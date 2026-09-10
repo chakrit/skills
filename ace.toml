@@ -1,0 +1,2 @@
+school = "ace-rs/school"
+include_skills = ["ace", "ace-audit", "ace-docs", "ace-init", "ace-save", "ace-skill"]
