@@ -26,10 +26,10 @@ and the target file. Resolve symlinks before writing. Read this repository's act
 `skills/<name>/` content when reviewing its published packages, even if a skill with
 that name is already loaded through PROD9.
 
-- **fact-check and learn:** edit `skills/fact-check/` or `skills/learn/` here.
+- **fact-check, learn, and note-taker:** edit their directories under `skills/` here.
   Route feedback and proposed changes to `chakrit/skills`, including feedback about
-  copies loaded through PROD9. Their former standalone repositories are ingestion
-  sources, not the ongoing maintenance destinations.
+  copies loaded through PROD9. The former standalone repositories and note-taker
+  in PROD9 are ingestion sources, not the ongoing maintenance destinations.
 - **kien-thai and kode-thai:** the local directories are imported copies. Route
   feedback and fixes to `chakrit/kien-thai`, then refresh the declared import after
   an authorized upstream change. Do not patch the imported copies as a lasting fix.
@@ -46,7 +46,8 @@ those actions and name the destination before executing them.
 
 ## Ownership and layout
 
-- `skills/fact-check/` and `skills/learn/` are maintained directly in this repository.
+- `skills/fact-check/`, `skills/learn/`, and `skills/note-taker/` are maintained
+  directly in this repository.
 - `skills/kien-thai/` and `skills/kode-thai/` are imported from chakrit/kien-thai.
   Follow the upstream ownership and command-target checks in this file.
 - Each published skill keeps its runtime references in `references/` and supporting
