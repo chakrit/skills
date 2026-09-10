@@ -16,13 +16,11 @@ Copy a complete directory from `skills/` into the skill directory supported by y
 agent. Keep its references and scripts together. Install `kien-thai` alongside
 `kode-thai`, which depends on it.
 
-For ACE, subscribe another project to a local checkout of this school:
+For ACE, subscribe another project to this school:
 
 ```sh
-ace setup /path/to/skills
+ace setup chakrit/skills
 ```
-
-After this repository is published, projects can subscribe with `ace setup chakrit/skills`.
 
 ## Maintain the school
 
