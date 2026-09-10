@@ -1,0 +1,52 @@
+#!/usr/bin/env lowfat-filter
+# pulumi — compact deploy output. Per-resource progress chatter is the bloat;
+# the verdict (Outputs/Resources counts, Duration, Diagnostics) sits at the END
+# of the stream — and `up` emits two Resources: sections (preview phase, then
+# update phase) — so compaction is tail-anchored, never head-anchored. Errors
+# surface in Diagnostics even on exit 1, so no raw-on-failure branch is needed.
+#
+# `--json` is machine output (multi-line JSON) — pass byte-exact (invariant 1).
+# Without the guard the tail-cap truncates it into corrupt JSON. The guard
+# repeats per compacting rule because `.lf` has no top-level pre-filter.
+
+include ../../lib/truncation.lf
+include ../../lib/ansi.lf
+
+define drop-spinner-noise:
+    # pulumi colours the per-resource lines the drops below anchor against, so the
+    # strip belongs here — ahead of every rule that matches on line shape.
+    strip-ansi
+    drop /^@ /
+    drop /^(Downloading|Installing) plugin /
+
+up|preview|destroy|refresh, ultra:
+    if --json:
+        raw
+    else:
+        drop-spinner-noise
+        # all per-resource lines (plan + progress + completed): " +  ", " -- ", " ~  "...
+        drop /^ [-+~]{1,2} /
+        # "running" lines repeat the Diagnostics block verbatim — ultra was keeping
+        # both and coming out *longer* than full, which inverts the levels
+        drop / running /
+        drop /^$/
+        tail-marked 15
+        or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 15 ]; then printf '[lowfat] +%d earlier lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((n-15))" "${level:-full}"; fi; printf '%s\n' "$s" | tail -15
+
+up|preview|destroy|refresh:
+    if --json:
+        raw
+    else:
+        drop-spinner-noise
+        # in-progress lines duplicate their completed counterparts; "running" lines
+        # duplicate the Diagnostics block
+        drop / (creating|deleting|updating|replacing|refreshing|reading) /
+        drop / running /
+        tail-auto-marked
+*:
+    if exit failed:
+        raw
+    elif --json:
+        raw
+    else:
+        head-auto-marked

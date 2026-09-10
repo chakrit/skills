@@ -1,0 +1,34 @@
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# project-local pinned tool binaries (smoke, provisioned by scripts/test.sh)
+.bin/
+
+# ACE-managed — do not edit this block.
+# Managed by ACE. See https://github.com/ace-rs/ace
+.agents/agents
+.agents/commands
+.agents/rules
+.agents/skills
+.claude/agents
+.claude/commands
+.claude/rules
+.claude/skills
+.opencode/agents
+.opencode/commands
+.opencode/rules
+.opencode/skills
+ace.local.toml
+# end ACE
+
+# session-local scheduler state
+.claude/scheduled_tasks.*
+
+# ACE session state — resume trail (save.md/save.ledger.md), ace-connect inbox
+# (connect.log), ace-afk handoff report (afk.log)
+/.ace/

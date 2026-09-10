@@ -1,0 +1,53 @@
+#!/usr/bin/env lowfat-filter
+# dotnet-compact - strip restore/project chatter, keep compiler and test summaries.
+# env: $sub $level $exit $args
+
+include ../../lib/truncation.lf
+
+define compact-dotnet(limit):
+    drop /^[[:space:]]*Determining projects to restore\.\.\.$/
+    # SDK 8.0.129 parenthesizes the timing — `Restored /w/app.csproj (in 892 ms).` —
+    # so the bare-`in` form alone matches nothing on current output.
+    drop /^[[:space:]]*Restored .+ \(?in [0-9.]+/
+    drop /^[[:space:]]*All projects are up-to-date for restore\.$/
+    drop /^[[:space:]]*[^[:space:]].+ -> .+$/
+    # keep: compiler diagnostics, build verdicts, vstest failure details (test
+    # name + Error Message:/Stack Trace: blocks, incl. their 3+-space-indented
+    # bodies), and run summaries (one-line "Failed!  -" and multi-line formats)
+    keep /(error CS[0-9]+|warning CS[0-9]+|Build succeeded\.|Build FAILED\.|Successfully created package|Passed!|Failed!|Total tests:|(Passed|Failed|Skipped):[[:space:]]+[0-9]+|Test Run (Failed|Successful)|^[[:space:]]+(Failed [A-Za-z_]|Error Message:|Stack Trace:|at )|^[[:space:]]{3}[^[:space:]])/
+    # `head-marked $1` cannot be written: `$N` reaches only shell:/or-shell: bodies,
+    # never an op argument, so the limit has to travel inside the body.
+    shell: |
+        body=$(cat)
+        [ -n "$body" ] || exit 0
+
+        total=$(printf '%s\n' "$body" | grep -c '')
+        printf '%s\n' "$body" | head -n $1
+
+        [ "$total" -gt $1 ] && printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - $1))" "${level:-full}"
+        exit 0
+    or-shell: s=$(grep -E '[^[:space:]]'); n=$(printf '%s\n' "$s" | wc -l); printf '%s\n' "$s" | head -$1; if [ "$n" -gt $1 ]; then printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((n-$1))" "${level:-full}"; fi
+
+# Extraction runs on failure too — a failed build is restore chatter + error
+# CS lines, exactly what the keep-list pulls out; the macro's or-shell guards
+# a crash with none of the expected markers. publish/pack share the build
+# output shape (restore chatter + diagnostics); pack's "Successfully created
+# package" verdict is in the keep-list, publish's terse path lines fall to the
+# or-shell fallback.
+#
+# `dotnet list ... --format json` is machine output — pass byte-exact
+# (invariant 1). It hits the `*` arm, where `head auto` would truncate a large
+# list; the guard passes it raw.
+build|test|publish|pack:
+    match level:
+        ultra: compact-dotnet 18
+        full:  compact-dotnet 35
+        lite:  compact-dotnet 70
+
+*:
+    if exit failed:
+        raw
+    elif --format json:
+        raw
+    else:
+        head-auto-marked

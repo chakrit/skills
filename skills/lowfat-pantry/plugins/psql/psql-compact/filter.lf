@@ -1,0 +1,54 @@
+#!/usr/bin/env lowfat-filter
+# psql-compact - remove ASCII table borders and cap rows; never hide SQL errors.
+# env: $sub $level $exit $args
+
+define compact-psql(limit):
+    shell: |
+        # The sed pass both classifies and reshapes (pipe rows lose their column
+        # separators, prose loses run-on blanks); the loop only has to count kept
+        # lines and hold the row tally back for the end.
+        sed -E '
+        /^\+[-+]+\+$/d
+        /^\([0-9]+ rows?\)$/{s/^/S/;b
+        }
+        /^\|/{
+        s/^\|[[:blank:]]*//
+        s/[[:blank:]]*\|[[:blank:]]*/ /g
+        s/[[:blank:]]+$//
+        s/^/P/
+        b
+        }
+        /^[[:blank:]]*-[-+[:blank:]]*$/d
+        /^[[:blank:]]*$/d
+        s/[[:blank:]][[:blank:]]+/ /g
+        s/^/X/' | {
+            kept=0
+            dropped=0
+            summary=
+            while IFS= read -r tagged || [ -n "$tagged" ]; do
+                line=${tagged#?}
+                case $tagged in
+                    S*) summary=$line ;;
+                    *)
+                        if [ "$kept" -lt $1 ]; then
+                            printf '%s\n' "$line"
+                            kept=$((kept + 1))
+                        else
+                            dropped=$((dropped + 1))
+                        fi
+                        ;;
+                esac
+            done
+            [ -n "$summary" ] && printf '%s\n' "$summary"
+            [ "$dropped" -gt 0 ] && printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$dropped" "${level:-full}"
+        }
+        exit 0
+
+*:
+    if exit failed:
+        raw
+    else:
+        match level:
+            ultra: compact-psql 15
+            full:  compact-psql 30
+            lite:  compact-psql 60

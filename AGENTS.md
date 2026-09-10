@@ -10,7 +10,8 @@ use the separate `prod9/school` workflow.
 - `ace.toml` configures the agent environment for EDITING this repository. Keep
   `school = "prod9/school"`. Do not change it to `"."` to make this repository a school.
 - `school.toml` defines the PUBLISHED collection and its upstream `[[imports]]`.
-  It currently imports kien-thai and kode-thai from `chakrit/kien-thai`.
+  It imports kien-thai and kode-thai from `chakrit/kien-thai`, and lowfat-pantry
+  from `chakrit/lowfat-pantry`.
 - `skills/` contains the published packages. `.agents/skills/` contains generated
   links to the editing workflow. Identical names in these directories do not mean
   identical ownership or content: `.agents/skills/fact-check/` resolves into PROD9,
@@ -26,13 +27,18 @@ and the target file. Resolve symlinks before writing. Read this repository's act
 `skills/<name>/` content when reviewing its published packages, even if a skill with
 that name is already loaded through PROD9.
 
-- **fact-check, learn, and note-taker:** edit their directories under `skills/` here.
+- **fact-check, learn, note-taker, smoke, and safety-audit:** edit their directories
+  under `skills/` here.
   Route feedback and proposed changes to `chakrit/skills`, including feedback about
-  copies loaded through PROD9. The former standalone repositories and note-taker
-  in PROD9 are ingestion sources, not the ongoing maintenance destinations.
+  copies loaded through PROD9. Former standalone repositories and copies extracted
+  from PROD9 are ingestion sources, not the ongoing maintenance destinations.
 - **kien-thai and kode-thai:** the local directories are imported copies. Route
   feedback and fixes to `chakrit/kien-thai`, then refresh the declared import after
   an authorized upstream change. Do not patch the imported copies as a lasting fix.
+- **lowfat-pantry:** route feedback and changes to `chakrit/lowfat-pantry` and
+  refresh the import. Keep its bundled plugins, templates, scripts, and docs intact.
+  Its nested instruction and configuration files describe the upstream package;
+  they do not change this repository's editing environment or grant upstream writes.
 - **PROD9 workflow skills:** feedback about PROD9-owned editing procedures belongs
   to `prod9/school`. A request to edit this repository does not authorize changing
   that separate checkout. For any imported skill in PROD9, establish its actual
@@ -46,10 +52,11 @@ those actions and name the destination before executing them.
 
 ## Ownership and layout
 
-- `skills/fact-check/`, `skills/learn/`, and `skills/note-taker/` are maintained
-  directly in this repository.
+- `skills/fact-check/`, `skills/learn/`, `skills/note-taker/`, `skills/smoke/`, and
+  `skills/safety-audit/` are maintained directly in this repository.
 - `skills/kien-thai/` and `skills/kode-thai/` are imported from chakrit/kien-thai.
   Follow the upstream ownership and command-target checks in this file.
+- `skills/lowfat-pantry/` is imported from chakrit/lowfat-pantry.
 - Each published skill keeps its runtime references in `references/` and supporting
   documentation in `docs/` within its own directory. Preserve relative references,
   source attribution, and the root MIT license. README.md is the catalog and source record.
@@ -76,6 +83,12 @@ proof that it targets this collection. For collection imports, target this check
 explicitly using a supported mechanism verified against the installed CLI. If that
 mechanism is unavailable or unclear, report the missing targeting capability; do not
 switch `ace.toml`, mutate PROD9, or guess command flags to get past it.
+
+A verified targeting method is a temporary project under `.ace/import-project/`
+whose `ace.toml` selects this checkout by absolute path. Run `ace paths school`
+there first; continue with `ace school pull` and `ace school validate` only when
+it resolves this collection. Keep this temporary config ignored and leave the
+repository-root editing config unchanged.
 
 Before committing a direct skill ingestion, compare its SKILL.md and references
 against the recorded source revision, check relative links, and inspect the full diff.

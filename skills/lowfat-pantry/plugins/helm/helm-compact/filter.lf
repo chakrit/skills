@@ -1,0 +1,106 @@
+#!/usr/bin/env lowfat-filter
+# helm-compact - preserve release metadata and cap bulky notes.
+# `list` is an inventory listing: rows are never capped, only column-squeezed (invariant 6).
+# env: $sub $level $exit $args
+#
+# `-o json`/`-o yaml` (and the `--output` long form) is machine output — pass
+# byte-exact (invariant 1). Without the guard, squeeze-columns collapses its
+# whitespace (corrupt JSON/YAML). The guard repeats
+# per compacting rule because `.lf` has no top-level pre-filter and macros can't
+# wrap a cascade; the default (table) output still compacts.
+
+include ../../lib/columns.lf
+include ../../lib/truncation.lf
+
+define helm-summary(limit):
+    shell: |
+        # NOTES: opens a block with its own budget; everything before it is
+        # release metadata with a separate one. The loop owns both counters.
+        sed -E '
+        /^(NAME:|LAST DEPLOYED:|NAMESPACE:|STATUS:|REVISION:|TEST SUITE:)/{s/^/K/;b
+        }
+        /^NOTES:/{s/^/N/;b
+        }
+        /^[[:blank:]]*$/{s/^/B/;b
+        }
+        s/^/X/' | {
+            in_notes=0
+            notes=0
+            seen=0
+            dropped=0
+            while IFS= read -r tagged || [ -n "$tagged" ]; do
+                line=${tagged#?}
+                tag=${tagged%"$line"}
+
+                if [ "$in_notes" = 1 ] && [ "$tag" != N ]; then
+                    if [ "${level:-full}" != "ultra" ] && [ "$notes" -lt $1 ]; then
+                        printf '%s\n' "$line"
+                        notes=$((notes + 1))
+                    else
+                        dropped=$((dropped + 1))
+                    fi
+                    continue
+                fi
+
+                case $tag in
+                    K) printf '%s\n' "$line" ;;
+                    N) printf '%s\n' "$line"; in_notes=1; notes=0 ;;
+                    X)
+                        if [ "$seen" -lt $1 ]; then
+                            printf '%s\n' "$line"
+                            seen=$((seen + 1))
+                        else
+                            dropped=$((dropped + 1))
+                        fi
+                        ;;
+                esac
+            done
+
+            [ "$dropped" -gt 0 ] && printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$dropped" "${level:-full}"
+        }
+        exit 0
+
+install|upgrade|status:
+    if exit failed:
+        raw
+    elif -o json:
+        raw
+    elif -o yaml:
+        raw
+    elif --output json:
+        raw
+    elif --output yaml:
+        raw
+    else:
+        match level:
+            ultra: helm-summary 8
+            full:  helm-summary 35
+            lite:  helm-summary 80
+
+list:
+    if exit failed:
+        raw
+    elif -o json:
+        raw
+    elif -o yaml:
+        raw
+    elif --output json:
+        raw
+    elif --output yaml:
+        raw
+    else:
+        squeeze-columns
+
+*:
+    if exit failed:
+        raw
+    elif -o json:
+        raw
+    elif -o yaml:
+        raw
+    elif --output json:
+        raw
+    elif --output yaml:
+        raw
+    else:
+        head-auto-marked

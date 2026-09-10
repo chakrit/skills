@@ -1,0 +1,74 @@
+#!/usr/bin/env lowfat-filter
+# systemctl-compact - keep unit state and cap journal tails.
+# env: $sub $level $exit $args
+
+include ../../lib/columns.lf
+include ../../lib/truncation.lf
+
+# limit = max journal lines to keep; 0 means identity lines only (header,
+# Loaded, Active, Main PID). Resource lines (Tasks/Memory/CPU/CGroup) appear
+# from limit > 10 up.
+define compact-status(limit):
+    shell: |
+        # Line 1 is the unit header, then the identity fields; resource fields
+        # only earn their place in the bigger budgets. Journal lines (Mon DD …)
+        # are the part that actually needs capping.
+        sed -E '
+        1{s/^/H/;b
+        }
+        /^[[:blank:]]+(Loaded|Active|Main PID):/{s/^/I/;b
+        }
+        /^[[:blank:]]+(Tasks|Memory|CPU|CGroup):/{s/^/R/;b
+        }
+        /^[[:blank:]]*[A-Z][a-z][a-z] [ 0-9][0-9] /{s/^/J/;b
+        }
+        s/^/D/' | {
+            logs=0
+            dropped=0
+            while IFS= read -r tagged || [ -n "$tagged" ]; do
+                line=${tagged#?}
+                case $tagged in
+                    H*|I*) printf '%s\n' "$line" ;;
+                    R*) [ $1 -gt 10 ] && printf '%s\n' "$line" ;;
+                    J*)
+                        if [ "$logs" -lt $1 ]; then
+                            printf '%s\n' "$line"
+                            logs=$((logs + 1))
+                        else
+                            dropped=$((dropped + 1))
+                        fi
+                        ;;
+                esac
+            done
+
+            [ "$dropped" -gt 0 ] && printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$dropped" "${level:-full}"
+        }
+        exit 0
+
+status:
+    if exit failed:
+        raw
+    else:
+        match level:
+            ultra: compact-status 0
+            full:  compact-status 5
+            lite:  compact-status 20
+
+list-units:
+    if exit failed:
+        raw
+    else:
+        drop /^(LOAD|ACTIVE|SUB)[[:space:]]+= /
+        drop /^[[:space:]]*$/
+        squeeze-columns
+
+is-active|is-enabled:
+    if exit failed:
+        raw
+    else:
+        head-marked 1
+*:
+    if exit failed:
+        raw
+    else:
+        head-auto-marked

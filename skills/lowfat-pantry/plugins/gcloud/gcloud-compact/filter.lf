@@ -1,0 +1,23 @@
+#!/usr/bin/env lowfat-filter
+# gcloud-compact — compact gcloud CLI output for LLM contexts.
+# env: $sub $level $exit $args
+#
+# gcloud's default text output is tabular (instances/services/operations) and
+# the deploy/operation flows print progress. Structured output (--format json|
+# yaml) is machine-readable and MUST pass through byte-exact. On a non-zero exit
+# the error / stack must show — raw.
+
+include ../../lib/truncation.lf
+
+*:
+    if exit failed:
+        raw
+    elif --format json:
+        raw
+    elif --format yaml:
+        raw
+    else:
+        match level:
+            ultra: head-marked 25
+            lite:  head-marked 200
+            else:  head-marked 60

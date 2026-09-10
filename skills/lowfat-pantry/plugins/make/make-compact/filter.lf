@@ -1,0 +1,17 @@
+#!/usr/bin/env lowfat-filter
+# make-compact - recipe output is arbitrary child-command output; tail only.
+# env: $sub $level $exit $args
+
+include ../../lib/truncation.lf
+
+*:
+    if exit failed:
+        match level:
+            ultra: tail-marked 80
+            lite:  tail-marked 240
+            else:  tail-marked 140
+    else:
+        match level:
+            ultra: tail-marked 25
+            lite:  tail-marked 120
+            else:  tail-marked 60

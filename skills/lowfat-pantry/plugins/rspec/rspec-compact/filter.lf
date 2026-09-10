@@ -1,0 +1,36 @@
+#!/usr/bin/env lowfat-filter
+# rspec-compact — collapse passing runs to the tally; on failure keep the
+# Failures section, the error block, the summary and the rerun list, drop the
+# progress dots and timing chatter.
+# env: $sub $level $exit $args
+
+include ../../lib/truncation.lf
+
+# Any explicit --format/-f (json, html, junit, a custom formatter class) is
+# caller-chosen machine output — pass byte-exact (invariant 1). The default
+# progress format (no flag) is the common case and still compacts below.
+*:
+    if --format:
+        raw
+    elif -f:
+        raw
+    elif exit ok:
+        keep /examples?, \d+ failures?/
+        head-marked 1
+        or "rspec: passed"
+    else:
+        match level:
+            ultra:
+                keep /(^\s+\d+\) |Failure\/Error|^rspec .*#|examples?, .*(failure|error)|LoadError|cannot load|An error occurred)/
+                head-marked 30
+                or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 20 ]; then printf '[lowfat] +%d earlier lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((n-20))" "${level:-full}"; fi; printf '%s\n' "$s" | tail -20
+            lite:
+                drop /^Finished in /
+                drop /^[.FE*]+$/
+                head-marked 200
+            full:
+                drop /^Finished in /
+                drop /^[.FE*]+$/
+                drop /^\s*$/
+                head-marked 60
+                or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 40 ]; then printf '[lowfat] +%d earlier lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((n-40))" "${level:-full}"; fi; printf '%s\n' "$s" | tail -40

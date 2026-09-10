@@ -1,0 +1,19 @@
+#!/usr/bin/env lowfat-filter
+# journalctl-compact - logs are volume; newest/error lines are usually last.
+# env: $sub $level $exit $args
+
+include ../../lib/truncation.lf
+
+*:
+    if exit failed:
+        raw
+    elif -o json:
+        raw
+    elif --output json:
+        raw
+    else:
+        match level:
+            ultra: tail-marked 20
+            full:  tail-marked 60
+            lite:  tail-marked 200
+

@@ -1,0 +1,570 @@
+- name: tests.cue \ pnpm-compact \ samples/pnpm-install.txt lite
+  commands:
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=install --args='' --exit=0 --level=lite < plugins/pnpm/pnpm-compact/samples/pnpm-install.txt
+      checks:
+        - name: stdout
+          data:
+            - 'WARN  deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported'
+            - 'WARN  deprecated inflight@1.0.6: This module is not supported, and leaks memory.'
+            - 'Packages: +326'
+            - 'dependencies:'
+            - + @fastify/cors 9.0.1
+            - + fastify 4.28.0
+            - + zod 3.23.8
+            - 'devDependencies:'
+            - + typescript 5.4.5
+            - + vitest 1.6.0
+            - Done in 3.7s
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=install --args='' --exit=0 --level=lite < plugins/pnpm/pnpm-compact/samples/pnpm-install.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 11
+            - bytes 305
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ pnpm-compact \ samples/pnpm-install.txt full
+  commands:
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=install --args='' --exit=0 --level=full < plugins/pnpm/pnpm-compact/samples/pnpm-install.txt
+      checks:
+        - name: stdout
+          data:
+            - 'WARN  deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported'
+            - 'WARN  deprecated inflight@1.0.6: This module is not supported, and leaks memory.'
+            - 'Packages: +326'
+            - 'dependencies:'
+            - + @fastify/cors 9.0.1
+            - + fastify 4.28.0
+            - + zod 3.23.8
+            - 'devDependencies:'
+            - + typescript 5.4.5
+            - + vitest 1.6.0
+            - Done in 3.7s
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=install --args='' --exit=0 --level=full < plugins/pnpm/pnpm-compact/samples/pnpm-install.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 11
+            - bytes 305
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ pnpm-compact \ samples/pnpm-install.txt ultra
+  commands:
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=install --args='' --exit=0 --level=ultra < plugins/pnpm/pnpm-compact/samples/pnpm-install.txt
+      checks:
+        - name: stdout
+          data:
+            - 'WARN  deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported'
+            - 'WARN  deprecated inflight@1.0.6: This module is not supported, and leaks memory.'
+            - 'Packages: +326'
+            - 'dependencies:'
+            - + @fastify/cors 9.0.1
+            - + fastify 4.28.0
+            - + zod 3.23.8
+            - 'devDependencies:'
+            - + typescript 5.4.5
+            - + vitest 1.6.0
+            - Done in 3.7s
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=install --args='' --exit=0 --level=ultra < plugins/pnpm/pnpm-compact/samples/pnpm-install.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 11
+            - bytes 305
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ pnpm-compact \ samples/pnpm-test.txt lite
+  commands:
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=test --args='' --exit=0 --level=lite < plugins/pnpm/pnpm-compact/samples/pnpm-test.txt
+      checks:
+        - name: stdout
+          data:
+            - '> api@0.8.0 test /repo/api'
+            - '> vitest run'
+            - ""
+            - ' RUN  v1.6.0 /repo/api'
+            - ""
+            - ' ✓ src/routes/orders.test.ts (14 tests) 64ms'
+            - ' ✓ src/routes/users.test.ts (11 tests) 49ms'
+            - ' ✓ src/services/pricing.test.ts (21 tests) 83ms'
+            - ""
+            - ' Test Files  3 passed (3)'
+            - '      Tests  46 passed (46)'
+            - '   Duration  1.86s'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=test --args='' --exit=0 --level=lite < plugins/pnpm/pnpm-compact/samples/pnpm-test.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 13
+            - bytes 283
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ pnpm-compact \ samples/pnpm-test.txt full
+  commands:
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=test --args='' --exit=0 --level=full < plugins/pnpm/pnpm-compact/samples/pnpm-test.txt
+      checks:
+        - name: stdout
+          data:
+            - '> api@0.8.0 test /repo/api'
+            - '> vitest run'
+            - ""
+            - ' RUN  v1.6.0 /repo/api'
+            - ""
+            - ' ✓ src/routes/orders.test.ts (14 tests) 64ms'
+            - ' ✓ src/routes/users.test.ts (11 tests) 49ms'
+            - ' ✓ src/services/pricing.test.ts (21 tests) 83ms'
+            - ""
+            - ' Test Files  3 passed (3)'
+            - '      Tests  46 passed (46)'
+            - '   Duration  1.86s'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=test --args='' --exit=0 --level=full < plugins/pnpm/pnpm-compact/samples/pnpm-test.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 13
+            - bytes 283
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ pnpm-compact \ samples/pnpm-test.txt ultra
+  commands:
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=test --args='' --exit=0 --level=ultra < plugins/pnpm/pnpm-compact/samples/pnpm-test.txt
+      checks:
+        - name: stdout
+          data:
+            - '> api@0.8.0 test /repo/api'
+            - '> vitest run'
+            - ""
+            - ' RUN  v1.6.0 /repo/api'
+            - ""
+            - ' ✓ src/routes/orders.test.ts (14 tests) 64ms'
+            - ' ✓ src/routes/users.test.ts (11 tests) 49ms'
+            - ' ✓ src/services/pricing.test.ts (21 tests) 83ms'
+            - ""
+            - ' Test Files  3 passed (3)'
+            - '      Tests  46 passed (46)'
+            - '   Duration  1.86s'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=test --args='' --exit=0 --level=ultra < plugins/pnpm/pnpm-compact/samples/pnpm-test.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 13
+            - bytes 283
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ pnpm-compact \ samples/pnpm-error.txt lite
+  commands:
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=install --args='' --exit=1 --level=lite < plugins/pnpm/pnpm-compact/samples/pnpm-error.txt
+      checks:
+        - name: stdout
+          data:
+            - '[ERR_PNPM_FETCH_404] GET https://registry.npmjs.org/@lowfat-pantry%2Fdefinitely-not-a-real-package: Not Found - 404'
+            - ""
+            - This error happened while installing a direct dependency of /w
+            - ""
+            - '@lowfat-pantry/definitely-not-a-real-package is not in the npm registry, or you have no permission to fetch it.'
+            - ""
+            - No authorization header was set for the request.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=install --args='' --exit=1 --level=lite < plugins/pnpm/pnpm-compact/samples/pnpm-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 7
+            - bytes 343
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ pnpm-compact \ samples/pnpm-error.txt full
+  commands:
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=install --args='' --exit=1 --level=full < plugins/pnpm/pnpm-compact/samples/pnpm-error.txt
+      checks:
+        - name: stdout
+          data:
+            - '[ERR_PNPM_FETCH_404] GET https://registry.npmjs.org/@lowfat-pantry%2Fdefinitely-not-a-real-package: Not Found - 404'
+            - ""
+            - This error happened while installing a direct dependency of /w
+            - ""
+            - '@lowfat-pantry/definitely-not-a-real-package is not in the npm registry, or you have no permission to fetch it.'
+            - ""
+            - No authorization header was set for the request.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=install --args='' --exit=1 --level=full < plugins/pnpm/pnpm-compact/samples/pnpm-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 7
+            - bytes 343
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ pnpm-compact \ samples/pnpm-error.txt ultra
+  commands:
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=install --args='' --exit=1 --level=ultra < plugins/pnpm/pnpm-compact/samples/pnpm-error.txt
+      checks:
+        - name: stdout
+          data:
+            - '[ERR_PNPM_FETCH_404] GET https://registry.npmjs.org/@lowfat-pantry%2Fdefinitely-not-a-real-package: Not Found - 404'
+            - ""
+            - This error happened while installing a direct dependency of /w
+            - ""
+            - '@lowfat-pantry/definitely-not-a-real-package is not in the npm registry, or you have no permission to fetch it.'
+            - ""
+            - No authorization header was set for the request.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=install --args='' --exit=1 --level=ultra < plugins/pnpm/pnpm-compact/samples/pnpm-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 7
+            - bytes 343
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ pnpm-compact \ samples/pnpm-ls-json.txt lite
+  commands:
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=ls --args='ls --json --depth=Infinity' --exit=0 --level=lite < plugins/pnpm/pnpm-compact/samples/pnpm-ls-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '['
+            - '  {'
+            - '    "name": "demo",'
+            - '    "version": "1.0.0",'
+            - '    "path": "/work",'
+            - '    "private": false,'
+            - '    "dependencies": {'
+            - '      "is-odd": {'
+            - '        "from": "is-odd",'
+            - '        "version": "3.0.1",'
+            - '        "resolved": "https://registry.npmjs.org/is-odd/-/is-odd-3.0.1.tgz",'
+            - '        "path": "/work/node_modules/.pnpm/is-odd@3.0.1/node_modules/is-odd",'
+            - '        "dependencies": {'
+            - '          "is-number": {'
+            - '            "from": "is-number",'
+            - '            "version": "6.0.0",'
+            - '            "resolved": "https://registry.npmjs.org/is-number/-/is-number-6.0.0.tgz",'
+            - '            "path": "/work/node_modules/.pnpm/is-number@6.0.0/node_modules/is-number"'
+            - '          }'
+            - '        }'
+            - '      }'
+            - '    }'
+            - '  }'
+            - ']'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=ls --args='ls --json --depth=Infinity' --exit=0 --level=lite < plugins/pnpm/pnpm-compact/samples/pnpm-ls-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 24
+            - bytes 670
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ pnpm-compact \ samples/pnpm-ls-json.txt full
+  commands:
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=ls --args='ls --json --depth=Infinity' --exit=0 --level=full < plugins/pnpm/pnpm-compact/samples/pnpm-ls-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '['
+            - '  {'
+            - '    "name": "demo",'
+            - '    "version": "1.0.0",'
+            - '    "path": "/work",'
+            - '    "private": false,'
+            - '    "dependencies": {'
+            - '      "is-odd": {'
+            - '        "from": "is-odd",'
+            - '        "version": "3.0.1",'
+            - '        "resolved": "https://registry.npmjs.org/is-odd/-/is-odd-3.0.1.tgz",'
+            - '        "path": "/work/node_modules/.pnpm/is-odd@3.0.1/node_modules/is-odd",'
+            - '        "dependencies": {'
+            - '          "is-number": {'
+            - '            "from": "is-number",'
+            - '            "version": "6.0.0",'
+            - '            "resolved": "https://registry.npmjs.org/is-number/-/is-number-6.0.0.tgz",'
+            - '            "path": "/work/node_modules/.pnpm/is-number@6.0.0/node_modules/is-number"'
+            - '          }'
+            - '        }'
+            - '      }'
+            - '    }'
+            - '  }'
+            - ']'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=ls --args='ls --json --depth=Infinity' --exit=0 --level=full < plugins/pnpm/pnpm-compact/samples/pnpm-ls-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 24
+            - bytes 670
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ pnpm-compact \ samples/pnpm-ls-json.txt ultra
+  commands:
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=ls --args='ls --json --depth=Infinity' --exit=0 --level=ultra < plugins/pnpm/pnpm-compact/samples/pnpm-ls-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '['
+            - '  {'
+            - '    "name": "demo",'
+            - '    "version": "1.0.0",'
+            - '    "path": "/work",'
+            - '    "private": false,'
+            - '    "dependencies": {'
+            - '      "is-odd": {'
+            - '        "from": "is-odd",'
+            - '        "version": "3.0.1",'
+            - '        "resolved": "https://registry.npmjs.org/is-odd/-/is-odd-3.0.1.tgz",'
+            - '        "path": "/work/node_modules/.pnpm/is-odd@3.0.1/node_modules/is-odd",'
+            - '        "dependencies": {'
+            - '          "is-number": {'
+            - '            "from": "is-number",'
+            - '            "version": "6.0.0",'
+            - '            "resolved": "https://registry.npmjs.org/is-number/-/is-number-6.0.0.tgz",'
+            - '            "path": "/work/node_modules/.pnpm/is-number@6.0.0/node_modules/is-number"'
+            - '          }'
+            - '        }'
+            - '      }'
+            - '    }'
+            - '  }'
+            - ']'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=ls --args='ls --json --depth=Infinity' --exit=0 --level=ultra < plugins/pnpm/pnpm-compact/samples/pnpm-ls-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 24
+            - bytes 670
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ pnpm-compact \ samples/pnpm-run-capped.txt lite
+  commands:
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=run --args='run build' --exit=0 --level=lite < plugins/pnpm/pnpm-compact/samples/pnpm-run-capped.txt
+      checks:
+        - name: stdout
+          data:
+            - '> demo@1.0.0 build'
+            - '> vite build'
+            - ""
+            - transformed module 1
+            - transformed module 2
+            - transformed module 3
+            - transformed module 4
+            - transformed module 5
+            - transformed module 6
+            - transformed module 7
+            - transformed module 8
+            - transformed module 9
+            - transformed module 10
+            - transformed module 11
+            - transformed module 12
+            - transformed module 13
+            - transformed module 14
+            - transformed module 15
+            - transformed module 16
+            - transformed module 17
+            - transformed module 18
+            - transformed module 19
+            - transformed module 20
+            - transformed module 21
+            - transformed module 22
+            - transformed module 23
+            - transformed module 24
+            - transformed module 25
+            - transformed module 26
+            - transformed module 27
+            - transformed module 28
+            - transformed module 29
+            - transformed module 30
+            - transformed module 31
+            - transformed module 32
+            - transformed module 33
+            - transformed module 34
+            - transformed module 35
+            - transformed module 36
+            - transformed module 37
+            - transformed module 38
+            - transformed module 39
+            - transformed module 40
+            - transformed module 41
+            - transformed module 42
+            - transformed module 43
+            - transformed module 44
+            - transformed module 45
+            - transformed module 46
+            - transformed module 47
+            - transformed module 48
+            - transformed module 49
+            - transformed module 50
+            - build complete
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=run --args='run build' --exit=0 --level=lite < plugins/pnpm/pnpm-compact/samples/pnpm-run-capped.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 55
+            - bytes 1140
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ pnpm-compact \ samples/pnpm-run-capped.txt full
+  commands:
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=run --args='run build' --exit=0 --level=full < plugins/pnpm/pnpm-compact/samples/pnpm-run-capped.txt
+      checks:
+        - name: stdout
+          data:
+            - '> demo@1.0.0 build'
+            - '> vite build'
+            - ""
+            - transformed module 1
+            - transformed module 2
+            - transformed module 3
+            - transformed module 4
+            - transformed module 5
+            - transformed module 6
+            - transformed module 7
+            - transformed module 8
+            - transformed module 9
+            - transformed module 10
+            - transformed module 11
+            - transformed module 12
+            - transformed module 13
+            - transformed module 14
+            - transformed module 15
+            - transformed module 16
+            - transformed module 17
+            - transformed module 18
+            - transformed module 19
+            - transformed module 20
+            - transformed module 21
+            - transformed module 22
+            - transformed module 23
+            - transformed module 24
+            - transformed module 25
+            - transformed module 26
+            - transformed module 27
+            - transformed module 28
+            - transformed module 29
+            - transformed module 30
+            - transformed module 31
+            - transformed module 32
+            - transformed module 33
+            - transformed module 34
+            - transformed module 35
+            - transformed module 36
+            - transformed module 37
+            - transformed module 38
+            - transformed module 39
+            - transformed module 40
+            - transformed module 41
+            - transformed module 42
+            - transformed module 43
+            - transformed module 44
+            - transformed module 45
+            - transformed module 46
+            - transformed module 47
+            - transformed module 48
+            - transformed module 49
+            - transformed module 50
+            - build complete
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=run --args='run build' --exit=0 --level=full < plugins/pnpm/pnpm-compact/samples/pnpm-run-capped.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 55
+            - bytes 1140
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ pnpm-compact \ samples/pnpm-run-capped.txt ultra
+  commands:
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=run --args='run build' --exit=0 --level=ultra < plugins/pnpm/pnpm-compact/samples/pnpm-run-capped.txt
+      checks:
+        - name: stdout
+          data:
+            - '> demo@1.0.0 build'
+            - '> vite build'
+            - ""
+            - transformed module 1
+            - transformed module 2
+            - transformed module 3
+            - transformed module 4
+            - transformed module 5
+            - transformed module 6
+            - transformed module 7
+            - transformed module 8
+            - transformed module 9
+            - transformed module 10
+            - transformed module 11
+            - transformed module 12
+            - transformed module 13
+            - transformed module 14
+            - transformed module 15
+            - transformed module 16
+            - transformed module 17
+            - transformed module 18
+            - transformed module 19
+            - transformed module 20
+            - transformed module 21
+            - transformed module 22
+            - transformed module 23
+            - transformed module 24
+            - transformed module 25
+            - transformed module 26
+            - '[lowfat] +25 lines dropped (level=ultra) -- output truncated, re-run raw for the full list'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=run --args='run build' --exit=0 --level=ultra < plugins/pnpm/pnpm-compact/samples/pnpm-run-capped.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 31
+            - bytes 688
+        - name: exitcode
+          data:
+            - "0"

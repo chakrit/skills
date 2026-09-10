@@ -1,0 +1,262 @@
+- name: tests.cue \ golangci-lint-compact \ samples/golangci-issues.txt lite
+  commands:
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=1 --level=lite < plugins/golangci-lint/golangci-lint-compact/samples/golangci-issues.txt
+      checks:
+        - name: stdout
+          data:
+            - 'internal/handler.go:42:2: ineffectual assignment to err (ineffassign)'
+            - "\terr := db.Save(ctx, order)"
+            - "\t^"
+            - 'internal/handler.go:88:1: cyclomatic complexity 18 of func `Handle` is high (gocyclo)'
+            - func Handle(w http.ResponseWriter, r *http.Request) {
+            - ^
+            - 'internal/db.go:15:6: exported type `Store` should have comment or be unexported (revive)'
+            - type Store struct {
+            - '     ^'
+            - 'internal/db.go:51:2: SA4006: this value of `rows` is never used (staticcheck)'
+            - "\trows, err := q.Query(ctx)"
+            - "\t^"
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=1 --level=lite < plugins/golangci-lint/golangci-lint-compact/samples/golangci-issues.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 12
+            - bytes 467
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ golangci-lint-compact \ samples/golangci-issues.txt full
+  commands:
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=1 --level=full < plugins/golangci-lint/golangci-lint-compact/samples/golangci-issues.txt
+      checks:
+        - name: stdout
+          data:
+            - 'internal/handler.go:42:2: ineffectual assignment to err (ineffassign)'
+            - "\terr := db.Save(ctx, order)"
+            - "\t^"
+            - 'internal/handler.go:88:1: cyclomatic complexity 18 of func `Handle` is high (gocyclo)'
+            - func Handle(w http.ResponseWriter, r *http.Request) {
+            - ^
+            - 'internal/db.go:15:6: exported type `Store` should have comment or be unexported (revive)'
+            - type Store struct {
+            - '     ^'
+            - 'internal/db.go:51:2: SA4006: this value of `rows` is never used (staticcheck)'
+            - "\trows, err := q.Query(ctx)"
+            - "\t^"
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=1 --level=full < plugins/golangci-lint/golangci-lint-compact/samples/golangci-issues.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 12
+            - bytes 467
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ golangci-lint-compact \ samples/golangci-issues.txt ultra
+  commands:
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=1 --level=ultra < plugins/golangci-lint/golangci-lint-compact/samples/golangci-issues.txt
+      checks:
+        - name: stdout
+          data:
+            - 'internal/handler.go:42:2: ineffectual assignment to err (ineffassign)'
+            - 'internal/handler.go:88:1: cyclomatic complexity 18 of func `Handle` is high (gocyclo)'
+            - 'internal/db.go:15:6: exported type `Store` should have comment or be unexported (revive)'
+            - 'internal/db.go:51:2: SA4006: this value of `rows` is never used (staticcheck)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=1 --level=ultra < plugins/golangci-lint/golangci-lint-compact/samples/golangci-issues.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 4
+            - bytes 323
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ golangci-lint-compact \ samples/golangci-clean.txt lite
+  commands:
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=0 --level=lite < plugins/golangci-lint/golangci-lint-compact/samples/golangci-clean.txt
+      checks:
+        - name: stdout
+          data:
+            - 'golangci-lint: clean'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=0 --level=lite < plugins/golangci-lint/golangci-lint-compact/samples/golangci-clean.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 21
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ golangci-lint-compact \ samples/golangci-clean.txt full
+  commands:
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=0 --level=full < plugins/golangci-lint/golangci-lint-compact/samples/golangci-clean.txt
+      checks:
+        - name: stdout
+          data:
+            - 'golangci-lint: clean'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=0 --level=full < plugins/golangci-lint/golangci-lint-compact/samples/golangci-clean.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 21
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ golangci-lint-compact \ samples/golangci-clean.txt ultra
+  commands:
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=0 --level=ultra < plugins/golangci-lint/golangci-lint-compact/samples/golangci-clean.txt
+      checks:
+        - name: stdout
+          data:
+            - 'golangci-lint: clean'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=0 --level=ultra < plugins/golangci-lint/golangci-lint-compact/samples/golangci-clean.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 21
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ golangci-lint-compact \ samples/golangci-configerr.txt lite
+  commands:
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=3 --level=lite < plugins/golangci-lint/golangci-lint-compact/samples/golangci-configerr.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Error: can''t load config: unsupported version of the configuration: ""'
+            - 'Failed executing command with error: can''t load config'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=3 --level=lite < plugins/golangci-lint/golangci-lint-compact/samples/golangci-configerr.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 126
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ golangci-lint-compact \ samples/golangci-configerr.txt full
+  commands:
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=3 --level=full < plugins/golangci-lint/golangci-lint-compact/samples/golangci-configerr.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Error: can''t load config: unsupported version of the configuration: ""'
+            - 'Failed executing command with error: can''t load config'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=3 --level=full < plugins/golangci-lint/golangci-lint-compact/samples/golangci-configerr.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 126
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ golangci-lint-compact \ samples/golangci-configerr.txt ultra
+  commands:
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=3 --level=ultra < plugins/golangci-lint/golangci-lint-compact/samples/golangci-configerr.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Error: can''t load config: unsupported version of the configuration: ""'
+            - 'Failed executing command with error: can''t load config'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=3 --level=ultra < plugins/golangci-lint/golangci-lint-compact/samples/golangci-configerr.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 126
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ golangci-lint-compact \ samples/golangci-json.txt lite
+  commands:
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run --output.json.path stdout ./...' --exit=1 --level=lite < plugins/golangci-lint/golangci-lint-compact/samples/golangci-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"Issues":[{"FromLinter":"errcheck","Text":"Error return value of `os.Setenv` is not checked","Severity":"","SourceLines":["\tos.Setenv(\"DEMO\", \"1\")"],"Pos":{"Filename":"main.go","Offset":51,"Line":6,"Column":11},"ExpectNoLint":false,"ExpectedNoLintLinter":""}],"Report":{"Linters":[{"Name":"arangolint"},{"Name":"asasalint"},{"Name":"asciicheck"},{"Name":"bidichk"},{"Name":"bodyclose"},{"Name":"canonicalheader"},{"Name":"clickhouselint"},{"Name":"containedctx"},{"Name":"contextcheck"},{"Name":"copyloopvar"},{"Name":"cyclop"},{"Name":"decorder"},{"Name":"depguard"},{"Name":"dogsled"},{"Name":"dupl"},{"Name":"dupword"},{"Name":"durationcheck"},{"Name":"embeddedstructfieldcheck"},{"Name":"errcheck","Enabled":true},{"Name":"errchkjson"},{"Name":"errname"},{"Name":"errorlint"},{"Name":"exhaustive"},{"Name":"exhaustruct"},{"Name":"exptostd"},{"Name":"forbidigo"},{"Name":"forcetypeassert"},{"Name":"funcorder"},{"Name":"fatcontext"},{"Name":"funlen"},{"Name":"gci"},{"Name":"ginkgolinter"},{"Name":"gocheckcompilerdirectives"},{"Name":"gochecknoglobals"},{"Name":"gochecknoinits"},{"Name":"gochecksumtype"},{"Name":"gocognit"},{"Name":"goconst"},{"Name":"gocritic"},{"Name":"gocyclo"},{"Name":"godoclint"},{"Name":"godot"},{"Name":"godox"},{"Name":"err113"},{"Name":"gofmt"},{"Name":"gofumpt"},{"Name":"golines"},{"Name":"goheader"},{"Name":"goimports"},{"Name":"mnd"},{"Name":"modernize"},{"Name":"gomoddirectives"},{"Name":"gomodguard"},{"Name":"gomodguard_v2"},{"Name":"goprintffuncname"},{"Name":"gosec"},{"Name":"gosmopolitan"},{"Name":"govet","Enabled":true},{"Name":"grouper"},{"Name":"iface"},{"Name":"importas"},{"Name":"inamedparam"},{"Name":"ineffassign","Enabled":true},{"Name":"interfacebloat"},{"Name":"intrange"},{"Name":"iotamixing"},{"Name":"ireturn"},{"Name":"lll"},{"Name":"loggercheck"},{"Name":"maintidx"},{"Name":"makezero"},{"Name":"mirror"},{"Name":"misspell"},{"Name":"musttag"},{"Name":"nakedret"},{"Name":"nestif"},{"Name":"nilerr"},{"Name":"nilnesserr"},{"Name":"nilnil"},{"Name":"nlreturn"},{"Name":"noctx"},{"Name":"noinlineerr"},{"Name":"nonamedreturns"},{"Name":"nosprintfhostport"},{"Name":"paralleltest"},{"Name":"perfsprint"},{"Name":"prealloc"},{"Name":"predeclared"},{"Name":"promlinter"},{"Name":"protogetter"},{"Name":"reassign"},{"Name":"recvcheck"},{"Name":"revive"},{"Name":"rowserrcheck"},{"Name":"sloglint"},{"Name":"sqlclosecheck"},{"Name":"spancheck"},{"Name":"staticcheck","Enabled":true},{"Name":"swaggo"},{"Name":"tagalign"},{"Name":"tagliatelle"},{"Name":"testableexamples"},{"Name":"testifylint"},{"Name":"testpackage"},{"Name":"thelper"},{"Name":"tparallel"},{"Name":"typecheck","Enabled":true},{"Name":"unconvert"},{"Name":"unparam"},{"Name":"unqueryvet"},{"Name":"unused","Enabled":true},{"Name":"usestdlibvars"},{"Name":"usetesting"},{"Name":"varnamelen"},{"Name":"wastedassign"},{"Name":"whitespace"},{"Name":"wrapcheck"},{"Name":"wsl"},{"Name":"wsl_v5"},{"Name":"zerologlint"},{"Name":"nolintlint"}]}}'
+            - '1 issues:'
+            - '* errcheck: 1'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run --output.json.path stdout ./...' --exit=1 --level=lite < plugins/golangci-lint/golangci-lint-compact/samples/golangci-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 3
+            - bytes 2992
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ golangci-lint-compact \ samples/golangci-json.txt full
+  commands:
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run --output.json.path stdout ./...' --exit=1 --level=full < plugins/golangci-lint/golangci-lint-compact/samples/golangci-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"Issues":[{"FromLinter":"errcheck","Text":"Error return value of `os.Setenv` is not checked","Severity":"","SourceLines":["\tos.Setenv(\"DEMO\", \"1\")"],"Pos":{"Filename":"main.go","Offset":51,"Line":6,"Column":11},"ExpectNoLint":false,"ExpectedNoLintLinter":""}],"Report":{"Linters":[{"Name":"arangolint"},{"Name":"asasalint"},{"Name":"asciicheck"},{"Name":"bidichk"},{"Name":"bodyclose"},{"Name":"canonicalheader"},{"Name":"clickhouselint"},{"Name":"containedctx"},{"Name":"contextcheck"},{"Name":"copyloopvar"},{"Name":"cyclop"},{"Name":"decorder"},{"Name":"depguard"},{"Name":"dogsled"},{"Name":"dupl"},{"Name":"dupword"},{"Name":"durationcheck"},{"Name":"embeddedstructfieldcheck"},{"Name":"errcheck","Enabled":true},{"Name":"errchkjson"},{"Name":"errname"},{"Name":"errorlint"},{"Name":"exhaustive"},{"Name":"exhaustruct"},{"Name":"exptostd"},{"Name":"forbidigo"},{"Name":"forcetypeassert"},{"Name":"funcorder"},{"Name":"fatcontext"},{"Name":"funlen"},{"Name":"gci"},{"Name":"ginkgolinter"},{"Name":"gocheckcompilerdirectives"},{"Name":"gochecknoglobals"},{"Name":"gochecknoinits"},{"Name":"gochecksumtype"},{"Name":"gocognit"},{"Name":"goconst"},{"Name":"gocritic"},{"Name":"gocyclo"},{"Name":"godoclint"},{"Name":"godot"},{"Name":"godox"},{"Name":"err113"},{"Name":"gofmt"},{"Name":"gofumpt"},{"Name":"golines"},{"Name":"goheader"},{"Name":"goimports"},{"Name":"mnd"},{"Name":"modernize"},{"Name":"gomoddirectives"},{"Name":"gomodguard"},{"Name":"gomodguard_v2"},{"Name":"goprintffuncname"},{"Name":"gosec"},{"Name":"gosmopolitan"},{"Name":"govet","Enabled":true},{"Name":"grouper"},{"Name":"iface"},{"Name":"importas"},{"Name":"inamedparam"},{"Name":"ineffassign","Enabled":true},{"Name":"interfacebloat"},{"Name":"intrange"},{"Name":"iotamixing"},{"Name":"ireturn"},{"Name":"lll"},{"Name":"loggercheck"},{"Name":"maintidx"},{"Name":"makezero"},{"Name":"mirror"},{"Name":"misspell"},{"Name":"musttag"},{"Name":"nakedret"},{"Name":"nestif"},{"Name":"nilerr"},{"Name":"nilnesserr"},{"Name":"nilnil"},{"Name":"nlreturn"},{"Name":"noctx"},{"Name":"noinlineerr"},{"Name":"nonamedreturns"},{"Name":"nosprintfhostport"},{"Name":"paralleltest"},{"Name":"perfsprint"},{"Name":"prealloc"},{"Name":"predeclared"},{"Name":"promlinter"},{"Name":"protogetter"},{"Name":"reassign"},{"Name":"recvcheck"},{"Name":"revive"},{"Name":"rowserrcheck"},{"Name":"sloglint"},{"Name":"sqlclosecheck"},{"Name":"spancheck"},{"Name":"staticcheck","Enabled":true},{"Name":"swaggo"},{"Name":"tagalign"},{"Name":"tagliatelle"},{"Name":"testableexamples"},{"Name":"testifylint"},{"Name":"testpackage"},{"Name":"thelper"},{"Name":"tparallel"},{"Name":"typecheck","Enabled":true},{"Name":"unconvert"},{"Name":"unparam"},{"Name":"unqueryvet"},{"Name":"unused","Enabled":true},{"Name":"usestdlibvars"},{"Name":"usetesting"},{"Name":"varnamelen"},{"Name":"wastedassign"},{"Name":"whitespace"},{"Name":"wrapcheck"},{"Name":"wsl"},{"Name":"wsl_v5"},{"Name":"zerologlint"},{"Name":"nolintlint"}]}}'
+            - '1 issues:'
+            - '* errcheck: 1'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run --output.json.path stdout ./...' --exit=1 --level=full < plugins/golangci-lint/golangci-lint-compact/samples/golangci-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 3
+            - bytes 2992
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ golangci-lint-compact \ samples/golangci-json.txt ultra
+  commands:
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run --output.json.path stdout ./...' --exit=1 --level=ultra < plugins/golangci-lint/golangci-lint-compact/samples/golangci-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"Issues":[{"FromLinter":"errcheck","Text":"Error return value of `os.Setenv` is not checked","Severity":"","SourceLines":["\tos.Setenv(\"DEMO\", \"1\")"],"Pos":{"Filename":"main.go","Offset":51,"Line":6,"Column":11},"ExpectNoLint":false,"ExpectedNoLintLinter":""}],"Report":{"Linters":[{"Name":"arangolint"},{"Name":"asasalint"},{"Name":"asciicheck"},{"Name":"bidichk"},{"Name":"bodyclose"},{"Name":"canonicalheader"},{"Name":"clickhouselint"},{"Name":"containedctx"},{"Name":"contextcheck"},{"Name":"copyloopvar"},{"Name":"cyclop"},{"Name":"decorder"},{"Name":"depguard"},{"Name":"dogsled"},{"Name":"dupl"},{"Name":"dupword"},{"Name":"durationcheck"},{"Name":"embeddedstructfieldcheck"},{"Name":"errcheck","Enabled":true},{"Name":"errchkjson"},{"Name":"errname"},{"Name":"errorlint"},{"Name":"exhaustive"},{"Name":"exhaustruct"},{"Name":"exptostd"},{"Name":"forbidigo"},{"Name":"forcetypeassert"},{"Name":"funcorder"},{"Name":"fatcontext"},{"Name":"funlen"},{"Name":"gci"},{"Name":"ginkgolinter"},{"Name":"gocheckcompilerdirectives"},{"Name":"gochecknoglobals"},{"Name":"gochecknoinits"},{"Name":"gochecksumtype"},{"Name":"gocognit"},{"Name":"goconst"},{"Name":"gocritic"},{"Name":"gocyclo"},{"Name":"godoclint"},{"Name":"godot"},{"Name":"godox"},{"Name":"err113"},{"Name":"gofmt"},{"Name":"gofumpt"},{"Name":"golines"},{"Name":"goheader"},{"Name":"goimports"},{"Name":"mnd"},{"Name":"modernize"},{"Name":"gomoddirectives"},{"Name":"gomodguard"},{"Name":"gomodguard_v2"},{"Name":"goprintffuncname"},{"Name":"gosec"},{"Name":"gosmopolitan"},{"Name":"govet","Enabled":true},{"Name":"grouper"},{"Name":"iface"},{"Name":"importas"},{"Name":"inamedparam"},{"Name":"ineffassign","Enabled":true},{"Name":"interfacebloat"},{"Name":"intrange"},{"Name":"iotamixing"},{"Name":"ireturn"},{"Name":"lll"},{"Name":"loggercheck"},{"Name":"maintidx"},{"Name":"makezero"},{"Name":"mirror"},{"Name":"misspell"},{"Name":"musttag"},{"Name":"nakedret"},{"Name":"nestif"},{"Name":"nilerr"},{"Name":"nilnesserr"},{"Name":"nilnil"},{"Name":"nlreturn"},{"Name":"noctx"},{"Name":"noinlineerr"},{"Name":"nonamedreturns"},{"Name":"nosprintfhostport"},{"Name":"paralleltest"},{"Name":"perfsprint"},{"Name":"prealloc"},{"Name":"predeclared"},{"Name":"promlinter"},{"Name":"protogetter"},{"Name":"reassign"},{"Name":"recvcheck"},{"Name":"revive"},{"Name":"rowserrcheck"},{"Name":"sloglint"},{"Name":"sqlclosecheck"},{"Name":"spancheck"},{"Name":"staticcheck","Enabled":true},{"Name":"swaggo"},{"Name":"tagalign"},{"Name":"tagliatelle"},{"Name":"testableexamples"},{"Name":"testifylint"},{"Name":"testpackage"},{"Name":"thelper"},{"Name":"tparallel"},{"Name":"typecheck","Enabled":true},{"Name":"unconvert"},{"Name":"unparam"},{"Name":"unqueryvet"},{"Name":"unused","Enabled":true},{"Name":"usestdlibvars"},{"Name":"usetesting"},{"Name":"varnamelen"},{"Name":"wastedassign"},{"Name":"whitespace"},{"Name":"wrapcheck"},{"Name":"wsl"},{"Name":"wsl_v5"},{"Name":"zerologlint"},{"Name":"nolintlint"}]}}'
+            - '1 issues:'
+            - '* errcheck: 1'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run --output.json.path stdout ./...' --exit=1 --level=ultra < plugins/golangci-lint/golangci-lint-compact/samples/golangci-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 3
+            - bytes 2992
+        - name: exitcode
+          data:
+            - "0"

@@ -1,0 +1,54 @@
+#!/usr/bin/env lowfat-filter
+# pnpm-compact - keep pnpm summaries and diagnostics, trim progress.
+# env: $sub $level $exit $args
+#
+# `--json` (`pnpm ls`/`audit`/`outdated`/`licenses --json`) is machine output —
+# pass byte-exact (invariant 1). Without the guard `head auto` truncates it
+# (a 24-line `ls --json` lost 9 lines at ultra).
+
+include ../../lib/truncation.lf
+
+define compact-pnpm-install(limit):
+    drop /^Progress: /
+    drop /^Resolving: /
+    keep /^(WARN|ERR_PNPM|Packages:[[:space:]]|Done in |dependencies:|devDependencies:|[[:space:]]*[+][[:space:]])/
+    # `head-marked $1` cannot be written: `$N` reaches only shell:/or-shell: bodies,
+    # never an op argument, so the limit has to travel inside the body.
+    shell: |
+        body=$(cat)
+        [ -n "$body" ] || exit 0
+
+        total=$(printf '%s\n' "$body" | grep -c '')
+        printf '%s\n' "$body" | head -n $1
+
+        [ "$total" -gt $1 ] && printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - $1))" "${level:-full}"
+        exit 0
+    or-shell: s=$(grep -E '[^[:space:]]'); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt $1 ]; then printf '[lowfat] +%d earlier lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((n-$1))" "${level:-full}"; fi; printf '%s\n' "$s" | tail -$1
+
+install|i:
+    if exit failed:
+        raw
+    elif --json:
+        raw
+    else:
+        match level:
+            ultra: compact-pnpm-install 18
+            full:  compact-pnpm-install 35
+            lite:  compact-pnpm-install 70
+
+run|test:
+    if exit failed:
+        raw
+    else:
+        match level:
+            ultra: cap 30
+            full:  cap 80
+            lite:  cap 160
+
+*:
+    if exit failed:
+        raw
+    elif --json:
+        raw
+    else:
+        head-auto-marked

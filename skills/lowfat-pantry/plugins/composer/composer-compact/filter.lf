@@ -1,0 +1,53 @@
+#!/usr/bin/env lowfat-filter
+# composer-compact — compact composer install/update output for LLM contexts.
+# env: $sub $level $exit $args
+#
+# Installer shape (like pip/gem). The bloat on success is per-package resolver
+# chatter: `  - Locking …`, `  - Downloading …`, `  - Installing …: Extracting
+# archive`, the `N/M [====]` progress bars, and the `Loading composer
+# repositories` / `Updating dependencies` lines. The signal kept is the tally
+# lines (`Lock file operations:`, `Package operations:`, `Generating autoload
+# files`, `Generated optimized autoload`) plus any warning/deprecation. On a
+# failed resolve the conflict block IS the signal (`Your requirements could not
+# be resolved`, `Problem`, `- Root composer.json requires`) — keep it, with a
+# tail recovery arm. `--format json`/`--format=json` passes through raw.
+
+include ../../lib/truncation.lf
+
+define drop-progress:
+    drop /^[[:space:]]*[0-9]+\/[0-9]+ \[[=>-]+\]/
+    drop /^[[:space:]]+- (Locking|Downloading|Installing|Removing|Upgrading|Downgrading|Syncing|Extracting) /
+    drop /^(Loading composer repositories|Updating dependencies|Installing dependencies from lock file|Writing lock file|Reading .* from cache)/
+
+*:
+    if --format json:
+        raw
+    elif --format=json:
+        raw
+    elif exit failed:
+        match level:
+            ultra:
+                keep /(could not be resolved|Problem |requires |conflict|but it does not|ERROR|error|Fatal|Exception|No such|not found|Failed|Aborting|does not contain valid|In [A-Za-z]+\.php line)/
+                head-marked 30
+                or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 30 ]; then printf '[lowfat] +%d earlier lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((n-30))" "${level:-full}"; fi; printf '%s\n' "$s" | tail -30
+            lite:
+                head-marked 200
+            else:
+                keep /(could not be resolved|Problem |requires |conflict|but it does not|ERROR|error|Fatal|Exception|No such|not found|Failed|Aborting|does not contain valid|In [A-Za-z]+\.php line|Warning|Deprecat)/
+                head-marked 60
+                or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 60 ]; then printf '[lowfat] +%d earlier lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((n-60))" "${level:-full}"; fi; printf '%s\n' "$s" | tail -60
+    else:
+        match level:
+            ultra:
+                drop-progress
+                keep /(Lock file operations|Package operations|Generating autoload|Generated .* autoload|Nothing to install|Warning|Deprecat|already up to date)/
+                head-marked 20
+                or "composer: ok"
+            lite:
+                drop-progress
+                cap 200
+            else:
+                drop-progress
+                keep /(Lock file operations|Package operations|Generating autoload|Generated .* autoload|Nothing to install|Warning|Deprecat|already up to date)/
+                head-marked 40
+                or "composer: ok"

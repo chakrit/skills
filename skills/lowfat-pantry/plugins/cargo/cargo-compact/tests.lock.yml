@@ -1,0 +1,583 @@
+- name: tests.cue \ cargo-compact \ samples/cargo-build-full.txt lite
+  commands:
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='' --exit=0 --level=lite < plugins/cargo/cargo-compact/samples/cargo-build-full.txt
+      checks:
+        - name: stdout
+          data:
+            - 'warning: unused variable: `x`'
+            - '  --> src/main.rs:4:9'
+            - '   |'
+            - 4  |     let x = 42;
+            - '   |         ^ help: if this is intentional, prefix it with an underscore: `_x`'
+            - '   |'
+            - '   = note: `#[warn(unused_variables)]` on by default'
+            - ""
+            - 'warning: `myapp` (bin "myapp") generated 1 warning'
+            - '    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.42s'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='' --exit=0 --level=lite < plugins/cargo/cargo-compact/samples/cargo-build-full.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 10
+            - bytes 340
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ cargo-compact \ samples/cargo-build-full.txt full
+  commands:
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='' --exit=0 --level=full < plugins/cargo/cargo-compact/samples/cargo-build-full.txt
+      checks:
+        - name: stdout
+          data:
+            - 'warning: unused variable: `x`'
+            - '  --> src/main.rs:4:9'
+            - '   |'
+            - 4  |     let x = 42;
+            - '   |         ^ help: if this is intentional, prefix it with an underscore: `_x`'
+            - '   |'
+            - '   = note: `#[warn(unused_variables)]` on by default'
+            - ""
+            - 'warning: `myapp` (bin "myapp") generated 1 warning'
+            - '    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.42s'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='' --exit=0 --level=full < plugins/cargo/cargo-compact/samples/cargo-build-full.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 10
+            - bytes 340
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ cargo-compact \ samples/cargo-build-full.txt ultra
+  commands:
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='' --exit=0 --level=ultra < plugins/cargo/cargo-compact/samples/cargo-build-full.txt
+      checks:
+        - name: stdout
+          data:
+            - 'warning: unused variable: `x`'
+            - '  --> src/main.rs:4:9'
+            - '   = note: `#[warn(unused_variables)]` on by default'
+            - 'warning: `myapp` (bin "myapp") generated 1 warning'
+            - '    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.42s'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='' --exit=0 --level=ultra < plugins/cargo/cargo-compact/samples/cargo-build-full.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 228
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ cargo-compact \ samples/cargo-build-error.txt lite
+  commands:
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='' --exit=101 --level=lite < plugins/cargo/cargo-compact/samples/cargo-build-error.txt
+      checks:
+        - name: stdout
+          data:
+            - 'error[E0425]: cannot find value `y` in this scope'
+            - ' --> src/main.rs:5:20'
+            - '  |'
+            - 5 |     println!("{}", y);
+            - '  |                    ^ help: a local variable with a similar name exists: `x`'
+            - ""
+            - 'error[E0308]: mismatched types'
+            - ' --> src/main.rs:7:18'
+            - '  |'
+            - '7 |     let z: u32 = "hello";'
+            - '  |            ---   ^^^^^^^ expected `u32`, found `&str`'
+            - ""
+            - 'error: aborting due to 2 previous errors'
+            - ""
+            - 'Some errors have detailed explanations: E0308, E0425.'
+            - For more information about an error, try `rustc --explain E0308`.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='' --exit=101 --level=lite < plugins/cargo/cargo-compact/samples/cargo-build-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 16
+            - bytes 492
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ cargo-compact \ samples/cargo-build-error.txt full
+  commands:
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='' --exit=101 --level=full < plugins/cargo/cargo-compact/samples/cargo-build-error.txt
+      checks:
+        - name: stdout
+          data:
+            - 'error[E0425]: cannot find value `y` in this scope'
+            - ' --> src/main.rs:5:20'
+            - '  |'
+            - 5 |     println!("{}", y);
+            - '  |                    ^ help: a local variable with a similar name exists: `x`'
+            - ""
+            - 'error[E0308]: mismatched types'
+            - ' --> src/main.rs:7:18'
+            - '  |'
+            - '7 |     let z: u32 = "hello";'
+            - '  |            ---   ^^^^^^^ expected `u32`, found `&str`'
+            - ""
+            - 'error: aborting due to 2 previous errors'
+            - ""
+            - 'Some errors have detailed explanations: E0308, E0425.'
+            - For more information about an error, try `rustc --explain E0308`.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='' --exit=101 --level=full < plugins/cargo/cargo-compact/samples/cargo-build-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 16
+            - bytes 492
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ cargo-compact \ samples/cargo-build-error.txt ultra
+  commands:
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='' --exit=101 --level=ultra < plugins/cargo/cargo-compact/samples/cargo-build-error.txt
+      checks:
+        - name: stdout
+          data:
+            - 'error[E0425]: cannot find value `y` in this scope'
+            - ' --> src/main.rs:5:20'
+            - 'error[E0308]: mismatched types'
+            - ' --> src/main.rs:7:18'
+            - 'error: aborting due to 2 previous errors'
+            - 'Some errors have detailed explanations: E0308, E0425.'
+            - For more information about an error, try `rustc --explain E0308`.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='' --exit=101 --level=ultra < plugins/cargo/cargo-compact/samples/cargo-build-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 7
+            - bytes 286
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ cargo-compact \ samples/cargo-test-error.txt lite
+  commands:
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=test --args='' --exit=101 --level=lite < plugins/cargo/cargo-compact/samples/cargo-test-error.txt
+      checks:
+        - name: stdout
+          data:
+            - '   Compiling myapp v0.1.0 (/Users/dev/myapp)'
+            - '    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.10s'
+            - '     Running unittests src/lib.rs (target/debug/deps/myapp-abc123)'
+            - ""
+            - running 5 tests
+            - test tests::multiplies ... FAILED
+            - ""
+            - 'failures:'
+            - ""
+            - '---- tests::multiplies stdout ----'
+            - 'thread ''tests::multiplies'' panicked at src/lib.rs:42:9:'
+            - assertion `left == right` failed
+            - '  left: 6'
+            - ' right: 8'
+            - 'note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace'
+            - ""
+            - 'failures:'
+            - '    tests::multiplies'
+            - ""
+            - 'test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=test --args='' --exit=101 --level=lite < plugins/cargo/cargo-compact/samples/cargo-test-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 20
+            - bytes 602
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ cargo-compact \ samples/cargo-test-error.txt full
+  commands:
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=test --args='' --exit=101 --level=full < plugins/cargo/cargo-compact/samples/cargo-test-error.txt
+      checks:
+        - name: stdout
+          data:
+            - '   Compiling myapp v0.1.0 (/Users/dev/myapp)'
+            - '    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.10s'
+            - '     Running unittests src/lib.rs (target/debug/deps/myapp-abc123)'
+            - ""
+            - running 5 tests
+            - test tests::multiplies ... FAILED
+            - ""
+            - 'failures:'
+            - ""
+            - '---- tests::multiplies stdout ----'
+            - 'thread ''tests::multiplies'' panicked at src/lib.rs:42:9:'
+            - assertion `left == right` failed
+            - '  left: 6'
+            - ' right: 8'
+            - 'note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace'
+            - ""
+            - 'failures:'
+            - '    tests::multiplies'
+            - ""
+            - 'test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=test --args='' --exit=101 --level=full < plugins/cargo/cargo-compact/samples/cargo-test-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 20
+            - bytes 602
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ cargo-compact \ samples/cargo-test-error.txt ultra
+  commands:
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=test --args='' --exit=101 --level=ultra < plugins/cargo/cargo-compact/samples/cargo-test-error.txt
+      checks:
+        - name: stdout
+          data:
+            - test tests::multiplies ... FAILED
+            - 'failures:'
+            - '---- tests::multiplies stdout ----'
+            - 'thread ''tests::multiplies'' panicked at src/lib.rs:42:9:'
+            - assertion `left == right` failed
+            - '  left: 6'
+            - ' right: 8'
+            - 'failures:'
+            - 'test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=test --args='' --exit=101 --level=ultra < plugins/cargo/cargo-compact/samples/cargo-test-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 9
+            - bytes 296
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ cargo-compact \ samples/cargo-build-json.txt lite
+  commands:
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='build --message-format json' --exit=0 --level=lite < plugins/cargo/cargo-compact/samples/cargo-build-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"reason":"compiler-artifact","package_id":"path+file:///work#demo@0.1.0","manifest_path":"/work/Cargo.toml","target":{"kind":["bin"],"crate_types":["bin"],"name":"demo","src_path":"/work/src/main.rs","edition":"2021","doc":true,"doctest":false,"test":true},"profile":{"opt_level":"0","debuginfo":2,"debug_assertions":true,"overflow_checks":true,"test":false},"features":[],"filenames":["/work/target/debug/demo"],"executable":"/work/target/debug/demo","fresh":true}'
+            - '{"reason":"build-finished","success":true}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='build --message-format json' --exit=0 --level=lite < plugins/cargo/cargo-compact/samples/cargo-build-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 510
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ cargo-compact \ samples/cargo-build-json.txt full
+  commands:
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='build --message-format json' --exit=0 --level=full < plugins/cargo/cargo-compact/samples/cargo-build-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"reason":"compiler-artifact","package_id":"path+file:///work#demo@0.1.0","manifest_path":"/work/Cargo.toml","target":{"kind":["bin"],"crate_types":["bin"],"name":"demo","src_path":"/work/src/main.rs","edition":"2021","doc":true,"doctest":false,"test":true},"profile":{"opt_level":"0","debuginfo":2,"debug_assertions":true,"overflow_checks":true,"test":false},"features":[],"filenames":["/work/target/debug/demo"],"executable":"/work/target/debug/demo","fresh":true}'
+            - '{"reason":"build-finished","success":true}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='build --message-format json' --exit=0 --level=full < plugins/cargo/cargo-compact/samples/cargo-build-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 510
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ cargo-compact \ samples/cargo-build-json.txt ultra
+  commands:
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='build --message-format json' --exit=0 --level=ultra < plugins/cargo/cargo-compact/samples/cargo-build-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"reason":"compiler-artifact","package_id":"path+file:///work#demo@0.1.0","manifest_path":"/work/Cargo.toml","target":{"kind":["bin"],"crate_types":["bin"],"name":"demo","src_path":"/work/src/main.rs","edition":"2021","doc":true,"doctest":false,"test":true},"profile":{"opt_level":"0","debuginfo":2,"debug_assertions":true,"overflow_checks":true,"test":false},"features":[],"filenames":["/work/target/debug/demo"],"executable":"/work/target/debug/demo","fresh":true}'
+            - '{"reason":"build-finished","success":true}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='build --message-format json' --exit=0 --level=ultra < plugins/cargo/cargo-compact/samples/cargo-build-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 510
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ cargo-compact \ samples/cargo-metadata-json.txt lite
+  commands:
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=metadata --args='metadata --format-version 1' --exit=0 --level=lite < plugins/cargo/cargo-compact/samples/cargo-metadata-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"packages":[{"name":"demo","version":"0.1.0","id":"path+file:///work#demo@0.1.0","license":null,"license_file":null,"description":null,"source":null,"dependencies":[],"targets":[{"kind":["bin"],"crate_types":["bin"],"name":"demo","src_path":"/work/src/main.rs","edition":"2021","doc":true,"doctest":false,"test":true}],"features":{},"manifest_path":"/work/Cargo.toml","metadata":null,"publish":null,"authors":[],"categories":[],"keywords":[],"readme":null,"repository":null,"homepage":null,"documentation":null,"edition":"2021","links":null,"default_run":null,"rust_version":null}],"workspace_members":["path+file:///work#demo@0.1.0"],"workspace_default_members":["path+file:///work#demo@0.1.0"],"resolve":null,"target_directory":"/work/target","build_directory":"/work/target","version":1,"workspace_root":"/work","metadata":null}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=metadata --args='metadata --format-version 1' --exit=0 --level=lite < plugins/cargo/cargo-compact/samples/cargo-metadata-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 833
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ cargo-compact \ samples/cargo-metadata-json.txt full
+  commands:
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=metadata --args='metadata --format-version 1' --exit=0 --level=full < plugins/cargo/cargo-compact/samples/cargo-metadata-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"packages":[{"name":"demo","version":"0.1.0","id":"path+file:///work#demo@0.1.0","license":null,"license_file":null,"description":null,"source":null,"dependencies":[],"targets":[{"kind":["bin"],"crate_types":["bin"],"name":"demo","src_path":"/work/src/main.rs","edition":"2021","doc":true,"doctest":false,"test":true}],"features":{},"manifest_path":"/work/Cargo.toml","metadata":null,"publish":null,"authors":[],"categories":[],"keywords":[],"readme":null,"repository":null,"homepage":null,"documentation":null,"edition":"2021","links":null,"default_run":null,"rust_version":null}],"workspace_members":["path+file:///work#demo@0.1.0"],"workspace_default_members":["path+file:///work#demo@0.1.0"],"resolve":null,"target_directory":"/work/target","build_directory":"/work/target","version":1,"workspace_root":"/work","metadata":null}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=metadata --args='metadata --format-version 1' --exit=0 --level=full < plugins/cargo/cargo-compact/samples/cargo-metadata-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 833
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ cargo-compact \ samples/cargo-metadata-json.txt ultra
+  commands:
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=metadata --args='metadata --format-version 1' --exit=0 --level=ultra < plugins/cargo/cargo-compact/samples/cargo-metadata-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"packages":[{"name":"demo","version":"0.1.0","id":"path+file:///work#demo@0.1.0","license":null,"license_file":null,"description":null,"source":null,"dependencies":[],"targets":[{"kind":["bin"],"crate_types":["bin"],"name":"demo","src_path":"/work/src/main.rs","edition":"2021","doc":true,"doctest":false,"test":true}],"features":{},"manifest_path":"/work/Cargo.toml","metadata":null,"publish":null,"authors":[],"categories":[],"keywords":[],"readme":null,"repository":null,"homepage":null,"documentation":null,"edition":"2021","links":null,"default_run":null,"rust_version":null}],"workspace_members":["path+file:///work#demo@0.1.0"],"workspace_default_members":["path+file:///work#demo@0.1.0"],"resolve":null,"target_directory":"/work/target","build_directory":"/work/target","version":1,"workspace_root":"/work","metadata":null}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=metadata --args='metadata --format-version 1' --exit=0 --level=ultra < plugins/cargo/cargo-compact/samples/cargo-metadata-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 833
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ cargo-compact \ samples/cargo-run.txt lite
+  commands:
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=run --args='run' --exit=0 --level=lite < plugins/cargo/cargo-compact/samples/cargo-run.txt
+      checks:
+        - name: stdout
+          data:
+            - '    Finished dev [unoptimized] target(s) in 1.2s'
+            - '     Running `target/debug/demo`'
+            - processing item 1 of 50
+            - processing item 2 of 50
+            - processing item 3 of 50
+            - processing item 4 of 50
+            - processing item 5 of 50
+            - processing item 6 of 50
+            - processing item 7 of 50
+            - processing item 8 of 50
+            - processing item 9 of 50
+            - processing item 10 of 50
+            - processing item 11 of 50
+            - processing item 12 of 50
+            - processing item 13 of 50
+            - processing item 14 of 50
+            - processing item 15 of 50
+            - processing item 16 of 50
+            - processing item 17 of 50
+            - processing item 18 of 50
+            - processing item 19 of 50
+            - processing item 20 of 50
+            - processing item 21 of 50
+            - processing item 22 of 50
+            - processing item 23 of 50
+            - processing item 24 of 50
+            - processing item 25 of 50
+            - processing item 26 of 50
+            - processing item 27 of 50
+            - processing item 28 of 50
+            - processing item 29 of 50
+            - processing item 30 of 50
+            - processing item 31 of 50
+            - processing item 32 of 50
+            - processing item 33 of 50
+            - processing item 34 of 50
+            - processing item 35 of 50
+            - processing item 36 of 50
+            - processing item 37 of 50
+            - processing item 38 of 50
+            - processing item 39 of 50
+            - processing item 40 of 50
+            - processing item 41 of 50
+            - processing item 42 of 50
+            - processing item 43 of 50
+            - processing item 44 of 50
+            - processing item 45 of 50
+            - processing item 46 of 50
+            - processing item 47 of 50
+            - processing item 48 of 50
+            - processing item 49 of 50
+            - processing item 50 of 50
+            - done.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=run --args='run' --exit=0 --level=lite < plugins/cargo/cargo-compact/samples/cargo-run.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 53
+            - bytes 1329
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ cargo-compact \ samples/cargo-run.txt full
+  commands:
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=run --args='run' --exit=0 --level=full < plugins/cargo/cargo-compact/samples/cargo-run.txt
+      checks:
+        - name: stdout
+          data:
+            - '    Finished dev [unoptimized] target(s) in 1.2s'
+            - '     Running `target/debug/demo`'
+            - processing item 1 of 50
+            - processing item 2 of 50
+            - processing item 3 of 50
+            - processing item 4 of 50
+            - processing item 5 of 50
+            - processing item 6 of 50
+            - processing item 7 of 50
+            - processing item 8 of 50
+            - processing item 9 of 50
+            - processing item 10 of 50
+            - processing item 11 of 50
+            - processing item 12 of 50
+            - processing item 13 of 50
+            - processing item 14 of 50
+            - processing item 15 of 50
+            - processing item 16 of 50
+            - processing item 17 of 50
+            - processing item 18 of 50
+            - processing item 19 of 50
+            - processing item 20 of 50
+            - processing item 21 of 50
+            - processing item 22 of 50
+            - processing item 23 of 50
+            - processing item 24 of 50
+            - processing item 25 of 50
+            - processing item 26 of 50
+            - processing item 27 of 50
+            - processing item 28 of 50
+            - processing item 29 of 50
+            - processing item 30 of 50
+            - processing item 31 of 50
+            - processing item 32 of 50
+            - processing item 33 of 50
+            - processing item 34 of 50
+            - processing item 35 of 50
+            - processing item 36 of 50
+            - processing item 37 of 50
+            - processing item 38 of 50
+            - processing item 39 of 50
+            - processing item 40 of 50
+            - processing item 41 of 50
+            - processing item 42 of 50
+            - processing item 43 of 50
+            - processing item 44 of 50
+            - processing item 45 of 50
+            - processing item 46 of 50
+            - processing item 47 of 50
+            - processing item 48 of 50
+            - processing item 49 of 50
+            - processing item 50 of 50
+            - done.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=run --args='run' --exit=0 --level=full < plugins/cargo/cargo-compact/samples/cargo-run.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 53
+            - bytes 1329
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ cargo-compact \ samples/cargo-run.txt ultra
+  commands:
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=run --args='run' --exit=0 --level=ultra < plugins/cargo/cargo-compact/samples/cargo-run.txt
+      checks:
+        - name: stdout
+          data:
+            - '    Finished dev [unoptimized] target(s) in 1.2s'
+            - '     Running `target/debug/demo`'
+            - processing item 1 of 50
+            - processing item 2 of 50
+            - processing item 3 of 50
+            - processing item 4 of 50
+            - processing item 5 of 50
+            - processing item 6 of 50
+            - processing item 7 of 50
+            - processing item 8 of 50
+            - processing item 9 of 50
+            - processing item 10 of 50
+            - processing item 11 of 50
+            - processing item 12 of 50
+            - processing item 13 of 50
+            - processing item 14 of 50
+            - processing item 15 of 50
+            - processing item 16 of 50
+            - processing item 17 of 50
+            - processing item 18 of 50
+            - processing item 19 of 50
+            - processing item 20 of 50
+            - processing item 21 of 50
+            - processing item 22 of 50
+            - processing item 23 of 50
+            - processing item 24 of 50
+            - processing item 25 of 50
+            - processing item 26 of 50
+            - processing item 27 of 50
+            - processing item 28 of 50
+            - '[lowfat] +23 lines dropped (level=ultra) -- output truncated, re-run raw for the full list'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=run --args='run' --exit=0 --level=ultra < plugins/cargo/cargo-compact/samples/cargo-run.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 31
+            - bytes 864
+        - name: exitcode
+          data:
+            - "0"

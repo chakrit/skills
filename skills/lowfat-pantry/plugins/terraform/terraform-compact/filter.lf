@@ -1,0 +1,133 @@
+#!/usr/bin/env lowfat-filter
+# terraform-compact - preserve plan/apply signal, drop repetitive diffs/progress.
+# Serves both `terraform` and `tofu` (OpenTofu) — same subcommands, format-identical output.
+# OpenTofu rebrands UI strings (s/Terraform/OpenTofu/), so brand-keyed keeps must alt both
+# (see the plan header keep below); brand-free patterns (Plan:, Apply complete!, +/~/- rows) match as-is.
+# env: $sub $level $exit $args
+#
+# `-json` is machine output (ndjson stream) — pass byte-exact (invariant 1).
+# Without the guard, compact-plan matches none of it (empty output) and the
+# apply/init tails truncate the stream. The guard repeats per compacting rule
+# because `.lf` has no top-level pre-filter and macros can't wrap a cascade.
+
+include ../../lib/truncation.lf
+
+define compact-plan(limit):
+    shell: |
+        buf=$(mktemp)
+        trap 'rm -f "$buf"' EXIT
+        cat > "$buf"
+
+        # One sed pass tags each line with its class, then a pure-builtin loop
+        # walks the tags — that keeps the running count (shared between resource
+        # headers and attribute rows) without forking per line. Tags are stripped
+        # back off on the way out, so a tag character can never collide with
+        # real output.
+        sed -E '
+        /^  # .*(will be|must be|has been|will be read during apply)/{s/^/H/;b
+        }
+        /^Plan: [0-9]+ to add, [0-9]+ to change, [0-9]+ to destroy\./{s/^/K/;b
+        }
+        /^No changes\./{s/^/K/;b
+        }
+        /^(Terraform|OpenTofu) will perform the following actions:/{s/^/K/;b
+        }
+        /^[[:blank:]]*[~+-][[:blank:]][A-Za-z0-9_"-]+[[:blank:]]+=/{s/^/A/;b
+        }
+        /^Changes to Outputs:/{s/^/O/;b
+        }
+        s/^/D/' < "$buf" | {
+            count=0
+            dropped=0
+            emitted=0
+            while IFS= read -r tagged || [ -n "$tagged" ]; do
+                line=${tagged#?}
+                case $tagged in
+                    H*) printf '%s\n' "$line"; count=$((count + 1)); emitted=1 ;;
+                    K*) printf '%s\n' "$line"; emitted=1 ;;
+                    A*)
+                        [ "${level:-full}" = "ultra" ] && continue
+                        if [ "$count" -lt $1 ]; then
+                            printf '%s\n' "$line"
+                            count=$((count + 1))
+                            emitted=1
+                        else
+                            dropped=$((dropped + 1))
+                        fi
+                        ;;
+                    O*) [ "${level:-full}" = "ultra" ] || { printf '%s\n' "$line"; emitted=1; } ;;
+                esac
+            done
+
+            # Nothing matched — an unrecognized shape must not read as silence.
+            if [ "$emitted" = 0 ]; then
+                total=$(grep -c '' < "$buf")
+                [ "$total" -gt $1 ] && printf '[lowfat] +%d earlier lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - $1))" "${level:-full}"
+                tail -n $1 < "$buf"
+            fi
+
+            [ "$dropped" -gt 0 ] && printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$dropped" "${level:-full}"
+        }
+        exit 0
+
+plan:
+    if exit failed:
+        raw
+    elif -json:
+        raw
+    else:
+        match level:
+            ultra: compact-plan 40
+            full:  compact-plan 90
+            lite:  compact-plan 180
+
+apply:
+    if exit failed:
+        raw
+    elif -json:
+        raw
+    else:
+        match level:
+            ultra:
+                drop /Still (creating|modifying|destroying|reading)\.\.\. \[[0-9]+s elapsed\]/
+                keep /(Creating|Modifying|Destroying|Reading|Creation complete|Modifications complete|Destruction complete|Read complete|Apply complete! Resources:)/
+                tail-marked 30
+                or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 30 ]; then printf '[lowfat] +%d earlier lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((n-30))" "${level:-full}"; fi; printf '%s\n' "$s" | tail -30
+            lite:
+                drop /Still (creating|modifying|destroying|reading)\.\.\. \[[0-9]+s elapsed\]/
+                tail-marked 120
+            else:
+                drop /Still (creating|modifying|destroying|reading)\.\.\. \[[0-9]+s elapsed\]/
+                tail-marked 60
+init:
+    if exit failed:
+        raw
+    elif -json:
+        raw
+    else:
+        match level:
+            ultra: tail-marked 20
+            lite:  tail-marked 80
+            else:  tail-marked 40
+
+# Inventory subcommands emit one load-bearing identifier per line with nothing redundant
+# to compact — the whole value is completeness, so they are exempt from compaction.
+state:
+    raw
+
+output:
+    raw
+
+providers:
+    raw
+
+workspace:
+    raw
+
+*:
+    if exit failed:
+        raw
+    elif -json:
+        raw
+    else:
+        head-auto-marked

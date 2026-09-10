@@ -1,0 +1,38 @@
+#!/usr/bin/env lowfat-filter
+# rubocop-compact — keep offense lines + the inspected/offenses tally, cap long
+# lists with a recovery hint, drop the source-frame/caret pairs and the
+# SuggestExtensions "Tip:" block. Clean run -> verdict; error (no offenses,
+# nonzero exit) -> raw so the diagnostic survives.
+# env: $sub $level $exit $args
+
+define compact-rubocop(limit):
+    shell: |
+        buf=$(mktemp)
+        trap 'rm -f "$buf"' EXIT
+        cat > "$buf"
+
+        findings=$(grep -cE '^[^:]+:[0-9]+:[0-9]+: [A-Z]: ' "$buf") || true
+        if [ "$findings" -gt 0 ]; then
+            grep -E '^[^:]+:[0-9]+:[0-9]+: [A-Z]: ' "$buf" | head -n $1
+            grep -E '^[0-9]+ files? inspected' "$buf" | tail -n 1
+            [ "$findings" -gt $1 ] && printf '[lowfat] +%d offenses dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((findings - $1))" "${level:-full}"
+        elif [ "${exit:-0}" = "0" ]; then
+            printf 'rubocop: clean\n'
+        else
+            cat "$buf"
+        fi
+        exit 0
+
+# Any explicit --format/-f (json, junit, sarif, …) is caller-chosen machine
+# output — pass byte-exact (invariant 1). The text extraction only ever fit the
+# default offense format; the default (no flag) is the common case below.
+*:
+    if --format:
+        raw
+    elif -f:
+        raw
+    else:
+        match level:
+            ultra: compact-rubocop 15
+            full:  compact-rubocop 35
+            lite:  compact-rubocop 70

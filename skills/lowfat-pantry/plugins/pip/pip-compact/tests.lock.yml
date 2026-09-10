@@ -1,0 +1,253 @@
+- name: tests.cue \ pip-compact \ samples/pip-install.txt lite
+  commands:
+    - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=install --args='install requests' --exit=0 --level=lite < plugins/pip/pip-compact/samples/pip-install.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Installing collected packages: urllib3, charset-normalizer, certifi, requests'
+            - Successfully installed certifi-2024.7.4 charset-normalizer-3.3.2 requests-2.32.3 urllib3-2.2.2
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=install --args='install requests' --exit=0 --level=lite < plugins/pip/pip-compact/samples/pip-install.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 173
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ pip-compact \ samples/pip-install.txt full
+  commands:
+    - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=install --args='install requests' --exit=0 --level=full < plugins/pip/pip-compact/samples/pip-install.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Installing collected packages: urllib3, charset-normalizer, certifi, requests'
+            - Successfully installed certifi-2024.7.4 charset-normalizer-3.3.2 requests-2.32.3 urllib3-2.2.2
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=install --args='install requests' --exit=0 --level=full < plugins/pip/pip-compact/samples/pip-install.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 173
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ pip-compact \ samples/pip-install.txt ultra
+  commands:
+    - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=install --args='install requests' --exit=0 --level=ultra < plugins/pip/pip-compact/samples/pip-install.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Installing collected packages: urllib3, charset-normalizer, certifi, requests'
+            - Successfully installed certifi-2024.7.4 charset-normalizer-3.3.2 requests-2.32.3 urllib3-2.2.2
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=install --args='install requests' --exit=0 --level=ultra < plugins/pip/pip-compact/samples/pip-install.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 173
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ pip-compact \ samples/pip-install-error.txt lite
+  commands:
+    - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=install --args='install nonexistent-package-xyz' --exit=1 --level=lite < plugins/pip/pip-compact/samples/pip-install-error.txt
+      checks:
+        - name: stdout
+          data:
+            - Collecting nonexistent-package-xyz
+            - 'ERROR: Could not find a version that satisfies the requirement nonexistent-package-xyz (from versions: none)'
+            - 'ERROR: No matching distribution found for nonexistent-package-xyz'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=install --args='install nonexistent-package-xyz' --exit=1 --level=lite < plugins/pip/pip-compact/samples/pip-install-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 3
+            - bytes 210
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ pip-compact \ samples/pip-install-error.txt full
+  commands:
+    - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=install --args='install nonexistent-package-xyz' --exit=1 --level=full < plugins/pip/pip-compact/samples/pip-install-error.txt
+      checks:
+        - name: stdout
+          data:
+            - Collecting nonexistent-package-xyz
+            - 'ERROR: Could not find a version that satisfies the requirement nonexistent-package-xyz (from versions: none)'
+            - 'ERROR: No matching distribution found for nonexistent-package-xyz'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=install --args='install nonexistent-package-xyz' --exit=1 --level=full < plugins/pip/pip-compact/samples/pip-install-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 3
+            - bytes 210
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ pip-compact \ samples/pip-install-error.txt ultra
+  commands:
+    - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=install --args='install nonexistent-package-xyz' --exit=1 --level=ultra < plugins/pip/pip-compact/samples/pip-install-error.txt
+      checks:
+        - name: stdout
+          data:
+            - 'ERROR: Could not find a version that satisfies the requirement nonexistent-package-xyz (from versions: none)'
+            - 'ERROR: No matching distribution found for nonexistent-package-xyz'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=install --args='install nonexistent-package-xyz' --exit=1 --level=ultra < plugins/pip/pip-compact/samples/pip-install-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 175
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ pip-compact \ samples/pip-list.txt lite
+  commands:
+    - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=list --args='list' --exit=0 --level=lite < plugins/pip/pip-compact/samples/pip-list.txt
+      checks:
+        - name: stdout
+          data:
+            - Package            Version
+            - '------------------ ---------'
+            - certifi            2024.7.4
+            - charset-normalizer 3.3.2
+            - pip                24.0
+            - requests           2.32.3
+            - urllib3            2.2.2
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=list --args='list' --exit=0 --level=lite < plugins/pip/pip-compact/samples/pip-list.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 7
+            - bytes 184
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ pip-compact \ samples/pip-list.txt full
+  commands:
+    - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=list --args='list' --exit=0 --level=full < plugins/pip/pip-compact/samples/pip-list.txt
+      checks:
+        - name: stdout
+          data:
+            - Package            Version
+            - '------------------ ---------'
+            - certifi            2024.7.4
+            - charset-normalizer 3.3.2
+            - pip                24.0
+            - requests           2.32.3
+            - urllib3            2.2.2
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=list --args='list' --exit=0 --level=full < plugins/pip/pip-compact/samples/pip-list.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 7
+            - bytes 184
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ pip-compact \ samples/pip-list.txt ultra
+  commands:
+    - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=list --args='list' --exit=0 --level=ultra < plugins/pip/pip-compact/samples/pip-list.txt
+      checks:
+        - name: stdout
+          data:
+            - Package            Version
+            - certifi            2024.7.4
+            - charset-normalizer 3.3.2
+            - pip                24.0
+            - requests           2.32.3
+            - urllib3            2.2.2
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=list --args='list' --exit=0 --level=ultra < plugins/pip/pip-compact/samples/pip-list.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 6
+            - bytes 155
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ pip-compact \ samples/pip-list-json.txt lite
+  commands:
+    - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=list --args='list --format json' --exit=0 --level=lite < plugins/pip/pip-compact/samples/pip-list-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '[{"name": "certifi", "version": "2026.6.17"}, {"name": "charset-normalizer", "version": "3.4.7"}, {"name": "idna", "version": "3.18"}, {"name": "markdown-it-py", "version": "4.2.0"}, {"name": "mdurl", "version": "0.1.2"}, {"name": "pip", "version": "25.0.1"}, {"name": "Pygments", "version": "2.20.0"}, {"name": "requests", "version": "2.34.2"}, {"name": "rich", "version": "15.0.0"}, {"name": "urllib3", "version": "2.7.0"}]'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=list --args='list --format json' --exit=0 --level=lite < plugins/pip/pip-compact/samples/pip-list-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 426
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ pip-compact \ samples/pip-list-json.txt full
+  commands:
+    - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=list --args='list --format json' --exit=0 --level=full < plugins/pip/pip-compact/samples/pip-list-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '[{"name": "certifi", "version": "2026.6.17"}, {"name": "charset-normalizer", "version": "3.4.7"}, {"name": "idna", "version": "3.18"}, {"name": "markdown-it-py", "version": "4.2.0"}, {"name": "mdurl", "version": "0.1.2"}, {"name": "pip", "version": "25.0.1"}, {"name": "Pygments", "version": "2.20.0"}, {"name": "requests", "version": "2.34.2"}, {"name": "rich", "version": "15.0.0"}, {"name": "urllib3", "version": "2.7.0"}]'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=list --args='list --format json' --exit=0 --level=full < plugins/pip/pip-compact/samples/pip-list-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 426
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ pip-compact \ samples/pip-list-json.txt ultra
+  commands:
+    - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=list --args='list --format json' --exit=0 --level=ultra < plugins/pip/pip-compact/samples/pip-list-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '[{"name": "certifi", "version": "2026.6.17"}, {"name": "charset-normalizer", "version": "3.4.7"}, {"name": "idna", "version": "3.18"}, {"name": "markdown-it-py", "version": "4.2.0"}, {"name": "mdurl", "version": "0.1.2"}, {"name": "pip", "version": "25.0.1"}, {"name": "Pygments", "version": "2.20.0"}, {"name": "requests", "version": "2.34.2"}, {"name": "rich", "version": "15.0.0"}, {"name": "urllib3", "version": "2.7.0"}]'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=list --args='list --format json' --exit=0 --level=ultra < plugins/pip/pip-compact/samples/pip-list-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 426
+        - name: exitcode
+          data:
+            - "0"

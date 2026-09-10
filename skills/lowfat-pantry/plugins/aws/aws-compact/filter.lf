@@ -1,0 +1,43 @@
+#!/usr/bin/env lowfat-filter
+# aws-compact - byte-preserve JSON/default output; compact table/text only.
+# env: $sub $level $exit $args
+
+define compact-aws-table(limit):
+    shell: |
+        # Rules and separators go; pipe rows lose their column bars, prose loses
+        # run-on blanks. Both classes share one budget, so the cap is a single
+        # head over the reshaped stream.
+        cut=$(mktemp)
+        trap 'rm -f "$cut"' EXIT
+
+        sed -E '
+        /^-+$|^\|[+-]+\|$|^\+[-+]+\+$/d
+        /^\|/{
+        s/^\|[[:blank:]]*//
+        s/[[:blank:]]*\|[[:blank:]]*/ /g
+        s/[[:blank:]]+$//
+        b
+        }
+        /^[[:blank:]]*$/d
+        s/[[:blank:]][[:blank:]]+/ /g' > "$cut"
+
+        total=$(grep -c '' < "$cut")
+        head -n $1 < "$cut"
+        [ "$total" -gt $1 ] && printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - $1))" "${level:-full}"
+        exit 0
+
+*:
+    if exit failed:
+        raw
+    elif --output table:
+        match level:
+            ultra: compact-aws-table 15
+            full:  compact-aws-table 30
+            lite:  compact-aws-table 60
+    elif --output text:
+        match level:
+            ultra: compact-aws-table 20
+            full:  compact-aws-table 40
+            lite:  compact-aws-table 80
+    else:
+        raw

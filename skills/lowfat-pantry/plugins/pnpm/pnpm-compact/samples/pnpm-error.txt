@@ -1,0 +1,7 @@
+[ERR_PNPM_FETCH_404] GET https://registry.npmjs.org/@lowfat-pantry%2Fdefinitely-not-a-real-package: Not Found - 404
+
+This error happened while installing a direct dependency of /w
+
+@lowfat-pantry/definitely-not-a-real-package is not in the npm registry, or you have no permission to fetch it.
+
+No authorization header was set for the request.

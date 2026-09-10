@@ -1,0 +1,44 @@
+#!/usr/bin/env lowfat-filter
+# jq-compact - keep full/lite JSON byte-exact; ultra summarizes large arrays.
+# env: $sub $level $exit $args
+
+include ../../lib/truncation.lf
+
+define ultra-json-array(limit):
+    shell: |
+        buf=$(mktemp)
+        trap 'rm -f "$buf"' EXIT
+        cat > "$buf"
+
+        # Reshaping JSON needs a JSON parser, and jq is the command being
+        # filtered — but never assume: anything unparseable, or a jq that isn't
+        # there, passes through untouched rather than risking a mangled stream.
+        command -v jq >/dev/null 2>&1 || { cat "$buf"; exit 0; }
+        jq -e . >/dev/null 2>&1 < "$buf" || { cat "$buf"; exit 0; }
+
+        count=$(jq 'if type == "array" then length else -1 end' < "$buf")
+        if [ "$count" -gt $1 ]; then
+            jq --indent 2 ".[:$1] + [{\"lowfat_truncated\": \"$((count - $1)) more elements\"}]" < "$buf"
+        else
+            cat "$buf"
+        fi
+        exit 0
+
+*:
+    if exit failed:
+        raw
+    elif -r:
+        match level:
+            ultra: head-marked 30
+            lite:  head-marked 120
+            else:  head-marked 60
+    elif --raw-output:
+        match level:
+            ultra: head-marked 30
+            lite:  head-marked 120
+            else:  head-marked 60
+    else:
+        match level:
+            ultra: ultra-json-array 12
+            full:  raw
+            lite:  raw

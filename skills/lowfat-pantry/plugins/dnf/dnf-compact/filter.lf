@@ -1,0 +1,35 @@
+#!/usr/bin/env lowfat-filter
+# dnf-compact — compact dnf/yum install/upgrade output.
+# env: $sub $level $exit $args
+#
+# Bloat is the repo-loading meters (`... 100% | ... KiB/s ...`), the per-package
+# `[N/M] <pkg> 100% | ...` download/install progress rows, and the `---` rule.
+# Signal is the transaction plan + summary table (`Package Arch Version ...`,
+# `Installing:`, `Installing dependencies:`, the `Transaction Summary:` block,
+# `Total size ...`) and the trailing `Complete!`, plus any error. On failure dnf
+# prints `Failed to resolve` / `No match for argument` — keep it. No JSON output
+# path → no byte-exact guard needed.
+
+include ../../lib/truncation.lf
+
+define drop-chatter:
+    drop /(100% \||^-{10,}$|^Updating and loading repositories|^Repositories loaded\.|^Running transaction$)/
+
+*:
+    if exit failed:
+        keep /(error:|Error:|Failed|No match for argument|Problem|conflict|cannot|Unable|nothing provides|You can try to add|--skip)/
+        head-marked 40
+        or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 40 ]; then printf '[lowfat] +%d earlier lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((n-40))" "${level:-full}"; fi; printf '%s\n' "$s" | tail -40
+    else:
+        match level:
+            ultra:
+                drop-chatter
+                keep /(^Installing|^Removing|^Upgrading|^ [a-z]|Transaction Summary|packages$|Total size|^Complete!|error:|warning:)/
+                head-marked 30
+                or "dnf: ok"
+            lite:
+                drop-chatter
+                head-marked 200
+            else:
+                drop-chatter
+                head-marked 60

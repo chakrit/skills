@@ -1,0 +1,74 @@
+#!/usr/bin/env lowfat-filter
+# vitest-compact — pass: collapse to a one-line tally; fail: keep the Failed Tests
+# section plus the final Test Files/Tests summary, drop the RUN banner and per-file
+# pass noise, scale body by level. Structured output (--reporter=json|junit and
+# --outputFile) passes through byte-exact.
+# Note: matchers are ASCII-only on purpose — a non-ASCII literal in a macro body
+# is corrupted by lowfat's $N arg-expansion, so the section is bounded by its
+# ASCII text ("Failed Tests", "Test Files", "AssertionError") not vitest's glyphs.
+# env: $sub $level $exit $args
+
+define compact-vitest(limit):
+    shell: |
+        if [ "${exit:-0}" = "0" ]; then
+            tally=$(grep -m1 -E '^[[:space:]]*Tests[[:space:]]+' | sed -E 's/^[[:space:]]*Tests[[:space:]]+//; s/[[:space:]]+$//')
+            if [ -n "$tally" ]; then printf 'vitest: %s\n' "$tally"; else printf 'vitest: passed\n'; fi
+            exit 0
+        fi
+
+        buf=$(mktemp)
+        detail=$(mktemp)
+        cut=$(mktemp)
+        trap 'rm -f "$buf" "$detail" "$cut"' EXIT
+        cat > "$buf"
+
+        # Two boundaries: the "Failed Tests" header opens the detail block, and the
+        # first summary line closes it for good (everything after it is dropped
+        # except further summary lines).
+        summary='^[[:space:]]*(Test Files|Tests|Start at|Duration)([^A-Za-z0-9_]|$)'
+        at=$(grep -nE "$summary" "$buf" | head -n 1 | cut -d: -f1)
+        [ -n "$at" ] || at=$(( $(grep -c '' < "$buf") + 1 ))
+
+        sed -n "1,$((at - 1))p" "$buf" | sed -n '/Failed Tests/,$p' > "$detail"
+
+        {
+            if [ "${level:-full}" = "ultra" ]; then
+                # the section header survives at every level; below it, only the
+                # assertion/error verdicts
+                grep -E 'Failed Tests|^ FAIL |Error:|^[^:]*Error' "$detail"
+            else
+                cat "$detail"
+            fi
+
+            sed -n "$at,\$p" "$buf" | grep -E "$summary"
+        } > "$cut"
+
+        # Nothing matched: the run's shape isn't one this filter knows (a new
+        # reporter, a plugin's own format, a crash before the section headers).
+        # Silence would read as "the command printed nothing" — fall back to a
+        # marked tail of what actually arrived.
+        if [ ! -s "$cut" ]; then
+            kept=$(( $1 + 8 ))
+            total=$(grep -c '' < "$buf")
+            [ "$total" -gt "$kept" ] && printf '[lowfat] +%d earlier lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - kept))" "${level:-full}"
+            tail -n "$kept" < "$buf"
+            exit 0
+        fi
+
+        total=$(grep -c '' < "$cut")
+        head -n $(( $1 + 8 )) < "$cut"
+        [ "$total" -gt $(( $1 + 8 )) ] && printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - $1 - 8))" "${level:-full}"
+        exit 0
+
+*:
+    if --reporter=json:
+        raw
+    elif --reporter=junit:
+        raw
+    elif --outputFile:
+        raw
+    else:
+        match level:
+            ultra: compact-vitest 18
+            full:  compact-vitest 45
+            lite:  compact-vitest 90

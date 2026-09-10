@@ -1,0 +1,845 @@
+- name: tests.cue \ deno-compact \ samples/deno-test-fail.txt lite
+  commands:
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=test --args='test' --exit=1 --level=lite < plugins/deno/deno-compact/samples/deno-test-fail.txt
+      checks:
+        - name: stdout
+          data:
+            - running 4 tests from ./cart_test.ts
+            - test applies coupon to total ... FAILED (3ms)
+            - ""
+            - ' ERRORS '
+            - ""
+            - applies coupon to total => ./cart_test.ts:42:6
+            - 'error: AssertionError: Values are not equal.'
+            - ""
+            - ""
+            - '    [Diff] Actual / Expected'
+            - ""
+            - ""
+            - '-   1299'
+            - +   1499
+            - ""
+            - '  at assertEquals (https://deno.land/std/assert/mod.ts:200:9)'
+            - '  at file:///app/cart_test.ts:43:3'
+            - ""
+            - ' FAILURES '
+            - ""
+            - applies coupon to total => ./cart_test.ts:42:6
+            - ""
+            - 'failures:'
+            - ""
+            - "\tapplies coupon to total"
+            - ""
+            - 'test result: FAILED. 3 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out (8ms)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=test --args='test' --exit=1 --level=lite < plugins/deno/deno-compact/samples/deno-test-fail.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 27
+            - bytes 517
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ deno-compact \ samples/deno-test-fail.txt full
+  commands:
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=test --args='test' --exit=1 --level=full < plugins/deno/deno-compact/samples/deno-test-fail.txt
+      checks:
+        - name: stdout
+          data:
+            - running 4 tests from ./cart_test.ts
+            - test applies coupon to total ... FAILED (3ms)
+            - ""
+            - ' ERRORS '
+            - ""
+            - applies coupon to total => ./cart_test.ts:42:6
+            - 'error: AssertionError: Values are not equal.'
+            - ""
+            - ""
+            - '    [Diff] Actual / Expected'
+            - ""
+            - ""
+            - '-   1299'
+            - +   1499
+            - ""
+            - '  at assertEquals (https://deno.land/std/assert/mod.ts:200:9)'
+            - '  at file:///app/cart_test.ts:43:3'
+            - ""
+            - ' FAILURES '
+            - ""
+            - applies coupon to total => ./cart_test.ts:42:6
+            - ""
+            - 'failures:'
+            - ""
+            - "\tapplies coupon to total"
+            - ""
+            - 'test result: FAILED. 3 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out (8ms)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=test --args='test' --exit=1 --level=full < plugins/deno/deno-compact/samples/deno-test-fail.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 27
+            - bytes 517
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ deno-compact \ samples/deno-test-fail.txt ultra
+  commands:
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=test --args='test' --exit=1 --level=ultra < plugins/deno/deno-compact/samples/deno-test-fail.txt
+      checks:
+        - name: stdout
+          data:
+            - running 4 tests from ./cart_test.ts
+            - test applies coupon to total ... FAILED (3ms)
+            - 'error: AssertionError: Values are not equal.'
+            - 'failures:'
+            - 'test result: FAILED. 3 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out (8ms)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=test --args='test' --exit=1 --level=ultra < plugins/deno/deno-compact/samples/deno-test-fail.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 222
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ deno-compact \ samples/deno-check-clean.txt lite
+  commands:
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=check --args='check main.ts' --exit=0 --level=lite < plugins/deno/deno-compact/samples/deno-check-clean.txt
+      checks:
+        - name: stdout
+          data:
+            - 'deno: no issues'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=check --args='check main.ts' --exit=0 --level=lite < plugins/deno/deno-compact/samples/deno-check-clean.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 16
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ deno-compact \ samples/deno-check-clean.txt full
+  commands:
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=check --args='check main.ts' --exit=0 --level=full < plugins/deno/deno-compact/samples/deno-check-clean.txt
+      checks:
+        - name: stdout
+          data:
+            - 'deno: no issues'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=check --args='check main.ts' --exit=0 --level=full < plugins/deno/deno-compact/samples/deno-check-clean.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 16
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ deno-compact \ samples/deno-check-clean.txt ultra
+  commands:
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=check --args='check main.ts' --exit=0 --level=ultra < plugins/deno/deno-compact/samples/deno-check-clean.txt
+      checks:
+        - name: stdout
+          data:
+            - 'deno: no issues'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=check --args='check main.ts' --exit=0 --level=ultra < plugins/deno/deno-compact/samples/deno-check-clean.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 16
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ deno-compact \ samples/deno-lint-json.txt lite
+  commands:
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=lint --args='lint --json mod.ts' --exit=1 --level=lite < plugins/deno/deno-compact/samples/deno-lint-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - '  "version": 1,'
+            - '  "diagnostics": ['
+            - '    {'
+            - '      "filename": "file:///work/mod.ts",'
+            - '      "range": {'
+            - '        "start": {'
+            - '          "line": 1,'
+            - '          "col": 6,'
+            - '          "bytePos": 6'
+            - '        },'
+            - '        "end": {'
+            - '          "line": 1,'
+            - '          "col": 7,'
+            - '          "bytePos": 7'
+            - '        }'
+            - '      },'
+            - '      "message": "`a` is never used",'
+            - '      "code": "no-unused-vars",'
+            - '      "hint": "If this is intentional, prefix it with an underscore like `_a`"'
+            - '    },'
+            - '    {'
+            - '      "filename": "file:///work/mod.ts",'
+            - '      "range": {'
+            - '        "start": {'
+            - '          "line": 2,'
+            - '          "col": 6,'
+            - '          "bytePos": 19'
+            - '        },'
+            - '        "end": {'
+            - '          "line": 2,'
+            - '          "col": 7,'
+            - '          "bytePos": 20'
+            - '        }'
+            - '      },'
+            - '      "message": "`b` is never used",'
+            - '      "code": "no-unused-vars",'
+            - '      "hint": "If this is intentional, prefix it with an underscore like `_b`"'
+            - '    },'
+            - '    {'
+            - '      "filename": "file:///work/mod.ts",'
+            - '      "range": {'
+            - '        "start": {'
+            - '          "line": 3,'
+            - '          "col": 6,'
+            - '          "bytePos": 32'
+            - '        },'
+            - '        "end": {'
+            - '          "line": 3,'
+            - '          "col": 7,'
+            - '          "bytePos": 33'
+            - '        }'
+            - '      },'
+            - '      "message": "`c` is never used",'
+            - '      "code": "no-unused-vars",'
+            - '      "hint": "If this is intentional, prefix it with an underscore like `_c`"'
+            - '    },'
+            - '    {'
+            - '      "filename": "file:///work/mod.ts",'
+            - '      "range": {'
+            - '        "start": {'
+            - '          "line": 4,'
+            - '          "col": 4,'
+            - '          "bytePos": 43'
+            - '        },'
+            - '        "end": {'
+            - '          "line": 4,'
+            - '          "col": 5,'
+            - '          "bytePos": 44'
+            - '        }'
+            - '      },'
+            - '      "message": "`d` is never used",'
+            - '      "code": "no-unused-vars",'
+            - '      "hint": "If this is intentional, prefix it with an underscore like `_d`"'
+            - '    },'
+            - '    {'
+            - '      "filename": "file:///work/mod.ts",'
+            - '      "range": {'
+            - '        "start": {'
+            - '          "line": 4,'
+            - '          "col": 4,'
+            - '          "bytePos": 43'
+            - '        },'
+            - '        "end": {'
+            - '          "line": 4,'
+            - '          "col": 5,'
+            - '          "bytePos": 44'
+            - '        }'
+            - '      },'
+            - '      "message": "`d` is never reassigned",'
+            - '      "code": "prefer-const",'
+            - '      "hint": "Use `const` instead"'
+            - '    }'
+            - '  ],'
+            - '  "errors": [],'
+            - '  "checked_files": ['
+            - '    "/work/mod.ts"'
+            - '  ]'
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=lint --args='lint --json mod.ts' --exit=1 --level=lite < plugins/deno/deno-compact/samples/deno-lint-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 99
+            - bytes 2142
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ deno-compact \ samples/deno-lint-json.txt full
+  commands:
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=lint --args='lint --json mod.ts' --exit=1 --level=full < plugins/deno/deno-compact/samples/deno-lint-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - '  "version": 1,'
+            - '  "diagnostics": ['
+            - '    {'
+            - '      "filename": "file:///work/mod.ts",'
+            - '      "range": {'
+            - '        "start": {'
+            - '          "line": 1,'
+            - '          "col": 6,'
+            - '          "bytePos": 6'
+            - '        },'
+            - '        "end": {'
+            - '          "line": 1,'
+            - '          "col": 7,'
+            - '          "bytePos": 7'
+            - '        }'
+            - '      },'
+            - '      "message": "`a` is never used",'
+            - '      "code": "no-unused-vars",'
+            - '      "hint": "If this is intentional, prefix it with an underscore like `_a`"'
+            - '    },'
+            - '    {'
+            - '      "filename": "file:///work/mod.ts",'
+            - '      "range": {'
+            - '        "start": {'
+            - '          "line": 2,'
+            - '          "col": 6,'
+            - '          "bytePos": 19'
+            - '        },'
+            - '        "end": {'
+            - '          "line": 2,'
+            - '          "col": 7,'
+            - '          "bytePos": 20'
+            - '        }'
+            - '      },'
+            - '      "message": "`b` is never used",'
+            - '      "code": "no-unused-vars",'
+            - '      "hint": "If this is intentional, prefix it with an underscore like `_b`"'
+            - '    },'
+            - '    {'
+            - '      "filename": "file:///work/mod.ts",'
+            - '      "range": {'
+            - '        "start": {'
+            - '          "line": 3,'
+            - '          "col": 6,'
+            - '          "bytePos": 32'
+            - '        },'
+            - '        "end": {'
+            - '          "line": 3,'
+            - '          "col": 7,'
+            - '          "bytePos": 33'
+            - '        }'
+            - '      },'
+            - '      "message": "`c` is never used",'
+            - '      "code": "no-unused-vars",'
+            - '      "hint": "If this is intentional, prefix it with an underscore like `_c`"'
+            - '    },'
+            - '    {'
+            - '      "filename": "file:///work/mod.ts",'
+            - '      "range": {'
+            - '        "start": {'
+            - '          "line": 4,'
+            - '          "col": 4,'
+            - '          "bytePos": 43'
+            - '        },'
+            - '        "end": {'
+            - '          "line": 4,'
+            - '          "col": 5,'
+            - '          "bytePos": 44'
+            - '        }'
+            - '      },'
+            - '      "message": "`d` is never used",'
+            - '      "code": "no-unused-vars",'
+            - '      "hint": "If this is intentional, prefix it with an underscore like `_d`"'
+            - '    },'
+            - '    {'
+            - '      "filename": "file:///work/mod.ts",'
+            - '      "range": {'
+            - '        "start": {'
+            - '          "line": 4,'
+            - '          "col": 4,'
+            - '          "bytePos": 43'
+            - '        },'
+            - '        "end": {'
+            - '          "line": 4,'
+            - '          "col": 5,'
+            - '          "bytePos": 44'
+            - '        }'
+            - '      },'
+            - '      "message": "`d` is never reassigned",'
+            - '      "code": "prefer-const",'
+            - '      "hint": "Use `const` instead"'
+            - '    }'
+            - '  ],'
+            - '  "errors": [],'
+            - '  "checked_files": ['
+            - '    "/work/mod.ts"'
+            - '  ]'
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=lint --args='lint --json mod.ts' --exit=1 --level=full < plugins/deno/deno-compact/samples/deno-lint-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 99
+            - bytes 2142
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ deno-compact \ samples/deno-lint-json.txt ultra
+  commands:
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=lint --args='lint --json mod.ts' --exit=1 --level=ultra < plugins/deno/deno-compact/samples/deno-lint-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - '  "version": 1,'
+            - '  "diagnostics": ['
+            - '    {'
+            - '      "filename": "file:///work/mod.ts",'
+            - '      "range": {'
+            - '        "start": {'
+            - '          "line": 1,'
+            - '          "col": 6,'
+            - '          "bytePos": 6'
+            - '        },'
+            - '        "end": {'
+            - '          "line": 1,'
+            - '          "col": 7,'
+            - '          "bytePos": 7'
+            - '        }'
+            - '      },'
+            - '      "message": "`a` is never used",'
+            - '      "code": "no-unused-vars",'
+            - '      "hint": "If this is intentional, prefix it with an underscore like `_a`"'
+            - '    },'
+            - '    {'
+            - '      "filename": "file:///work/mod.ts",'
+            - '      "range": {'
+            - '        "start": {'
+            - '          "line": 2,'
+            - '          "col": 6,'
+            - '          "bytePos": 19'
+            - '        },'
+            - '        "end": {'
+            - '          "line": 2,'
+            - '          "col": 7,'
+            - '          "bytePos": 20'
+            - '        }'
+            - '      },'
+            - '      "message": "`b` is never used",'
+            - '      "code": "no-unused-vars",'
+            - '      "hint": "If this is intentional, prefix it with an underscore like `_b`"'
+            - '    },'
+            - '    {'
+            - '      "filename": "file:///work/mod.ts",'
+            - '      "range": {'
+            - '        "start": {'
+            - '          "line": 3,'
+            - '          "col": 6,'
+            - '          "bytePos": 32'
+            - '        },'
+            - '        "end": {'
+            - '          "line": 3,'
+            - '          "col": 7,'
+            - '          "bytePos": 33'
+            - '        }'
+            - '      },'
+            - '      "message": "`c` is never used",'
+            - '      "code": "no-unused-vars",'
+            - '      "hint": "If this is intentional, prefix it with an underscore like `_c`"'
+            - '    },'
+            - '    {'
+            - '      "filename": "file:///work/mod.ts",'
+            - '      "range": {'
+            - '        "start": {'
+            - '          "line": 4,'
+            - '          "col": 4,'
+            - '          "bytePos": 43'
+            - '        },'
+            - '        "end": {'
+            - '          "line": 4,'
+            - '          "col": 5,'
+            - '          "bytePos": 44'
+            - '        }'
+            - '      },'
+            - '      "message": "`d` is never used",'
+            - '      "code": "no-unused-vars",'
+            - '      "hint": "If this is intentional, prefix it with an underscore like `_d`"'
+            - '    },'
+            - '    {'
+            - '      "filename": "file:///work/mod.ts",'
+            - '      "range": {'
+            - '        "start": {'
+            - '          "line": 4,'
+            - '          "col": 4,'
+            - '          "bytePos": 43'
+            - '        },'
+            - '        "end": {'
+            - '          "line": 4,'
+            - '          "col": 5,'
+            - '          "bytePos": 44'
+            - '        }'
+            - '      },'
+            - '      "message": "`d` is never reassigned",'
+            - '      "code": "prefer-const",'
+            - '      "hint": "Use `const` instead"'
+            - '    }'
+            - '  ],'
+            - '  "errors": [],'
+            - '  "checked_files": ['
+            - '    "/work/mod.ts"'
+            - '  ]'
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=lint --args='lint --json mod.ts' --exit=1 --level=ultra < plugins/deno/deno-compact/samples/deno-lint-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 99
+            - bytes 2142
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ deno-compact \ samples/deno-info-json.txt lite
+  commands:
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=info --args='info --json mod.ts' --exit=0 --level=lite < plugins/deno/deno-compact/samples/deno-info-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - '  "version": 1,'
+            - '  "roots": ['
+            - '    "file:///work/mod.ts"'
+            - '  ],'
+            - '  "modules": ['
+            - '    {'
+            - '      "kind": "esm",'
+            - '      "local": "/work/mod.ts",'
+            - '      "size": 112,'
+            - '      "mediaType": "TypeScript",'
+            - '      "specifier": "file:///work/mod.ts"'
+            - '    }'
+            - '  ],'
+            - '  "redirects": {},'
+            - '  "npmPackages": {}'
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=info --args='info --json mod.ts' --exit=0 --level=lite < plugins/deno/deno-compact/samples/deno-info-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 17
+            - bytes 280
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ deno-compact \ samples/deno-info-json.txt full
+  commands:
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=info --args='info --json mod.ts' --exit=0 --level=full < plugins/deno/deno-compact/samples/deno-info-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - '  "version": 1,'
+            - '  "roots": ['
+            - '    "file:///work/mod.ts"'
+            - '  ],'
+            - '  "modules": ['
+            - '    {'
+            - '      "kind": "esm",'
+            - '      "local": "/work/mod.ts",'
+            - '      "size": 112,'
+            - '      "mediaType": "TypeScript",'
+            - '      "specifier": "file:///work/mod.ts"'
+            - '    }'
+            - '  ],'
+            - '  "redirects": {},'
+            - '  "npmPackages": {}'
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=info --args='info --json mod.ts' --exit=0 --level=full < plugins/deno/deno-compact/samples/deno-info-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 17
+            - bytes 280
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ deno-compact \ samples/deno-info-json.txt ultra
+  commands:
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=info --args='info --json mod.ts' --exit=0 --level=ultra < plugins/deno/deno-compact/samples/deno-info-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - '  "version": 1,'
+            - '  "roots": ['
+            - '    "file:///work/mod.ts"'
+            - '  ],'
+            - '  "modules": ['
+            - '    {'
+            - '      "kind": "esm",'
+            - '      "local": "/work/mod.ts",'
+            - '      "size": 112,'
+            - '      "mediaType": "TypeScript",'
+            - '      "specifier": "file:///work/mod.ts"'
+            - '    }'
+            - '  ],'
+            - '  "redirects": {},'
+            - '  "npmPackages": {}'
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=info --args='info --json mod.ts' --exit=0 --level=ultra < plugins/deno/deno-compact/samples/deno-info-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 17
+            - bytes 280
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ deno-compact \ samples/deno-run-error.txt lite
+  commands:
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=run --args='run does-not-exist.ts' --exit=1 --level=lite < plugins/deno/deno-compact/samples/deno-run-error.txt
+      checks:
+        - name: stdout
+          data:
+            - "\e[0m\e[1m\e[31merror\e[0m: Module not found \"file:///w/does-not-exist.ts\"."
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=run --args='run does-not-exist.ts' --exit=1 --level=lite < plugins/deno/deno-compact/samples/deno-run-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 72
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ deno-compact \ samples/deno-run-error.txt full
+  commands:
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=run --args='run does-not-exist.ts' --exit=1 --level=full < plugins/deno/deno-compact/samples/deno-run-error.txt
+      checks:
+        - name: stdout
+          data:
+            - "\e[0m\e[1m\e[31merror\e[0m: Module not found \"file:///w/does-not-exist.ts\"."
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=run --args='run does-not-exist.ts' --exit=1 --level=full < plugins/deno/deno-compact/samples/deno-run-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 72
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ deno-compact \ samples/deno-run-error.txt ultra
+  commands:
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=run --args='run does-not-exist.ts' --exit=1 --level=ultra < plugins/deno/deno-compact/samples/deno-run-error.txt
+      checks:
+        - name: stdout
+          data:
+            - "\e[0m\e[1m\e[31merror\e[0m: Module not found \"file:///w/does-not-exist.ts\"."
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=run --args='run does-not-exist.ts' --exit=1 --level=ultra < plugins/deno/deno-compact/samples/deno-run-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 72
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ deno-compact \ samples/deno-run-capped.txt lite
+  commands:
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=run --args='run server.ts' --exit=0 --level=lite < plugins/deno/deno-compact/samples/deno-run-capped.txt
+      checks:
+        - name: stdout
+          data:
+            - Starting server...
+            - request 1 handled
+            - request 2 handled
+            - request 3 handled
+            - request 4 handled
+            - request 5 handled
+            - request 6 handled
+            - request 7 handled
+            - request 8 handled
+            - request 9 handled
+            - request 10 handled
+            - request 11 handled
+            - request 12 handled
+            - request 13 handled
+            - request 14 handled
+            - request 15 handled
+            - request 16 handled
+            - request 17 handled
+            - request 18 handled
+            - request 19 handled
+            - request 20 handled
+            - request 21 handled
+            - request 22 handled
+            - request 23 handled
+            - request 24 handled
+            - request 25 handled
+            - request 26 handled
+            - request 27 handled
+            - request 28 handled
+            - request 29 handled
+            - request 30 handled
+            - request 31 handled
+            - request 32 handled
+            - request 33 handled
+            - request 34 handled
+            - request 35 handled
+            - request 36 handled
+            - request 37 handled
+            - request 38 handled
+            - request 39 handled
+            - request 40 handled
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=run --args='run server.ts' --exit=0 --level=lite < plugins/deno/deno-compact/samples/deno-run-capped.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 41
+            - bytes 770
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ deno-compact \ samples/deno-run-capped.txt full
+  commands:
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=run --args='run server.ts' --exit=0 --level=full < plugins/deno/deno-compact/samples/deno-run-capped.txt
+      checks:
+        - name: stdout
+          data:
+            - Starting server...
+            - request 1 handled
+            - request 2 handled
+            - request 3 handled
+            - request 4 handled
+            - request 5 handled
+            - request 6 handled
+            - request 7 handled
+            - request 8 handled
+            - request 9 handled
+            - request 10 handled
+            - request 11 handled
+            - request 12 handled
+            - request 13 handled
+            - request 14 handled
+            - request 15 handled
+            - request 16 handled
+            - request 17 handled
+            - request 18 handled
+            - request 19 handled
+            - request 20 handled
+            - request 21 handled
+            - request 22 handled
+            - request 23 handled
+            - request 24 handled
+            - request 25 handled
+            - request 26 handled
+            - request 27 handled
+            - request 28 handled
+            - request 29 handled
+            - request 30 handled
+            - request 31 handled
+            - request 32 handled
+            - request 33 handled
+            - request 34 handled
+            - request 35 handled
+            - request 36 handled
+            - request 37 handled
+            - request 38 handled
+            - request 39 handled
+            - request 40 handled
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=run --args='run server.ts' --exit=0 --level=full < plugins/deno/deno-compact/samples/deno-run-capped.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 41
+            - bytes 770
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ deno-compact \ samples/deno-run-capped.txt ultra
+  commands:
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=run --args='run server.ts' --exit=0 --level=ultra < plugins/deno/deno-compact/samples/deno-run-capped.txt
+      checks:
+        - name: stdout
+          data:
+            - Starting server...
+            - request 1 handled
+            - request 2 handled
+            - request 3 handled
+            - request 4 handled
+            - request 5 handled
+            - request 6 handled
+            - request 7 handled
+            - request 8 handled
+            - request 9 handled
+            - request 10 handled
+            - request 11 handled
+            - request 12 handled
+            - request 13 handled
+            - request 14 handled
+            - request 15 handled
+            - request 16 handled
+            - request 17 handled
+            - request 18 handled
+            - request 19 handled
+            - request 20 handled
+            - request 21 handled
+            - request 22 handled
+            - request 23 handled
+            - request 24 handled
+            - '[lowfat] +16 lines dropped (level=ultra) -- output truncated, re-run raw for the full list'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=run --args='run server.ts' --exit=0 --level=ultra < plugins/deno/deno-compact/samples/deno-run-capped.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 26
+            - bytes 557
+        - name: exitcode
+          data:
+            - "0"

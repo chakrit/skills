@@ -1,0 +1,95 @@
+#!/usr/bin/env lowfat-filter
+# npx-compact — npx keys filter selection on `npx`, so `npx eslint`/`npx tsc`
+# never reach eslint-compact/tsc-compact. This filter strips npm's install/fetch
+# preamble, detects the wrapped tool from $args (handling npx flags like
+# `-y`/`-p typescript`), and hands the stream to that tool's own filter; unknown
+# tools get a conservative cap.
+#
+# No copies: the wrapped tool's compaction is *delegated* by re-invoking `lowfat
+# filter` on the real plugin, so eslint/prettier/tsc-compact stay the single
+# source of truth and cannot drift out from under this file. When the wrapped
+# plugin isn't installed, the stream falls back to a marked cap rather than a
+# stale duplicate of its logic. The remaining ask upstream is wrapper-unwrap —
+# see the "Wrapper commands" section in docs/spec/pantry-plugin-backlog.md and
+# the wishlist in docs/spec/lf-wishlist.md. The sibling uv-compact follows the
+# same pattern.
+#
+# Limitation: dispatch covers eslint/prettier/tsc (the tools commonly run via
+# npx). next/playwright/prisma are near-always package scripts (`npm run …`) and
+# their subcommand-keyed selectors don't map onto npx args, so they fall to the
+# generic cap.
+# env: $sub $level $exit $args
+
+define npx-dispatch:
+    shell: |
+        buf=$(mktemp)
+        trap 'rm -f "$buf"' EXIT
+
+        # npm prints its install/fetch preamble before the tool's own output;
+        # strip it so the wrapped tool's filter sees only what that tool wrote.
+        sed -E '
+        /^Need to install the following packages:/d
+        /^Ok to proceed\?/d
+        /^[@A-Za-z0-9_\/.-]+@[0-9][^[:space:]]*$/d
+        /^npm (WARN|notice)/d
+        /^npm http fetch /d
+        /^added [0-9]+ packages/d
+        /^audited [0-9]+ packages/d' > "$buf"
+
+        # --- resolve the wrapped tool (npx <flags> <tool> …) ---------------------
+        set -- $args
+        tool=
+        while [ $# -gt 0 ]; do
+            case "$1" in
+                -p|--package|-c|--call) shift 2 || shift; continue ;;
+                -*) shift; continue ;;
+                *) tool=$1; break ;;
+            esac
+        done
+        rest=$*
+        tool=${tool##*/}
+
+        # --- delegate to the wrapped tool's own filter ---------------------------
+        # The plugin tree is laid out the same in the pantry source and in the
+        # lowfat home, so one probe list covers dev checkouts and installs alike.
+        delegate() {
+            for root in "${LOWFAT_HOME:-}" "$HOME/.lowfat" "$HOME/.config/lowfat" "$PWD"; do
+                [ -n "$root" ] || continue
+                target="$root/plugins/$1/$1-compact/filter.lf"
+                [ -f "$target" ] || continue
+
+                shift
+                exec lowfat filter "$target" --sub="${1%% *}" --args="$1" \
+                    --exit="${exit:-0}" --level="${level:-full}" < "$buf"
+            done
+            return 1
+        }
+
+        # --- unknown tool: conservative cap (npx generic) ------------------------
+        # a silently capped body looks complete; announce the cap so the agent
+        # knows output was truncated (the curl/gem/rake convention).
+        generic() {
+            if [ "${exit:-0}" != "0" ]; then
+                cat "$buf"
+                exit 0
+            fi
+
+            case "${level:-full}" in
+                ultra) limit=40 ;;
+                lite)  limit=160 ;;
+                *)     limit=80 ;;
+            esac
+
+            total=$(grep -c '' < "$buf")
+            head -n "$limit" < "$buf"
+            [ "$total" -gt "$limit" ] && printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - limit))" "${level:-full}"
+            exit 0
+        }
+
+        case "$tool" in
+            eslint|prettier|tsc) delegate "$tool" "${rest#"$tool" }" || generic ;;
+            *) generic ;;
+        esac
+
+*:
+    npx-dispatch

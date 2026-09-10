@@ -5,3 +5,7 @@ name = "Chakrit Skills"
 [[imports]]
 source = "chakrit/kien-thai"
 skills = ["kien-thai", "kode-thai"]
+
+[[imports]]
+source = "chakrit/lowfat-pantry"
+skills = ["lowfat-pantry"]

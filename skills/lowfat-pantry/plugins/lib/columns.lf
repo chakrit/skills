@@ -1,0 +1,11 @@
+# Column-squeezing shared by the pantry — collapses run-on whitespace in tabular
+# output without dropping rows (inventory listings stay complete). Include, don't copy:
+#
+#     include ../../lib/columns.lf
+
+define squeeze-columns:
+    shell: |
+        body=$(cat)
+        [ -n "$body" ] || exit 0
+
+        printf '%s\n' "$body" | sed -E 's/[[:blank:]]{2,}/ /g'

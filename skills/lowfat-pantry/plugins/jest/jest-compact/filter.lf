@@ -1,0 +1,67 @@
+#!/usr/bin/env lowfat-filter
+# jest-compact — pass: collapse to a one-line tally; fail: keep the failing-test
+# blocks (● / FAIL) plus the final summary, drop per-suite PASS noise, scale body
+# by level. Structured output (--json / --outputFile) passes through byte-exact.
+# env: $sub $level $exit $args
+
+define compact-jest(limit):
+    shell: |
+        if [ "${exit:-0}" = "0" ]; then
+            tally=$(grep -m1 -E 'Tests:[[:space:]]+' | sed -E 's/.*Tests:[[:space:]]+//; s/[[:space:]]+$//')
+            if [ -n "$tally" ]; then printf 'jest: %s\n' "$tally"; else printf 'jest: passed\n'; fi
+            exit 0
+        fi
+
+        buf=$(mktemp)
+        cut=$(mktemp)
+        trap 'rm -f "$buf" "$cut"' EXIT
+        cat > "$buf"
+
+        # The final summary block latches: once "Test Suites:"/"Tests:"/… appears,
+        # nothing but further summary lines survives. So the stream splits there —
+        # failure blocks above, summary lines below.
+        summary='^(Test Suites|Tests|Snapshots|Time|Ran all):'
+        at=$(grep -nE "$summary" "$buf" | head -n 1 | cut -d: -f1)
+        [ -n "$at" ] || at=$(( $(grep -c '' < "$buf") + 1 ))
+
+        {
+            if [ "${level:-full}" = "ultra" ]; then
+                # ultra: FAIL headers + assertion verdicts. The per-test bullet is
+                # matched structurally, never by its glyph — a non-ASCII literal in
+                # a parameterized macro body is corrupted by lowfat's $N expansion.
+                sed -n "1,$((at - 1))p" "$buf" | grep -E '^FAIL |^[[:space:]]*(Expected|Received|expect\()'
+            else
+                # full/lite: the whole failure block minus per-suite PASS noise
+                sed -n "1,$((at - 1))p" "$buf" | grep -vE '^PASS '
+            fi
+
+            sed -n "$at,\$p" "$buf" | grep -E "$summary"
+        } > "$cut"
+
+        # Nothing matched: the run's shape isn't one this filter knows (a new
+        # reporter, a plugin's own format, a crash before the section headers).
+        # Silence would read as "the command printed nothing" — fall back to a
+        # marked tail of what actually arrived.
+        if [ ! -s "$cut" ]; then
+            kept=$(( $1 + 8 ))
+            total=$(grep -c '' < "$buf")
+            [ "$total" -gt "$kept" ] && printf '[lowfat] +%d earlier lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - kept))" "${level:-full}"
+            tail -n "$kept" < "$buf"
+            exit 0
+        fi
+
+        total=$(grep -c '' < "$cut")
+        head -n $(( $1 + 8 )) < "$cut"
+        [ "$total" -gt $(( $1 + 8 )) ] && printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - $1 - 8))" "${level:-full}"
+        exit 0
+
+*:
+    if --json:
+        raw
+    elif --outputFile:
+        raw
+    else:
+        match level:
+            ultra: compact-jest 18
+            full:  compact-jest 45
+            lite:  compact-jest 90

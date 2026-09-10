@@ -1,0 +1,32 @@
+#!/usr/bin/env lowfat-filter
+# tar-compact — compact verbose tar output for LLM contexts.
+# env: $sub $level $exit $args
+#
+# `tar` is silent without -v and explodes with it: one line per archived/
+# extracted file. The signal is just "it worked + roughly what/how many"; the
+# bloat is the full file list. ultra shows the first entries + a total-count
+# footer; full/lite head-cap. tar writes errors to stderr (non-zero exit) — raw.
+
+include ../../lib/truncation.lf
+
+*:
+    if exit failed:
+        raw
+    else:
+        match level:
+            ultra:
+                shell: |
+                    buf=$(mktemp)
+                    trap 'rm -f "$buf"' EXIT
+                    cat > "$buf"
+
+                    total=$(grep -c '' < "$buf")
+                    [ "$total" -gt 0 ] || exit 0
+
+                    head -n 12 < "$buf"
+                    [ "$total" -gt 12 ] && printf '[lowfat] +%d entries dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - 12))" "${level:-full}"
+                    exit 0
+            lite:
+                head-marked 200
+            else:
+                head-marked 60

@@ -1,0 +1,83 @@
+#!/usr/bin/env lowfat-filter
+# cargo-compact — compact cargo output for LLM contexts.
+# env: $sub $level $exit $args
+#
+# The bloat in cargo output is the per-crate progress stream (`Compiling foo
+# v1.2.3`, `Downloading`, `Updating`) — dozens of lines that carry no signal
+# once the build is underway. The signal is diagnostics (error/warning + their
+# `-->` location and `help:`/`note:` context), the `Finished` line, and for
+# tests the failures + `test result:` summary. We never keyword-filter `run`
+# output (it's the program's own stdout).
+#
+# NOTE: a rule body is either a flat pipeline OR a cascade — you can't run a
+# flat op and then a `match`. So the shared `drop-progress` macro is invoked
+# inside each arm, not once before the match.
+#
+# `--message-format json` is machine output (ndjson) — pass byte-exact
+# (invariant 1). Without the guard a `cargo build --message-format json` run
+# collapses to "cargo: ok". Guard the json value (so `--message-format short`
+# /`human` still compact); the `json-diagnostic-*` variants are residual. The
+# `metadata` subcommand always emits JSON, so it raws unconditionally.
+
+include ../../lib/truncation.lf
+
+define drop-progress:
+    drop /^[[:space:]]*(Compiling|Checking|Downloading|Downloaded|Updating|Adding|Locking|Blocking|Waiting|Installing|Removing|Fresh|Ignored|Packaging|Verifying|Uploading) /
+
+# ── build / check / clippy — keep diagnostics, drop crate progress ────────
+build|check|clippy:
+    if --message-format json:
+        raw
+    else:
+        match level:
+            ultra:
+                drop-progress
+                keep /^(error|warning|[[:space:]]*-->|[[:space:]]*Finished|[[:space:]]*help:|[[:space:]]*note:|[[:space:]]*=|Some errors|For more information|[0-9]+ (error|warning))/
+                head-marked 25
+                or "cargo: ok"
+            lite:
+                drop-progress
+                head-marked 200
+            else:
+                drop-progress
+                head-marked 60
+# ── test / bench — keep failures + result, drop passing noise ─────────────
+test|bench:
+    if --message-format json:
+        raw
+    else:
+        match level:
+            ultra:
+                keep /(FAILED|panicked|^test result:|^---- |^failures:|^error|left:|right:|assertion)/
+                head-marked 30
+                or "cargo test: ok"
+            lite:
+                drop /\.\.\. ok$/
+                head-marked 200
+            else:
+                drop /\.\.\. ok$/
+                head-marked 60
+# ── run — strip the compile preamble only; never filter program output ────
+run:
+    match level:
+        ultra:
+            drop-progress
+            cap 30
+        lite:
+            drop-progress
+            cap 200
+        else:
+            drop-progress
+            cap 60
+
+# ── metadata — always emits a single JSON object; raw (invariant 1) ───────
+metadata:
+    raw
+
+# ── everything else (add, update, fmt, tree, …) — light cap ───────────────
+*:
+    if --message-format json:
+        raw
+    else:
+        drop-progress
+        head-marked 40

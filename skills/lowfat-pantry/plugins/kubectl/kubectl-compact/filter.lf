@@ -1,0 +1,140 @@
+#!/usr/bin/env lowfat-filter
+# kubectl-compact — preserve cluster signal while capping log verbosity.
+# `get` is an inventory listing: every row is load-bearing, so rows are never capped,
+# only column-squeezed (invariant 6).
+# env: $sub $level $exit $args
+#
+# `-o json` / `-o yaml` is machine output — pass byte-exact (invariant 1).
+# Without the guard, squeeze-columns/describe shred JSON/YAML. The
+# guard repeats per compacting rule because `.lf` has no top-level pre-filter
+# and macros can't wrap a cascade. (`-o jsonpath`/`go-template`/`custom-columns`
+# emit caller-formatted text — residual risk, not yet guarded.)
+
+include ../../lib/columns.lf
+include ../../lib/truncation.lf
+
+define compact-describe(limit):
+    shell: |
+        buf=$(mktemp)
+        trap 'rm -f "$buf"' EXIT
+        cat > "$buf"
+
+        # Tag by line class in one sed pass; the loop below owns the state the
+        # tags can't carry: whether we're inside the Events table, and how many
+        # event rows have been kept.
+        sed -E '
+        /^(Name:|Namespace:|Status:|Controlled By:)/{s/^/N/;b
+        }
+        /^Events:/{s/^/V/;b
+        }
+        /^  (Type[[:blank:]]+Reason|----)/{s/^/T/;b
+        }
+        /^(Labels:|Annotations:|Containers:|Conditions:|Replicas:|StrategyType:)/{s/^/L/;b
+        }
+        /^[[:blank:]]*$/{s/^/B/;b
+        }
+        s/^/X/' < "$buf" | {
+            in_events=0
+            events=0
+            dropped=0
+            emitted=0
+            while IFS= read -r tagged || [ -n "$tagged" ]; do
+                line=${tagged#?}
+                tag=${tagged%"$line"}
+
+                # inside the Events table every non-blank row is an event row,
+                # whatever it looks like — mirrors the reference order of checks
+                if [ "$in_events" = 1 ] && [ "$tag" = L ]; then
+                    tag=X
+                fi
+
+                case $tag in
+                    N) printf '%s\n' "$line"; emitted=1 ;;
+                    V) printf '%s\n' "$line"; in_events=1; emitted=1 ;;
+                    T) [ "$in_events" = 1 ] && { printf '%s\n' "$line"; emitted=1; } ;;
+                    L) [ "${level:-full}" = "ultra" ] || { printf '%s\n' "$line"; emitted=1; } ;;
+                    X)
+                        if [ "$in_events" = 1 ]; then
+                            if [ "$events" -lt $1 ]; then
+                                printf '%s\n' "$line"
+                                events=$((events + 1))
+                                emitted=1
+                            else
+                                dropped=$((dropped + 1))
+                            fi
+                        fi
+                        ;;
+                esac
+            done
+
+            # Nothing matched — an unrecognized shape must not read as silence.
+            if [ "$emitted" = 0 ]; then
+                total=$(grep -c '' < "$buf")
+                [ "$total" -gt $1 ] && printf '[lowfat] +%d earlier lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - $1))" "${level:-full}"
+                tail -n $1 < "$buf"
+            fi
+
+            [ "$dropped" -gt 0 ] && printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$dropped" "${level:-full}"
+        }
+        exit 0
+
+get:
+    if exit failed:
+        raw
+    elif -o json:
+        raw
+    elif -o yaml:
+        raw
+    else:
+        squeeze-columns
+
+describe:
+    if exit failed:
+        raw
+    elif -o json:
+        raw
+    elif -o yaml:
+        raw
+    else:
+        match level:
+            ultra: compact-describe 8
+            full:  compact-describe 24
+            lite:  compact-describe 48
+
+logs, ultra:
+    if exit failed:
+        raw
+    else:
+        tail-marked 15
+logs, full:
+    if exit failed:
+        raw
+    else:
+        tail-marked 30
+logs:
+    if exit failed:
+        raw
+    else:
+        tail-marked 60
+apply|rollout:
+    if exit failed:
+        raw
+    elif -o json:
+        raw
+    elif -o yaml:
+        raw
+    else:
+        keep /^([[:alnum:]._\/-]+ (created|configured|unchanged|deleted)|deployment ".+" successfully|Waiting for|rollout status|error:)/
+        head-auto-marked
+        or-shell: s=$(grep -E '[^[:space:]]'); n=$(printf '%s\n' "$s" | wc -l); printf '%s\n' "$s" | head -30; if [ "$n" -gt 30 ]; then printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((n-30))" "${level:-full}"; fi
+
+*:
+    if exit failed:
+        raw
+    elif -o json:
+        raw
+    elif -o yaml:
+        raw
+    else:
+        head-auto-marked
+

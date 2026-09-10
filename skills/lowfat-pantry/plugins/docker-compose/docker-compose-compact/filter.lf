@@ -1,0 +1,70 @@
+#!/usr/bin/env lowfat-filter
+# docker-compose-compact - compact legacy docker-compose output.
+# env: $sub $level $exit $args
+#
+# `--format json` (`ps`/`config`/`images --format json`) is machine output —
+# pass byte-exact (invariant 1). Without the guard squeeze-columns reshapes it and
+# the `*` drop-blank+head-auto truncates it (a 53-line `config --format json`
+# fell to 15 at ultra). Guard the json value so default `--format table` /
+# yaml still compacts.
+
+include ../../lib/columns.lf
+include ../../lib/truncation.lf
+
+define drop-compose-spam:
+    drop /^$/
+    drop /[[:space:]]+(Creating|Created|Starting|Started|Pulling|Pulled|Waiting|Recreating|Recreated)([[:space:]]|$)/
+    drop /[[:space:]]+Pull complete$/
+    drop /^Creating /
+    drop /^Starting /
+    drop /^Pulling /
+    drop /^Waiting /
+
+up|build:
+    if exit failed:
+        raw
+    else:
+        match level:
+            ultra:
+                drop-compose-spam
+                keep /(error|Error|ERROR|exited with code|Successfully|Built|Building|Recreating|Attaching to)/
+                tail-marked 30
+                or "docker-compose: ok"
+            lite:
+                drop-compose-spam
+                tail-marked 200
+            else:
+                drop-compose-spam
+                tail-marked 80
+logs, ultra:
+    if exit failed:
+        raw
+    else:
+        tail-marked 20
+logs, full:
+    if exit failed:
+        raw
+    else:
+        tail-marked 60
+logs:
+    if exit failed:
+        raw
+    else:
+        tail-marked 200
+ps:
+    if exit failed:
+        raw
+    elif --format json:
+        raw
+    else:
+        drop /^[-]+$/
+        squeeze-columns
+
+*:
+    if exit failed:
+        raw
+    elif --format json:
+        raw
+    else:
+        drop-compose-spam
+        head-auto-marked

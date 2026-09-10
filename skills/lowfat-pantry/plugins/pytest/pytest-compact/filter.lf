@@ -1,0 +1,60 @@
+#!/usr/bin/env lowfat-filter
+# pytest-compact — drop progress/pass noise, keep failure sections and summary.
+# env: $sub $level $exit $args
+
+define compact-pytest(limit):
+    shell: |
+        if [ "${exit:-0}" = "0" ]; then
+            tally=$(grep -m1 -oE '[0-9]+ passed')
+            if [ -n "$tally" ]; then printf 'pytest: %s\n' "$tally"; else printf 'pytest: passed\n'; fi
+            exit 0
+        fi
+
+        # ultra keeps only the headers and the assertion (E) lines; full/lite keep
+        # the whole FAILURES/ERRORS section body, which is a sed *range* — the
+        # `b` skips later rules so a log line starting "ERROR " inside the section
+        # isn't printed twice.
+        buf=$(mktemp)
+        cut=$(mktemp)
+        trap 'rm -f "$buf" "$cut"' EXIT
+        cat > "$buf"
+
+        if [ "${level:-full}" = "ultra" ]; then
+            grep -E '^(=+ (FAILURES|ERRORS) =+|=+ short test summary info =+|=+ .*(failed|error|errors).* =+|FAILED |ERROR |_____|E   )'
+        else
+            sed -nE '/^=+ (FAILURES|ERRORS) =+/,/^=+ short test summary info =+/{
+        p
+        b
+        }
+        /^=+ .*(failed|error|errors).* =+/{
+        p
+        b
+        }
+        /^(FAILED|ERROR) /{
+        p
+        b
+        }'
+        fi < "$buf" > "$cut"
+
+        # Nothing matched: the run's shape isn't one this filter knows (a new
+        # reporter, a plugin's own format, a crash before the section headers).
+        # Silence would read as "the command printed nothing" — fall back to a
+        # marked tail of what actually arrived.
+        if [ ! -s "$cut" ]; then
+            kept=$(( $1 + 8 ))
+            total=$(grep -c '' < "$buf")
+            [ "$total" -gt "$kept" ] && printf '[lowfat] +%d earlier lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - kept))" "${level:-full}"
+            tail -n "$kept" < "$buf"
+            exit 0
+        fi
+
+        total=$(grep -c '' < "$cut")
+        head -n $(( $1 + 8 )) < "$cut"
+        [ "$total" -gt $(( $1 + 8 )) ] && printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - $1 - 8))" "${level:-full}"
+        exit 0
+
+*:
+    match level:
+        ultra: compact-pytest 18
+        full:  compact-pytest 45
+        lite:  compact-pytest 90

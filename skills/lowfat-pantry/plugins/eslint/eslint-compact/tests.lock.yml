@@ -1,0 +1,291 @@
+- name: tests.cue \ eslint-compact \ samples/eslint-problems.txt lite
+  commands:
+    - command: lowfat filter plugins/eslint/eslint-compact/filter.lf --sub= --args='.' --exit=1 --level=lite < plugins/eslint/eslint-compact/samples/eslint-problems.txt
+      checks:
+        - name: stdout
+          data:
+            - /Users/dev/shop/src/checkout/api.ts
+            - '  12:1   error    ''Optional'' is defined but never used                  no-unused-vars'
+            - '  37:89  warning  This line has a length of 112. Maximum allowed is 88  max-len'
+            - '  86:9   error    Unexpected console statement                          no-console'
+            - '  112:5  error    Expected ''==='' and instead saw ''==''                   eqeqeq'
+            - /Users/dev/shop/src/checkout/config.ts
+            - '  4:1    error    Run autofix to sort these imports                     simple-import-sort/imports'
+            - '  22:7   warning  ''rawEnv'' is assigned a value but never used           no-unused-vars'
+            - /Users/dev/shop/src/checkout/models.ts
+            - '  57:9   error    Use the rest parameters instead of ''arguments''        prefer-rest-params'
+            - ✖ 7 problems (5 errors, 2 warnings)
+            - '  3 errors and 0 warnings potentially fixable with the `--fix` option.'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/eslint/eslint-compact/filter.lf --sub= --args='.' --exit=1 --level=lite < plugins/eslint/eslint-compact/samples/eslint-problems.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 12
+            - bytes 829
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ eslint-compact \ samples/eslint-problems.txt full
+  commands:
+    - command: lowfat filter plugins/eslint/eslint-compact/filter.lf --sub= --args='.' --exit=1 --level=full < plugins/eslint/eslint-compact/samples/eslint-problems.txt
+      checks:
+        - name: stdout
+          data:
+            - /Users/dev/shop/src/checkout/api.ts
+            - '  12:1   error    ''Optional'' is defined but never used                  no-unused-vars'
+            - '  37:89  warning  This line has a length of 112. Maximum allowed is 88  max-len'
+            - '  86:9   error    Unexpected console statement                          no-console'
+            - '  112:5  error    Expected ''==='' and instead saw ''==''                   eqeqeq'
+            - /Users/dev/shop/src/checkout/config.ts
+            - '  4:1    error    Run autofix to sort these imports                     simple-import-sort/imports'
+            - '  22:7   warning  ''rawEnv'' is assigned a value but never used           no-unused-vars'
+            - /Users/dev/shop/src/checkout/models.ts
+            - '  57:9   error    Use the rest parameters instead of ''arguments''        prefer-rest-params'
+            - ✖ 7 problems (5 errors, 2 warnings)
+            - '  3 errors and 0 warnings potentially fixable with the `--fix` option.'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/eslint/eslint-compact/filter.lf --sub= --args='.' --exit=1 --level=full < plugins/eslint/eslint-compact/samples/eslint-problems.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 12
+            - bytes 829
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ eslint-compact \ samples/eslint-problems.txt ultra
+  commands:
+    - command: lowfat filter plugins/eslint/eslint-compact/filter.lf --sub= --args='.' --exit=1 --level=ultra < plugins/eslint/eslint-compact/samples/eslint-problems.txt
+      checks:
+        - name: stdout
+          data:
+            - /Users/dev/shop/src/checkout/api.ts
+            - '  12:1   error    ''Optional'' is defined but never used                  no-unused-vars'
+            - '  37:89  warning  This line has a length of 112. Maximum allowed is 88  max-len'
+            - '  86:9   error    Unexpected console statement                          no-console'
+            - '  112:5  error    Expected ''==='' and instead saw ''==''                   eqeqeq'
+            - /Users/dev/shop/src/checkout/config.ts
+            - '  4:1    error    Run autofix to sort these imports                     simple-import-sort/imports'
+            - '  22:7   warning  ''rawEnv'' is assigned a value but never used           no-unused-vars'
+            - /Users/dev/shop/src/checkout/models.ts
+            - '  57:9   error    Use the rest parameters instead of ''arguments''        prefer-rest-params'
+            - ✖ 7 problems (5 errors, 2 warnings)
+            - '  3 errors and 0 warnings potentially fixable with the `--fix` option.'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/eslint/eslint-compact/filter.lf --sub= --args='.' --exit=1 --level=ultra < plugins/eslint/eslint-compact/samples/eslint-problems.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 12
+            - bytes 829
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ eslint-compact \ samples/eslint-clean.txt lite
+  commands:
+    - command: lowfat filter plugins/eslint/eslint-compact/filter.lf --sub= --args='.' --exit=0 --level=lite < plugins/eslint/eslint-compact/samples/eslint-clean.txt
+      checks:
+        - name: stdout
+          data:
+            - 'eslint: clean'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/eslint/eslint-compact/filter.lf --sub= --args='.' --exit=0 --level=lite < plugins/eslint/eslint-compact/samples/eslint-clean.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 14
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ eslint-compact \ samples/eslint-clean.txt full
+  commands:
+    - command: lowfat filter plugins/eslint/eslint-compact/filter.lf --sub= --args='.' --exit=0 --level=full < plugins/eslint/eslint-compact/samples/eslint-clean.txt
+      checks:
+        - name: stdout
+          data:
+            - 'eslint: clean'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/eslint/eslint-compact/filter.lf --sub= --args='.' --exit=0 --level=full < plugins/eslint/eslint-compact/samples/eslint-clean.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 14
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ eslint-compact \ samples/eslint-clean.txt ultra
+  commands:
+    - command: lowfat filter plugins/eslint/eslint-compact/filter.lf --sub= --args='.' --exit=0 --level=ultra < plugins/eslint/eslint-compact/samples/eslint-clean.txt
+      checks:
+        - name: stdout
+          data:
+            - 'eslint: clean'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/eslint/eslint-compact/filter.lf --sub= --args='.' --exit=0 --level=ultra < plugins/eslint/eslint-compact/samples/eslint-clean.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 14
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ eslint-compact \ samples/eslint-many.txt lite
+  commands:
+    - command: lowfat filter plugins/eslint/eslint-compact/filter.lf --sub= --args='src' --exit=1 --level=lite < plugins/eslint/eslint-compact/samples/eslint-many.txt
+      checks:
+        - name: stdout
+          data:
+            - /src/app.js
+            - '  1:5  error  Unexpected console statement  no-console'
+            - '  2:5  error  Unexpected console statement  no-console'
+            - '  3:5  error  Unexpected console statement  no-console'
+            - '  4:5  error  Unexpected console statement  no-console'
+            - '  5:5  error  Unexpected console statement  no-console'
+            - '  6:5  error  Unexpected console statement  no-console'
+            - '  7:5  error  Unexpected console statement  no-console'
+            - '  8:5  error  Unexpected console statement  no-console'
+            - '  9:5  error  Unexpected console statement  no-console'
+            - '  10:5  error  Unexpected console statement  no-console'
+            - '  11:5  error  Unexpected console statement  no-console'
+            - '  12:5  error  Unexpected console statement  no-console'
+            - '  13:5  error  Unexpected console statement  no-console'
+            - '  14:5  error  Unexpected console statement  no-console'
+            - '  15:5  error  Unexpected console statement  no-console'
+            - '  16:5  error  Unexpected console statement  no-console'
+            - '  17:5  error  Unexpected console statement  no-console'
+            - '  18:5  error  Unexpected console statement  no-console'
+            - '  19:5  error  Unexpected console statement  no-console'
+            - '  20:5  error  Unexpected console statement  no-console'
+            - '  21:5  error  Unexpected console statement  no-console'
+            - '  22:5  error  Unexpected console statement  no-console'
+            - '  23:5  error  Unexpected console statement  no-console'
+            - '  24:5  error  Unexpected console statement  no-console'
+            - '  25:5  error  Unexpected console statement  no-console'
+            - '  26:5  error  Unexpected console statement  no-console'
+            - '  27:5  error  Unexpected console statement  no-console'
+            - '  28:5  error  Unexpected console statement  no-console'
+            - '  29:5  error  Unexpected console statement  no-console'
+            - '  30:5  error  Unexpected console statement  no-console'
+            - ✖ 30 problems (30 errors, 0 warnings)
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/eslint/eslint-compact/filter.lf --sub= --args='src' --exit=1 --level=lite < plugins/eslint/eslint-compact/samples/eslint-many.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 32
+            - bytes 1723
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ eslint-compact \ samples/eslint-many.txt full
+  commands:
+    - command: lowfat filter plugins/eslint/eslint-compact/filter.lf --sub= --args='src' --exit=1 --level=full < plugins/eslint/eslint-compact/samples/eslint-many.txt
+      checks:
+        - name: stdout
+          data:
+            - /src/app.js
+            - '  1:5  error  Unexpected console statement  no-console'
+            - '  2:5  error  Unexpected console statement  no-console'
+            - '  3:5  error  Unexpected console statement  no-console'
+            - '  4:5  error  Unexpected console statement  no-console'
+            - '  5:5  error  Unexpected console statement  no-console'
+            - '  6:5  error  Unexpected console statement  no-console'
+            - '  7:5  error  Unexpected console statement  no-console'
+            - '  8:5  error  Unexpected console statement  no-console'
+            - '  9:5  error  Unexpected console statement  no-console'
+            - '  10:5  error  Unexpected console statement  no-console'
+            - '  11:5  error  Unexpected console statement  no-console'
+            - '  12:5  error  Unexpected console statement  no-console'
+            - '  13:5  error  Unexpected console statement  no-console'
+            - '  14:5  error  Unexpected console statement  no-console'
+            - '  15:5  error  Unexpected console statement  no-console'
+            - '  16:5  error  Unexpected console statement  no-console'
+            - '  17:5  error  Unexpected console statement  no-console'
+            - '  18:5  error  Unexpected console statement  no-console'
+            - '  19:5  error  Unexpected console statement  no-console'
+            - '  20:5  error  Unexpected console statement  no-console'
+            - '  21:5  error  Unexpected console statement  no-console'
+            - '  22:5  error  Unexpected console statement  no-console'
+            - '  23:5  error  Unexpected console statement  no-console'
+            - '  24:5  error  Unexpected console statement  no-console'
+            - '  25:5  error  Unexpected console statement  no-console'
+            - '  26:5  error  Unexpected console statement  no-console'
+            - '  27:5  error  Unexpected console statement  no-console'
+            - '  28:5  error  Unexpected console statement  no-console'
+            - '  29:5  error  Unexpected console statement  no-console'
+            - '  30:5  error  Unexpected console statement  no-console'
+            - ✖ 30 problems (30 errors, 0 warnings)
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/eslint/eslint-compact/filter.lf --sub= --args='src' --exit=1 --level=full < plugins/eslint/eslint-compact/samples/eslint-many.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 32
+            - bytes 1723
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ eslint-compact \ samples/eslint-many.txt ultra
+  commands:
+    - command: lowfat filter plugins/eslint/eslint-compact/filter.lf --sub= --args='src' --exit=1 --level=ultra < plugins/eslint/eslint-compact/samples/eslint-many.txt
+      checks:
+        - name: stdout
+          data:
+            - /src/app.js
+            - '  1:5  error  Unexpected console statement  no-console'
+            - '  2:5  error  Unexpected console statement  no-console'
+            - '  3:5  error  Unexpected console statement  no-console'
+            - '  4:5  error  Unexpected console statement  no-console'
+            - '  5:5  error  Unexpected console statement  no-console'
+            - '  6:5  error  Unexpected console statement  no-console'
+            - '  7:5  error  Unexpected console statement  no-console'
+            - '  8:5  error  Unexpected console statement  no-console'
+            - '  9:5  error  Unexpected console statement  no-console'
+            - '  10:5  error  Unexpected console statement  no-console'
+            - '  11:5  error  Unexpected console statement  no-console'
+            - '  12:5  error  Unexpected console statement  no-console'
+            - '  13:5  error  Unexpected console statement  no-console'
+            - '  14:5  error  Unexpected console statement  no-console'
+            - '  15:5  error  Unexpected console statement  no-console'
+            - '  16:5  error  Unexpected console statement  no-console'
+            - '  17:5  error  Unexpected console statement  no-console'
+            - '  18:5  error  Unexpected console statement  no-console'
+            - '  19:5  error  Unexpected console statement  no-console'
+            - '  20:5  error  Unexpected console statement  no-console'
+            - '  21:5  error  Unexpected console statement  no-console'
+            - '  22:5  error  Unexpected console statement  no-console'
+            - '  23:5  error  Unexpected console statement  no-console'
+            - '  24:5  error  Unexpected console statement  no-console'
+            - '[lowfat] +7 lines dropped (level=ultra) -- output truncated, re-run raw for the full list'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/eslint/eslint-compact/filter.lf --sub= --args='src' --exit=1 --level=ultra < plugins/eslint/eslint-compact/samples/eslint-many.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 26
+            - bytes 1437
+        - name: exitcode
+          data:
+            - "0"

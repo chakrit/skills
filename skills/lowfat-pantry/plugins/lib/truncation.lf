@@ -1,0 +1,85 @@
+# Truncation macros shared by the pantry — every rule that drops lines says so, with
+# the count (docs/decisions/2026-07-26-visible-truncation.md). Include, don't copy:
+#
+#     include ../../lib/truncation.lf
+#
+# The path is relative to the including filter and holds in both trees: the pantry
+# source (plugins/<cat>/<name>/) and the install (<LOWFAT_HOME>/plugins/<cat>/<name>/).
+# A filter needing its own variant just defines the name locally — a local define wins
+# over an included one.
+#
+# POSIX sh only, and ERE only (`grep -E`, `sed -nE`): BSD sed has no `\|` alternation
+# and matches *nothing* for it, silently, so a BRE alternation ships a filter that works
+# on Linux and blanks the output on macOS.
+
+define head-marked(limit):
+    shell: |
+        body=$(cat)
+        [ -n "$body" ] || exit 0
+
+        total=$(printf '%s\n' "$body" | grep -c '')
+        printf '%s\n' "$body" | head -n $1
+
+        [ "$total" -gt $1 ] && printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - $1))" "${level:-full}"
+        exit 0
+
+define head-auto-marked:
+    shell: |
+        case "${level:-full}" in
+            ultra) limit=15 ;;
+            lite)  limit=60 ;;
+            *)     limit=30 ;;
+        esac
+
+        body=$(cat)
+        [ -n "$body" ] || exit 0
+
+        total=$(printf '%s\n' "$body" | grep -c '')
+        printf '%s\n' "$body" | head -n "$limit"
+
+        [ "$total" -gt "$limit" ] && printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - limit))" "${level:-full}"
+        exit 0
+
+define tail-marked(limit):
+    shell: |
+        body=$(cat)
+        [ -n "$body" ] || exit 0
+
+        total=$(printf '%s\n' "$body" | grep -c '')
+        [ "$total" -gt $1 ] && printf '[lowfat] +%d earlier lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - $1))" "${level:-full}"
+
+        printf '%s\n' "$body" | tail -n $1
+        exit 0
+
+# `cap` differs from the macros above only in bookkeeping: it keeps trailing blank
+# lines in the tally, so it buffers to a file rather than to a variable (command
+# substitution eats them). The marker is the same house form.
+define cap(limit):
+    shell: |
+        buf=$(mktemp)
+        trap 'rm -f "$buf"' EXIT
+        cat > "$buf"
+
+        total=$(grep -c '' < "$buf")
+        [ "$total" -gt 0 ] || exit 0
+
+        head -n $1 < "$buf"
+        [ "$total" -gt $1 ] && printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - $1))" "${level:-full}"
+        exit 0
+
+define tail-auto-marked:
+    shell: |
+        case "${level:-full}" in
+            ultra) limit=15 ;;
+            lite)  limit=60 ;;
+            *)     limit=30 ;;
+        esac
+
+        body=$(cat)
+        [ -n "$body" ] || exit 0
+
+        total=$(printf '%s\n' "$body" | grep -c '')
+        [ "$total" -gt "$limit" ] && printf '[lowfat] +%d earlier lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - limit))" "${level:-full}"
+
+        printf '%s\n' "$body" | tail -n "$limit"
+        exit 0
