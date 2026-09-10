@@ -30,10 +30,15 @@ After this repository is published, projects can subscribe with `ace setup chakr
 workflow school used to maintain this repository; those workflow skills are not
 published here.
 
-Before refreshing imports, confirm that `ace paths school` resolves this checkout.
-With this checkout selected as the target school, use `ace school pull` to refresh
-its imports and `ace school validate` to check its configuration. `ace link` updates
-the current project's workflow links from the school selected in `ace.toml`.
+`ace paths school` normally resolves PROD9 here because it describes the editing
+environment. Keep that selection. Before refreshing this collection's imports,
+verify a supported way to target this checkout explicitly; do not run a school
+mutation against PROD9 or change `ace.toml` to select this collection.
+`ace link` updates the editing links supplied by PROD9.
+
+[AGENTS.md](AGENTS.md) defines the editing boundaries, command-target checks, and
+feedback destinations. Feedback for fact-check and learn belongs in `chakrit/skills`;
+feedback for the Thai skills belongs in `chakrit/kien-thai`.
 
 Edit `fact-check` and `learn` directly here. Changes to the imported Thai skills
 belong in [chakrit/kien-thai](https://github.com/chakrit/kien-thai); a later pull

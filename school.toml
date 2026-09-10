@@ -1,3 +1,5 @@
+# Published skill collection; this does not select the editing workflow.
+# Agents editing this repository use prod9/school through ace.toml.
 name = "Chakrit Skills"
 
 [[imports]]

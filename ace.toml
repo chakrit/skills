@@ -1,3 +1,5 @@
+# Editing environment for this repository; keep PROD9 selected.
+# Published packages and upstream imports are defined in school.toml.
 school = "prod9/school"
 include_skills = [
   "ace",
