@@ -1,0 +1,5 @@
+name = "Chakrit Skills"
+
+[[imports]]
+source = "chakrit/kien-thai"
+skills = ["kien-thai", "kode-thai"]

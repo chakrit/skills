@@ -1,45 +1,50 @@
-# Personally published skills
+# Chakrit Skills
 
-This repository collects Chakrit's personally published agent skills. The initial
-consolidation sources are chakrit/kien-thai, chakrit/fact-check, and chakrit/learn.
+This repository is Chakrit's ACE school for personally published agent skills.
+`school.toml` declares this school's imports. `ace.toml` selects `prod9/school`
+for the workflow used to maintain this repository.
+`CLAUDE.md` is a symlink to this file.
 
-## Repository layout
+## Ownership and layout
 
-Publish each skill as a real directory under skills/<name>/ with a SKILL.md entry
-point and its supporting resources. Keep runtime references in skills/<name>/references/ and
-skill-local explanatory documents in skills/<name>/docs/ when needed. Keep
-maintenance documentation under docs/skills/<name>/ after the docs gate is
-established. Keep relative references valid and preserve
-source licenses and attribution during consolidation. These packages must remain
-usable independently of the agent application used to maintain this repository.
+- `skills/fact-check/` and `skills/learn/` are maintained directly in this repository.
+- `skills/kien-thai/` and `skills/kode-thai/` are imported from chakrit/kien-thai.
+  Make changes upstream and refresh them with `ace school pull`.
+- Each published skill keeps its runtime references in `references/` and supporting
+  documentation in `docs/` within its own directory. Preserve relative references,
+  source attribution, and the root MIT license. README.md is the catalog and source record.
+- Kien-thai's research docs, corpus, and evaluation tooling remain upstream; links
+  are in README.md. Do not migrate them into this school as part of a skill refresh.
+- `.agents/skills/` contains generated links. Edit owned packages through `skills/`.
+- `.ace/` holds ignored local session records and temporary source checkouts.
 
-The .agents/skills/ directory contains ACE-managed workflow links into the ACE Home
-school. Edit this repository's published skills under skills/, not through those
-links. Changes to the ACE Home school are a separate task.
+Keep skill packages usable independently of the agent application used to maintain
+this school. Preserve the sibling relationship between kien-thai and kode-thai.
 
-## Working commands and conventions
+## Commands and checks
 
-Run ace to start or resume work. Run ace skills and ace config to inspect the active
-workflow configuration, ace paths to locate it, and ace link after approved changes
-to the workflow selection.
+Run `ace` for recurring work. Use `ace skills` and `ace config` to inspect the
+workflow configuration. `ace link` links the selected PROD9 workflow into this project.
+Before using `ace school pull` for this repository, confirm that `ace paths school`
+resolves this checkout rather than PROD9. Refresh and validate only the intended school.
 
-The shared workflow selection is ace, ace-audit, ace-docs, ace-init, ace-save, and
-ace-skill. The inherited user selection also activates ace-afk and ace-school.
-Use ace-skill when authoring or revising published skills.
+Before committing a direct skill ingestion, compare its SKILL.md and references
+against the recorded source revision, check relative links, and inspect the full diff.
+No repository-wide build or model evaluation is required for package ingestion.
 
-No project build or test command is established yet. During migration, preserve and
-inspect source checks before documenting runnable commands. Load the code and
-architect skills before designing or editing code; report a missing required skill.
+Use `ace-skill` for authored skill revisions and `ace-school` for school reviews.
+Keep `ace` and `ace-save` available with the ACE Home workflow. Load `code` and
+`architect` before designing or editing code; the PROD9 school is an authorized
+source for those skills when absent from this school's active set.
 
-Use the current branch by default and the gh remote. Wrap prose at 90 columns where
-practical and align Markdown table pipes. Always capitalize PRODIGY9.
+Use the current branch and the `gh` remote. Wrap prose at 90 columns where practical,
+align Markdown table pipes, and always capitalize PRODIGY9.
 
 ## Durable documentation
 
-The planned durable documentation root is docs/. It has not been scaffolded yet.
-Use ace-docs to establish its gates before creating durable architecture, domain,
-or design documents. Keep the public skill catalog and installation guidance in
-README.md when the skill packages are consolidated.
+Skill documentation belongs alongside its package. No repository-wide docs tree is
+established. Use `ace-docs` before creating the first repository-wide architecture,
+domain, or design document.
 
 ## Git checkpoints
 
