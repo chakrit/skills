@@ -9,6 +9,8 @@ ordinary skill directories.
 | `learn`         | Adaptive technical tutoring      | Yes             |
 | `note-taker`    | Meeting and discussion notes     | Yes             |
 | `safety-audit`  | Software trust and safety audits | Yes             |
+| `1-by-1`        | Walk decisions one at a time     | Yes             |
+| `wrap-up`       | Close a work session cleanly     | Yes             |
 | `lowfat-pantry` | Command-output filter pantry     | Imported        |
 | `kien-thai`     | Natural Thai writing             | Imported        |
 | `kode-thai`     | Iterative Thai writing audits    | Imported        |
@@ -39,10 +41,11 @@ mutation against PROD9 or change `ace.toml` to select this collection.
 `ace link` updates the editing links supplied by PROD9.
 
 [AGENTS.md](AGENTS.md) defines the editing boundaries, command-target checks, and
-feedback destinations. Feedback for fact-check, learn, note-taker, and safety-audit
-belongs in `chakrit/skills`. Feedback for the Thai skills belongs in
-`chakrit/kien-thai`; lowfat-pantry feedback belongs in `chakrit/lowfat-pantry`;
-smoke feedback belongs in `chakrit/smoke`, beside the SMOKE CLI it documents.
+feedback destinations. Feedback for fact-check, learn, note-taker, safety-audit,
+1-by-1, and wrap-up belongs in `chakrit/skills`. Feedback for the Thai skills
+belongs in `chakrit/kien-thai`; lowfat-pantry feedback belongs in
+`chakrit/lowfat-pantry`; smoke feedback belongs in `chakrit/smoke`, beside the
+SMOKE CLI it documents.
 
 Edit the directly maintained skills here. Changes to imported packages belong
 upstream; a later import refresh brings those changes into this collection.
@@ -66,6 +69,9 @@ The direct ingestions started from these revisions:
   `4a35557ed7b1fa330f184f9f15899fffb1714d67`.
 - `note-taker` and `safety-audit`: the corresponding directories under `skills/`
   in `prod9/school` at `55d913f56df00ff7548eab329d4c56b91489d89d`.
+- `1-by-1` and `wrap-up`: Chakrit's personal agent configuration
+  (`claude/.claude/skills/` in `chakrit/dotfiles`), including its uncommitted edits
+  as of 2026-11-03.
 
 These skills are maintained here after ingestion and are not refreshed by
 `ace school pull`.
