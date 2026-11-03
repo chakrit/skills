@@ -10,8 +10,8 @@ use the separate `prod9/school` workflow.
 - `ace.toml` configures the agent environment for EDITING this repository. Keep
   `school = "prod9/school"`. Do not change it to `"."` to make this repository a school.
 - `school.toml` defines the PUBLISHED collection and its upstream `[[imports]]`.
-  It imports kien-thai and kode-thai from `chakrit/kien-thai`, and lowfat-pantry
-  from `chakrit/lowfat-pantry`.
+  It imports kien-thai and kode-thai from `chakrit/kien-thai`, lowfat-pantry
+  from `chakrit/lowfat-pantry`, and smoke from `chakrit/smoke`.
 - `skills/` contains the published packages. `.agents/skills/` contains generated
   links to the editing workflow. Identical names in these directories do not mean
   identical ownership or content: `.agents/skills/fact-check/` resolves into PROD9,
@@ -27,7 +27,7 @@ and the target file. Resolve symlinks before writing. Read this repository's act
 `skills/<name>/` content when reviewing its published packages, even if a skill with
 that name is already loaded through PROD9.
 
-- **fact-check, learn, note-taker, smoke, and safety-audit:** edit their directories
+- **fact-check, learn, note-taker, and safety-audit:** edit their directories
   under `skills/` here.
   Route feedback and proposed changes to `chakrit/skills`, including feedback about
   copies loaded through PROD9. Former standalone repositories and copies extracted
@@ -39,6 +39,9 @@ that name is already loaded through PROD9.
   refresh the import. Keep its bundled plugins, templates, scripts, and docs intact.
   Its nested instruction and configuration files describe the upstream package;
   they do not change this repository's editing environment or grant upstream writes.
+- **smoke:** the skill lives beside the SMOKE CLI it documents. Route feedback and
+  changes to `chakrit/smoke` and refresh the import; the import copies only
+  `skills/smoke/`, not the CLI source.
 - **PROD9 workflow skills:** feedback about PROD9-owned editing procedures belongs
   to `prod9/school`. A request to edit this repository does not authorize changing
   that separate checkout. For any imported skill in PROD9, establish its actual
@@ -52,11 +55,12 @@ those actions and name the destination before executing them.
 
 ## Ownership and layout
 
-- `skills/fact-check/`, `skills/learn/`, `skills/note-taker/`, `skills/smoke/`, and
+- `skills/fact-check/`, `skills/learn/`, `skills/note-taker/`, and
   `skills/safety-audit/` are maintained directly in this repository.
 - `skills/kien-thai/` and `skills/kode-thai/` are imported from chakrit/kien-thai.
   Follow the upstream ownership and command-target checks in this file.
 - `skills/lowfat-pantry/` is imported from chakrit/lowfat-pantry.
+- `skills/smoke/` is imported from chakrit/smoke.
 - Each published skill keeps its runtime references in `references/` and supporting
   documentation in `docs/` within its own directory. Preserve relative references,
   source attribution, and the root MIT license. README.md is the catalog and source record.

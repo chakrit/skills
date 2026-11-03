@@ -8,11 +8,11 @@ ordinary skill directories.
 | `fact-check`    | Verify claims and assess reviews | Yes             |
 | `learn`         | Adaptive technical tutoring      | Yes             |
 | `note-taker`    | Meeting and discussion notes     | Yes             |
-| `smoke`         | Command-output snapshot testing  | Yes             |
 | `safety-audit`  | Software trust and safety audits | Yes             |
 | `lowfat-pantry` | Command-output filter pantry     | Imported        |
 | `kien-thai`     | Natural Thai writing             | Imported        |
 | `kode-thai`     | Iterative Thai writing audits    | Imported        |
+| `smoke`         | Command-output snapshot testing  | Imported        |
 
 ## Use the skills
 
@@ -28,9 +28,9 @@ ace setup chakrit/skills
 
 ## Maintain the school
 
-`school.toml` imports the two Thai skills and lowfat-pantry. `ace.toml` selects PROD9 as the
-workflow school used to maintain this repository; those workflow skills are not
-published here.
+`school.toml` imports the two Thai skills, lowfat-pantry, and smoke. `ace.toml`
+selects PROD9 as the workflow school used to maintain this repository; those
+workflow skills are not published here.
 
 `ace paths school` normally resolves PROD9 here because it describes the editing
 environment. Keep that selection. Before refreshing this collection's imports,
@@ -39,9 +39,10 @@ mutation against PROD9 or change `ace.toml` to select this collection.
 `ace link` updates the editing links supplied by PROD9.
 
 [AGENTS.md](AGENTS.md) defines the editing boundaries, command-target checks, and
-feedback destinations. Feedback for fact-check, learn, note-taker, smoke, and
-safety-audit belongs in `chakrit/skills`. Feedback for the Thai skills belongs in
-`chakrit/kien-thai`; lowfat-pantry feedback belongs in `chakrit/lowfat-pantry`.
+feedback destinations. Feedback for fact-check, learn, note-taker, and safety-audit
+belongs in `chakrit/skills`. Feedback for the Thai skills belongs in
+`chakrit/kien-thai`; lowfat-pantry feedback belongs in `chakrit/lowfat-pantry`;
+smoke feedback belongs in `chakrit/smoke`, beside the SMOKE CLI it documents.
 
 Edit the directly maintained skills here. Changes to imported packages belong
 upstream; a later import refresh brings those changes into this collection.
@@ -63,13 +64,16 @@ The direct ingestions started from these revisions:
   `a88af9a75e06297a15c728d2907882a3e379eefe`.
 - `learn`: `chakrit/learn` at
   `4a35557ed7b1fa330f184f9f15899fffb1714d67`.
-- `note-taker`, `smoke`, and `safety-audit`: the corresponding directories under
-  `skills/` in `prod9/school` at
-  `55d913f56df00ff7548eab329d4c56b91489d89d`.
+- `note-taker` and `safety-audit`: the corresponding directories under `skills/`
+  in `prod9/school` at `55d913f56df00ff7548eab329d4c56b91489d89d`.
 
 These skills are maintained here after ingestion and are not refreshed by
 `ace school pull`.
-The Thai packages and lowfat-pantry are refreshed through `school.toml` imports.
+The Thai packages, lowfat-pantry, and smoke are refreshed through `school.toml`
+imports. Smoke was first extracted from `prod9/school` with the skills above, then
+switched to an import of `skills/smoke/` from `chakrit/smoke` at
+`689f85ce1a22a42cf58a9b712555ae2472adbd05`, whose copy was identical. The import
+copies only that directory, not the SMOKE CLI source.
 Lowfat-pantry was initially imported from `chakrit/lowfat-pantry` at
 `e9d7d942297e7b76bd01e2a7b6e29ffe0b9a3ad8`, including its plugins, templates,
 scripts, and documentation.
