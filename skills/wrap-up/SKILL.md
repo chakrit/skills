@@ -33,8 +33,8 @@ Run the complete wrap-up procedure below.
    remote. Invocation of this skill is explicit authorization to push and overrides the
    usual no-push rule. Stop and report the failure if the push does not succeed.
 6. **Save deferred state.** When step 3 deferred the save, run the session-save skill
-   now. When it
-   creates tracked changes, commit those changes and push the resulting commit.
+   now. When it creates tracked changes, commit those changes and push the resulting
+   commit.
 7. **Verify the breadcrumb.** Re-read the saved breadcrumb and compare it with the
    current task and final repository state. Confirm that the final working tree
    contains only repository-designated churn or intentional post-save state.
