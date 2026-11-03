@@ -62,10 +62,11 @@ need the user's full judgment.
 2. **Collect the decision — into the ledger, verbatim, now.** Append the entry
    while the words are on screen: status, provenance, and the user's verbatim
    words for SETTLED/KILLED; record a ruling that amends or releases an earlier
-   one as exactly that. Where the repo carries an ACE trail, the ledger is
-   `.ace/save.ledger.md` and its format is `dw-save/trail.md` — read that file
-   and follow it, including its status set. Elsewhere, keep one ledger file in
-   whatever scratch home the repo uses, same fields. The ledger append is the
+   one as exactly that. When an available session-save skill (for example
+   `ace-save`) defines a decision ledger, append to that ledger file in its
+   format — read its instructions and follow them, including its status set.
+   Otherwise, keep one ledger file in whatever scratch home the repo uses, same
+   fields. The ledger append is the
    protocol's own bookkeeping, not "acting" — beyond it, edit nothing, run
    nothing, touch no other state.
 3. **Acknowledge with the walk delta. Stop. Wait.** When a ruling closes the item,
