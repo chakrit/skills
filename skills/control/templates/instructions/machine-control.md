@@ -17,13 +17,12 @@ You own `~/Documents/control/policies/`.
 
 ## Records
 
-- `policies/`: one governance policy per level, read by every agent of that level.
+- `policies/`: one governance policy per level, and `memory.md` for every level.
 - `tasks.md`: task ledger.
-- `human.md`: everything waiting on chakrit.
+- `human.html`: chakrit's view of this machine: links to org controls, registries.
 - `registries/orgs.md`: org controls.
 - `registries/ports.md`: port blocks granted to orgs.
-- `registries/heavy-jobs.md`: heavy-job slots, gates, holders and queue.
-- Raw captures and in-flight state: `.ace/` (gitignored).
+- `registries/heavy-jobs.md`: heavy-job slots and their holders.
 
 Commit completed coordination work as it happens. Never push without chakrit's
 authorization.

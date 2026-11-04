@@ -5,71 +5,57 @@ into their policy and instruction files; agents do not read this file after setu
 
 ## Install scripts
 
-1. Copy this skill's `scripts/` and `tests/` into the control repo (`scripts/`,
-   `tests/`).
-2. Copy `scripts/control.example.toml` to `control.toml` at the repo root and fill in
-   every key for this level. Leave no example values.
-3. Record the source in `scripts/SOURCE`: this skill's repo path and
-   `git rev-parse --short HEAD` of that repo.
-4. Run the tests: `python3 -m unittest discover -s tests`. All must pass before commit.
-
-Project controls skip this section unless chakrit asks; they reach their parent through
-messages.
-
-The repo's copy belongs to the repo. Its agent may change it. To refresh from the skill
-later, diff the skill's scripts against the revision in `scripts/SOURCE` and merge the
-changes into the local copy. Never overwrite the local copy.
+Copy this skill's `scripts/` into the control repo as `scripts/`. Project controls
+skip this; they reach their parent through messages. To refresh later, copy the
+skill's `scripts/` again and review the diff before committing.
 
 ## Start an agent
 
 Run the harness inside a shell in a tmux window, never as the window's command, so
-chakrit can restart it.
+chakrit can restart it. Type the harness named in the registry's Backend column.
 
 ```sh
 tmux new-window -d -P -F '#{window_id} #{pane_id}' -c <folder>
-tmux send-keys -t <pane_id> ace Enter
+tmux send-keys -t <pane_id> <harness> Enter
 ```
 
-- Never use `exec ace`. Never rename tmux windows.
-- If `ace` prints "No conversation found to continue", run `ace new` in that pane.
-- Rename the harness session to the agent name: `/rename <agent-name>` sent to the pane
-  (`scripts/control-agents rename-session` does this safely).
-- Record the window and pane IDs in the parent's registry.
+- Never `exec` the harness. Never rename tmux windows.
+- Record the window and pane IDs in the parent's registry, then rename the harness
+  session: `scripts/control-agents rename-session <slug> <agent-name>`.
 
 ## Message an agent
 
 1. Identify the sender in the first line: `FROM: <agent-name> (<folder>)`. Never write
    as chakrit.
 2. Use the harness's own agent messaging when sender and receiver both have it.
-   Otherwise use `scripts/control-agents send <slug> --snapshot <uuid>`, which checks
-   the pane before typing. Never hand-type into a pane the script refused.
-3. Harness commands (`/clear`, `/rename`, `/exit`) always go through
-   `scripts/control-agents`.
+   Otherwise use `scripts/control-agents send <slug>` with the message on stdin. It
+   types only into the registered pane, while it runs a harness in the agent's folder
+   and nobody is viewing it. Never hand-type into a pane the script refused.
+3. Clear and rename an agent only through `scripts/control-agents`.
 4. Quote rulings verbatim with chakrit's name and the date:
    `chakrit, 2026-11-04: "<exact words>"`.
 
-## Wake up a control
+## Reach a parent
 
-When an agent needs its parent (for a port, a heavy-job slot, a ruling) and the parent
-is not running:
+Messages run downward through `scripts/control-agents`; nothing runs upward. An agent
+that needs its parent (for a port, a heavy-job slot, a ruling) uses the harness's own
+agent messaging when it reaches the parent. Otherwise it asks chakrit to start the
+parent and relay the message, for example: "We need a port for the XYZ server and the
+org control is not running; can you start it and pass this on?" A child never starts
+its parent or runs the parent's scripts.
 
-1. Check: `tmux list-panes -a -F '#{pane_id} #{pane_current_path} #{pane_current_command}'`
-   shows no harness running in the parent's folder.
-2. Start it with "Start an agent".
-3. Send the ask.
-
-An org control may wake machine control the same way. Machine control that needs a
-project pane while the org control is down manages that pane directly; it starts the
-org control first only when that is faster or the work needs org context.
+Machine control that needs a project pane while the org control is down manages that
+pane directly; it starts the org control first only when that is faster or the work
+needs org context.
 
 ## Save and clear an agent
 
-1. Ask the agent to run its session-save skill (`ace-save` or the school's equivalent).
-2. Wait for the reply naming the checkpoint paths it wrote and read back.
-3. If the save failed, stop and record it in `tasks.md`. Never clear.
-4. Check the pane shows no newer unsaved work or typed draft.
-5. Clear with `scripts/control-agents clear-context <slug> --snapshot <uuid>
-   --checkpoint <path>`.
+1. Ask the agent to save. It saves before a clear, preferring engram's
+   `mem_session_summary`, and reports what it saved and where.
+2. If the save failed, stop and record it in `tasks.md`. Never clear.
+3. Check with `scripts/control-agents inspect <slug>` that the pane shows no newer
+   unsaved work or typed draft.
+4. Clear with `scripts/control-agents clear-context <slug>`.
 
 ## Run a process
 

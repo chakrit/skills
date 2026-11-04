@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>{{machine}} control</title>
+<style>
+  body { font: 15px/1.5 system-ui, sans-serif; max-width: 70rem; margin: 2rem auto; padding: 0 1rem; }
+  table { border-collapse: collapse; width: 100%; margin-bottom: 2rem; }
+  th, td { border-bottom: 1px solid #ddd; padding: .4rem .6rem; text-align: left; }
+  th { background: #f4f4f4; }
+  .meta { color: #666; }
+</style>
+</head>
+<body>
+<h1>{{machine}} control</h1>
+<p class="meta">Machine control <code>{{machine}}:control</code>. Updated {{date}}.</p>
+
+<h2>Orgs</h2>
+<!-- One row per org control, from registries/orgs.md. Link its human.html. -->
+<table>
+  <tr><th>Org</th><th>Control center</th><th>Port block</th></tr>
+</table>
+
+<h2>Heavy-job slots</h2>
+<!-- From registries/heavy-jobs.md. -->
+<table>
+  <tr><th>Slot</th><th>Holder</th></tr>
+  <tr><td>big</td><td>none</td></tr>
+  <tr><td>light</td><td>none</td></tr>
+</table>
+</body>
+</html>

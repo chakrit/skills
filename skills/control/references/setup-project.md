@@ -9,8 +9,8 @@ control owns the project's context and may do hands-on work in its clones.
 1. **Check.** The org control must exist at `~/Documents/<org>/control`; if not, run
    `references/setup-org.md` first. If the project folder exists and already has
    `AGENTS.md`, stop and use `references/initiation.md` instead.
-2. **Confirm the names.** `<project>` is chakrit's short name for the project. Ask him
-   for it and for the list of component repos, unless he already gave both.
+2. **Confirm the names.** `<project>` is chakrit's short name for the project. Ask
+   chakrit for it and for the list of component repos, unless chakrit already gave both.
 3. **Create the repo.**
 
    ```sh
@@ -36,14 +36,13 @@ control owns the project's context and may do hands-on work in its clones.
    git submodules.
 6. **Clone.** Run `bin/clone-repos`. It clones missing repos with remote `gh` and adds
    each folder to `.gitignore`.
-7. **Set up ACE.** Run `ace setup` with the org's school. Ask chakrit if unsure.
-8. **Memory.** Follow "Set up a level's engram project" in `references/memory.md`
+7. **Memory.** Follow "Set up a level's engram project" in `references/memory.md`
    with project name `<org>-<project>`.
-9. **Register with the org control.** Message it (wake it up first if needed) asking it
-   to add the project to its `registries/projects.md` and to allocate a port block.
-   Write the granted block into `AGENTS.md` under "Ports".
-10. **Commit,** naming the skill revision.
-11. **Start the agent** ("Start an agent" in `references/operations.md`) and rename its
+8. **Register with the org control.** Ask it to add the project to its
+   `registries/projects.md` and to allocate a port block (see "Reach a parent" in
+   `references/operations.md`). Write the granted block into `AGENTS.md` under "Ports".
+9. **Commit,** naming the skill revision.
+10. **Start the agent** ("Start an agent" in `references/operations.md`) and rename its
     session to `<machine>:<org>:<project>`.
 
 ## Done when

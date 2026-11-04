@@ -2,17 +2,11 @@
 *.swp
 *~
 
-# Agent runtime records and raw captures
-/.ace/
-
 # Transient command captures
 /tmp/
 
 # Python tool artifacts
 __pycache__/
 *.py[cod]
-
-# Per-checkout control shim
-/control-agent
 
 # Component clones (bin/clone-repos appends one line per repo below)

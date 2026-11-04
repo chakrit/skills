@@ -19,10 +19,14 @@ adapting control repos between orgs and machines.
   project context and may do hands-on work.
 - **Agent names:** `<machine>:control`, `<machine>:<org>:control`,
   `<machine>:<org>:<project>`. The org slug is chakrit's short name (`datawow`).
-- **After setup, agents never load the skill.** Setup writes each agent's instruction
-  file with the standing grant and a pointer to its level's policy file. Small context
-  means each agent loads only what it needs and should.
-- **Policies:** one file per level, loaded whole, governance only, stored only in
+- **No ACE dependency.** The skill works for users without ACE or its save skill.
+- **No script configuration.** The script finds its registry from the folder layout,
+  talks to the tmux server it runs in, and hard-codes Claude Code's commands. An agent
+  starts another by typing the harness the registry names.
+- **After setup, agents shouldn't need to load the skill.** Setup writes each agent's
+  instruction file with the standing grant and a pointer to its level's policy file.
+  Small context means each agent loads only what it needs and should.
+- **Policies:** one file per level plus `memory.md`, loaded whole, governance only, in
   `~/Documents/control/policies/`. Machine control owns and amends them on chakrit's
   rulings. Individual-agent rules stay in that agent's own files.
 - **Registries** are a building block: files a control keeps to track shared things.
@@ -32,19 +36,32 @@ adapting control repos between orgs and machines.
 - **Two message classes.** Rulings (authority, policy) are chakrit's decisions and are
   applied as given. Task asks may be misread in relay; the receiving agent pushes back
   and the control resolves it with chakrit.
-- **Wake-up runs upward.** An agent that needs its parent starts it. Machine control
-  manages project panes directly when the org control is down, unless waking the org
-  control is faster or needs its context.
+- **Nothing runs upward.** Controls start, message and clear the agents below them. A
+  child reaches its parent through the harness's own agent messaging, or asks chakrit
+  to start the parent and relay; it never starts a parent or runs its scripts. Machine
+  control manages project panes directly when the org control is down, unless waking
+  the org control is faster or needs its context.
 - **Visible processes.** chakrit's global "leave server startup to me" is exempt in this
   setup; every long-running process runs in a visible tmux pane instead.
 - **No submodules.** Projects keep `repos.txt` and `bin/clone-repos`; clones are plain
   and gitignored.
-- **Engram-first memory** at all levels; files only for policies, registries, the task
-  ledger and the waiting page. Repo-only knowledge goes to the repo's ace-docs, which
-  is never set up without chakrit's permission.
+- **Files versus engram.** What an agent must follow every time, and durable state
+  such as registries, lives in files loaded by path. What an agent recalls when
+  relevant lives in engram, which is searched and so never guarantees a rule applies.
+  The memory rules are themselves a policy file, `policies/memory.md`. Repo-only
+  knowledge follows the repo's own docs convention; none is set up without chakrit's
+  permission.
+- **Saving names one preference:** save before a clear or handoff, prefer engram's
+  `mem_session_summary`, report what was saved and where.
+- **`human.html` is chakrit's control center,** a static page opened in a local
+  browser. Each org control keeps one: what is going on and what needs chakrit.
+  Machine control's links to the org pages and shows the machine registries, and
+  little else, since machine control only coordinates.
 - **Single machine.** No sync content anywhere; chakrit manages cross-machine state.
-- **Scripts:** one canonical copy here, copied into each control and customized
-  locally. Refreshing is a merge against the revision recorded in `scripts/SOURCE`.
+- **Scripts are a small reference,** not a product: one `control-agents` that lists,
+  reads and types into registered panes. It targets panes only by tmux ID, re-checks
+  the pane before typing, and never changes windows or layout. Controls copy it and
+  may adapt it.
 
 Decision provenance (chakrit's words) was recorded during design in this repository's
 ignored session ledger, not in the published package.

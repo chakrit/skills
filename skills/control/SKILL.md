@@ -21,31 +21,31 @@ and the policy file it points to; no agent needs this skill again for daily work
 
 Use these names exactly, in every file and message.
 
-| Term            | Meaning                                                                                |
-| --------------- | -------------------------------------------------------------------------------------- |
-| Machine control | `~/Documents/control`, agent `<machine>:control`. Machine-wide tasks only.             |
-| Org control     | `~/Documents/<org>/control`, agent `<machine>:<org>:control`. One org's tasks.         |
-| Project control | `~/Documents/<org>/<project>`, agent `<machine>:<org>:<project>`. One project's work.  |
-| Level           | One of the three above. There are exactly three. Never define a fourth.                |
-| Parent          | Project control → its org control → machine control.                                   |
-| `<machine>`     | Lowercase short hostname: `hostname -s`, lowercased (`lz49`).                          |
-| `<org>`         | chakrit's short org name (`datawow`, not `datawowio`).                                 |
-| Policy          | Governance rules for one level, in `~/Documents/control/policies/<level>.md`.          |
-| Registry        | A file a control keeps to track shared things (ports, heavy-job slots, members).       |
-| Ruling          | chakrit's decision on authority or policy, relayed by a control.                       |
-| Task ask        | Work chakrit asked a control to hand to an agent.                                      |
-| Waiting page    | `human.md` in a control repo: everything waiting on chakrit.                           |
-| Task ledger     | `tasks.md` in a control repo: every task, its status, provenance and evidence.         |
-| Wake-up         | Starting a stopped agent so it can receive a message.                                  |
+| Term            | Meaning                                                                               |
+| --------------- | ------------------------------------------------------------------------------------- |
+| Machine control | `~/Documents/control`, agent `<machine>:control`. Machine-wide tasks only.            |
+| Org control     | `~/Documents/<org>/control`, agent `<machine>:<org>:control`. One org's tasks.        |
+| Project control | `~/Documents/<org>/<project>`, agent `<machine>:<org>:<project>`. One project's work. |
+| Level           | One of the three above. There are exactly three. Never define a fourth.               |
+| Parent          | Project control → its org control → machine control.                                  |
+| `<machine>`     | Lowercase short hostname: `hostname -s`, lowercased (`lz49`).                         |
+| `<org>`         | chakrit's short org name (`datawow`, not `datawowio`).                                |
+| Policy          | Governance rules for one level, in `~/Documents/control/policies/<level>.md`.         |
+| Registry        | A file a control keeps to track shared things (ports, heavy-job slots, members).      |
+| Ruling          | chakrit's decision on authority or policy, relayed by a control.                      |
+| Task ask        | Work chakrit asked a control to hand to an agent.                                     |
+| Control center  | `human.html` in a control repo: chakrit's browser view; see the level's policy.       |
+| Task ledger     | `tasks.md` in a control repo: every task, its status, provenance and evidence.        |
+| Wake-up         | Starting a stopped agent. Controls wake agents below; chakrit wakes a parent.         |
 
 ## Menu
 
-| Operation                 | Read                              | Use when                                          |
-| ------------------------- | --------------------------------- | ------------------------------------------------- |
-| Set up machine control    | `references/setup-machine.md`     | `~/Documents/control` does not exist yet          |
-| Set up an org control     | `references/setup-org.md`         | `~/Documents/<org>/control` does not exist yet    |
-| Set up a project control  | `references/setup-project.md`     | a project folder needs an agent and its clones    |
-| Initiate an agent         | `references/initiation.md`        | an existing agent lacks the standing grant        |
+| Operation                | Read                          | Use when                                       |
+| ------------------------ | ----------------------------- | ---------------------------------------------- |
+| Set up machine control   | `references/setup-machine.md` | `~/Documents/control` does not exist yet       |
+| Set up an org control    | `references/setup-org.md`     | `~/Documents/<org>/control` does not exist yet |
+| Set up a project control | `references/setup-project.md` | a project folder needs an agent and its clones |
+| Initiate an agent        | `references/initiation.md`    | an existing agent lacks the standing grant     |
 
 Read only the file for the chosen operation. It names the sections of the shared
 files it needs: `references/operations.md`, `references/registries.md` and

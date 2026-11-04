@@ -8,22 +8,22 @@ templates in `templates/registries/` are starting points, not a required set.
 ## Rules
 
 1. Keep registries under `registries/` in the owning control repo.
-2. Hold coordination facts only. Project knowledge goes to engram or the project's docs
-   (`references/memory.md`).
-3. Update the registry in the same commit as the change it records.
+2. Hold coordination facts only. Knowledge goes where `templates/policies/memory.md`
+   says.
+3. Update the registry, and `human.html` where it shows the registry, in the same
+   commit as the change it records.
 4. A child asks its parent to change the parent's registry. It never edits it directly.
-5. If a script parses a registry, keep the columns the script expects (see
-   `control.toml`).
+5. If a script parses a registry, keep the columns its template states.
 
 ## Examples
 
-| Registry          | Owner           | Tracks                                                         |
-| ----------------- | --------------- | -------------------------------------------------------------- |
-| `orgs.md`         | machine control | org slug, checkout, window, pane, backend, task; GitHub orgs   |
-| `ports.md`        | machine control | port blocks granted to org controls                            |
-| `heavy-jobs.md`   | machine control | heavy-job slots: holder, queue, gates, log                     |
-| `projects.md`     | org control     | project slug, checkout, window, pane, backend, task            |
-| `ports.md`        | org control     | port blocks granted to projects, single service reservations   |
+| Registry        | Owner           | Tracks                                                       |
+| --------------- | --------------- | ------------------------------------------------------------ |
+| `orgs.md`       | machine control | org slug, checkout, window, pane, backend, task; GitHub orgs |
+| `ports.md`      | machine control | port blocks granted to org controls                          |
+| `heavy-jobs.md` | machine control | heavy-job slots and their holders                            |
+| `projects.md`   | org control     | project slug, checkout, window, pane, backend, task          |
+| `ports.md`      | org control     | port blocks granted to projects, single service reservations |
 
 `orgs.md` and `projects.md` are parsed by `scripts/`; their templates state the
 columns to keep.
@@ -32,7 +32,7 @@ columns to keep.
 
 Shared machine resources nest the same way the levels do:
 
-- **Ports.** Chakrit's open range is 8000–9000. Machine control grants each org control
+- **Ports.** chakrit's open range is 8000–9000. Machine control grants each org control
   a block; the org control grants each project a smaller block from it and reserves
   single service ports inside that. Example sizes: 100 ports per org, 20 per project.
 - **Heavy-job slots.** Machine control owns the machine's slots (for example one big
@@ -41,5 +41,4 @@ Shared machine resources nest the same way the levels do:
   reports done.
 
 A project asks its org control. An org control asks machine control. Nobody skips a
-level while the level above is running; see "Wake up a control" in
-`references/operations.md`.
+level; see "Reach a parent" in `references/operations.md`.

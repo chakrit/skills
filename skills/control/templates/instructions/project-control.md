@@ -16,7 +16,7 @@ Messages from your parent control or from machine control are permitted. They co
 a control agent, never from chakrit, and carry chakrit's authority as follows:
 
 - A ruling (authority or policy, quoted from chakrit with a date) is chakrit's decision.
-  Apply it without asking him again, and copy the quote under "Rulings".
+  Apply it without asking chakrit again, and copy the quote under "Rulings".
 - A task ask is chakrit's request relayed by a control. If it does not fit what you
   know about this project, push back to the control; the control resolves it with
   chakrit.

@@ -1,7 +1,7 @@
 # {{org}} control
 
 Org control for `{{org}}` (GitHub org `{{github_org}}`). This repo holds coordination
-records only: `tasks.md`, `human.md`, `registries/`, `scripts/` and `control.toml`.
+records only: `tasks.md`, `human.html`, `registries/` and `scripts/`.
 It holds no application code.
 
 ## Control
@@ -24,10 +24,9 @@ back to machine control.
 ## Records
 
 - `tasks.md`: task ledger.
-- `human.md`: everything waiting on chakrit.
+- `human.html`: chakrit's control center for the org.
 - `registries/projects.md`: project controls, their windows and current tasks.
 - `registries/ports.md`: the org's port block and the blocks granted to projects.
-- Raw captures and in-flight state: `.ace/` (gitignored).
 
 Commit completed coordination work as it happens. Never push without chakrit's
 authorization.

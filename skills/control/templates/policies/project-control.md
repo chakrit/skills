@@ -6,10 +6,10 @@ commands) belong in your own instruction file, not here.
 
 ## Authority
 
-1. chakrit decides what work is authorized. A control relays his decisions; it cannot
-   create new approval.
-2. A ruling relayed by a control (quoted from chakrit, with a date) is his decision.
-   Apply it and copy the quote into your instruction file under "Rulings".
+1. chakrit decides what work is authorized. A control relays chakrit's decisions; it
+   cannot create new approval.
+2. A ruling relayed by a control (quoted from chakrit, with a date) is chakrit's
+   decision. Apply it and copy the quote into your instruction file under "Rulings".
 3. A task ask relayed by a control may be misread. If it does not fit what you know,
    reply to the control with why; the control resolves it with chakrit.
 4. Do not stop to ask chakrit about work a control relayed as authorized.
@@ -36,23 +36,18 @@ commands) belong in your own instruction file, not here.
 
 1. Report to your org control: task done, blocked, or needing chakrit. Start each
    message with `FROM: <your agent name> (<your folder>)`.
-2. If your org control is not running, start it (tmux window, `ace` in its shell), then
-   send the message.
-3. When a task is done, run your session-save skill and report the checkpoint paths.
+2. Use the harness's own agent messaging when it reaches your org control. Otherwise ask
+   chakrit to start the org control and relay your message, for example: "We need a
+   port for the XYZ server and the org control is not running; can you start it and
+   pass this on?" Never start a control or run its scripts yourself.
+3. When a task is done, save (see Memory) and report what you saved and where.
 
 ## Memory
 
-1. At session start and after compaction, call engram `mem_context` for your own
-   engram project, then read the `spec` memories for your area.
-2. Search before saving; amend the existing memory instead of adding a second.
-3. Before your first save in a session, read the engram `spec` memory
-   `policies/memory` (project `control`) for types, topic keys and titles.
-4. Knowledge about one component repo goes to that repo's `docs/` if it has ace-docs.
-   If it has none, ask chakrit before setting ace-docs up; if he declines, save it to
-   your engram project under `<repo>/<subject>`.
-5. Other project knowledge goes to your engram project, not to files. In-flight state
-   stays in `.ace/`.
-6. If engram is not installed, skip these steps.
+Must follow every time → a file; recalled when relevant → engram. Follow
+`~/Documents/control/policies/memory.md`; your engram project is `<org>-<project>`.
+Save before a clear or handoff, preferring engram's `mem_session_summary`, and report
+what you saved and where.
 
 ## Policy changes
 
