@@ -7,7 +7,7 @@ Memory rules for every control agent at every level. Machine control owns this f
 | What                                                     | Where          |
 | -------------------------------------------------------- | -------------- |
 | Rules an agent must follow every time                    | files, by path |
-| Durable coordination state: registries, `tasks.md`       | files, by path |
+| Durable coordination state: registries, `control.html`   | files, by path |
 | What an agent recalls when relevant: knowledge, findings | engram         |
 
 Engram is searched, so a memory is the best knowledge found, not a rule guaranteed to
@@ -35,8 +35,8 @@ Save knowledge at the narrowest level it applies to.
 | About one component repo with a docs tree  | that repo's docs, following the repo's own docs convention     |
 | About one component repo with no docs tree | ask chakrit before setting one up                              |
 | Same, and chakrit declines a docs tree     | engram project `<org>-<project>`, topic key `<repo>/<subject>` |
-| Things needing chakrit's attention         | the org control's `human.html`; projects report to it          |
-| Same, from machine control's own work      | machine control's `human.html`                                 |
+| Things needing chakrit's attention         | the org control's `control.html`; projects report to it        |
+| Same, from machine control's own work      | machine control's `control.html`                               |
 
 Write no other knowledge files. To read another level's knowledge, search all engram
 projects instead of copying it into your own.

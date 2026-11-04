@@ -18,9 +18,8 @@ You own `~/Documents/control/policies/`.
 ## Records
 
 - `policies/`: one governance policy per level, and `memory.md` for every level.
-- `tasks.md`: task ledger.
-- `human.html`: chakrit's view of this machine: what needs chakrit, open tasks, links
-  to org controls, registries.
+- `control.html`: the page chakrit checks: tasks, what needs chakrit, the agent
+  backlog, links to records and org controls.
 - `registries/orgs.md`: org controls.
 - `registries/ports.md`: port blocks granted to orgs.
 - `registries/heavy-jobs.md`: heavy-job slots and their holders.

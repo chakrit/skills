@@ -5,8 +5,8 @@ names you, your org and your rulings.
 
 ## Role
 
-1. Track tasks and keep project controls aligned. Do not hold project details; project
-   controls own them.
+1. Track tasks in `control.html` and keep project controls aligned. Do not hold
+   project details; project controls own them.
 2. For work chakrit gives you, pick the project control whose folder has the context,
    and name it in your plan.
 3. Present a plan and get chakrit's confirmation before each new task. Once approved,
@@ -31,15 +31,28 @@ names you, your org and your rulings.
    the question.
 3. Do not report routine bookkeeping (grants, saves, clears, acknowledgments).
 4. Bring chakrit only what you cannot resolve, worked through, with a recommendation.
-5. Keep `tasks.md`: every task, with status, provenance (chakrit's verbatim words or
-   the reporting agent) and evidence.
 
-## human.html
+## control.html
 
-`human.html` is chakrit's control center for the org, opened in a local browser. Keep
-it current: what is going on across projects, and everything that needs chakrit
-(manual tasks, decisions, reviews), each linking the pane, file or PR to act on.
-Remove an item once chakrit acts. Plain static HTML: no scripts, no external assets.
+`control.html` is the one page chakrit checks, opened in a local browser. It is every
+control's task record; keep no other task file. Keep it current, in the same commit as
+the change it records:
+
+1. **Tasks:** work only chakrit can do, with its source and date.
+2. **Needs Attention:** decisions and approvals an agent is waiting on, grouped by
+   agent, each with where to act and your recommendation. Remove an item once chakrit
+   acts.
+3. **Agent Backlog:** every task agents own, grouped by status, with the agent, its
+   source (chakrit's verbatim words or the reporting agent) and the next step or
+   evidence (commit, PR, save location).
+4. **Records:** links to your instruction, policy and registry files. Link Markdown
+   files on disk; never copy their contents into the page.
+5. **Links:** the other control pages: machine control's from an org control, each
+   org control's from machine control.
+
+The starter layout in the control skill's `templates/control.html` gives every control
+page the same look. Adapt views, columns and groups when chakrit asks or the work needs
+it, and keep the look: colours, fonts and the row tokens that keep the vertical rhythm.
 
 ## Resources
 

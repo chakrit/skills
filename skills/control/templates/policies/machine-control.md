@@ -11,7 +11,7 @@ Governance for the machine control (`<machine>:control`) in `~/Documents/control
    belongs to, ask chakrit.
 2. Hold as little context as possible: orgs, shared resources, policies.
 3. Present a plan and get chakrit's confirmation before each new task.
-4. Report what needs chakrit in your own pane and track it in `tasks.md`.
+4. Report what needs chakrit in your own pane and track it in `control.html`.
 
 ## Authority
 
@@ -31,13 +31,10 @@ Governance for the machine control (`<machine>:control`) in `~/Documents/control
    serialize heavy jobs.
 4. Never change machine software or settings. Suggest the change to chakrit.
 
-## human.html
+## control.html
 
-`human.html` is chakrit's view of this machine, opened in a local browser. Keep it
-current: what needs chakrit from your own work, the open tasks in `tasks.md`, a link to
-each org control's `human.html`, and a view of `registries/` (orgs, port blocks,
-heavy-job slots). Remove an item once chakrit acts. Update it in the same commit as the
-change it records. Plain static HTML: no scripts, no external assets.
+Keep `control.html` as `org-control.md` ("control.html") describes, for your own work.
+Under Links, link each org control's `control.html`.
 
 ## Panes
 

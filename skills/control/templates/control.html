@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{title}}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Iosevka+Charon:wght@400;600&family=Iosevka+Charon+Mono:wght@400;600&display=swap">
+<script>
+  // Apply the saved theme, else the system one, before first paint.
+  document.documentElement.dataset.theme = localStorage.getItem('control-theme')
+    || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+</script>
+<style>
+  /* Colours: FEMS portal light and dark themes. */
+  [data-theme="light"] {
+    color-scheme: light;
+    --bg: #f4f6f9; --panel: #fff; --rule: #e1e6ec; --control: #e2e7ee;
+    --fg: #1b2430; --heading: #0b1220; --muted: #4f5b6a; --accent: #1f5fa8;
+    --success: #1b7340; --warning: #855300; --error: #b3261e; --info: #1d5fa3;
+    --table-head: var(--heading); --table-head-bg: #d5dce4; --tone-shade: 35%; --tone-tint: 24%;
+  }
+  [data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #161b22; --panel: #1c232c; --rule: #2c3540; --control: #2a323d;
+    --fg: #e6eaf0; --heading: #fff; --muted: #a6b0bd; --accent: #6cb2f5;
+    --success: #5fd08a; --warning: #e8b85a; --error: #f2817a; --info: #79b8f5;
+    --table-head: var(--muted); --table-head-bg: #232b35; --tone-shade: 0%; --tone-tint: 14%;
+  }
+  /*
+   * Rhythm by construction: both columns are stacks of rows. Every text line is one
+   * --lead line, every row is that line inside --row-pad, and both columns start at the
+   * same point with a head of the same shape, so baselines line up across columns.
+   * Space between sidebar sections is a whole --row; the views and tables sit directly
+   * under their heads.
+   * Never set a line-height or vertical padding outside these tokens.
+   */
+  :root {
+    --lead: 24px;
+    --row-pad: 6px;
+    --row: calc(var(--lead) + var(--row-pad) * 2);
+    --gutter: .75rem;
+    --radius: .375rem;
+    --text-xs: 12px; --text-sm: 13px; --text-md: 14px; --text-base: 15px; --text-lg: 20px;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font: var(--text-base)/var(--lead) "Iosevka Charon", ui-sans-serif, sans-serif;
+  }
+  code { font: .9em/1 "Iosevka Charon Mono", ui-monospace, monospace; }
+  h1, h2, p { margin: 0; }
+  ul { list-style: none; margin: 0; padding: 0; }
+
+  .shell {
+    display: grid; grid-template-columns: 15rem 1fr; column-gap: 2rem; align-items: start;
+    max-width: 80rem; margin: 0 auto; padding: 0 1rem;
+  }
+  /* Sidebar spans the full window height; its content starts one --row down, like main's. */
+  aside {
+    position: sticky; top: 0; height: 100vh; overflow-y: auto;
+    display: flex; flex-direction: column;
+    padding: var(--row) var(--gutter);
+    background: var(--panel); box-shadow: inset 1px 0 0 var(--rule), inset -1px 0 0 var(--rule);
+  }
+  main { min-width: 0; padding-block: var(--row); }
+  @media (max-width: 48rem) {
+    .shell { grid-template-columns: 1fr; row-gap: var(--row); }
+    aside { position: static; height: auto; }
+  }
+
+  /* Head: title line and meta line, padded to two rows in both columns. */
+  .head { padding: calc(var(--row-pad) * 2) 0; }
+  aside .head { padding-inline: var(--gutter); }
+  aside nav { margin-top: var(--row); }
+  aside nav:last-of-type { margin-bottom: var(--row); }
+  .head h1, .head h2 { font-size: var(--text-lg); color: var(--heading); }
+  .meta { font-size: var(--text-sm); color: var(--muted); }
+
+  /* Rows: every sidebar entry, section label and table cell is one --row. */
+  aside label, aside a, aside nav h2, #theme, th, td {
+    padding: var(--row-pad) var(--gutter);
+  }
+  aside nav h2, thead th {
+    font-size: var(--text-xs); font-weight: 600; letter-spacing: .04em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  aside label, aside a, #theme {
+    display: flex; justify-content: space-between;
+    border-radius: var(--radius); color: var(--fg); text-decoration: none; cursor: pointer;
+  }
+  aside label:hover, aside a:hover { background: var(--control); }
+  aside a { color: var(--accent); }
+  .count { font-size: var(--text-sm); color: var(--muted); }
+  .count.hot { font-weight: 600; color: var(--warning); }
+  #theme {
+    margin-top: auto; border: 0; font-family: inherit; font-size: var(--text-md); line-height: var(--lead);
+    background: var(--control);
+  }
+  #theme::after { content: "Dark"; }
+  [data-theme="dark"] #theme::after { content: "Light"; }
+
+  /* Views: CSS-only tabs driven by the radio inputs before .shell. */
+  input[name=view] { position: absolute; opacity: 0; pointer-events: none; }
+  .panel { display: none; }
+  #view-tasks:checked ~ .shell [for=view-tasks],
+  #view-attention:checked ~ .shell [for=view-attention],
+  #view-agents:checked ~ .shell [for=view-agents] {
+    font-weight: 600; color: var(--accent); background: color-mix(in srgb, var(--accent) 16%, var(--panel));
+  }
+  #view-tasks:checked ~ .shell #tasks,
+  #view-attention:checked ~ .shell #attention,
+  #view-agents:checked ~ .shell #agents { display: block; }
+  input[name=view]:focus-visible ~ .shell .views { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: var(--radius); }
+
+  /* Tables: one tbody per group; the tbody class sets the group's tone. */
+  table { width: 100%; border-collapse: collapse; background: var(--panel); border-radius: var(--radius); overflow: hidden; }
+  th, td { text-align: left; vertical-align: top; box-shadow: inset 0 -1px 0 var(--rule); }
+  thead th { color: var(--table-head); background: var(--table-head-bg); }
+  tbody th {
+    --tone-ink: color-mix(in srgb, var(--tone), #000 var(--tone-shade));
+    font-size: var(--text-sm); color: var(--tone-ink); background: color-mix(in srgb, var(--tone) var(--tone-tint), var(--panel));
+    box-shadow: inset 3px 0 0 var(--tone), inset 0 -1px 0 var(--rule);
+  }
+  tbody th .count {
+    margin-left: .35rem; padding: 0 .4rem; border-radius: 999px;
+    color: var(--tone-ink); background: color-mix(in srgb, var(--tone) calc(var(--tone-tint) + 8%), var(--panel));
+  }
+  tbody td:first-child { padding-left: calc(var(--gutter) * 2); }
+  td.dim { font-size: var(--text-md); color: var(--muted); }
+  td.when { white-space: nowrap; }
+  .todo { --tone: var(--muted); }
+  .doing, .agent { --tone: var(--info); }
+  .waiting { --tone: var(--warning); }
+  .blocked { --tone: var(--error); }
+  .done { --tone: var(--success); }
+  tbody.done td { color: var(--muted); }
+</style>
+</head>
+<body>
+<!--
+  Starter control page. Keep the look (colours, fonts, row tokens) so every control page
+  reads the same; adapt views, columns and groups when chakrit asks or the work needs it.
+
+  Each view's table holds one <tbody> per group, in the order shown in its comment.
+  A group opens with a heading row; its class sets the colour:
+    <tbody class="doing">
+      <tr><th colspan="3" scope="rowgroup">In progress <span class="count">1</span></th></tr>
+      <tr><td>Item</td><td class="dim">Source</td><td class="dim when">Nov 4</td></tr>
+    </tbody>
+  Group classes: todo, doing, waiting, blocked, done, agent. Leave out empty groups.
+  Keep every count (sidebar, group heading, head meta line) equal to the rows it counts.
+-->
+<input type="radio" name="view" id="view-tasks">
+<input type="radio" name="view" id="view-attention" checked>
+<input type="radio" name="view" id="view-agents">
+<div class="shell">
+<aside>
+  <div class="head">
+    <h1>{{title}}</h1>
+    <p class="meta">updated {{date}}</p>
+  </div>
+
+  <ul class="views">
+    <li><label for="view-tasks">Tasks <span class="count">0</span></label></li>
+    <li><label for="view-attention">Needs Attention <span class="count">0</span></label></li>
+    <li><label for="view-agents">Agent Backlog <span class="count">0</span></label></li>
+  </ul>
+
+  <nav>
+    <h2>Records</h2>
+    <!-- One link per instruction, policy and registry file, by relative path. -->
+    <ul>
+    </ul>
+  </nav>
+
+  <nav>
+    <h2>Links</h2>
+    <!-- One link per related control page: org controls on machine control's page,
+         machine control on an org control's page. -->
+    <ul>
+    </ul>
+  </nav>
+
+  <button id="theme" type="button" aria-label="Switch theme"></button>
+</aside>
+
+<main>
+<section id="tasks" class="panel">
+  <div class="head"><h2>Tasks</h2><p class="meta">0 items</p></div>
+  <!-- Work only chakrit can do. Groups: doing (In progress), todo (To do), done (Done). -->
+  <table>
+    <thead><tr><th>Item</th><th>Source</th><th>Since</th></tr></thead>
+  </table>
+</section>
+
+<section id="attention" class="panel">
+  <div class="head"><h2>Needs Attention</h2><p class="meta">0 items</p></div>
+  <!-- Decisions and approvals an agent is waiting on. One "agent" group per waiting
+       agent, headed "Agents · <code>agent name</code>". Remove a row once chakrit acts.
+       Add class "hot" to the sidebar count while this view has rows. -->
+  <table>
+    <thead><tr><th>Item</th><th>Where to act</th><th>Recommendation</th><th>Since</th></tr></thead>
+  </table>
+</section>
+
+<section id="agents" class="panel">
+  <div class="head"><h2>Agent Backlog</h2><p class="meta">0 items</p></div>
+  <!-- Every task agents own. Groups: blocked (Blocked), waiting (Waiting on chakrit),
+       doing (In progress), todo (Queued), done (Done). Source is chakrit's verbatim
+       words or the reporting agent; Next / evidence names the next step or the commit,
+       PR or save location. Drop done rows older than a week. -->
+  <table>
+    <thead><tr><th>Item</th><th>Agent</th><th>Source</th><th>Next / evidence</th></tr></thead>
+  </table>
+</section>
+</main>
+</div>
+<script>
+  document.getElementById('theme').addEventListener('click', () => {
+    const root = document.documentElement;
+    root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('control-theme', root.dataset.theme);
+  });
+</script>
+</body>
+</html>

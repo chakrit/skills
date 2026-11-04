@@ -60,10 +60,14 @@ adapting control repos between orgs and machines.
   permission.
 - **Saving names one preference:** save before a clear or handoff, prefer engram's
   `mem_session_summary`, report what was saved and where.
-- **`human.html` is chakrit's control center,** a static page opened in a local
-  browser. Each org control keeps one: what is going on and what needs chakrit.
-  Machine control's shows what needs chakrit and its open tasks, links to the org
-  pages and shows the machine registries. Machine control keeps work across orgs and
+- **`control.html` is the one page chakrit checks,** opened in a local browser, and
+  the only task record; there is no separate task file. Machine and org controls keep
+  the same three views: Tasks (work only chakrit can do), Needs Attention (what an
+  agent waits on, grouped by agent) and Agent Backlog (agents' tasks, grouped by
+  status). Policies and registries stay Markdown; the page links them rather than
+  rendering them, so a port or heavy-job change touches one file. One template gives
+  every page the same look and a vertical rhythm built from row tokens; controls adapt
+  its content and keep the look. Machine control keeps work across orgs and
   anything that belongs to no org; it sends one org's tasks, including that org's
   project tasks, to the org control.
 - **Single machine.** No sync content anywhere; chakrit manages cross-machine state.

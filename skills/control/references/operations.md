@@ -89,7 +89,8 @@ needs org context.
 
 1. Ask the agent to save. It saves before a clear, preferring engram's
    `mem_session_summary`, and reports what it saved and where.
-2. If the save failed, stop and record it in `tasks.md`. Never clear.
+2. If the save failed, stop and add it to Needs Attention in `control.html`. Never
+   clear.
 3. Check with `scripts/control-agents inspect <slug>` that the pane shows no newer
    unsaved work or typed draft.
 4. Clear with `scripts/control-agents clear-context <slug>`.

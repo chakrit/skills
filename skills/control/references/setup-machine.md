@@ -17,7 +17,8 @@ policies, and the machine's shared resources.
    ```
 
 3. **Copy templates.** Copy from this skill's directory, replacing placeholders
-   (`{{machine}}`, `{{date}}`):
+   (`{{machine}}`, `{{date}}`, and `{{title}}` with `<MACHINE> Control` in capitals,
+   such as `LZ49 Control`):
 
    | Source                                      | Destination                   |
    | ------------------------------------------- | ----------------------------- |
@@ -26,19 +27,20 @@ policies, and the machine's shared resources.
    | `templates/policies/org-control.md`         | `policies/org-control.md`     |
    | `templates/policies/project-control.md`     | `policies/project-control.md` |
    | `templates/policies/memory.md`              | `policies/memory.md`          |
-   | `templates/human-machine.html`              | `human.html`                  |
-   | `templates/tasks.md`                        | `tasks.md`                    |
+   | `templates/control.html`                    | `control.html`                |
    | `templates/gitignore`                       | `.gitignore`                  |
    | `templates/registries/orgs.md`              | `registries/orgs.md`          |
    | `templates/registries/ports-machine.md`     | `registries/ports.md`         |
    | `templates/registries/heavy-jobs.md`        | `registries/heavy-jobs.md`    |
 
-   Then `ln -s AGENTS.md CLAUDE.md`.
+   Then `ln -s AGENTS.md CLAUDE.md`. In `control.html`, under Records, link
+   `AGENTS.md`, each file in `policies/` and each file in `registries/`.
 4. **Copy scripts.** Follow "Install scripts" in `references/operations.md`.
 5. **Memory.** Follow "Set up a level's engram project" in `references/memory.md`
    with project name `control`.
 6. **Register existing orgs.** For each folder `~/Documents/<org>/control` that
-   already exists, add a row to `registries/orgs.md` and to `human.html`. Do not
+   already exists, add a row to `registries/orgs.md` and a link to its
+   `control.html` under Links in `control.html`. Do not
    create org controls. Read `references/registries.md` for how registries and nested
    resources work.
 7. **Commit.** Commit everything with a message naming the skill revision

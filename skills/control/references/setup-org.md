@@ -20,29 +20,31 @@ details; project controls own those.
    ```
 
 4. **Copy templates,** replacing placeholders (`{{machine}}`, `{{org}}`,
-   `{{github_org}}`, `{{date}}`):
+   `{{github_org}}`, `{{date}}`, and `{{title}}` with `<org> Control`):
 
    | Source                                  | Destination              |
    | --------------------------------------- | ------------------------ |
    | `templates/instructions/org-control.md` | `AGENTS.md`              |
-   | `templates/human-org.html`              | `human.html`             |
-   | `templates/tasks.md`                    | `tasks.md`               |
+   | `templates/control.html`                | `control.html`           |
    | `templates/gitignore`                   | `.gitignore`             |
    | `templates/registries/projects.md`      | `registries/projects.md` |
    | `templates/registries/ports-org.md`     | `registries/ports.md`    |
 
    Then `ln -s AGENTS.md CLAUDE.md`. Do not copy policy files; the instruction file
-   points to the central one.
+   points to the central one. In `control.html`, under Records, link `AGENTS.md`,
+   `../../control/policies/org-control.md`, `../../control/policies/memory.md` and each
+   file in `registries/`. Under Links, link `../../control/control.html` as
+   "Machine control".
 5. **Copy scripts.** Follow "Install scripts" in `references/operations.md`.
 6. **Memory.** Follow "Set up a level's engram project" in `references/memory.md`
    with project name `<org>`.
 7. **Register with machine control.** Ask machine control to add the org to
-   `registries/orgs.md` and its `human.html`, and to allocate a port block (see "Reach
+   `registries/orgs.md`, to link this org's `control.html` from its own, and to
+   allocate a port block (see "Reach
    a parent" in `references/operations.md`). Record the block it grants in
    `registries/ports.md`.
 8. **Register existing projects.** For each project folder under `~/Documents/<org>/`
-   that has an agent, add a row to `registries/projects.md` and to `human.html`. Do not
-   create projects.
+   that has an agent, add a row to `registries/projects.md`. Do not create projects.
    Read `references/registries.md` for how registries and nested resources work.
    Existing project agents without a "Control" section get `references/initiation.md`
    once the org control is running.
