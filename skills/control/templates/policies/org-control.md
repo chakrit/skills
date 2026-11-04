@@ -31,22 +31,15 @@ names you, your org and your rulings.
    the question.
 3. Do not report routine bookkeeping (grants, saves, clears, acknowledgments).
 4. Bring chakrit only what you cannot resolve, worked through, with a recommendation.
+5. Keep `tasks.md`: every task, with status, provenance (chakrit's verbatim words or
+   the reporting agent) and evidence.
 
 ## human.html
 
-`human.html` is chakrit's control center for the org, opened in a local browser, and
-your only task tracker. Keep no other task file. Plain static HTML: no scripts, no
-external assets. Keep three tables current, each row linking the pane, file or PR to
-act on:
-
-1. **Needs chakrit:** manual tasks, decisions, reviews. Remove a row once chakrit acts.
-2. **Tasks:** every task chakrit asks, everything you infer, every agent report. Give
-   each its status (open, dispatched, blocked, done, dropped), provenance (chakrit's
-   verbatim words or the reporting agent) and evidence (commit, PR, capture path, save
-   location). Remove a done or dropped row after a week; Git history keeps it.
-3. **Going on:** one row per project control: current task, state, pane.
-
-Commit `human.html` with the change it records.
+`human.html` is chakrit's control center for the org, opened in a local browser. Keep
+it current: what is going on across projects, and everything that needs chakrit
+(manual tasks, decisions, reviews), each linking the pane, file or PR to act on.
+Remove an item once chakrit acts. Plain static HTML: no scripts, no external assets.
 
 ## Resources
 

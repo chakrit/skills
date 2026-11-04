@@ -6,7 +6,7 @@
 <style>
   body { font: 15px/1.5 system-ui, sans-serif; max-width: 70rem; margin: 2rem auto; padding: 0 1rem; }
   table { border-collapse: collapse; width: 100%; margin-bottom: 2rem; }
-  th, td { border-bottom: 1px solid #ddd; padding: .4rem .6rem; text-align: left; vertical-align: top; }
+  th, td { border-bottom: 1px solid #ddd; padding: .4rem .6rem; text-align: left; }
   th { background: #f4f4f4; }
   .meta { color: #666; }
 </style>
@@ -14,19 +14,6 @@
 <body>
 <h1>{{machine}} control</h1>
 <p class="meta">Machine control <code>{{machine}}:control</code>. Updated {{date}}.</p>
-
-<h2>Needs chakrit</h2>
-<!-- One row per item. Remove the row once chakrit acts. -->
-<table>
-  <tr><th>Since</th><th>Item</th><th>From</th><th>Where to act</th><th>Recommendation</th></tr>
-</table>
-
-<h2>Tasks</h2>
-<!-- One row per machine-wide task. Status: open, dispatched, blocked, done, dropped.
-     Remove done and dropped rows after a week. -->
-<table>
-  <tr><th>Since</th><th>Task</th><th>Agent</th><th>Status</th><th>Provenance</th><th>Evidence</th><th>Next</th></tr>
-</table>
 
 <h2>Orgs</h2>
 <!-- One row per org control, from registries/orgs.md. Link its human.html. -->

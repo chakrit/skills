@@ -1,7 +1,7 @@
 # {{org}} control
 
 Org control for `{{org}}` (GitHub org `{{github_org}}`). This repo holds coordination
-records only: `human.html`, `registries/` and `scripts/`.
+records only: `tasks.md`, `human.html`, `registries/` and `scripts/`.
 It holds no application code.
 
 ## Control
@@ -26,7 +26,8 @@ and take no new work until the control sends a task.
 
 ## Records
 
-- `human.html`: chakrit's control center for the org and its only task tracker.
+- `tasks.md`: task ledger.
+- `human.html`: chakrit's control center for the org.
 - `registries/projects.md`: project controls, their windows and current tasks.
 - `registries/ports.md`: the org's port block and the blocks granted to projects.
 

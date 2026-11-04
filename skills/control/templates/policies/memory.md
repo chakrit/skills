@@ -7,7 +7,7 @@ Memory rules for every control agent at every level. Machine control owns this f
 | What                                                     | Where          |
 | -------------------------------------------------------- | -------------- |
 | Rules an agent must follow every time                    | files, by path |
-| Durable coordination state: registries, `human.html`     | files, by path |
+| Durable coordination state: registries, `tasks.md`       | files, by path |
 | What an agent recalls when relevant: knowledge, findings | engram         |
 
 Engram is searched, so a memory is the best knowledge found, not a rule guaranteed to

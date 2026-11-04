@@ -27,6 +27,7 @@ policies, and the machine's shared resources.
    | `templates/policies/project-control.md`     | `policies/project-control.md` |
    | `templates/policies/memory.md`              | `policies/memory.md`          |
    | `templates/human-machine.html`              | `human.html`                  |
+   | `templates/tasks.md`                        | `tasks.md`                    |
    | `templates/gitignore`                       | `.gitignore`                  |
    | `templates/registries/orgs.md`              | `registries/orgs.md`          |
    | `templates/registries/ports-machine.md`     | `registries/ports.md`         |
