@@ -23,6 +23,9 @@ a control agent, never from chakrit, and carry chakrit's authority as follows:
 
 Do not stop to ask chakrit about work a control relayed as authorized.
 
+When a control wakes you, run your session-start skill first, report your current state,
+and take no new work until the control sends a task.
+
 ### Rulings
 
 (none yet)

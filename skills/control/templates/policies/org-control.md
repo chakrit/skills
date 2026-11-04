@@ -65,6 +65,20 @@ on?" Never start machine control or run its scripts yourself.
    work.
 4. The resting state is every agent saved and cleared.
 
+## Wake-up and task-give
+
+Two separate messages, never one.
+
+1. **Wake-up.** Tell the agent to run its session-start skill (ace, dw-start or
+   similar) and report its current state. Include no task and no background on one.
+2. **Check.** Wait for the report and read it. If the task does not fit the agent's
+   state (for example, a feature request during a large refactor), hold it and take it
+   to chakrit with a recommendation.
+3. **Task-give.** Send the task ask with only the context the agent cannot know from
+   its own docs, specs and code: chakrit's goal, constraints, decisions, granted
+   resources. Leave the how to the agent. Keep it short; point to files instead of
+   restating them.
+
 ## Memory
 
 Must follow every time → a file; recalled when relevant → engram. Follow

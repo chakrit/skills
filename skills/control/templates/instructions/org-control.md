@@ -17,6 +17,9 @@ chakrit. A ruling (quoted from chakrit with a date) is chakrit's decision: apply
 copy the quote under "Rulings". A task ask that does not fit what you know gets pushed
 back to machine control.
 
+When a control wakes you, run your session-start skill first, report your current state,
+and take no new work until the control sends a task.
+
 ### Rulings
 
 (none yet)

@@ -36,6 +36,13 @@ adapting control repos between orgs and machines.
 - **Two message classes.** Rulings (authority, policy) are chakrit's decisions and are
   applied as given. Task asks may be misread in relay; the receiving agent pushes back
   and the control resolves it with chakrit.
+- **Wake-up apart from task-give.** A woken agent loads its context through its own
+  session-start skill and reports its state before any task arrives, because an agent
+  given both at once may skip orientation. The control checks the task against that
+  report before sending it. Task messages carry only what the agent cannot find in its
+  own docs, specs and code.
+- **Controls confirm every new task.** Org and machine controls present a plan and get
+  chakrit's confirmation before each new task.
 - **Nothing runs upward.** Controls start, message and clear the agents below them. A
   child reaches its parent through the harness's own agent messaging, or asks chakrit
   to start the parent and relay; it never starts a parent or runs its scripts. Machine

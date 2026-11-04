@@ -23,6 +23,43 @@ tmux send-keys -t <pane_id> <harness> Enter
 - Record the window and pane IDs in the parent's registry, then rename the harness
   session: `scripts/control-agents rename-session <slug> <agent-name>`.
 
+## Wake up an agent
+
+Waking an agent and giving it a task are two separate flows. Never put a task, or
+background on one, in the wake message: an agent may jump to the task before it has
+finished loading its context.
+
+1. **Start.** If the agent is not running, start it ("Start an agent").
+2. **Send the wake message** ("Message an agent"):
+
+   ```text
+   FROM: <your agent name> (<your folder>). This message is written by a control
+   agent, not chakrit.
+
+   WAKE-UP: Run your session-start skill (ace, dw-start or similar); without one,
+   follow the session-start steps in your instruction file. Then report your current
+   state: work in progress, open questions, anything blocking. Take no new work yet.
+   ```
+
+3. **Wait** until the agent has reported. Read the report with
+   `scripts/control-agents inspect <slug>`.
+4. **Check the fit.** Before giving a task, judge it against the report. If the task
+   does not fit the agent's state (for example, a feature request to an agent in the
+   middle of a large refactor), hold the task and take it to chakrit with a
+   recommendation. Otherwise continue with "Give a task".
+
+## Give a task
+
+Send the task ask or ruling as its own message ("Message an agent"), only after the
+wake-up check.
+
+- Give the context from chakrit's conversation with you that the agent cannot know:
+  the goal, constraints, deadlines, decisions, granted resources.
+- Do not give everything you know. The agent has the project's docs, specs and code;
+  leave the how to it.
+- Keep it short. Point to files, PRs or panes instead of restating them; expect the
+  agent to look things up itself.
+
 ## Message an agent
 
 1. Identify the sender in the first line: `FROM: <agent-name> (<folder>)`. Never write

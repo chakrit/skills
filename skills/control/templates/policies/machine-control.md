@@ -38,6 +38,7 @@ registry change. It holds no tasks or findings; you only coordinate.
 1. To reach a project agent, message its org control if it is running.
 2. If the org control is not running, manage the project's pane directly. Start the
    org control first only when that is faster or the work needs org context.
+3. Wake agents and give them tasks as in `org-control.md` ("Wake-up and task-give").
 
 ## Policies
 
