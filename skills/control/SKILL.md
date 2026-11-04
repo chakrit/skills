@@ -34,8 +34,8 @@ Use these names exactly, in every file and message.
 | Registry        | A file a control keeps to track shared things (ports, heavy-job slots, members).      |
 | Ruling          | chakrit's decision on authority or policy, relayed by a control.                      |
 | Task ask        | Work chakrit asked a control to hand to an agent.                                     |
-| Control center  | `human.html` in a control repo: chakrit's browser view; see the level's policy.       |
-| Task ledger     | `tasks.md` in a control repo: every task, its status, provenance and evidence.        |
+| Control center  | `human.html` in a control repo: chakrit's browser view and the control's only task    |
+|                 | tracker: what is owed to chakrit and every task's status, provenance and evidence.    |
 | Wake-up         | Readying an agent before any task. Controls wake below; chakrit wakes a parent.       |
 | Task-give       | Sending a woken agent a task ask, after checking it fits the agent's reported state.  |
 

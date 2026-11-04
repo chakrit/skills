@@ -60,10 +60,11 @@ adapting control repos between orgs and machines.
   permission.
 - **Saving names one preference:** save before a clear or handoff, prefer engram's
   `mem_session_summary`, report what was saved and where.
-- **`human.html` is chakrit's control center,** a static page opened in a local
-  browser. Each org control keeps one: what is going on and what needs chakrit.
-  Machine control's links to the org pages and shows the machine registries, and
-  little else, since machine control only coordinates.
+- **`human.html` is chakrit's control center and the only task tracker,** a static
+  page opened in a local browser. It holds what is owed to chakrit, so task tracking
+  lives there too; there is no separate task ledger. Each org control's shows what
+  needs chakrit, its tasks and what is going on. Machine control's holds the same
+  for machine-wide work, links to the org pages and shows the machine registries.
 - **Single machine.** No sync content anywhere; chakrit manages cross-machine state.
 - **Scripts are a small reference,** not a product: one `control-agents` that lists,
   reads and types into registered panes. It targets panes only by tmux ID, re-checks

@@ -15,8 +15,8 @@ or one whose instruction file lacks a "Control" section.
    the agent's checkout yourself; the agent writes its own instructions.
 3. **Wait for the acknowledgment.** The agent replies with the instruction path it
    changed and the policy file it read. Delivery is not acknowledgment.
-4. **Record it** in the control's `tasks.md`, and add the agent to the control's
-   registry if it is missing.
+4. **Record it** in the control's `human.html` "Tasks" table, and add the agent to the
+   control's registry if it is missing.
 
 ## Message
 

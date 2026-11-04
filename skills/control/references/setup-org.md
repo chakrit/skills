@@ -26,7 +26,6 @@ details; project controls own those.
    | --------------------------------------- | ------------------------ |
    | `templates/instructions/org-control.md` | `AGENTS.md`              |
    | `templates/human-org.html`              | `human.html`             |
-   | `templates/tasks.md`                    | `tasks.md`               |
    | `templates/gitignore`                   | `.gitignore`             |
    | `templates/registries/projects.md`      | `registries/projects.md` |
    | `templates/registries/ports-org.md`     | `registries/ports.md`    |
