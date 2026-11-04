@@ -16,12 +16,58 @@ chakrit can restart it. Type the harness named in the registry's Backend column.
 
 ```sh
 tmux new-window -d -P -F '#{window_id} #{pane_id}' -c <folder>
-tmux send-keys -t <pane_id> <harness> Enter
+tmux send-keys -t <pane_id> '<start command>' Enter
 ```
+
+Resume the folder's previous session by default; it holds context a fresh session
+lacks. Start a new session only when the task explicitly requires a fresh one or the
+folder has no previous session to resume.
+
+| Backend  | Resume (default)      | New session |
+| -------- | --------------------- | ----------- |
+| `ace`    | `ace`                 | `ace new`   |
+| `claude` | `claude --continue`   | `claude`    |
+| `codex`  | `codex resume --last` | `codex`     |
+
+If the resume command reports no session to resume, type the new-session command.
 
 - Never `exec` the harness. Never rename tmux windows.
 - Record the window and pane IDs in the parent's registry, then rename the harness
   session: `scripts/control-agents rename-session <slug> <agent-name>`.
+
+## Plan downstream controls
+
+Run after a machine control or an org control is set up or initiated. It finds the
+folders one level down that should get their own control, so the structure is complete
+rather than set up one folder at a time.
+
+1. **Scan** the new control's level:
+   - **Machine control:** every folder `~/Documents/<name>/` except `control`. A
+     folder is an org candidate when it has no `control/` subfolder and holds git
+     repos (`find ~/Documents/<name> -maxdepth 3 -name .git`). Suggest the folder
+     name as `<org>` and the GitHub org from its repos' `gh` remotes.
+   - **Org control:** every folder `~/Documents/<org>/<name>/` except `control`.
+     Classify each one:
+
+     | Folder holds                                    | Candidate for                     |
+     | ----------------------------------------------- | --------------------------------- |
+     | `AGENTS.md` with a `## Control` section         | nothing; register it if missing   |
+     | `AGENTS.md` or `CLAUDE.md` without that section | `references/initiation.md`        |
+     | several git clones and no `AGENTS.md`           | `references/setup-project.md`     |
+     | one git repo at its top level                   | ask chakrit which project owns it |
+
+     For a project candidate, suggest the folder name as `<project>` and its clones'
+     `gh` remotes as `repos.txt` lines.
+   - Skip folders without git repos and list them as skipped.
+2. **Check authorization.** If chakrit already asked for downstream setup ("set up
+   all the orgs", "do the projects too"), quote those words and continue. Otherwise
+   send chakrit the candidate list with the suggested names, and ask which to set up.
+   Wait for chakrit's answer. Never move or rename a folder chakrit has not named.
+3. **Lodge.** Add one Agent Backlog entry per approved candidate in the new control's
+   `control.html`, with chakrit's quoted words as the source. Commit.
+4. **Do.** Run the setup or initiation for each approved candidate, one at a time.
+   Each org control set up this way runs this section again for its own projects.
+   Mark each backlog entry done with its commit hash.
 
 ## Wake up an agent
 

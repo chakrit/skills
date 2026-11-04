@@ -41,6 +41,15 @@ adapting control repos between orgs and machines.
   given both at once may skip orientation. The control checks the task against that
   report before sending it. Task messages carry only what the agent cannot find in its
   own docs, specs and code.
+- **Resume by default.** Controls start an agent by resuming the folder's previous
+  session (`ace`, `claude --continue`, `codex resume --last`); a fresh session only
+  when the task requires one or nothing exists to resume, because the previous session
+  holds context a fresh one lacks.
+- **Setup plans the level below.** After a machine or org control is set up or
+  initiated, it scans one level down for folders that should get controls, asks
+  chakrit (or applies chakrit's existing request), lodges the approved setups in
+  `control.html` and runs them, so the structure is completed rather than grown one
+  folder at a time.
 - **Controls confirm every new task.** Org and machine controls present a plan and get
   chakrit's confirmation before each new task.
 - **Nothing runs upward.** Controls start, message and clear the agents below them. A

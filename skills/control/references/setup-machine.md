@@ -40,13 +40,14 @@ policies, and the machine's shared resources.
    with project name `control`.
 6. **Register existing orgs.** For each folder `~/Documents/<org>/control` that
    already exists, add a row to `registries/orgs.md` and a link to its
-   `control.html` under Links in `control.html`. Do not
-   create org controls. Read `references/registries.md` for how registries and nested
-   resources work.
+   `control.html` under Links in `control.html`. Read `references/registries.md` for
+   how registries and nested resources work.
 7. **Commit.** Commit everything with a message naming the skill revision
    (`git -C <this skill's repo> rev-parse --short HEAD`).
 8. **Start the agent.** Follow "Start an agent" in `references/operations.md`, then
    rename its session to `<machine>:control`.
+9. **Plan downstream.** Follow "Plan downstream controls" in
+   `references/operations.md` for org candidates under `~/Documents/`.
 
 ## Done when
 

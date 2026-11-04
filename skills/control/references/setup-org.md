@@ -44,13 +44,14 @@ details; project controls own those.
    a parent" in `references/operations.md`). Record the block it grants in
    `registries/ports.md`.
 8. **Register existing projects.** For each project folder under `~/Documents/<org>/`
-   that has an agent, add a row to `registries/projects.md`. Do not create projects.
-   Read `references/registries.md` for how registries and nested resources work.
-   Existing project agents without a "Control" section get `references/initiation.md`
-   once the org control is running.
+   that has an agent, add a row to `registries/projects.md`. Read
+   `references/registries.md` for how registries and nested resources work.
 9. **Commit,** naming the skill revision.
 10. **Start the agent** ("Start an agent" in `references/operations.md`) and rename
-   its session to `<machine>:<org>:control`.
+    its session to `<machine>:<org>:control`.
+11. **Plan downstream.** Follow "Plan downstream controls" in
+    `references/operations.md` for project candidates under `~/Documents/<org>/`,
+    including existing project agents that need initiation.
 
 ## Done when
 

@@ -74,9 +74,12 @@ on?" Never start machine control or run its scripts yourself.
 2. Start an agent in a new tmux window by typing its harness into the window's shell;
    never make the harness the window's command. Rename its session to its agent name.
    Never rename tmux windows.
-3. Clear an agent only after it reports what it saved and where, and shows no newer
+3. Resume the folder's previous session by default: `ace`, `claude --continue` or
+   `codex resume --last`. Start a new session (`ace new`, `claude`, `codex`) only when
+   the task explicitly requires a fresh one or there is no previous session to resume.
+4. Clear an agent only after it reports what it saved and where, and shows no newer
    work.
-4. The resting state is every agent saved and cleared.
+5. The resting state is every agent saved and cleared.
 
 ## Wake-up and task-give
 

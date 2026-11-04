@@ -74,6 +74,9 @@ A setup is done when:
   prints nothing);
 - the agent's instruction file contains the standing grant and the policy pointer;
 - the parent's registry lists the new control (org and project controls);
+- for a machine or org control, "Plan downstream controls" in
+  `references/operations.md` has either lodged the approved setups in `control.html`
+  or is waiting on chakrit's answer to the candidate list;
 - the work is committed in the new repo.
 
 Report the folder, the agent name, the commit hash and any steps left for chakrit.

@@ -17,6 +17,10 @@ or one whose instruction file lacks a "Control" section.
    changed and the policy file it read. Delivery is not acknowledgment.
 4. **Record it** in the Agent Backlog of the control's `control.html`, and add the
    agent to the control's registry if it is missing.
+5. **Plan downstream.** When the initiated agent is an org control, run steps 1–2 of
+   "Plan downstream controls" in `references/operations.md` for its org folder. Send
+   the approved candidates to the org control as a task ask ("Give a task"); the org
+   control loads this skill and runs steps 3–4 itself.
 
 ## Message
 
