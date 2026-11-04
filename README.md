@@ -11,6 +11,7 @@ ordinary skill directories.
 | `safety-audit`  | Software trust and safety audits | Yes             |
 | `1-by-1`        | Walk decisions one at a time     | Yes             |
 | `wrap-up`       | Close a work session cleanly     | Yes             |
+| `control`       | Set up control-agent hierarchy   | Yes             |
 | `lowfat-pantry` | Command-output filter pantry     | Imported        |
 | `kien-thai`     | Natural Thai writing             | Imported        |
 | `kode-thai`     | Iterative Thai writing audits    | Imported        |
@@ -42,7 +43,7 @@ mutation against PROD9 or change `ace.toml` to select this collection.
 
 [AGENTS.md](AGENTS.md) defines the editing boundaries, command-target checks, and
 feedback destinations. Feedback for fact-check, learn, note-taker, safety-audit,
-1-by-1, and wrap-up belongs in `chakrit/skills`. Feedback for the Thai skills
+1-by-1, wrap-up, and control belongs in `chakrit/skills`. Feedback for the Thai skills
 belongs in `chakrit/kien-thai`; lowfat-pantry feedback belongs in
 `chakrit/lowfat-pantry`; smoke feedback belongs in `chakrit/smoke`, beside the
 SMOKE CLI it documents.

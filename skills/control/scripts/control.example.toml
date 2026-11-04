@@ -1,0 +1,72 @@
+# Identity and environment of one control repository, read by every script in
+# scripts/. Copy this file to control.toml at the repository root and replace every
+# value. The scripts refuse to run when a required key is missing, a value is
+# malformed, a key is unknown, or a key does not apply at the chosen level.
+
+# Required. Which control this repository is: "machine", "org" or "project".
+level = "org"
+
+# Required. Lowercase short hostname (`hostname -s`, lowercased).
+machine = "lz49"
+
+# Required at org and project levels; refused at machine level. Short org name.
+org = "datawow"
+
+# Required at project level only; refused elsewhere. The project folder's name.
+# project = "cookiewow"
+
+# Required at org and project levels; refused at machine level. Absolute path of the
+# parent control repository (machine control for an org, org control for a project).
+# The scripts validate it; agents read it to find their parent.
+parent = "/Users/chakrit/Documents/control"
+
+# The agent name follows from the keys above:
+#   machine -> <machine>:control
+#   org     -> <machine>:<org>:control
+#   project -> <machine>:<org>:<project>
+
+# Required. The person whose delegated authority the control acts under. It appears in
+# the FROM line of every message control-agents delivers:
+#   FROM: <agent> (<repository>), acting under <principal>'s delegated authority.
+principal = "chakrit"
+
+# Required. Absolute directory that the Checkout column of the projects registry is
+# relative to (an org control's ~/Documents/<org>).
+root = "/Users/chakrit/Documents/datawow"
+
+# Required. Foreground process names (tmux #{pane_current_command}) that identify a
+# running agent harness in a registered pane. Panes running anything else are refused.
+harness = ["ace", "claude", "codex"]
+
+# Required. Absolute path of the tmux server socket and the session name that hold the
+# registered agent windows. `tmux display-message -p '#{socket_path} #{session_name}'`
+# prints both.
+tmux_socket = "/private/tmp/tmux-501/default"
+tmux_session = "main"
+
+# Optional, default "registries/projects.md". Registry of agents this control
+# dispatches to, relative to the repository root. The scripts read every table row
+# whose first cell is a lowercase slug, with exactly these six columns:
+#   | Project | Checkout | Window | Agent | Backend | Assignment |
+#   Checkout is relative to `root`; Window is a tmux window ID (@N); Agent is the
+#   harness pane ID (%N); Backend and Assignment are free text.
+projects_registry = "registries/projects.md"
+
+# Optional, default "tasks.md". Task ledger relative to the repository root; task IDs
+# come from headings of the form "## task-id — owner".
+tasks_registry = "tasks.md"
+
+# Optional, default []. Window-name prefixes for control-sort-tmux, highest rank first.
+# Windows named PREFIX/name sort by prefix rank, then name; others sort after them.
+sort_prefixes = ["D", "a", "p", "c", "n", "f"]
+
+# Optional. The harness screen that confirms exiting while background work runs.
+# control-agents confirm-exit sends Enter only when the captured pane ends with
+# `footer`, contains the line `notice`, and the only line starting with `marker` is
+# "<marker> <option>". Without this table confirm-exit refuses to run. The values below
+# match Claude Code; other harnesses need their own strings.
+[exit_confirmation]
+notice = "Background work is running"
+footer = "Enter to confirm · Esc to cancel"
+marker = "❯"
+option = "1. Exit and stop tasks"

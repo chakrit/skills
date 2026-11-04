@@ -1,0 +1,129 @@
+#!/usr/bin/env python3
+"""Agent-facing entry point: report current status, subagents and inbox messages."""
+
+import argparse
+import datetime
+import json
+from dataclasses import asdict
+from pathlib import Path
+import sys
+from typing import Mapping
+
+from agent_inbox import Kind, compose, publish, receipt
+from agent_status import (NO_TASK, Context, Records, State, Status, SubagentState,
+                          report_state, report_subagent, task_changed)
+from control_config import load
+from control_registry import Project, load_projects, load_task_ids
+
+
+def main(arguments: list[str]) -> int:
+    options = parser().parse_args(arguments)
+    repository = Path(__file__).resolve().parent.parent
+
+    try:
+        config = load(repository)
+        projects = load_projects(config)
+        tasks = load_task_ids(config)
+        if options.slug not in projects:
+            raise ValueError("--slug must be a registered project slug")
+        result = run(options, repository, projects, tasks)
+    except (OSError, UnicodeError, ValueError) as error:
+        print(f"control-agent: {error}", file=sys.stderr)
+        return 1
+
+    print(json.dumps(result, ensure_ascii=False))
+    return 0
+
+
+def run(options: argparse.Namespace, repository: Path, projects: Mapping[str, Project],
+        tasks: frozenset[str]) -> dict[str, object]:
+    slug = options.slug
+    records = Records(repository)
+    now = datetime.datetime.now(datetime.timezone.utc)
+
+    if options.command == "whoami":
+        status = records.read(slug)
+        return {"slug": slug, "checkout": str(projects[slug].checkout),
+                "status": asdict(status) if status is not None else None}
+    if options.command == "status":
+        if options.task is not None and options.task not in tasks:
+            raise ValueError("--task must be a registered task ID")
+        context = Context(options.context) if options.context is not None else None
+        previous, status = records.update(slug, lambda previous: report_state(
+            previous, slug, State(options.state), options.summary, options.task, context,
+            now))
+        warn_running(previous, status)
+        return asdict(status)
+    if options.command == "subagent":
+        _previous, status = records.update(slug, lambda previous: report_subagent(
+            previous, options.id, SubagentState(options.state), options.description, now))
+        return asdict(status)
+
+    return report(options, repository, records, frozenset(projects), tasks)
+
+
+def report(options: argparse.Namespace, repository: Path, records: Records,
+           projects: frozenset[str], tasks: frozenset[str]) -> dict[str, str]:
+    status = records.read(options.slug)
+    recorded = status.task if status is not None and status.task != NO_TASK else None
+    if options.task is None and recorded is None:
+        raise ValueError("--task is required when no status record names the current task")
+    task = options.task if options.task is not None else recorded
+    body = sys.stdin.buffer.read().decode("utf-8")
+
+    message = compose(options.slug, task, options.kind, body, projects, tasks)
+    publish(repository, message)
+
+    return receipt(message)
+
+
+def warn_running(previous: Status | None, status: Status) -> None:
+    names = ", ".join(entry.id for entry in status.running())
+    if not names:
+        return
+
+    if task_changed(previous, status.task):
+        print(f"control-agent: warning: task changed to {status.task} with subagents "
+              f"still running: {names}", file=sys.stderr)
+    if status.state in (State.DONE, State.IDLE):
+        print(f"control-agent: warning: {status.state.value} with subagents still "
+              f"running: {names}", file=sys.stderr)
+
+
+class Once(argparse.Action):
+    """Refuse a repeated option so a wrapper's fixed --slug cannot be overridden."""
+
+    def __call__(self, parser: argparse.ArgumentParser, namespace: argparse.Namespace,
+                 values: object, option_string: str | None = None) -> None:
+        if getattr(namespace, self.dest) is not None:
+            parser.error(f"{option_string} may be given only once")
+        setattr(namespace, self.dest, values)
+
+
+def parser() -> argparse.ArgumentParser:
+    root = argparse.ArgumentParser(prog="control-agent", description=__doc__)
+    root.add_argument("--slug", required=True, action=Once, help="registered project slug")
+    commands = root.add_subparsers(dest="command", required=True)
+    commands.add_parser("whoami", help="print slug, checkout and current status")
+
+    status = commands.add_parser("status", help="overwrite the current status record")
+    status.add_argument("state", choices=[state.value for state in State])
+    status.add_argument("summary", help="one line, at most 200 characters")
+    status.add_argument("--task", help="registered task ID; kept from the record if omitted")
+    status.add_argument("--context", choices=[context.value for context in Context])
+
+    subagent = commands.add_parser("subagent", help="insert or update one subagent entry")
+    subagent.add_argument("id")
+    subagent.add_argument("state", choices=[state.value for state in SubagentState])
+    subagent.add_argument("description", nargs="?",
+                          help="one line; required the first time an ID is reported")
+
+    message = commands.add_parser("report", help="submit an inbox message; body on stdin")
+    message.add_argument("kind", choices=[kind.value for kind in Kind])
+    message.add_argument("--task", help="registered task ID; defaults to the record's task")
+
+    return root
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))

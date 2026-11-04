@@ -1,0 +1,139 @@
+#!/usr/bin/env python3
+"""Explicitly sort a single-client control tmux session without installing hooks."""
+
+import argparse
+from dataclasses import dataclass
+from pathlib import Path
+import subprocess
+import sys
+
+from control_config import load
+from tmux_transport import Connection
+
+
+@dataclass(frozen=True)
+class Window:
+    identity: str
+    index: int
+    name: str
+    pane: str
+    cwd: str
+
+
+def ordered(windows: tuple[Window, ...], control: str,
+            priorities: tuple[str, ...]) -> tuple[Window, ...]:
+    """Control first, then PREFIX/name windows by prefix rank, then the rest by name."""
+    def key(window: Window) -> tuple[int, str, int]:
+        prefix, separator, _ = window.name.partition("/")
+        ranked = bool(separator) and prefix in priorities
+        group = priorities.index(prefix) if ranked else len(priorities)
+        return (-1 if window.identity == control else group, window.name, window.index)
+
+    return tuple(sorted(windows, key=key))
+
+
+def swaps(windows: tuple[Window, ...], control: str,
+          priorities: tuple[str, ...]) -> tuple[tuple[str, str], ...]:
+    current = list(sorted(windows, key=lambda window: window.index))
+    desired = ordered(windows, control, priorities)
+    operations = []
+
+    for position, window in enumerate(desired):
+        occupied = current[position]
+        if occupied.identity == window.identity:
+            continue
+        source = current.index(window)
+        operations.append((occupied.identity, window.identity))
+        current[position], current[source] = current[source], current[position]
+
+    return tuple(operations)
+
+
+class Tmux:
+    """Validate session sorting and compose stable window swaps."""
+
+    def __init__(self, socket: str | None) -> None:
+        self.connection = Connection(socket)
+
+    def snapshot(self, client: str, root: Path) -> tuple[str, tuple[Window, ...], str]:
+        clients = self.connection.run("list-clients", "-F", "#{client_name}\t#{session_id}")
+        records = tuple(line.split("\t") for line in clients.splitlines())
+        if any(len(record) != 2 for record in records):
+            raise ValueError("Malformed tmux client data")
+        selected = tuple(record for record in records if record[0] == client)
+        if len(selected) != 1:
+            raise ValueError("Specify exactly one attached client by its client_name")
+        session = selected[0][1]
+        if sum(record[1] == session for record in records) != 1:
+            raise ValueError("Refusing to reorder a session shared by multiple clients")
+        grouped = self.connection.run("display-message", "-p", "-t", session, "#{session_grouped}")
+        if grouped.rstrip("\n") != "0":
+            raise ValueError("Refusing to reorder a grouped session")
+        active = self.connection.run(
+            "display-message", "-p", "-c", client,
+            "#{window_id}\t#{pane_current_path}",
+        ).rstrip("\n").split("\t")
+        if len(active) != 2 or Path(active[1]).resolve() != root:
+            raise ValueError("The selected client's active pane must be in control")
+        snapshot = self.connection.run(
+            "list-windows", "-t", session, "-F",
+            "#{window_id}\t#{window_index}\t#{window_name}\t#{pane_id}\t#{pane_current_path}",
+        )
+        rows = tuple(line.split("\t") for line in snapshot.splitlines())
+        if not rows or any(len(row) != 5 for row in rows):
+            raise ValueError("Malformed tmux window data; tabs/newlines are unsupported")
+        windows = tuple(Window(row[0], int(row[1]), *row[2:]) for row in rows)
+        links = self.connection.run("list-windows", "-a", "-F", "#{window_id}").splitlines()
+        if any(links.count(window.identity) != 1 for window in windows):
+            raise ValueError("Refusing to reorder windows linked to another session")
+        if active[0] not in {window.identity for window in windows}:
+            raise ValueError("Active control window disappeared")
+
+        return session, windows, active[0]
+
+    def apply(self, session: str, operations: tuple[tuple[str, str], ...], focus: str) -> None:
+        arguments: list[str] = []
+
+        for left, right in operations:
+            if arguments:
+                arguments.append(";")
+            arguments.extend(("swap-window", "-d", "-s", f"{session}:{left}",
+                              "-t", f"{session}:{right}"))
+        if arguments:
+            arguments.extend((";", "select-window", "-t", f"{session}:{focus}"))
+            self.connection.run(*arguments)
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--client", required=True, help="exact tmux client_name")
+    parser.add_argument("--socket", help="tmux socket path; defaults to control.toml")
+    arguments = parser.parse_args()
+    root = Path(__file__).resolve().parent.parent
+
+    try:
+        config = load(root)
+        socket = arguments.socket if arguments.socket is not None else config.tmux_socket
+        priorities = config.sort_prefixes
+        tmux = Tmux(socket)
+        before = tmux.snapshot(arguments.client, root)
+        session, windows, control = before
+        operations = swaps(windows, control, priorities)
+        if tmux.snapshot(arguments.client, root) != before:
+            raise ValueError("Session changed during planning; no sorting performed")
+        tmux.apply(session, operations, control)
+        after = tmux.snapshot(arguments.client, root)
+        actual = tuple(window.identity for window in sorted(after[1], key=lambda item: item.index))
+        expected = tuple(window.identity for window in ordered(windows, control, priorities))
+        if actual != expected or after[2] != control:
+            raise ValueError("Sorting verification failed; inspect the session")
+    except (ValueError, OSError, subprocess.CalledProcessError) as error:
+        print(f"control-sort-tmux: {error}", file=sys.stderr)
+        return 1
+
+    print(f"Sorted {len(windows)} windows in {session}; focus preserved on {control}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

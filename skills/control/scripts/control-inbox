@@ -1,0 +1,35 @@
+#!/usr/bin/env python3
+"""Submit registered agent messages without exposing caller-selected write paths."""
+
+import json
+import pathlib
+import sys
+
+from agent_inbox import compose, publish, receipt
+from control_config import load
+from control_registry import load_projects, load_task_ids
+
+
+def main(arguments: list[str]) -> int:
+    repository = pathlib.Path(__file__).resolve().parent.parent
+
+    try:
+        if len(arguments) != 3:
+            raise ValueError("usage: control-inbox PROJECT TASK KIND < message-body")
+        project, task, kind = arguments
+        config = load(repository)
+        projects = frozenset(load_projects(config))
+        tasks = load_task_ids(config)
+        body = sys.stdin.buffer.read().decode("utf-8")
+        message = compose(project, task, kind, body, projects, tasks)
+        publish(repository, message)
+    except (OSError, UnicodeError, ValueError) as error:
+        print(f"control-inbox: {error}", file=sys.stderr)
+        return 1
+
+    print(json.dumps(receipt(message)))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))

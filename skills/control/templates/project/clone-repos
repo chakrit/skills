@@ -1,0 +1,35 @@
+#!/bin/sh
+# Clone every repo listed in repos.txt that is not cloned yet, with remote "gh",
+# and make sure each clone folder is ignored by this project repo.
+set -eu
+
+root=$(cd "$(dirname "$0")/.." && pwd)
+manifest="$root/repos.txt"
+ignore="$root/.gitignore"
+
+if [ ! -f "$manifest" ]; then
+  echo "clone-repos: $manifest not found" >&2
+  exit 1
+fi
+touch "$ignore"
+
+while read -r folder url extra; do
+  case "$folder" in
+    ''|'#'*) continue ;;
+  esac
+  if [ -z "${url:-}" ] || [ -n "${extra:-}" ]; then
+    echo "clone-repos: bad line, want '<folder> <clone-url>': $folder ${url:-} ${extra:-}" >&2
+    exit 1
+  fi
+
+  if [ -d "$root/$folder/.git" ]; then
+    echo "have   $folder"
+  else
+    echo "clone  $folder"
+    git clone --origin gh "$url" "$root/$folder"
+  fi
+
+  if ! grep -qxF "/$folder/" "$ignore"; then
+    echo "/$folder/" >>"$ignore"
+  fi
+done <"$manifest"

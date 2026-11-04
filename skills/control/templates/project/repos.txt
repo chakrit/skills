@@ -1,0 +1,3 @@
+# One component repo per line: <folder> <clone-url>
+# The folder is the exact GitHub repo name. Lines starting with # are ignored.
+# example-api git@github.com:example-org/example-api.git

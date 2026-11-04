@@ -1,0 +1,38 @@
+#!/usr/bin/env python3
+"""Align the pipes of every Markdown table in the given files, in place."""
+
+import pathlib
+import sys
+
+
+def align_block(lines: list[str]) -> list[str]:
+    rows = [[cell.strip() for cell in line.strip()[1:-1].split("|")] for line in lines]
+    width = len(rows[0])
+    if len(rows) < 2 or any(len(row) != width for row in rows):
+        return lines
+    sizes = [max(len(row[i]) for n, row in enumerate(rows) if n != 1) for i in range(width)]
+    out = []
+    for n, row in enumerate(rows):
+        cells = ["-" * sizes[i] if n == 1 else row[i].ljust(sizes[i]) for i in range(width)]
+        out.append("| " + " | ".join(cells) + " |")
+    return out
+
+
+def align(text: str) -> str:
+    lines, out, i = text.split("\n"), [], 0
+    while i < len(lines):
+        if lines[i].startswith("|"):
+            j = i
+            while j < len(lines) and lines[j].startswith("|"):
+                j += 1
+            out.extend(align_block(lines[i:j]))
+            i = j
+        else:
+            out.append(lines[i])
+            i += 1
+    return "\n".join(out)
+
+
+for name in sys.argv[1:]:
+    path = pathlib.Path(name)
+    path.write_text(align(path.read_text(encoding="utf-8")), encoding="utf-8")

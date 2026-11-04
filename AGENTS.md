@@ -27,7 +27,7 @@ and the target file. Resolve symlinks before writing. Read this repository's act
 `skills/<name>/` content when reviewing its published packages, even if a skill with
 that name is already loaded through PROD9.
 
-- **fact-check, learn, note-taker, safety-audit, 1-by-1, and wrap-up:** edit their
+- **fact-check, learn, note-taker, safety-audit, 1-by-1, wrap-up, and control:** edit their
   directories under `skills/` here.
   Route feedback and proposed changes to `chakrit/skills`, including feedback about
   copies loaded through PROD9. Former standalone repositories and copies extracted
@@ -56,7 +56,8 @@ those actions and name the destination before executing them.
 ## Ownership and layout
 
 - `skills/fact-check/`, `skills/learn/`, `skills/note-taker/`,
-  `skills/safety-audit/`, `skills/1-by-1/`, and `skills/wrap-up/` are maintained
+  `skills/safety-audit/`, `skills/1-by-1/`, `skills/wrap-up/`, and `skills/control/` are
+  maintained
   directly in this repository.
 - `skills/kien-thai/` and `skills/kode-thai/` are imported from chakrit/kien-thai.
   Follow the upstream ownership and command-target checks in this file.

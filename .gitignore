@@ -29,3 +29,7 @@ ace.local.toml
 
 # Local ACE session records
 .ace/
+
+# Python bytecode from running skill script tests
+__pycache__/
+*.py[cod]
