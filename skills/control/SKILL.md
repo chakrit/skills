@@ -23,7 +23,7 @@ Use these names exactly, in every file and message.
 
 | Term            | Meaning                                                                               |
 | --------------- | ------------------------------------------------------------------------------------- |
-| Machine control | `~/Documents/control`, agent `<machine>:control`. Machine-wide tasks only.            |
+| Machine control | `~/Documents/control`, agent `<machine>:control`. Tasks no single org owns.           |
 | Org control     | `~/Documents/<org>/control`, agent `<machine>:<org>:control`. One org's tasks.        |
 | Project control | `~/Documents/<org>/<project>`, agent `<machine>:<org>:<project>`. One project's work. |
 | Level           | One of the three above. There are exactly three. Never define a fourth.               |

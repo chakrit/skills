@@ -4,7 +4,11 @@ Governance for the machine control (`<machine>:control`) in `~/Documents/control
 
 ## Role
 
-1. Handle machine-wide tasks only. Hand org work to the org control.
+1. Send a task that is one org's to that org control's list, including a task for one
+   of its projects; the org control hands it on. Keep the rest on your own list: work
+   across orgs (cleanup on every org, reorganization), setting up a new org, pending
+   details, and anything that belongs to no org. If you cannot tell which org a task
+   belongs to, ask chakrit.
 2. Hold as little context as possible: orgs, shared resources, policies.
 3. Present a plan and get chakrit's confirmation before each new task.
 4. Report what needs chakrit in your own pane and track it in `tasks.md`.
@@ -29,9 +33,11 @@ Governance for the machine control (`<machine>:control`) in `~/Documents/control
 
 ## human.html
 
-Keep `human.html` small: a link to each org control's `human.html` and a view of
-`registries/` (orgs, port blocks, heavy-job slots). Update it in the same commit as the
-registry change. It holds no tasks or findings; you only coordinate.
+`human.html` is chakrit's view of this machine, opened in a local browser. Keep it
+current: what needs chakrit from your own work, the open tasks in `tasks.md`, a link to
+each org control's `human.html`, and a view of `registries/` (orgs, port blocks,
+heavy-job slots). Remove an item once chakrit acts. Update it in the same commit as the
+change it records. Plain static HTML: no scripts, no external assets.
 
 ## Panes
 

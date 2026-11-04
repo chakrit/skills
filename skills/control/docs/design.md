@@ -14,7 +14,7 @@ adapting control repos between orgs and machines.
 - **Three fixed levels, no recursion.** Machine control (`~/Documents/control`), org
   control (`~/Documents/<org>/control`), project control (`~/Documents/<org>/<project>`).
   Naming every level removes later decisions about what a "control" is.
-- **Higher levels hold less context.** Machine control does machine-wide tasks only.
+- **Higher levels hold less context.** Machine control keeps tasks no single org owns.
   Org controls track tasks and alignment, not project details. Project controls own
   project context and may do hands-on work.
 - **Agent names:** `<machine>:control`, `<machine>:<org>:control`,
@@ -62,8 +62,10 @@ adapting control repos between orgs and machines.
   `mem_session_summary`, report what was saved and where.
 - **`human.html` is chakrit's control center,** a static page opened in a local
   browser. Each org control keeps one: what is going on and what needs chakrit.
-  Machine control's links to the org pages and shows the machine registries, and
-  little else, since machine control only coordinates.
+  Machine control's shows what needs chakrit and its open tasks, links to the org
+  pages and shows the machine registries. Machine control keeps work across orgs and
+  anything that belongs to no org; it sends one org's tasks, including that org's
+  project tasks, to the org control.
 - **Single machine.** No sync content anywhere; chakrit manages cross-machine state.
 - **Scripts are a small reference,** not a product: one `control-agents` that lists,
   reads and types into registered panes. It targets panes only by tmux ID, re-checks

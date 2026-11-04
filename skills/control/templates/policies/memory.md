@@ -36,6 +36,7 @@ Save knowledge at the narrowest level it applies to.
 | About one component repo with no docs tree | ask chakrit before setting one up                              |
 | Same, and chakrit declines a docs tree     | engram project `<org>-<project>`, topic key `<repo>/<subject>` |
 | Things needing chakrit's attention         | the org control's `human.html`; projects report to it          |
+| Same, from machine control's own work      | machine control's `human.html`                                 |
 
 Write no other knowledge files. To read another level's knowledge, search all engram
 projects instead of copying it into your own.
