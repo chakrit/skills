@@ -80,14 +80,17 @@ on?" Never start machine control or run its scripts yourself.
 
 ## Wake-up and task-give
 
-Two separate messages, never one.
+Two separate messages, never one, after a clear.
 
-1. **Wake-up.** Tell the agent to run its session-start skill (ace, dw-start or
+1. **Clear.** Agents mostly start by resuming their previous session, so clear the
+   agent before waking it (item 3 under "Panes"). If its last save is already reported
+   and nothing newer shows, clear without another save. Skip this for a fresh session.
+2. **Wake-up.** Tell the agent to run its session-start skill (ace, dw-start or
    similar) and report its current state. Include no task and no background on one.
-2. **Check.** Wait for the report and read it. If the task does not fit the agent's
+3. **Check.** Wait for the report and read it. If the task does not fit the agent's
    state (for example, a feature request during a large refactor), hold it and take it
    to chakrit with a recommendation.
-3. **Task-give.** Send the task ask with only the context the agent cannot know from
+4. **Task-give.** Send the task ask with only the context the agent cannot know from
    its own docs, specs and code: chakrit's goal, constraints, decisions, granted
    resources. Leave the how to the agent. Keep it short; point to files instead of
    restating them.
