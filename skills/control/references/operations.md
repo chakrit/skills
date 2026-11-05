@@ -30,7 +30,13 @@ background on one, in the wake message: an agent may jump to the task before it 
 finished loading its context.
 
 1. **Start.** If the agent is not running, start it ("Start an agent").
-2. **Send the wake message** ("Message an agent"):
+2. **Clear before resuming work.** Agents mostly start in resume mode, so the harness
+   reopens the previous conversation, and an agent left running still holds its last
+   one. Either way the wake message would land on stale context. Clear the agent
+   first ("Save and clear an agent"). When its last save is already reported and the
+   pane shows nothing newer, clear without asking for another save; otherwise ask it
+   to save first. Skip this step only for a session started fresh.
+3. **Send the wake message** ("Message an agent"):
 
    ```text
    FROM: <your agent name> (<your folder>). This message is written by a control
@@ -41,9 +47,9 @@ finished loading its context.
    state: work in progress, open questions, anything blocking. Take no new work yet.
    ```
 
-3. **Wait** until the agent has reported. Read the report with
+4. **Wait** until the agent has reported. Read the report with
    `scripts/control-agents inspect <slug>`.
-4. **Check the fit.** Before giving a task, judge it against the report. If the task
+5. **Check the fit.** Before giving a task, judge it against the report. If the task
    does not fit the agent's state (for example, a feature request to an agent in the
    middle of a large refactor), hold the task and take it to chakrit with a
    recommendation. Otherwise continue with "Give a task".
