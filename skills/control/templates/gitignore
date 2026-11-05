@@ -5,6 +5,9 @@
 # Transient command captures
 /tmp/
 
+# scripts/control-agents audit trail of clears
+/clears.log
+
 # Python tool artifacts
 __pycache__/
 *.py[cod]

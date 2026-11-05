@@ -29,6 +29,19 @@ adapting control repos between orgs and machines.
 - **Policies:** one file per level plus `memory.md`, loaded whole, governance only, in
   `~/Documents/control/policies/`. Machine control owns and amends them on chakrit's
   rulings. Individual-agent rules stay in that agent's own files.
+- **Procedures compose by name.** `policies/agents.md` holds the procedures controls run
+  on agents (start, message, before a clear, clear, wake, give a task). Level policies
+  name its sections instead of restating them, so each rule has one home and a caller
+  cannot drop a step such as the save check before a clear. Agents read a section each
+  time they run it, because the obvious command (a bare `/clear`) looks complete and is
+  not. `scripts/control-agents clear-context` requires `--saved <location>` and logs
+  it to `clears.log`; the script cannot verify the save, so the flag is a prompt to run
+  "Before a clear" and an audit trail, not proof.
+- **Resume, then clear.** Agents start by resuming their previous session because it
+  keeps the session's name marker and per-conversation settings. A clear followed by no
+  message does not hold on some harnesses: the next resume reopens the conversation
+  before the clear. So waking an agent always clears it again, reusing a save already
+  reported instead of asking for another.
 - **Registries** are a building block: files a control keeps to track shared things.
   The templates are examples, not a required set.
 - **Resources nest.** Machine control grants port blocks and heavy-job slots to org

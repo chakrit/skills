@@ -11,8 +11,8 @@ or one whose instruction file lacks a "Control" section.
    `{{placeholder}}`.
 2. **Send it.** The sender is the agent's parent control (machine control initiates org
    controls; an org control initiates project controls). Send the message below with
-   the block inside it; see "Message an agent" in `references/operations.md`. Never edit
-   the agent's checkout yourself; the agent writes its own instructions.
+   the block inside it; see "Message an agent" in `templates/policies/agents.md`. Never
+   edit the agent's checkout yourself; the agent writes its own instructions.
 3. **Wait for the acknowledgment.** The agent replies with the instruction path it
    changed and the policy file it read. Delivery is not acknowledgment.
 4. **Record it** in the Agent Backlog of the control's `control.html`, and add the

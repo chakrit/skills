@@ -1,5 +1,6 @@
 """Registry lookup and pane checks of scripts/control-agents; no live tmux."""
 
+from datetime import datetime, timezone
 from pathlib import Path
 import runpy
 from types import SimpleNamespace
@@ -84,6 +85,20 @@ class SessionNameTest(unittest.TestCase):
             with self.subTest(name=name):
                 with self.assertRaises(ValueError):
                     agents.check_session_name(name)
+
+
+class ClearRecordTest(unittest.TestCase):
+    NOW = datetime(2026, 11, 5, 9, 30, tzinfo=timezone.utc)
+
+    def test_record_names_time_agent_and_save_location(self) -> None:
+        self.assertEqual(agents.clear_record(WEB, "engram acme-web #412", self.NOW),
+                         "2026-11-05T09:30:00+00:00\tweb\tengram acme-web #412\n")
+
+    def test_save_location_must_be_one_printed_line(self) -> None:
+        for saved in ("", "   ", "engram #1\n/exit", "a\tb", "engram\x1b[2J"):
+            with self.subTest(saved=saved):
+                with self.assertRaises(ValueError):
+                    agents.clear_record(WEB, saved, self.NOW)
 
 
 if __name__ == "__main__":

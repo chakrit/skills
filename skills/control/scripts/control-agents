@@ -9,6 +9,7 @@ The script never creates, renames, resizes or moves windows or panes.
 
 import argparse
 from dataclasses import dataclass
+from datetime import datetime
 from pathlib import Path
 import re
 import subprocess
@@ -25,6 +26,9 @@ CHECKOUT = re.compile(r"[A-Za-z0-9_][A-Za-z0-9._-]*(/[A-Za-z0-9_][A-Za-z0-9._-]*
 SESSION_NAME = re.compile(r"[a-z0-9][a-z0-9_-]*(:[a-z0-9][a-z0-9_-]*){1,2}")
 # The harness drops part of a paste when Enter follows at once.
 PASTE_SETTLE_SECONDS = 1
+# One line per clear-context: time, slug, where the agent's save went.
+CLEAR_LOG = "clears.log"
+BEFORE_A_CLEAR = '"Before a clear" in ~/Documents/control/policies/agents.md'
 
 
 @dataclass(frozen=True)
@@ -89,6 +93,19 @@ def check_session_name(name: str) -> None:
         raise ValueError(f"{name!r} is not an agent name like lz49:acme:web")
 
 
+def clear_record(entry: Agent, saved: str, now: datetime) -> str:
+    if not saved.strip() or not saved.isprintable():
+        raise ValueError(f"{entry.slug}: run {BEFORE_A_CLEAR}, then pass --saved with "
+                         "where the save went, on one line")
+
+    return f"{now.isoformat()}\t{entry.slug}\t{saved}\n"
+
+
+def append_clear_record(repository: Path, record: str) -> None:
+    with (repository / CLEAR_LOG).open("a", encoding="utf-8") as log:
+        log.write(record)
+
+
 def tmux(*arguments: str, stdin: str | None = None) -> str:
     return subprocess.run(("tmux", *arguments), input=stdin, capture_output=True,
                           text=True, check=True).stdout
@@ -122,9 +139,15 @@ def main(arguments: list[str]) -> int:
     actions = commands.add_subparsers(dest="command", required=True)
     actions.add_parser("list", help="print the registered agents")
     for name, text in (("inspect", "print the last 200 lines of the agent's pane"),
-                       ("send", "type the message on stdin and press Enter"),
-                       ("clear-context", "type /clear")):
+                       ("send", "type the message on stdin and press Enter")):
         actions.add_parser(name, help=text).add_argument("slug")
+    clear = actions.add_parser(
+        "clear-context", help=f"type /clear; run {BEFORE_A_CLEAR} first",
+        epilog=f"Run {BEFORE_A_CLEAR} first. A bare /clear can drop unsaved work.")
+    clear.add_argument("slug")
+    clear.add_argument("--saved", default="", metavar="LOCATION",
+                       help="where the agent reported its save went, such as an engram "
+                            "observation or a session file; logged to " + CLEAR_LOG)
     rename = actions.add_parser("rename-session", help="type /rename NAME")
     rename.add_argument("slug")
     rename.add_argument("name")
@@ -134,7 +157,7 @@ def main(arguments: list[str]) -> int:
     try:
         path, root = registry(repository, Path.home().resolve())
         agents = parse(path.read_text(encoding="utf-8"), root)
-        output = run(options, agents)
+        output = run(options, agents, repository)
     except subprocess.CalledProcessError as error:
         print(f"control-agents: tmux: {error.stderr.strip()}", file=sys.stderr)
         return 1
@@ -146,7 +169,7 @@ def main(arguments: list[str]) -> int:
     return 0
 
 
-def run(options: argparse.Namespace, agents: dict[str, Agent]) -> str:
+def run(options: argparse.Namespace, agents: dict[str, Agent], repository: Path) -> str:
     if options.command == "list":
         return "".join(f"{entry.slug}\t{entry.window}\t{entry.pane}\t{entry.checkout}\n"
                        for entry in agents.values())
@@ -159,7 +182,9 @@ def run(options: argparse.Namespace, agents: dict[str, Agent]) -> str:
     if options.command == "send":
         type_line(entry, sys.stdin.read().rstrip("\n"))
     elif options.command == "clear-context":
+        record = clear_record(entry, options.saved, datetime.now().astimezone())
         type_line(entry, "/clear")
+        append_clear_record(repository, record)
     else:
         check_session_name(options.name)
         type_line(entry, f"/rename {options.name}")

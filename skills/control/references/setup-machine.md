@@ -27,6 +27,7 @@ policies, and the machine's shared resources.
    | `templates/policies/org-control.md`         | `policies/org-control.md`     |
    | `templates/policies/project-control.md`     | `policies/project-control.md` |
    | `templates/policies/memory.md`              | `policies/memory.md`          |
+   | `templates/policies/agents.md`              | `policies/agents.md`          |
    | `templates/control.html`                    | `control.html`                |
    | `templates/gitignore`                       | `.gitignore`                  |
    | `templates/registries/orgs.md`              | `registries/orgs.md`          |
@@ -44,7 +45,7 @@ policies, and the machine's shared resources.
    how registries and nested resources work.
 7. **Commit.** Commit everything with a message naming the skill revision
    (`git -C <this skill's repo> rev-parse --short HEAD`).
-8. **Start the agent.** Follow "Start an agent" in `references/operations.md`, then
+8. **Start the agent.** Follow "Start an agent" in `templates/policies/agents.md`, then
    rename its session to `<machine>:control`.
 9. **Plan downstream.** Follow "Plan downstream controls" in
    `references/operations.md` for org candidates under `~/Documents/`.
@@ -52,4 +53,4 @@ policies, and the machine's shared resources.
 ## Done when
 
 The completion list in `SKILL.md` holds, and `policies/` contains the three level
-policies and `memory.md`.
+policies, `memory.md` and `agents.md`.

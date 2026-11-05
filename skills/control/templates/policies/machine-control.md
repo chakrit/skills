@@ -41,13 +41,13 @@ Under Links, link each org control's `control.html`.
 1. To reach a project agent, message its org control if it is running.
 2. If the org control is not running, manage the project's pane directly. Start the
    org control first only when that is faster or the work needs org context.
-3. Start, resume and clear agents as in `org-control.md` ("Panes"). Wake agents and
-   give them tasks as in `org-control.md` ("Wake-up and task-give").
+3. Start, message, clear, wake and task agents as `org-control.md` ("Panes")
+   describes: by reading the named section of `agents.md` each time you run it.
 
 ## Policies
 
-1. You own `~/Documents/control/policies/`, including `memory.md`. Other agents only
-   read it.
+1. You own `~/Documents/control/policies/`, including `memory.md` and `agents.md`.
+   Other agents only read it.
 2. Amend a policy only for a ruling from chakrit or a proposal chakrit approves. Commit
    the change with chakrit's quoted words in the message.
 3. Keep each policy file short: governance only (authority, alignment, reporting,

@@ -32,9 +32,9 @@ details; project controls own those.
 
    Then `ln -s AGENTS.md CLAUDE.md`. Do not copy policy files; the instruction file
    points to the central one. In `control.html`, under Records, link `AGENTS.md`,
-   `../../control/policies/org-control.md`, `../../control/policies/memory.md` and each
-   file in `registries/`. Under Links, link `../../control/control.html` as
-   "Machine control".
+   `../../control/policies/org-control.md`, `../../control/policies/agents.md`,
+   `../../control/policies/memory.md` and each file in `registries/`. Under Links, link
+   `../../control/control.html` as "Machine control".
 5. **Copy scripts.** Follow "Install scripts" in `references/operations.md`.
 6. **Memory.** Follow "Set up a level's engram project" in `references/memory.md`
    with project name `<org>`.
@@ -47,7 +47,7 @@ details; project controls own those.
    that has an agent, add a row to `registries/projects.md`. Read
    `references/registries.md` for how registries and nested resources work.
 9. **Commit,** naming the skill revision.
-10. **Start the agent** ("Start an agent" in `references/operations.md`) and rename
+10. **Start the agent** ("Start an agent" in `templates/policies/agents.md`) and rename
     its session to `<machine>:<org>:control`.
 11. **Plan downstream.** Follow "Plan downstream controls" in
     `references/operations.md` for project candidates under `~/Documents/<org>/`,

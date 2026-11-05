@@ -71,32 +71,21 @@ on?" Never start machine control or run its scripts yourself.
 
 1. You may start, inspect, message, save, clear and stop your projects' agents and
    panes. Use `scripts/control-agents`.
-2. Start an agent in a new tmux window by typing its harness into the window's shell;
-   never make the harness the window's command. Rename its session to its agent name.
-   Never rename tmux windows.
-3. Resume the folder's previous session by default: `ace`, `claude --continue` or
-   `codex resume --last`. Start a new session (`ace new`, `claude`, `codex`) only when
-   the task explicitly requires a fresh one or there is no previous session to resume.
-4. Clear an agent only after it reports what it saved and where, and shows no newer
-   work.
-5. The resting state is every agent saved and cleared.
+2. Run each of these by reading its section in
+   `~/Documents/control/policies/agents.md` at the time, not from memory. A bare
+   `/clear` can drop unsaved work, and a wake-up sent to a resumed session lands on a
+   stale conversation.
 
-## Wake-up and task-give
+   | To                                  | Run                 |
+   | ----------------------------------- | ------------------- |
+   | start or resume an agent            | "Start an agent"    |
+   | send any message                    | "Message an agent"  |
+   | clear an agent, at any time         | "Clear an agent"    |
+   | bring an agent up to take work      | "Wake up an agent"  |
+   | hand over a task after the wake-up  | "Give a task"       |
 
-Two separate messages, never one, after a clear.
-
-1. **Clear.** Agents mostly start by resuming their previous session, so clear the
-   agent before waking it (item 3 under "Panes"). If its last save is already reported
-   and nothing newer shows, clear without another save. Skip this for a fresh session.
-2. **Wake-up.** Tell the agent to run its session-start skill (ace, dw-start or
-   similar) and report its current state. Include no task and no background on one.
-3. **Check.** Wait for the report and read it. If the task does not fit the agent's
-   state (for example, a feature request during a large refactor), hold it and take it
-   to chakrit with a recommendation.
-4. **Task-give.** Send the task ask with only the context the agent cannot know from
-   its own docs, specs and code: chakrit's goal, constraints, decisions, granted
-   resources. Leave the how to the agent. Keep it short; point to files instead of
-   restating them.
+3. The resting state is every agent saved and cleared. A resumed agent can still show
+   its pre-clear conversation; "Wake up an agent" handles that.
 
 ## Memory
 

@@ -48,8 +48,8 @@ Use these names exactly, in every file and message.
 | Initiate an agent        | `references/initiation.md`    | an existing agent lacks the standing grant     |
 
 Read only the file for the chosen operation. It names the sections of the shared
-files it needs: `references/operations.md`, `references/registries.md` and
-`references/memory.md`.
+files it needs: `references/operations.md`, `references/registries.md`,
+`references/memory.md` and `templates/policies/agents.md`.
 
 Set up levels top-down. Before an org control, machine control must exist. Before a
 project control, its org control must exist. If a parent is missing, set it up first
