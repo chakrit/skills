@@ -120,3 +120,12 @@ Commit coherent, completed slices autonomously after completing the checks requi
 that work. Do not ask for permission to make a local commit. A local commit does not
 authorize pushing, publishing, merging, releasing, deploying, or any other change to
 shared or external state; each requires separate user authorization.
+
+## Merging pull requests
+
+When a pull request is merged, merge it first as it stands, then do any follow-up work
+as new commits on top of `main`. Rebase-merge when possible; fall back to another merge
+method only when a rebase fails. Reworking the PR branch or replacing the PR with a new
+commit hides what the author proposed and what the follow-up changed; separate commits
+keep both reviewable. If local `main` has unpushed commits, rebase them onto the merged
+`main` before continuing. Each merge still needs chakrit's authorization.
