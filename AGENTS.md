@@ -53,6 +53,26 @@ Feedback requests authorize findings or a draft, not sending messages, opening i
 or PRs, pushing, or editing another repository. Obtain explicit authorization for
 those actions and name the destination before executing them.
 
+## Context setup before a skill discussion or edit
+
+A skill is a small system: its files have roles, readers, owners and loading rules, and
+its docs record why. A proposal that answers only the request at hand tends to break a
+rule written elsewhere in the skill, and each later fix breaks another. Before
+proposing, discussing or editing a change to a skill, build that model first:
+
+1. Read the skill's `SKILL.md`, its `docs/` (especially any design document), and every
+   file the change touches or names.
+2. Write down, for yourself, the skill's layout model: which files exist and what each
+   may hold, who reads each one, when it is loaded (whole at session start, a section
+   on demand, only during setup), who owns and amends it, and where installed copies
+   live on the machine.
+3. List the skill's stated constraints on structure and content, with `file:line`
+   (for example "governance only", "one file per level", "loaded whole").
+4. Check every proposal against that model and those constraints before presenting it.
+   When a request conflicts with one, say so and quote the rule; do not choose silently.
+5. When the user corrects a proposal, recheck the next one against the whole model, not
+   only against the correction.
+
 ## Ownership and layout
 
 - `skills/fact-check/`, `skills/learn/`, `skills/note-taker/`,
