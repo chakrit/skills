@@ -85,6 +85,29 @@ proposing, discussing or editing a change to a skill, build that model first:
 5. When the user corrects a proposal, recheck the next one against the whole model, not
    only against the correction.
 
+## Audits and fix loops on a skill
+
+An audit checks a skill's integrity against what already exists: its own files and
+chakrit's rulings on it, which `.ace/save.ledger.md` records with chakrit's words. A fix
+makes the skill agree with itself and with those rulings. It never adds a requirement,
+step, check, branch or stop condition that no ruling asked for, and never widens or
+narrows a ruling. The tempting failure is to fill each gap an audit finds with a
+plausible new step and cite a general ruling ("align all layers", "ask chakrit when
+unclear") as its basis. Each addition is new surface for the next audit, so the loop
+never converges, and chakrit has to find and undo work nobody asked for.
+
+- Fix only text that contradicts other text in the skill or a ruling, or a step that
+  cannot be followed as written. Make the smallest change that removes the conflict;
+  prefer rewording or deleting over adding a step.
+- A gap that no ruling covers is a finding, not a fix. Bring it to chakrit as a
+  question, or drop it when it needs several unusual conditions at once.
+- A general ruling does not settle a specific gap. Cite a ruling as the basis only when
+  its words decide that case.
+- When briefing an audit agent, ask for contradictions and steps that cannot be
+  followed, not for "gaps", and tell it not to propose new steps.
+- An audit-fix loop ends when a pass finds no contradiction. Remaining questions go to
+  chakrit in one `1-by-1` walk, not into another loop.
+
 ## Ownership and layout
 
 - `skills/fact-check/`, `skills/learn/`, `skills/note-taker/`,
