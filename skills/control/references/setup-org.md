@@ -14,10 +14,10 @@ line. It does not hold project details; project controls own those.
    agent" sends the `## Control` section, since the agent writes its own instructions.
    When this setup runs for "Initiate an agent" and writes a missing `AGENTS.md`, leave
    out its `## Control` section, down to the next `##` heading, for the same reason.
-2. **Work out the names.** `<org>` is chakrit's short name for the org and maps to a
-   GitHub org that may be named differently. chakrit's request usually holds both
+2. **Work out the names.** `<org>` is the user's short name for the org and maps to a
+   GitHub org that may be named differently. The user's request usually holds both
    ("set up fi/ to manage my Forward Insight stuff"); otherwise find them from the
-   environment (the org's repos and their remotes, `gh`). Flag chakrit only when you
+   environment (the org's repos and their remotes, `gh`). Flag the user only when you
    cannot settle one. Then follow "Record the environment" in
    `references/operations.md` for the org.
 3. **Create the repo.**
@@ -71,7 +71,7 @@ line. It does not hold project details; project controls own those.
     registry, and its planning task registers what is missing.
 11. **Lodge downstream planning.** Add an Agent Backlog row to `control.data.js` (group
     `todo`): item "Plan downstream controls (`control` skill,
-    `references/operations.md`)", agent `<machine>:<org>:control`, source chakrit's
+    `references/operations.md`)", agent `<machine>:<org>:control`, source the user's
     request, next "after first start". When this setup runs for "Initiate an agent",
     skip this step; initiation sends the planning as a task.
 12. **Commit** what this setup wrote, naming the skill revision.

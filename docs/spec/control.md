@@ -8,10 +8,13 @@ never read this file; every rule they follow lives in the skill's own `SKILL.md`
 
 ## What it is
 
-One skill, invoked in different folders, that sets up chakrit's agent coordination on a
+One skill, invoked in different folders, that sets up the user's agent coordination on a
 single machine: three fixed levels of control agents in tmux, rules and memory in one
 engram store, and registries. It replaces copying control repos between orgs and
 machines.
+
+The skill is self-contained for any user. Its wording addresses "the user"; "chakrit"
+appears only as an example name, and no rule rests on what chakrit wants.
 
 ## Structure
 
@@ -19,7 +22,7 @@ machines.
   control (`~/Documents/<org>/control`), project control
   (`~/Documents/<org>/<project>`).
 - Agent names: `<machine>:control`, `<machine>:<org>:control`,
-  `<machine>:<org>:<project>`. `<org>` is chakrit's short name (`datawow`).
+  `<machine>:<org>:<project>`. `<org>` is the user's short name (`datawow`).
 - Higher levels hold less context. Machine control keeps work across orgs and work
   that belongs to no org, and sends one org's tasks to that org control. Org controls
   track tasks and alignment, not project details. Project controls own project context
@@ -45,7 +48,7 @@ machines.
 - An entry loads by searching its key, taking the exact `topic_key` match, then
   `mem_get_observation` by ID, since search returns only previews.
 - Seeds live in `templates/rules/`. Machine control owns the entries and amends them
-  with `mem_update` by ID, appending the quoted ruling. chakrit syncs amendments back
+  with `mem_update` by ID, appending the quoted ruling. The user syncs amendments back
   to the seeds and handles backups.
 - With engram, engram is the only copy of the rules; setup writes no rule files.
   Without engram, setup copies the seeds to `~/Documents/control/rules/`.
@@ -71,10 +74,10 @@ machines.
 
 ## Agent handling
 
-- chakrit's "stop" for an agent means wind down: save, clear, exit the harness, exit
+- The user's "stop" for an agent means wind down: save, clear, exit the harness, exit
   the shell.
 - `clear-context` and `wind-down` require `--saved <location>`; `force-clear` requires
-  `--ruling` with chakrit's quoted words, a last resort. The flag is named `--ruling`,
+  `--ruling` with the user's quoted words, a last resort. The flag is named `--ruling`,
   not `--reason`, so an agent cannot fill it with a reason of its own. All three log to
   `clears.log`.
 - Agents resume their previous session, which keeps its name marker and settings. On
@@ -91,27 +94,27 @@ machines.
 - Messages go through the harness's agent messaging first; `scripts/control-agents`
   is the fallback, and the only way to send keystroke-only commands (`/clear`,
   `/rename`, `/quit`).
-- Two message classes: rulings are chakrit's decisions and are applied as given; task
+- Two message classes: rulings are the user's decisions and are applied as given; task
   asks may be misread in relay, so the receiver pushes back and the control resolves it
-  with chakrit.
-- Org and machine controls present a plan and get chakrit's confirmation before each
+  with the user.
+- Org and machine controls present a plan and get the user's confirmation before each
   new task.
 - Nothing runs upward. A child reaches its parent through agent messaging or asks
-  chakrit to start the parent and relay. Machine control never acts on a project's
+  the user to start the parent and relay. Machine control never acts on a project's
   pane; it reaches project work through the org control, starting and waking it when
   it is not running.
 - Long-running processes, dev and preview servers included, run only in tmux panes
-  chakrit can see, never in the harness's own shell.
+  the user can see, never in the harness's own shell.
 - After a machine or org control is set up or initiated, it scans one level down for
-  folders that should get controls, gets chakrit's approval, and runs the setups. Setup
-  lodges this as a backlog row; a parent sends it as a task after the wake, and chakrit
+  folders that should get controls, gets the user's approval, and runs the setups. Setup
+  lodges this as a backlog row; a parent sends it as a task after the wake, and the user
   asks machine control.
 
 ## Records
 
 - Registries are Markdown files a control keeps to track shared things; the templates
   are examples, not a required set.
-- Agent rows hold slug, checkout and the last-known window and pane. chakrit starts
+- Agent rows hold slug, checkout and the last-known window and pane. The user starts
   and moves agents alongside the controls, so the pane IDs are a cache: controls use
   them as they are and correct a row only when the script refuses the pane or the cells
   are empty.
@@ -123,7 +126,7 @@ machines.
   them by path. Without engram, a `memory/` folder per level holds what engram would.
 - Knowledge about one component repo goes in that repo's own docs, so it travels with
   the clone.
-- `control.html` is the one page chakrit checks. It is a fixed template rendering
+- `control.html` is the one page the user checks. It is a fixed template rendering
   `control.data.js`, the only live task record. Agents edit only the data file for
   updates, and change `control.html` when the user asks for a different view (pages,
   columns). The

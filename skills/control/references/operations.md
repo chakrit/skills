@@ -37,7 +37,7 @@ The new machine or org control runs this itself, after its setup or initiation. 
 finds the folders one level down that should get their own control, so the structure
 is complete rather than set up one folder at a time. Setup lodges it as an Agent
 Backlog row in the new control's `control.data.js`; a parent that set up or initiated
-an org control sends it as a task after the wake, and chakrit asks machine control.
+an org control sends it as a task after the wake, and the user asks machine control.
 
 1. **Scan** the new control's level:
    - **Machine control:** every folder `~/Documents/<name>/` except `control`.
@@ -52,27 +52,27 @@ an org control sends it as a task after the wake, and chakrit asks machine contr
      Find git repos with `find ~/Documents/<name> -maxdepth 3 -name .git`. For an org
      candidate, suggest the folder name as `<org>` and the GitHub org from
      its repos' remotes. Registering an org also adds its line under `## GitHub orgs`
-     in `registries/orgs.md`: find out its GitHub org, and flag chakrit only when you
+     in `registries/orgs.md`: find out its GitHub org, and flag the user only when you
      cannot.
    - **Org control:** every folder `~/Documents/<org>/<name>/` except `control`.
      Classify each one:
 
-     | Folder holds                                    | Candidate for                     |
-     | ----------------------------------------------- | --------------------------------- |
-     | `AGENTS.md` with a `## Control` section         | nothing; register it if missing   |
-     | `AGENTS.md` or `CLAUDE.md` without that section | `references/initiation.md`        |
-     | several git clones and no `AGENTS.md`           | `references/setup-project.md`     |
-     | one git repo at its top level                   | ask chakrit which project owns it |
+     | Folder holds                                    | Candidate for                      |
+     | ----------------------------------------------- | ---------------------------------- |
+     | `AGENTS.md` with a `## Control` section         | nothing; register it if missing    |
+     | `AGENTS.md` or `CLAUDE.md` without that section | `references/initiation.md`         |
+     | several git clones and no `AGENTS.md`           | `references/setup-project.md`      |
+     | one git repo at its top level                   | ask the user which project owns it |
 
      For a project candidate, suggest the folder name as `<project>` and its clones'
      remotes as `repos.txt` lines.
    - Skip folders without git repos and list them as skipped.
-2. **Check authorization.** If chakrit already asked for downstream setup ("set up
+2. **Check authorization.** If the user already asked for downstream setup ("set up
    all the orgs", "do the projects too"), quote those words and continue. Otherwise
-   send chakrit the candidate list with the suggested names, and ask which to set up.
-   Wait for chakrit's answer. Never move or rename a folder chakrit has not named.
+   send the user the candidate list with the suggested names, and ask which to set up.
+   Wait for the user's answer. Never move or rename a folder the user has not named.
 3. **Lodge.** Add one Agent Backlog entry per approved candidate in the new control's
-   `control.data.js`, with chakrit's quoted words as the source. Commit.
+   `control.data.js`, with the user's quoted words as the source. Commit.
 4. **Do.** Run the setup or initiation for each approved candidate, one at a time.
    An org control set up or initiated this way gets this section as its task. Mark each
    backlog entry done with its commit hash.
@@ -81,7 +81,7 @@ an org control sends it as a task after the wake, and chakrit asks machine contr
 
 Nothing runs upward: `scripts/control-agents` only types into agents below. An agent
 that needs its parent (for a port, a heavy-job slot, a ruling) uses the harness's own
-agent messaging when it reaches the parent. Otherwise it asks chakrit to start the
+agent messaging when it reaches the parent. Otherwise it asks the user to start the
 parent and relay the message, for example: "We need a port for the XYZ server and the
 org control is not running; can you start it and pass this on?" A child never starts
 its parent or runs the parent's scripts.
@@ -96,7 +96,7 @@ already gets its environment's start and save skills from the environment itself
 only onboarding, which runs before that, needs these values.
 
 Find the values in the org's school, the instruction files already in the org's
-folders, or chakrit's words. Ask chakrit when any value is unclear.
+folders, or the user's words. Ask the user when any value is unclear.
 
 | Placeholder      | Value                                       |
 | ---------------- | ------------------------------------------- |
@@ -112,7 +112,7 @@ the folder: machine control's own, or the org root's for every folder in the org
 1. If the school is `none`, skip this section; the setup is complete without ACE.
 2. In the folder, set up the school in a visible tmux pane with the command the
    environment uses for it, found as "Record the environment" finds its values; prefer
-   ACE's own where `ace` is installed. It may ask for authentication; tell chakrit
+   ACE's own where `ace` is installed. It may ask for authentication; tell the user
    which pane waits for input.
 3. If the init skill is `none`, skip this step. Run the init skill in that folder to
    finish onboarding. Commit the files it writes where the folder is a repo; the org

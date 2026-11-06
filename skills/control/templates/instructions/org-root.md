@@ -14,7 +14,7 @@ The org control owns this file.
 
 You are an agent started in the org folder, not a control. Do no project work here:
 work belongs in the project folder that owns it, and org coordination belongs to the
-org control. If chakrit asks for either, say which folder's agent should take it.
+org control. If the user asks for either, say which folder's agent should take it.
 
 **At session start and after a clear or compaction,** load every entry the table marks
 "start", then call `mem_context` for engram project `{{machine}}-{{org}}`, the org's

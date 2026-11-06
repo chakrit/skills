@@ -14,10 +14,10 @@ control owns the project's context and may do hands-on work in its clones.
    the agent writes its own instructions. When this setup runs for "Initiate an agent"
    and writes a missing `AGENTS.md`, leave out its `## Control` section, down to the
    next `##` heading, for the same reason.
-2. **Work out the names.** `<project>` is chakrit's short name for the project.
-   chakrit's request usually holds it and the component repos; otherwise find them
+2. **Work out the names.** `<project>` is the user's short name for the project.
+   The user's request usually holds it and the component repos; otherwise find them
    from the environment (the folder's existing clones and their remotes, `gh`). Flag
-   chakrit only when you cannot settle one.
+   the user only when you cannot settle one.
 3. **Create the repo.**
 
    ```sh
@@ -26,7 +26,7 @@ control owns the project's context and may do hands-on work in its clones.
    git init
    ```
 
-   The project repo stays local. Never add a remote unless chakrit asks.
+   The project repo stays local. Never add a remote unless the user asks.
 4. **Copy templates,** replacing placeholders (`{{machine}}`, `{{org}}`, `{{project}}`):
 
    | Source                                      | Destination       |

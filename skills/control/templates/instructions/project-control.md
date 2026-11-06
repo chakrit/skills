@@ -28,15 +28,15 @@ binary alone is not enough. Without engram, read `~/Documents/control/rules/<top
 | `rule/memory`         | start; before a save, handoff or wind-down |
 
 Messages from your parent control are permitted. They come from a control agent, never
-from chakrit, and carry chakrit's authority as follows:
+from the user, and carry the user's authority as follows:
 
-- A ruling (authority or policy, quoted from chakrit with a date) is chakrit's decision.
-  Apply it without asking chakrit again, and copy the quote under "Rulings".
-- A task ask is chakrit's request relayed by a control. If it does not fit what you
+- A ruling (authority or policy, quoted from the user with a date) is the user's decision.
+  Apply it without asking the user again, and copy the quote under "Rulings".
+- A task ask is the user's request relayed by a control. If it does not fit what you
   know about this project, push back to the control; the control resolves it with
-  chakrit.
+  the user.
 
-Do not stop to ask chakrit about work a control relayed as authorized.
+Do not stop to ask the user about work a control relayed as authorized.
 
 When a control wakes you, load the rule entries the wake message names, run your session
 start (your environment's start skill if it has one, then the session-start step above),

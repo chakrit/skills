@@ -1,7 +1,7 @@
 /*
  * Data for control.html, which sits next to this file and renders every view, count and
  * link from it. Update the page by editing only this file; change control.html only when
- * chakrit asks for a different view, column or group.
+ * the user asks for a different view, column or group.
  *
  * The object assigned below, up to the closing "};", is strict JSON: double quotes, no
  * comments, no trailing commas. Values are plain text, never HTML. Keep every key,
@@ -11,20 +11,20 @@
  *
  * title      Page title.
  * updated    Date of the last edit, such as "2026-11-06". Set it on every edit.
- * tasks      Work only chakrit can do, by group: doing (In progress), todo (To do),
+ * tasks      Work only the user can do, by group: doing (In progress), todo (To do),
  *            done (Done). Row: {"item": "", "source": "", "since": ""}.
  * attention  Decisions and approvals an agent is waiting on, one entry per waiting agent:
  *            {"agent": "<agent name>", "items": [row, ...]}.
  *            Row: {"item": "", "where": "", "recommendation": "", "since": ""}, where
- *            "where" names the place chakrit acts. Remove a row once chakrit acts, and
+ *            "where" names the place the user acts. Remove a row once the user acts, and
  *            an agent's entry once it has no rows. Its sidebar count turns
  *            warning-coloured while it has rows.
  * backlog    Every task agents own, by group: blocked (Blocked), waiting (Waiting on
- *            chakrit), doing (In progress), todo (Queued), done (Done).
+ *            the user), doing (In progress), todo (Queued), done (Done).
  *            Row: {"item": "", "agent": "", "source": "", "next": ""}. "source" is
- *            chakrit's verbatim words or the reporting agent; "next" names the next step,
- *            or the commit, PR or save location as evidence. Drop done rows older than a
- *            week.
+ *            the user's verbatim words or the reporting agent; "next" names the next
+ *            step, or the commit, PR or save location as evidence. Drop done rows older
+ *            than a week.
  * links      Related control pages: {"label": "", "href": ""}, href relative to this
  *            file. Org controls on machine control's page, machine control on an org
  *            control's page.

@@ -23,7 +23,7 @@ Engram first. Use files only for what must be read by path or shown on a page.
 
 A component repo's docs travel with its clone, so knowledge about one repo goes in that
 repo's docs, following the repo's own convention and the environment's docs skill.
-If the repo has no docs tree, ask chakrit before setting one up. If chakrit declines,
+If the repo has no docs tree, ask the user before setting one up. If the user declines,
 save it in the project's engram project with topic key `<repo>/<subject>`, or in
 `memory/<repo>-<subject>.md` without engram.
 
@@ -59,7 +59,7 @@ before the work it governs:
 3. `mem_get_observation` with that result's ID. Search results are truncated; a rule
    read from a search result alone is incomplete.
 4. If no result has the exact key, stop the work the entry governs and tell your parent
-   control the entry is missing; machine control tells chakrit. A machine with engram
+   control the entry is missing; machine control tells the user. A machine with engram
    has no rule files to fall back to; never work from what you remember of a rule.
 
 ## Session
@@ -103,10 +103,10 @@ engram's MCP tools and CLI only; never install an engram plugin or hooks.
 
 ## Amending a rule entry
 
-Only machine control amends rule entries, for a ruling from chakrit or a proposal
-chakrit approves. Find the entry's ID as "Loading a rule entry" describes, then call
+Only machine control amends rule entries, for a ruling from the user or a proposal
+the user approves. Find the entry's ID as "Loading a rule entry" describes, then call
 `mem_update` with that ID and `expected_project: <machine>-control-rules`. Append
-chakrit's quoted ruling with its date to the entry's "Rulings" section, adding the
+the user's quoted ruling with its date to the entry's "Rulings" section, adding the
 section at the end if it is missing. Never re-save a rule by topic key: a mistyped key
 or project creates a second entry instead of replacing the rule. Without engram, edit
 the file in `~/Documents/control/rules/` and commit it with the quoted ruling in the

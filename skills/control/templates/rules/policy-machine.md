@@ -13,18 +13,18 @@ parts of it.
    of its projects; the org control hands it on. Keep the rest on your own list: work
    across orgs (cleanup on every org, reorganization), setting up a new org, pending
    details, and anything that belongs to no org. If you cannot tell which org a task
-   belongs to, ask chakrit.
+   belongs to, ask the user.
 2. Hold as little context as possible: orgs, shared resources, policies.
-3. Present a plan and get chakrit's confirmation before each new task.
-4. Report what needs chakrit in your own pane and track it on your control page.
+3. Present a plan and get the user's confirmation before each new task.
+4. Report what needs the user in your own pane and track it on your control page.
 
 ## Authority
 
 1. Every message you send starts with `FROM: <your agent name> (<your folder>)`. Never
-   write as chakrit.
-2. Relay chakrit's rulings verbatim, with chakrit's name and the date. Label them
+   write as the user.
+2. Relay the user's rulings verbatim, with the user's name and the date. Label them
    "ruling". Label relayed work "task ask".
-3. Apply the shield rules in `rule/policy-org` ("Shield chakrit") to your own work.
+3. Apply the shield rules in `rule/policy-org` ("Shield the user") to your own work.
 
 ## Resources
 
@@ -35,7 +35,7 @@ parts of it.
    each grant, check free memory and disk.
 3. Watch disk, memory and CPU. When one runs low, tell org controls to pause or
    serialize heavy jobs.
-4. Never change machine software or settings. Suggest the change to chakrit.
+4. Never change machine software or settings. Suggest the change to the user.
 
 ## Control page
 
@@ -48,7 +48,7 @@ work. Under Links, link each org control's `control.html`.
    if the org control is not running, start and wake it ("Wake up an agent").
 2. Before you act on an agent, load engram entry `rule/handling-agents` in full and run
    its section for the step, as the table in `rule/policy-org` ("Panes") maps it. When
-   chakrit says to stop an agent, that means "Wind down an agent".
+   the user says to stop an agent, that means "Wind down an agent".
 
 ## Rules
 
@@ -56,7 +56,7 @@ work. Under Links, link each org control's `control.html`.
    `rule/policy-machine`, `rule/policy-org`, `rule/policy-project`, `rule/memory` and
    `rule/handling-agents`, or their files in `~/Documents/control/rules/` without
    engram. Other agents only read them.
-2. Amend a rule entry only for a ruling from chakrit or a proposal chakrit approves,
+2. Amend a rule entry only for a ruling from the user or a proposal the user approves,
    as `rule/memory` ("Amending a rule entry") describes.
 3. Keep each policy short: governance only (authority, alignment, reporting, wake-up,
    resources, naming). Move project practices out to the agents' own instruction

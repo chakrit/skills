@@ -17,7 +17,7 @@ Your rules live in engram project `{{machine}}-control-rules`. Load each entry i
 `mem_search` its topic key with project `{{machine}}-control-rules`, take the result
 whose `topic_key` equals the key exactly, then `mem_get_observation` that ID for the full
 text, since search results are truncated. If no result has the exact key, stop and tell
-chakrit. Engram is available when the `mem_search` tool exists; the `engram` binary
+the user. Engram is available when the `mem_search` tool exists; the `engram` binary
 alone is not enough. Without engram, read `~/Documents/control/rules/<topic>.md`
 (`rule/policy-machine` is `rules/policy-machine.md`).
 
@@ -48,12 +48,12 @@ Environment table instead. `none` means there is no such step.
 ## Records
 
 - `rules/`: the live rule files, only on a machine without engram.
-- `control.html`: the page chakrit checks, rendered from `control.data.js`: tasks,
-  what needs chakrit, the agent backlog, links to org controls. Edit only
+- `control.html`: the page the user checks, rendered from `control.data.js`: tasks,
+  what needs the user, the agent backlog, links to org controls. Edit only
   `control.data.js`.
 - `registries/orgs.md`: org controls.
 - `registries/ports.md`: port blocks granted to orgs.
 - `registries/heavy-jobs.md`: heavy-job slots and their holders.
 
-Commit completed coordination work as it happens. Never push without chakrit's
+Commit completed coordination work as it happens. Never push without the user's
 authorization.

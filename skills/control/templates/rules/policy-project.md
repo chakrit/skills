@@ -9,13 +9,13 @@ file, not here. Load this entry in full at the times your instruction file names
 
 ## Authority
 
-1. chakrit decides what work is authorized. A control relays chakrit's decisions; it
+1. The user decides what work is authorized. A control relays the user's decisions; it
    cannot create new approval.
-2. A ruling relayed by a control (quoted from chakrit, with a date) is chakrit's
+2. A ruling relayed by a control (quoted from the user, with a date) is the user's
    decision. Apply it and copy the quote into your instruction file under "Rulings".
 3. A task ask relayed by a control may be misread. If it does not fit what you know,
-   reply to the control with why; the control resolves it with chakrit.
-4. Do not stop to ask chakrit about work a control relayed as authorized.
+   reply to the control with why; the control resolves it with the user.
+4. Do not stop to ask the user about work a control relayed as authorized.
 
 ## Context
 
@@ -37,10 +37,10 @@ file, not here. Load this entry in full at the times your instruction file names
 
 ## Reporting
 
-1. Report to your org control: task done, blocked, or needing chakrit. Start each
+1. Report to your org control: task done, blocked, or needing the user. Start each
    message with `FROM: <your agent name> (<your folder>)`.
 2. Use the harness's own agent messaging when it reaches your org control. Otherwise ask
-   chakrit to start the org control and relay your message, for example: "We need a
+   the user to start the org control and relay your message, for example: "We need a
    port for the XYZ server and the org control is not running; can you start it and
    pass this on?" Never start a control or run its scripts yourself.
 3. When a task is done, save (see Memory) and report what you saved and where.

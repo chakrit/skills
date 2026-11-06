@@ -29,7 +29,7 @@ binary alone is not enough. Without engram, read `~/Documents/control/rules/<top
 | `rule/handling-agents` | before you start, message, clear, stop, wake or initiate an agent |
 
 Messages from machine control are permitted. They come from a control agent, never from
-chakrit. A ruling (quoted from chakrit with a date) is chakrit's decision: apply it and
+the user. A ruling (quoted from the user with a date) is the user's decision: apply it and
 copy the quote under "Rulings". A task ask that does not fit what you know gets pushed
 back to machine control.
 
@@ -46,8 +46,8 @@ carries the task.
 
 ## Records
 
-- `control.html`: the page chakrit checks, rendered from `control.data.js`: tasks,
-  what needs chakrit, the agent backlog, a link to machine control. Edit only
+- `control.html`: the page the user checks, rendered from `control.data.js`: tasks,
+  what needs the user, the agent backlog, a link to machine control. Edit only
   `control.data.js`.
 - `registries/projects.md`: project controls and their last-known panes.
 - `registries/ports.md`: the org's port block and the blocks granted to projects.
@@ -55,5 +55,5 @@ carries the task.
   with the org's Environment table. You own and update it. The org root is not a git
   repo, so nothing tracks its history.
 
-Commit completed coordination work as it happens. Never push without chakrit's
+Commit completed coordination work as it happens. Never push without the user's
 authorization.

@@ -6,7 +6,7 @@
 
 Reference script for the control skill. Run it from the control repo's scripts/,
 inside the tmux server that holds the agents. The registry's Window and Agent pane are
-the last-known IDs, which chakrit's own moves can make stale; every tmux call targets
+the last-known IDs, which the user's own moves can make stale; every tmux call targets
 that pane by its server-unique ID, and the pane is checked again before each keystroke,
 so a stale ID is refused rather than typed into.
 The script never creates, renames, resizes or moves windows or panes. Only wind-down
@@ -37,7 +37,7 @@ HARNESS_EXIT_COMMAND = "/quit"
 HARNESS_EXIT_SECONDS = 10
 HARNESS_EXIT_POLL_SECONDS = 0.2
 # One line per clear: time, slug, kind (`saved`, `wind-down`, `forced`), and where the
-# save went or chakrit's ruling that forced it.
+# save went or the user's ruling that forced it.
 CLEAR_LOG = "clears.log"
 BEFORE_A_CLEAR = ('the "Before a clear" section of engram entry rule/handling-agents '
                   "(fallback ~/Documents/control/rules/handling-agents.md)")
@@ -45,7 +45,7 @@ SAVED_HINT = f"run {BEFORE_A_CLEAR}, then pass --saved with where the save went"
 CLEAR_DETAIL_HINTS = {
     "saved": SAVED_HINT,
     "wind-down": SAVED_HINT,
-    "forced": "ask chakrit, then pass --ruling with chakrit's quoted words",
+    "forced": "ask the user, then pass --ruling with the user's quoted words",
 }
 
 
@@ -230,20 +230,21 @@ def main(arguments: list[str]) -> int:
     clearing.add_argument("--saved", default="", metavar="LOCATION", help=saved_help)
     down = actions.add_parser(
         "wind-down", help="clear, exit the harness, then exit the pane's shell",
-        epilog=f"Run {BEFORE_A_CLEAR} first. chakrit's \"stop\", \"wind down\" or "
+        epilog=f"Run {BEFORE_A_CLEAR} first. The user's \"stop\", \"wind down\" or "
                "\"shut down\" for an agent mean this. Afterwards empty the agent's "
                "Window and Agent pane cells in the registry.")
     down.add_argument("slug")
     down.add_argument("--saved", default="", metavar="LOCATION", help=saved_help)
     force = actions.add_parser(
-        "force-clear", help="type /clear without a save; lossy, only on chakrit's ruling",
+        "force-clear",
+        help="type /clear without a save; lossy, only on the user's ruling",
         epilog=f"Skips {BEFORE_A_CLEAR}, so unsaved work is lost. A last resort, allowed "
-               "only on chakrit's ruling: chakrit ordered a clear without a save, or "
+               "only on the user's ruling: the user ordered a clear without a save, or "
                "approved one because the agent is stuck or hung, agents are being torn "
-               "down, or another special circumstance requires it. Ask chakrit first.")
+               "down, or another special circumstance requires it. Ask the user first.")
     force.add_argument("slug")
     force.add_argument("--ruling", default="", metavar="TEXT",
-                       help="chakrit's quoted words ordering or approving the clear; "
+                       help="the user's quoted words ordering or approving the clear; "
                             "logged to " + CLEAR_LOG)
     rename = actions.add_parser("rename-session", help="type /rename NAME")
     rename.add_argument("slug")

@@ -28,13 +28,13 @@ templates in `templates/registries/` are starting points, not a required set.
 `orgs.md` and `projects.md` are parsed by `scripts/`; their templates state the
 columns to keep. Rows record who exists, not live state: Window and Agent pane are the
 last-known IDs the script types into, used only for what needs keystrokes or an agent
-the harness's agent messaging cannot reach. chakrit starts and moves agents too, so a
+the harness's agent messaging cannot reach. The user starts and moves agents too, so a
 control uses them as they are and corrects a row only when the script refuses the pane
 or the cells are empty.
 
 ## Nested resources
 
-- **Ports nest the way the levels do.** chakrit's open range is 8000–9000. Machine
+- **Ports nest the way the levels do.** The user's open range is 8000–9000. Machine
   control grants each org control a block; the org control grants each project a
   smaller block from it and reserves single service ports inside that. Example sizes:
   100 ports per org, 20 per project.

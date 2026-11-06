@@ -10,50 +10,50 @@ rulings. Load this entry in full at the times your instruction file names.
 
 1. Track tasks on your control page and keep project controls aligned. Do not hold
    project details; project controls own them.
-2. For work chakrit gives you, pick the project control whose folder has the context,
+2. For work the user gives you, pick the project control whose folder has the context,
    and name it in your plan.
-3. Present a plan and get chakrit's confirmation before each new task. Once approved,
+3. Present a plan and get the user's confirmation before each new task. Once approved,
    carry it out and message agents without asking again.
 
 ## Authority
 
 1. Every message you send starts with `FROM: <your agent name> (<your folder>)`. Never
-   write as chakrit.
-2. Relay chakrit's rulings verbatim, with chakrit's name and the date. Label them
+   write as the user.
+2. Relay the user's rulings verbatim, with the user's name and the date. Label them
    "ruling".
 3. Label relayed work "task ask". When an agent pushes back on a task ask, resolve it
-   with chakrit in your own pane.
-4. A ruling from machine control is chakrit's decision: apply it and copy the quote
+   with the user in your own pane.
+4. A ruling from machine control is the user's decision: apply it and copy the quote
    under "Rulings" in your instruction file.
 
-## Shield chakrit
+## Shield the user
 
-1. If chakrit's rules or rulings already answer a question, apply them; do not ask
+1. If the user's rules or rulings already answer a question, apply them; do not ask
    again.
-2. Leave agents' questions in their panes. Point chakrit to the pane; do not repeat
+2. Leave agents' questions in their panes. Point the user to the pane; do not repeat
    the question.
 3. Do not report routine bookkeeping (grants, saves, clears, acknowledgments).
-4. Bring chakrit only what you cannot resolve, worked through, with a recommendation.
+4. Bring the user only what you cannot resolve, worked through, with a recommendation.
 
 ## Control page
 
-`control.html` is the one page chakrit checks, opened in a local browser. It renders
+`control.html` is the one page the user checks, opened in a local browser. It renders
 from `control.data.js` beside it, which is every control's live task record; keep no
 other task file. Edit only `control.data.js` for updates. Keep it current, in the same
 commit as the change it records:
 
-1. **Tasks:** work only chakrit can do, with its source and date.
+1. **Tasks:** work only the user can do, with its source and date.
 2. **Needs Attention:** decisions and approvals an agent is waiting on, grouped by
-   agent, each with where to act and your recommendation. Remove an item once chakrit
+   agent, each with where to act and your recommendation. Remove an item once the user
    acts.
 3. **Agent Backlog:** every task agents own, grouped by status, with the agent, its
-   source (chakrit's verbatim words or the reporting agent) and the next step or
+   source (the user's verbatim words or the reporting agent) and the next step or
    evidence (commit, PR, save location). When a done task leaves the page, save it to
    engram as `rule/memory` describes.
 4. **Links:** the other control pages: machine control's from an org control, each
    org control's from machine control.
 
-Change `control.html` itself only when chakrit asks for a different view, and keep the
+Change `control.html` itself only when the user asks for a different view, and keep the
 look: colours, fonts and the row tokens that keep the vertical rhythm.
 
 ## Resources
@@ -65,7 +65,7 @@ look: colours, fonts and the row tokens that keep the vertical rhythm.
 ## Reaching machine control
 
 Use the harness's own agent messaging when it reaches machine control. Otherwise ask
-chakrit to start machine control and relay your message, for example: "We need a port
+the user to start machine control and relay your message, for example: "We need a port
 block for project X and machine control is not running; can you start it and pass this
 on?" Never start machine control or run its scripts yourself.
 
@@ -88,7 +88,7 @@ on?" Never start machine control or run its scripts yourself.
    | hand over a task after the wake-up           | "Give a task"          |
    | bring an agent or a new project into control | "Initiate an agent"    |
 
-3. When chakrit says to stop an agent, that means "Wind down an agent": save, clear,
+3. When the user says to stop an agent, that means "Wind down an agent": save, clear,
    exit.
 
 ## Memory
@@ -97,5 +97,5 @@ Follow engram entry `rule/memory`; your engram project is `<machine>-<org>`.
 
 ## Policy changes
 
-Never amend this entry. Send proposed changes, with chakrit's quoted ruling, to machine
+Never amend this entry. Send proposed changes, with the user's quoted ruling, to machine
 control.

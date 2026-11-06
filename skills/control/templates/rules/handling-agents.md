@@ -11,7 +11,7 @@ a wake-up sent to a resumed session lands on a stale conversation.
 ## Start an agent
 
 Run the harness inside a shell in a tmux window, never as the window's command, so
-chakrit can restart it and `scripts/control-agents` can tell the harness from the shell.
+the user can restart it and `scripts/control-agents` can tell the harness from the shell.
 Start it with the same command that started your own session. Your shell's ancestor
 processes show it: run `ps -o ppid=,command= -p <pid>` from your shell's parent upward
 (for example `claude --continue` under `ace`), and take the command whose parent is
@@ -34,14 +34,14 @@ the command reports no session to resume.
 ## Message an agent
 
 1. Identify the sender in the first line: `FROM: <agent-name> (<folder>)`. Never write
-   as chakrit.
+   as the user.
 2. Use the harness's own agent messaging when sender and receiver both have it.
    Otherwise use `scripts/control-agents send <slug>` with the message on stdin. It
    types only into the registered pane, in the agent's folder, while a program other
    than the pane's shell holds it and nobody is viewing it. Never hand-type into a pane
    the script refused.
 3. Clear, rename and wind down an agent only through `scripts/control-agents`.
-4. Quote rulings verbatim with chakrit's name and the date:
+4. Quote rulings verbatim with the user's name and the date:
    `chakrit, 2026-11-04: "<exact words>"`.
 
 ## Before a clear
@@ -73,23 +73,23 @@ session file its save skill wrote, or a memory file.
    whose last action was a clear reopens the conversation before the clear. When the
    agent is to work now, send the next message at once ("Wake up an agent").
 
-**Force a clear** only on chakrit's ruling, as a last resort: chakrit orders a clear
+**Force a clear** only on the user's ruling, as a last resort: the user orders a clear
 without a save, or approves one because the agent is stuck or hung, agents are being
-torn down, or another circumstance requires it. Without chakrit's words, ask chakrit
+torn down, or another circumstance requires it. Without the user's words, ask the user
 first. Skip "Before a clear" and run
-`scripts/control-agents force-clear <slug> --ruling '<chakrit's quoted words>'`. Step
+`scripts/control-agents force-clear <slug> --ruling '<the user's quoted words>'`. Step
 3 still applies.
 
 ## Wind down an agent
 
-When chakrit says to stop, wind down or shut down an agent, this is the procedure: the
+When the user says to stop, wind down or shut down an agent, this is the procedure: the
 agent saves, clears, exits its harness, and its shell exits, which closes the pane.
 
 1. Run "Before a clear".
 2. Run `scripts/control-agents wind-down <slug> --saved "<save location>"`. It types
    `/clear` and `/quit`, waits for the shell to take the pane back, then types `exit`.
    If the harness does not exit, the script types nothing into the shell; read the pane
-   and resolve it, or ask chakrit.
+   and resolve it, or ask the user.
 3. Empty the agent's Window and Agent pane cells in your registry: the agent is not
    running. Commit the registry change.
 
@@ -112,7 +112,7 @@ finished loading its context.
 
    ```text
    FROM: <your agent name> (<your folder>). This message is written by a control
-   agent, not chakrit.
+   agent, not the user.
 
    WAKE-UP: Load your rules first, in full: engram entries <entries> in project
    <machine>-control-rules (mem_search the topic key, take the exact topic_key match,
@@ -126,7 +126,7 @@ finished loading its context.
    "Before a clear" step 1.
 5. **Check the fit.** Judge the task against the report. If it does not fit the
    agent's state (for example, a feature request to an agent in the middle of a large
-   refactor), hold it and take it to chakrit with a recommendation. Otherwise run
+   refactor), hold it and take it to the user with a recommendation. Otherwise run
    "Give a task".
 
 ## Give a task
@@ -136,7 +136,7 @@ agent". If the agent is still working, hold the task until it reports done or si
 idle, then wake it (the wake saves and clears it first) and send the task. A ruling or
 reply within the agent's current work is a plain "Message an agent", with no wake.
 
-- Give the context from chakrit's conversation with you that the agent cannot know:
+- Give the context from the user's conversation with you that the agent cannot know:
   the goal, constraints, deadlines, decisions, granted resources.
 - Do not give everything you know. The agent has the project's docs, specs and code;
   leave the how to it.
@@ -172,7 +172,7 @@ initiates project controls.
 
    ```text
    FROM: <your agent name> (<your folder>). This message is written by a control
-   agent, not chakrit.
+   agent, not the user.
 
    INITIATION: Add the block below to your always-loaded instruction file (AGENTS.md;
    keep CLAUDE.md consistent with it). Preserve your existing rules. Move any

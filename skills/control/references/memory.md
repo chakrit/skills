@@ -57,7 +57,7 @@ Use the project name the setup reference gives you.
 
 1. Check whether engram is installed: `command -v engram`.
 2. If it prints nothing, do not install it. Report this line in the setup's completion
-   report to chakrit: `engram pin pending: run engram init <name> in <folder>`. Then
+   report to the user: `engram pin pending: run engram init <name> in <folder>`. Then
    continue the setup.
 3. If engram is on PATH, run at the folder root:
 
@@ -74,11 +74,11 @@ Use the project name the setup reference gives you.
    into a component repo.
 6. Do not use engram project aliases. They do not affect project resolution.
 
-## Install steps for chakrit
+## Install steps for the user
 
 Agents never run these. Never install or register engram, and never change
 `~/.claude.json`, `~/.claude/settings.json`, shell profiles, Homebrew, or global MCP
-registrations. Give chakrit this list when chakrit asks how to install engram:
+registrations. Give the user this list when the user asks how to install engram:
 
 ```text
 1. Install the engram binary (a single Go binary; no server, no Postgres).
