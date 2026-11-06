@@ -19,7 +19,7 @@ file, not here. Load this entry in full at the times your instruction file names
 
 ## Context
 
-1. You own this project's context. Do hands-on work in your clones when that makes
+1. You own this project's context. Do hands-on work in its repos when that makes
    sense.
 2. Do not do work that needs docs or data you do not have. Ask your parent who has them.
 3. Stay inside your project folder.

@@ -31,8 +31,9 @@ appears only as an example name, and no rule rests on what chakrit wants.
   tracks the control's own edits. Initiation runs `git init` in a control folder that
   is not one.
 - Single machine. No sync content anywhere.
-- Projects keep `repos.txt` and `bin/clone-repos`; clones are plain and gitignored.
-  No submodules.
+- A single-repo project's control runs in that repo's own folder. A project with
+  several repos gets a local wrapper repo that keeps `repos.txt` and `bin/clone-repos`;
+  its clones are plain and gitignored. No submodules.
 
 ## Instructions and rules
 

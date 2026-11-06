@@ -1,8 +1,9 @@
 # Set up a project control
 
-Creates `~/Documents/<org>/<project>`, a local project repo that holds the project's
-component repos as plain clones, and its agent `<machine>:<org>:<project>`. The project
-control owns the project's context and may do hands-on work in its clones.
+Sets up the project folder `~/Documents/<org>/<project>` and its agent
+`<machine>:<org>:<project>`. The project control owns the project's context and may do
+hands-on work in its repos. A single-repo project's folder is that repo. A project with
+several repos gets a local wrapper repo that holds them as plain clones.
 
 ## Steps
 
@@ -15,10 +16,11 @@ control owns the project's context and may do hands-on work in its clones.
    and writes a missing `AGENTS.md`, leave out its `## Control` section, down to the
    next `##` heading, for the same reason.
 2. **Work out the names.** `<project>` is the user's short name for the project.
-   The user's request usually holds it and the component repos; otherwise find them
-   from the environment (the folder's existing clones and their remotes, `gh`). Flag
-   the user only when you cannot settle one.
-3. **Create the repo.**
+   The user's request usually holds it and the project's repos; otherwise find them
+   from the environment (the folder's repos and their remotes, `gh`). Flag the user
+   only when you cannot settle one.
+3. **Create the repo.** A single-repo project's folder is a clone of that repo; clone
+   it there if it is missing. For a project with several repos, create the wrapper:
 
    ```sh
    mkdir -p ~/Documents/<org>/<project>
@@ -26,23 +28,24 @@ control owns the project's context and may do hands-on work in its clones.
    git init
    ```
 
-   The project repo stays local. Never add a remote unless the user asks.
+   The wrapper repo stays local. Never add a remote unless the user asks.
 4. **Copy templates,** replacing placeholders (`{{machine}}`, `{{org}}`, `{{project}}`):
 
-   | Source                                      | Destination       |
-   | ------------------------------------------- | ----------------- |
-   | `templates/instructions/project-control.md` | `AGENTS.md`       |
-   | `templates/gitignore`                       | `.gitignore`      |
-   | `templates/project/repos.txt`               | `repos.txt`       |
-   | `templates/project/clone-repos`             | `bin/clone-repos` |
+   | Source                                      | Destination       | Projects           |
+   | ------------------------------------------- | ----------------- | ------------------ |
+   | `templates/instructions/project-control.md` | `AGENTS.md`       | all                |
+   | `templates/gitignore`                       | `.gitignore`      | several repos only |
+   | `templates/project/repos.txt`               | `repos.txt`       | several repos only |
+   | `templates/project/clone-repos`             | `bin/clone-repos` | several repos only |
 
-   Then `ln -s AGENTS.md CLAUDE.md` and `chmod +x bin/clone-repos`.
-5. **List the clones.** Write one line per component repo in `repos.txt`:
-   `<repo-name> <clone-url>`. The folder name is the exact GitHub repo name. Never use
-   git submodules. Add one row per repo to the `## Repos` table in `AGENTS.md` with only
-   the Folder cell filled; the project control fills the rest.
-6. **Clone.** Run `bin/clone-repos`. It clones missing repos and adds each folder to
-   `.gitignore`.
+   Then `ln -s AGENTS.md CLAUDE.md`, and for a wrapper `chmod +x bin/clone-repos`.
+5. **List the repos.** Add one row per repo to the `## Repos` table in `AGENTS.md` with
+   only the Folder cell filled; the project control fills the rest. A single-repo
+   project has one row, Folder `.`. In a wrapper, also write one line per repo in
+   `repos.txt`: `<repo-name> <clone-url>`. The folder name is the exact GitHub repo
+   name. Never use git submodules.
+6. **Clone.** In a wrapper, run `bin/clone-repos`. It clones missing repos and adds
+   each folder to `.gitignore`.
 7. **Memory.** Follow "Set up a level's engram project" in `references/memory.md`
    with project name `<machine>-<org>-<project>`.
 8. **ACE.** Follow "Onboard into ACE" in `references/operations.md`.
@@ -62,5 +65,6 @@ control owns the project's context and may do hands-on work in its clones.
 
 ## Done when
 
-The completion list in `SKILL.md` holds, every repo in `repos.txt` is cloned and
-ignored, and the org control's projects registry lists the project.
+The completion list in `SKILL.md` holds, the project's repos are cloned (in a wrapper,
+every repo in `repos.txt`, each ignored), and the org control's projects registry lists
+the project.

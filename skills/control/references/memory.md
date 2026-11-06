@@ -65,12 +65,13 @@ Use the project name the setup reference gives you.
    engram init <name>
    ```
 
-   This writes `.engram/config.json`. Commit it with the rest of the setup.
+   This writes `.engram/config.json`. Commit it with the rest of the setup, except in
+   a component repo: a single-repo project's folder, or a clone in a wrapper.
 4. Always pin. An unpinned folder takes its name from its `origin` remote or, without
    one, from its directory, and collides with same-named folders elsewhere.
-5. If a session ever starts inside a component clone, pin that clone with the same
-   name and add `.engram/` to the clone's `.git/info/exclude`. Never commit `.engram/`
-   into a component repo.
+5. In a component repo, add `.engram/` to its `.git/info/exclude` instead. Never commit
+   `.engram/` into a component repo. If a session ever starts inside a clone in a
+   wrapper, pin that clone with the wrapper's name the same way.
 6. Do not use engram project aliases. They do not affect project resolution.
 
 ## Install steps for the user

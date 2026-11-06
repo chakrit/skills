@@ -54,18 +54,18 @@ an org control sends it as a task after the wake, and the user asks machine cont
      its repos' remotes. Registering an org also adds its line under `## GitHub orgs`
      in `registries/orgs.md`: find out its GitHub org, and flag the user only when you
      cannot.
-   - **Org control:** every folder `~/Documents/<org>/<name>/` except `control`.
-     Classify each one:
+   - **Org control:** every folder `~/Documents/<org>/<name>/` except `control`. Each
+     one that is a git repo, or holds git repos, is a project. Classify it by its
+     top-level instruction file:
 
-     | Folder holds                                    | Candidate for                      |
-     | ----------------------------------------------- | ---------------------------------- |
-     | `AGENTS.md` with a `## Control` section         | nothing; register it if missing    |
-     | `AGENTS.md` or `CLAUDE.md` without that section | `references/initiation.md`         |
-     | several git clones and no `AGENTS.md`           | `references/setup-project.md`      |
-     | one git repo at its top level                   | ask the user which project owns it |
+     | `AGENTS.md` or `CLAUDE.md`        | Candidate for                   |
+     | --------------------------------- | ------------------------------- |
+     | has a `## Control` section        | nothing; register it if missing |
+     | exists without that section       | `references/initiation.md`      |
+     | neither exists                    | `references/setup-project.md`   |
 
-     For a project candidate, suggest the folder name as `<project>` and its clones'
-     remotes as `repos.txt` lines.
+     Suggest the folder name as `<project>`. For a folder holding several repos, suggest
+     their remotes as `repos.txt` lines.
    - Skip folders without git repos and list them as skipped.
 2. **Check authorization.** If the user already asked for downstream setup ("set up
    all the orgs", "do the projects too"), quote those words and continue. Otherwise

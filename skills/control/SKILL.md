@@ -48,7 +48,7 @@ Use these names exactly, in every file and message.
 | ------------------------ | ----------------------------- | ---------------------------------------------- |
 | Set up machine control   | `references/setup-machine.md` | `~/Documents/control` does not exist yet       |
 | Set up an org control    | `references/setup-org.md`     | `~/Documents/<org>/control` does not exist yet |
-| Set up a project control | `references/setup-project.md` | a project folder needs an agent and its clones |
+| Set up a project control | `references/setup-project.md` | a project folder needs an agent                |
 | Initiate an agent        | `references/initiation.md`    | an existing agent lacks setup or the grant     |
 
 Read only the file for the chosen operation. It names the sections of the shared
@@ -67,23 +67,23 @@ and tell the user you did.
 3. Copy templates, then replace every `{{placeholder}}`. A file with a leftover
    `{{` is not done.
 4. Keep policy and instruction files short. Agents skip long instructions.
-5. Commit each finished setup in the new repo; never push.
+5. Commit each finished setup in the control's repo; never push.
 
 ## Completion
 
 A setup is done when:
 
-- every file the setup reference lists exists, with no `{{` left: in the new repo,
-  `git grep --untracked -n '{{'` prints nothing (it skips the ignored clones);
+- every file the setup reference lists exists, with no `{{` left: `grep -n '{{'` on
+  the files this setup wrote prints nothing;
 - the agent's instruction file contains the standing grant and the rule-entry pointers;
   when the setup runs for "Initiate an agent", the agent adds them itself and the
   initiation's acknowledgment meets this item;
-- the new repo is onboarded as its Environment values say ("Onboard into ACE" in
+- the control's repo is onboarded as its Environment values say ("Onboard into ACE" in
   `references/operations.md`), or its school is `none`;
 - the parent's registry lists the new control (org and project controls);
 - for a machine or org control, its `control.data.js` has an Agent Backlog row "Plan
   downstream controls" for the new control, except when the setup runs for "Initiate
   an agent", which sends the planning as a task;
-- the work is committed in the new repo.
+- the work is committed in the control's repo.
 
 Report the folder, the agent name, the commit hash and any steps left for the user.

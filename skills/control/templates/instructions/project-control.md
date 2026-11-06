@@ -1,8 +1,6 @@
 # {{project}}
 
-Project control for `{{project}}` in org `{{org}}`. This folder is a local repo that
-holds the project's component repos as plain clones, listed in `repos.txt`. Run
-`bin/clone-repos` to clone missing ones. Never use git submodules.
+Project control for `{{project}}` in org `{{org}}`.
 
 ## Control
 
@@ -74,6 +72,10 @@ Re-run the last two commands after adding or removing a process pane. Report the
 IDs to your org control.
 
 ## Repos
+
+The project's repos. Folder `.` is this folder's own repo. Otherwise this folder is a
+local repo holding the repos as plain clones, listed in `repos.txt`; run
+`bin/clone-repos` to clone missing ones. Never use git submodules.
 
 | Folder | What it is | Commands |
 | ------ | ---------- | -------- |
