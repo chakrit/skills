@@ -113,8 +113,3 @@ section at the end if it is missing. Never re-save a rule by topic key: a mistyp
 or project creates a second entry instead of replacing the rule. Without engram, edit
 the file in `~/Documents/control/rules/` and commit it with the quoted ruling in the
 message.
-
-## Engram itself
-
-If an engram release puts export of the store behind a paid tier, tell chakrit before
-upgrading.

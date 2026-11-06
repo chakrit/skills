@@ -88,9 +88,7 @@ registrations. Give chakrit this list when chakrit asks how to install engram:
    release check, its only default network call.
 4. Do NOT run `engram setup claude-code`. It installs hooks and a plugin and offers
    to rewrite ~/.claude/settings.json.
-5. Before every upgrade, back up ~/.engram/engram.db. Migrations run automatically
-   and downgrade is untested.
-6. For each "engram pin pending" line a setup reported, run `engram init <name>` in
+5. For each "engram pin pending" line a setup reported, run `engram init <name>` in
    the named folder, then commit .engram/config.json there if the folder is a git
    repo (the org root is not).
 ```
