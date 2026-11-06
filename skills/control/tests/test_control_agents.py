@@ -90,15 +90,29 @@ class SessionNameTest(unittest.TestCase):
 class ClearRecordTest(unittest.TestCase):
     NOW = datetime(2026, 11, 5, 9, 30, tzinfo=timezone.utc)
 
-    def test_record_names_time_agent_and_save_location(self) -> None:
-        self.assertEqual(agents.clear_record(WEB, "engram acme-web #412", self.NOW),
-                         "2026-11-05T09:30:00+00:00\tweb\tengram acme-web #412\n")
+    UNPRINTABLE = ("", "   ", "engram #1\n/exit", "a\tb", "engram\x1b[2J")
+
+    def test_saved_record_names_time_agent_and_save_location(self) -> None:
+        self.assertEqual(
+            agents.saved_clear_record(WEB, "engram acme-web #412", self.NOW),
+            "2026-11-05T09:30:00+00:00\tweb\tsaved\tengram acme-web #412\n")
 
     def test_save_location_must_be_one_printed_line(self) -> None:
-        for saved in ("", "   ", "engram #1\n/exit", "a\tb", "engram\x1b[2J"):
-            with self.subTest(saved=saved):
+        for location in self.UNPRINTABLE:
+            with self.subTest(location=location):
                 with self.assertRaises(ValueError):
-                    agents.clear_record(WEB, saved, self.NOW)
+                    agents.saved_clear_record(WEB, location, self.NOW)
+
+    def test_forced_record_names_time_agent_and_reason(self) -> None:
+        self.assertEqual(
+            agents.forced_clear_record(WEB, "chakrit: 'clear web, no save'", self.NOW),
+            "2026-11-05T09:30:00+00:00\tweb\tforced\tchakrit: 'clear web, no save'\n")
+
+    def test_reason_must_be_one_printed_line(self) -> None:
+        for reason in self.UNPRINTABLE:
+            with self.subTest(reason=reason):
+                with self.assertRaises(ValueError):
+                    agents.forced_clear_record(WEB, reason, self.NOW)
 
 
 if __name__ == "__main__":

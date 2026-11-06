@@ -26,9 +26,10 @@ CHECKOUT = re.compile(r"[A-Za-z0-9_][A-Za-z0-9._-]*(/[A-Za-z0-9_][A-Za-z0-9._-]*
 SESSION_NAME = re.compile(r"[a-z0-9][a-z0-9_-]*(:[a-z0-9][a-z0-9_-]*){1,2}")
 # The harness drops part of a paste when Enter follows at once.
 PASTE_SETTLE_SECONDS = 1
-# One line per clear-context: time, slug, where the agent's save went.
+# One line per clear: time, slug, `saved` and where the save went, or `forced` and why.
 CLEAR_LOG = "clears.log"
-BEFORE_A_CLEAR = '"Before a clear" in ~/Documents/control/policies/agents.md'
+BEFORE_A_CLEAR = ('the "Before a clear" section of engram entry control/handling-agents '
+                  "(fallback ~/Documents/control/rules/handling-agents.md)")
 
 
 @dataclass(frozen=True)
@@ -93,12 +94,28 @@ def check_session_name(name: str) -> None:
         raise ValueError(f"{name!r} is not an agent name like lz49:acme:web")
 
 
-def clear_record(entry: Agent, saved: str, now: datetime) -> str:
-    if not saved.strip() or not saved.isprintable():
+def saved_clear_record(entry: Agent, location: str, now: datetime) -> str:
+    if not one_printed_line(location):
         raise ValueError(f"{entry.slug}: run {BEFORE_A_CLEAR}, then pass --saved with "
                          "where the save went, on one line")
 
-    return f"{now.isoformat()}\t{entry.slug}\t{saved}\n"
+    return clear_line(now, entry, "saved", location)
+
+
+def forced_clear_record(entry: Agent, reason: str, now: datetime) -> str:
+    if not one_printed_line(reason):
+        raise ValueError(f"{entry.slug}: pass --reason with chakrit's quoted words or "
+                         "what happened, on one line")
+
+    return clear_line(now, entry, "forced", reason)
+
+
+def one_printed_line(text: str) -> bool:
+    return bool(text.strip()) and text.isprintable()
+
+
+def clear_line(now: datetime, entry: Agent, kind: str, detail: str) -> str:
+    return f"{now.isoformat()}\t{entry.slug}\t{kind}\t{detail}\n"
 
 
 def append_clear_record(repository: Path, record: str) -> None:
@@ -129,6 +146,11 @@ def type_line(entry: Agent, text: str) -> None:
     tmux("send-keys", "-t", entry.pane, "Enter")
 
 
+def clear_and_log(entry: Agent, record: str, repository: Path) -> None:
+    type_line(entry, "/clear")
+    append_clear_record(repository, record)
+
+
 def inspect(entry: Agent) -> str:
     verify(entry)
     return tmux("capture-pane", "-p", "-t", entry.pane, "-S", "-200")
@@ -148,6 +170,15 @@ def main(arguments: list[str]) -> int:
     clear.add_argument("--saved", default="", metavar="LOCATION",
                        help="where the agent reported its save went, such as an engram "
                             "observation or a session file; logged to " + CLEAR_LOG)
+    force = actions.add_parser(
+        "force-clear", help="type /clear without a save; lossy, see its --help for when",
+        epilog=f"Skips {BEFORE_A_CLEAR}, so unsaved work is lost. Allowed only when "
+               "chakrit ordered a clear without a save, the agent is stuck or hung, "
+               "agents are being torn down, or another special circumstance requires it.")
+    force.add_argument("slug")
+    force.add_argument("--reason", default="", metavar="TEXT",
+                       help="chakrit's quoted words, or what happened; logged to "
+                            + CLEAR_LOG)
     rename = actions.add_parser("rename-session", help="type /rename NAME")
     rename.add_argument("slug")
     rename.add_argument("name")
@@ -182,9 +213,11 @@ def run(options: argparse.Namespace, agents: dict[str, Agent], repository: Path)
     if options.command == "send":
         type_line(entry, sys.stdin.read().rstrip("\n"))
     elif options.command == "clear-context":
-        record = clear_record(entry, options.saved, datetime.now().astimezone())
-        type_line(entry, "/clear")
-        append_clear_record(repository, record)
+        record = saved_clear_record(entry, options.saved, datetime.now().astimezone())
+        clear_and_log(entry, record, repository)
+    elif options.command == "force-clear":
+        record = forced_clear_record(entry, options.reason, datetime.now().astimezone())
+        clear_and_log(entry, record, repository)
     else:
         check_session_name(options.name)
         type_line(entry, f"/rename {options.name}")
