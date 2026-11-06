@@ -33,7 +33,7 @@ Use these names exactly, in every file and message.
 | `<org>`         | chakrit's short org name (`datawow`, not `datawowio`).                                                                                        |
 | Policy          | Governance rules for one level: engram entry `rule/policy-<level>`.                                                                           |
 | Rule entry      | A rule set in engram project `<machine>-control-rules`, seeded from `templates/rules/`; files in `~/Documents/control/rules/` without engram. |
-| Environment     | Table in machine control's and each org root's instruction file: how agents there start, onboard and save.                                    |
+| Environment     | Table in machine control's and each org root's instruction file: the school and init skill that onboard folders there.                        |
 | Registry        | A file a control keeps to track shared things (ports, heavy-job slots, members).                                                              |
 | Ruling          | chakrit's decision on authority or policy, relayed by a control.                                                                              |
 | Task ask        | Work chakrit asked a control to hand to an agent.                                                                                             |

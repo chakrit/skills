@@ -14,9 +14,12 @@ line. It does not hold project details; project controls own those.
    agent" sends the `## Control` section, since the agent writes its own instructions.
    When this setup runs for "Initiate an agent" and writes a missing `AGENTS.md`, leave
    out its `## Control` section, down to the next `##` heading, for the same reason.
-2. **Confirm the names.** `<org>` is chakrit's short name for the org. Ask chakrit for
-   it and for the GitHub org it maps to, unless chakrit already said both. Then follow
-   "Record the environment" in `references/operations.md` for the org.
+2. **Work out the names.** `<org>` is chakrit's short name for the org and maps to a
+   GitHub org that may be named differently. chakrit's request usually holds both
+   ("set up fi/ to manage my Forward Insight stuff"); otherwise find them from the
+   environment (the org's repos and their remotes, `gh`). Flag chakrit only when you
+   cannot settle one. Then follow "Record the environment" in
+   `references/operations.md` for the org.
 3. **Create the repo.**
 
    ```sh
@@ -53,19 +56,19 @@ line. It does not hold project details; project controls own those.
    `~/Documents/<org>/`. Both folders share the org's memory.
 8. **ACE.** Follow "Onboard into ACE" in `references/operations.md` for the org control
    and the org root.
-9. **Register with machine control.** The org needs a row in machine control's
-   `registries/orgs.md`, a link in machine control's `control.data.js`, and a port
-   block. If you are machine control, add them yourself and commit in
-   `~/Documents/control`. Otherwise ask machine control (see "Reach a parent" in
-   `references/operations.md`). Record the block in `registries/ports.md`. When this
-   setup runs for "Initiate an agent", add only the row and the link; initiation grants
-   the block.
+9. **Register with machine control.** The org needs a row and a `## GitHub orgs` line
+   in machine control's `registries/orgs.md`, a link in machine control's
+   `control.data.js`, and a port block. If you are machine control, add them yourself
+   and commit in `~/Documents/control`. Otherwise ask machine control (see "Reach a
+   parent" in `references/operations.md`). Record the block in `registries/ports.md`.
+   When this setup runs for "Initiate an agent", add only the row, the GitHub orgs line
+   and the link; initiation grants the block.
 10. **Register existing projects.** For each project folder under `~/Documents/<org>/`
     that has an agent, add a row to `registries/projects.md`, with Window and Agent
-    pane filled when you see its pane and empty otherwise. Read `references/registries.md` for how
-    registries and nested resources work. When this setup runs for "Initiate an agent",
-    skip this step: the org control keeps its own registry, and its planning task
-    registers what is missing.
+    pane filled when you see its pane and empty otherwise. Read
+    `references/registries.md` for how registries and nested resources work. When this
+    setup runs for "Initiate an agent", skip this step: the org control keeps its own
+    registry, and its planning task registers what is missing.
 11. **Lodge downstream planning.** Add an Agent Backlog row to `control.data.js` (group
     `todo`): item "Plan downstream controls (`control` skill,
     `references/operations.md`)", agent `<machine>:<org>:control`, source chakrit's
@@ -77,10 +80,9 @@ line. It does not hold project details; project controls own those.
     "Wake up an agent" in `rule/handling-agents` (it starts the agent and renames its
     session to `<machine>:<org>:control`), then send "Plan downstream controls" as its
     task ("Give a task"). Otherwise add to the completion report: "Start the org
-    control: in a tmux window, `cd ~/Documents/<org>/control`, type the new-session
-    command from the org root's Environment table, then `/rename
-    <machine>:<org>:control`. Then ask it to run its backlog row 'Plan downstream
-    controls'."
+    control: in a tmux window, `cd ~/Documents/<org>/control`, start a new session the
+    way you start agents in this org, then `/rename <machine>:<org>:control`. Then ask
+    it to run its backlog row 'Plan downstream controls'."
 
 ## Done when
 

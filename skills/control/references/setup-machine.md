@@ -38,8 +38,9 @@ rule entries every level loads, and the machine's shared resources.
 5. **Memory.** Follow "Set up a level's engram project" in `references/memory.md`
    with project name `<machine>-control`, then "Seed the rule entries" in the same file.
 6. **Register existing orgs.** For each folder `~/Documents/<org>/control` that
-   already exists, add a row to `registries/orgs.md` and a link to its
-   `control.html` under links in `control.data.js`. Read `references/registries.md`
+   already exists, add a row and a `## GitHub orgs` line to `registries/orgs.md` and a
+   link to its `control.html` under links in `control.data.js`. Find out each org's
+   GitHub org, and flag chakrit only when you cannot. Read `references/registries.md`
    for how registries and nested resources work.
 7. **ACE.** Follow "Onboard into ACE" in `references/operations.md`.
 8. **Lodge downstream planning.** Add an Agent Backlog row to `control.data.js` (group
@@ -49,8 +50,8 @@ rule entries every level loads, and the machine's shared resources.
    (`git -C <this skill's repo> rev-parse --short HEAD`).
 10. **Leave the start to chakrit.** Machine control has no parent control to start it.
     Add to the completion report: "Start machine control: in a tmux window, `cd
-    ~/Documents/control`, type the new-session command from its Environment table, then
-    `/rename <machine>:control`. Then ask it to run its backlog row 'Plan downstream
+    ~/Documents/control`, start a new session the way you start agents on this machine,
+    then `/rename <machine>:control`. Then ask it to run its backlog row 'Plan downstream
     controls'."
 
 ## Done when

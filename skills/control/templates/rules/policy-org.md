@@ -88,8 +88,7 @@ on?" Never start machine control or run its scripts yourself.
    | bring an agent or a new project into control | "Initiate an agent"    |
 
 3. When chakrit says to stop an agent, that means "Wind down an agent": save, clear,
-   exit. An agent left running rests saved and cleared; a resumed agent can still show
-   its pre-clear conversation, which "Wake up an agent" handles.
+   exit.
 
 ## Memory
 

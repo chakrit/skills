@@ -51,7 +51,9 @@ an org control sends it as a task after the wake, and chakrit asks machine contr
 
      Find git repos with `find ~/Documents/<name> -maxdepth 3 -name .git`. For an org
      candidate, suggest the folder name as `<org>` and the GitHub org from
-     its repos' remotes.
+     its repos' remotes. Registering an org also adds its line under `## GitHub orgs`
+     in `registries/orgs.md`: find out its GitHub org, and flag chakrit only when you
+     cannot.
    - **Org control:** every folder `~/Documents/<org>/<name>/` except `control`.
      Classify each one:
 
@@ -86,25 +88,20 @@ its parent or runs the parent's scripts.
 
 ## Record the environment
 
-ACE is preferred where it exists and never required. An environment may wrap it: an
-org's school can ship its own launcher and init skill in place of `ace` and `ace-init`.
-Never assume the plain ACE names. Run this once for machine control and once per org;
-its values fill the Environment placeholders of `machine-control.md` or `org-root.md`.
+ACE is preferred where it exists and never required. An environment may use its own CLI
+and init skill in place of `ace` and `ace-init`. Never assume the plain ACE names. Run
+this once for machine control and once per org; its values fill the Environment
+placeholders of `machine-control.md` or `org-root.md`. An agent started in a folder
+already gets its environment's start and save skills from the environment itself, so
+only onboarding, which runs before that, needs these values.
 
-1. Find the values in the org's school, the instruction files already in the org's
-   folders, or chakrit's words. Ask chakrit when any value is unclear.
+Find the values in the org's school, the instruction files already in the org's
+folders, or chakrit's words. Ask chakrit when any value is unclear.
 
-   | Placeholder          | Value                                                       |
-   | -------------------- | ----------------------------------------------------------- |
-   | `{{school}}`         | the ACE school, or `none` without ACE                       |
-   | `{{resume_command}}` | what to type to resume the folder's last session            |
-   | `{{new_command}}`    | what to type to start a new session                         |
-   | `{{start_skill}}`    | the skill that loads a session's context, or `none`         |
-   | `{{init_skill}}`     | the skill that onboards a folder, or `none`                 |
-   | `{{save_skill}}`     | the skill that saves a session before a clear, or `none`    |
-
-2. Without ACE, use the plain harness: for Claude Code, `claude --continue` and
-   `claude`; for Codex, `codex resume --last` and `codex`.
+| Placeholder      | Value                                       |
+| ---------------- | ------------------------------------------- |
+| `{{school}}`     | the ACE school, or `none` without ACE       |
+| `{{init_skill}}` | the skill that onboards a folder, or `none` |
 
 ## Onboard into ACE
 
@@ -113,9 +110,10 @@ root, the org control and each project control. Use the Environment table that g
 the folder: machine control's own, or the org root's for every folder in the org.
 
 1. If the school is `none`, skip this section; the setup is complete without ACE.
-2. In the folder, set up the school in a visible tmux pane (`ace setup <school>`, or
-   the command the org's instructions name instead), since it may ask for
-   authentication; tell chakrit which pane waits for input.
+2. In the folder, set up the school in a visible tmux pane with the command the
+   environment uses for it, found as "Record the environment" finds its values; prefer
+   ACE's own where `ace` is installed. It may ask for authentication; tell chakrit
+   which pane waits for input.
 3. If the init skill is `none`, skip this step. Run the init skill in that folder to
    finish onboarding. Commit the files it writes where the folder is a repo; the org
    root is not one.

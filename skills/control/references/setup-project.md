@@ -14,8 +14,10 @@ control owns the project's context and may do hands-on work in its clones.
    the agent writes its own instructions. When this setup runs for "Initiate an agent"
    and writes a missing `AGENTS.md`, leave out its `## Control` section, down to the
    next `##` heading, for the same reason.
-2. **Confirm the names.** `<project>` is chakrit's short name for the project. Ask
-   chakrit for it and for the list of component repos, unless chakrit already gave both.
+2. **Work out the names.** `<project>` is chakrit's short name for the project.
+   chakrit's request usually holds it and the component repos; otherwise find them
+   from the environment (the folder's existing clones and their remotes, `gh`). Flag
+   chakrit only when you cannot settle one.
 3. **Create the repo.**
 
    ```sh
@@ -54,8 +56,8 @@ control owns the project's context and may do hands-on work in its clones.
 11. **Start the agent.** When this setup runs for "Initiate an agent", skip this step;
     initiation starts and wakes the agent. If you are the org control, follow "Start an
     agent" in `rule/handling-agents`. Otherwise add to the completion report: "Start the
-    project control: in a tmux window, `cd ~/Documents/<org>/<project>`, type the
-    new-session command from the org root's Environment table, then
+    project control: in a tmux window, `cd ~/Documents/<org>/<project>`, start a new
+    session the way you start agents in this org, then
     `/rename <machine>:<org>:<project>`."
 
 ## Done when

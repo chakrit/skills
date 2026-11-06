@@ -12,18 +12,20 @@ a wake-up sent to a resumed session lands on a stale conversation.
 
 Run the harness inside a shell in a tmux window, never as the window's command, so
 chakrit can restart it and `scripts/control-agents` can tell the harness from the shell.
-Take the start commands from the Environment table in the org root's instruction file,
-`~/Documents/<org>/AGENTS.md`, for the agent's org.
+Start it with the same command that started your own session. Your shell's ancestor
+processes show it: run `ps -o ppid=,command= -p <pid>` from your shell's parent upward
+(for example `claude --continue` under `ace`), and take the command whose parent is
+your tmux pane's shell.
 
 ```sh
 tmux new-window -d -P -F '#{window_id} #{pane_id}' -c <folder>
 tmux send-keys -t <pane_id> '<start command>' Enter
 ```
 
-Type the Resume command by default. The session keeps its name marker and its
+Resume the folder's last session by default. The session keeps its name marker and its
 per-conversation settings, which a new session loses; "Wake up an agent" clears the
-old conversation. Type the New session command only when the task explicitly requires
-a fresh session or the resume command reports no session to resume.
+old conversation. Start a new session only when the task explicitly requires one or
+the command reports no session to resume.
 
 - Never `exec` the harness. Never rename tmux windows.
 - Record the window and pane IDs in your registry, then rename the harness session:
@@ -47,13 +49,14 @@ a fresh session or the resume command reports no session to resume.
 Establish that the agent's work is saved, and where. A save already reported counts;
 asking for another wastes the agent's tokens.
 
-1. Read the pane: `scripts/control-agents inspect <slug>`.
-2. The agent is saved when the pane shows its report of what it saved and where, with
-   nothing after the report: no newer work and no typed draft. A session resumed after
-   a wind-down usually shows exactly this.
+1. Read the agent's latest report where it arrives: its reply through the harness's
+   agent messaging, or, without that, its pane: `scripts/control-agents inspect <slug>`.
+2. The agent is saved when that report says what it saved and where, with nothing
+   after it: no newer work and no typed draft. A session resumed after a wind-down
+   usually shows exactly this.
 3. Otherwise ask the agent to save ("Message an agent") and report what it saved and
    where. It saves as `rule/memory` ("Saving") describes. Wait for the report, then
-   read the pane again.
+   read it as in step 1.
 4. If the save failed, stop: add it to Needs Attention in `control.data.js` and do not
    clear.
 
@@ -72,8 +75,8 @@ session file its save skill wrote, or a memory file.
 
 **Force a clear** only on chakrit's ruling, as a last resort: chakrit orders a clear
 without a save, or approves one because the agent is stuck or hung, agents are being
-torn down, or another circumstance makes a save impossible or pointless. Without
-chakrit's words, ask chakrit first. Skip "Before a clear" and run
+torn down, or another circumstance requires it. Without chakrit's words, ask chakrit
+first. Skip "Before a clear" and run
 `scripts/control-agents force-clear <slug> --ruling '<chakrit's quoted words>'`. Step
 3 still applies.
 
@@ -98,7 +101,8 @@ Waking an agent and giving it a task are two separate messages. Never put a task
 background on one, in the wake message: an agent may jump to the task before it has
 finished loading its context.
 
-1. **Start.** If the agent is not running, start it ("Start an agent").
+1. **Start.** If the agent is not running (agent messaging does not show it and the
+   script refuses its recorded pane), start it ("Start an agent").
 2. **Clear.** Unless the session was started new, run "Clear an agent". A resumed or
    still-running session holds its previous conversation, even when it was cleared at
    a wind-down.
@@ -113,14 +117,13 @@ finished loading its context.
    WAKE-UP: Load your rules first, in full: engram entries <entries> in project
    <machine>-control-rules (mem_search the topic key, take the exact topic_key match,
    then mem_get_observation its ID), or the files in ~/Documents/control/rules/
-   without engram. Then run the Start skill in your org root's Environment table
-   (~/Documents/<org>/AGENTS.md); when it is none, follow the session-start steps in
-   your instruction file. Report your current state: work in progress, open questions,
-   anything blocking. Take no new work yet.
+   without engram. Then run your session start, as your environment and your
+   instruction file describe. Report your current state: work in progress, open
+   questions, anything blocking. Take no new work yet.
    ```
 
-4. **Wait** until the agent has reported. Read the report with
-   `scripts/control-agents inspect <slug>`.
+4. **Wait** until the agent has reported. Read the report where it arrives, as in
+   "Before a clear" step 1.
 5. **Check the fit.** Judge the task against the report. If it does not fit the
    agent's state (for example, a feature request to an agent in the middle of a large
    refactor), hold it and take it to chakrit with a recommendation. Otherwise run

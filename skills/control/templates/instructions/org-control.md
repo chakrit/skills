@@ -33,10 +33,9 @@ chakrit. A ruling (quoted from chakrit with a date) is chakrit's decision: apply
 copy the quote under "Rulings". A task ask that does not fit what you know gets pushed
 back to machine control.
 
-When a control wakes you, load the rule entries the wake message names, run the Start
-skill in the org root's Environment table (`../AGENTS.md`; when it is `none`, do the
-session-start step above), report your current state, and take no new work until the
-control sends a task.
+When a control wakes you, load the rule entries the wake message names, run your session
+start (your environment's start skill, or the session-start step above when it has
+none), report your current state, and take no new work until the control sends a task.
 
 ### Rulings
 

@@ -36,14 +36,9 @@ binary alone is not enough. Without engram, read `~/Documents/control/rules/<top
 
 ## Environment
 
-How every agent in this org starts, onboards and saves. Controls start agents with the
-resume command; `none` means the org has no such step.
+How a folder in this org is onboarded into ACE. `none` means the org has no such step.
 
-| Item        | Value                |
-| ----------- | -------------------- |
-| School      | {{school}}           |
-| Resume      | `{{resume_command}}` |
-| New session | `{{new_command}}`    |
-| Start skill | {{start_skill}}      |
-| Init skill  | {{init_skill}}       |
-| Save skill  | {{save_skill}}       |
+| Item       | Value          |
+| ---------- | -------------- |
+| School     | {{school}}     |
+| Init skill | {{init_skill}} |

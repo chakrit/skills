@@ -20,10 +20,12 @@ adapting control repos between orgs and machines.
 - **Agent names:** `<machine>:control`, `<machine>:<org>:control`,
   `<machine>:<org>:<project>`. The org slug is chakrit's short name (`datawow`).
 - **ACE is preferred, never required, and named per environment.** An environment may
-  wrap ACE in its own launcher and skills, so the skill hard-codes none of them. Setup
-  records each environment's school, resume and new-session commands, start skill, init
-  skill and save skill in an Environment table (machine control's instruction file and
-  each org root's), and starting, waking, saving and onboarding read that table.
+  use its own CLI and skills in place of ACE's, so the skill hard-codes none of them.
+  An agent started through its environment already has that environment's start and
+  save skills, so waking and saving name none. A control starts agents below it with
+  the command that started its own session. Only onboarding runs before the
+  environment is in place, so setup records just the school and init skill in an
+  Environment table (machine control's instruction file and each org root's).
 - **Org roots carry instruction files.** `~/Documents/<org>/` is not a level and not a
   repo, but an agent started there must still load rules and the org's memory, so it
   gets an `AGENTS.md` (owned by the org control) and shares engram project
@@ -32,8 +34,7 @@ adapting control repos between orgs and machines.
   skipped after restarts.
 - **No script configuration.** The script finds its registry from the folder layout,
   talks to the tmux server it runs in, and hard-codes the harness slash commands. An
-  agent starts another by typing the resume command from the org root's Environment
-  table.
+  agent starts another by typing the command that started its own session.
 - **After setup, agents shouldn't need to load the skill.** Setup writes each agent's
   instruction file with the standing grant and pointers to the rule entries it loads.
   Small context means each agent loads only what it needs and should.
@@ -83,7 +84,12 @@ adapting control repos between orgs and machines.
   again, reusing a save already reported instead of asking for another, and sends the
   wake message at once.
 - **Registries** are a building block: files a control keeps to track shared things.
-  The templates are examples, not a required set.
+  The templates are examples, not a required set. They record who exists, not live
+  state: chakrit starts and moves agents alongside the controls, so agent rows keep
+  only the last-known window and pane, which the script needs for keystroke-only
+  actions (`/clear`, `/rename`, `/quit`) and for agents the harness's agent messaging
+  cannot reach. Controls use them as they are and correct a row only when the script
+  refuses the pane, rather than re-checking before every message.
 - **Ports nest; heavy-job slots do not.** Machine control grants port blocks to org
   controls, and org controls sub-allocate to projects. Heavy-job slots are recorded only
   in machine control's registry, holder `<org>:<project>`; org controls relay requests.
@@ -124,8 +130,8 @@ adapting control repos between orgs and machines.
   pointers name it by topic key and agents load it in full; a rule found by searching
   alone is not guaranteed to apply.
 - **Saving names one order:** save before a clear or handoff with the agent's own
-  session-save skill when its Environment table names one, otherwise
-  engram's `mem_session_summary`; report what was saved and where.
+  session-save skill when its environment has one, otherwise engram's
+  `mem_session_summary`; report what was saved and where.
 - **`control.html` is the one page chakrit checks,** opened in a local browser. It is
   a fixed template that renders from `control.data.js` beside it, the only live task
   record; there is no separate task file. Agents edit the small data file, never the
@@ -142,7 +148,8 @@ adapting control repos between orgs and machines.
 - **Single machine.** No sync content anywhere; chakrit manages cross-machine state.
 - **Scripts are a small reference,** not a product: one `control-agents` that lists,
   reads and types into registered panes. It targets panes only by tmux ID, re-checks
-  the pane before typing, and never changes windows or layout. Before typing it refuses
+  the pane before typing, and never changes windows or layout, except that wind-down's
+  exit closes the agent's pane. Before typing it refuses
   when the pane's own shell holds the foreground (the shell's PID equals the terminal's
   foreground process group), instead of matching harness names, so a new harness needs
   no change. It runs through `uv run --script` (Python 3.10 or newer), never the

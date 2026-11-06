@@ -38,10 +38,9 @@ from chakrit, and carry chakrit's authority as follows:
 
 Do not stop to ask chakrit about work a control relayed as authorized.
 
-When a control wakes you, load the rule entries the wake message names, run the Start
-skill in the org root's Environment table (`../AGENTS.md`; when it is `none`, do the
-session-start step above), report your current state, and take no new work until the
-control sends a task.
+When a control wakes you, load the rule entries the wake message names, run your session
+start (your environment's start skill, or the session-start step above when it has
+none), report your current state, and take no new work until the control sends a task.
 
 ### Rulings
 

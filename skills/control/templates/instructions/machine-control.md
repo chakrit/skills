@@ -37,17 +37,13 @@ You own every rule entry in engram project `{{machine}}-control-rules` and the f
 
 ## Environment
 
-How machine control starts, onboards and saves. Org controls and projects use their org
-root's Environment table instead. `none` means there is no such step.
+How a folder here is onboarded into ACE. Org controls and projects use their org root's
+Environment table instead. `none` means there is no such step.
 
-| Item        | Value                |
-| ----------- | -------------------- |
-| School      | {{school}}           |
-| Resume      | `{{resume_command}}` |
-| New session | `{{new_command}}`    |
-| Start skill | {{start_skill}}      |
-| Init skill  | {{init_skill}}       |
-| Save skill  | {{save_skill}}       |
+| Item       | Value          |
+| ---------- | -------------- |
+| School     | {{school}}     |
+| Init skill | {{init_skill}} |
 
 ## Records
 

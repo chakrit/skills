@@ -73,12 +73,10 @@ before the work it governs:
 
 ## Saving
 
-Save before a clear or handoff and report what you saved and where. Use the save skill
-your Environment table names (machine control's, or your org root's) when it is not
-`none`; otherwise
-use engram's `mem_session_summary`, or a `memory/` file without engram. Save
-deliberately; nothing saves on its own. Use engram's MCP tools and CLI only; never
-install an engram plugin or hooks.
+Save before a clear or handoff and report what you saved and where. Use your
+environment's save skill if it has one; otherwise use engram's `mem_session_summary`,
+or a `memory/` file without engram. Save deliberately; nothing saves on its own. Use
+engram's MCP tools and CLI only; never install an engram plugin or hooks.
 
 - **Search before saving.** Amend the existing entry or file on a subject instead of
   writing a second one.
