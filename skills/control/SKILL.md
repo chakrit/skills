@@ -25,6 +25,7 @@ Use these names exactly, in every file and message.
 | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
 | Machine control | `~/Documents/control`, agent `<machine>:control`. Tasks no single org owns.                                                                   |
 | Org control     | `~/Documents/<org>/control`, agent `<machine>:<org>:control`. One org's tasks.                                                                |
+| Org root        | `~/Documents/<org>/`. Not a level or a repo; its instruction file, owned by the org control, maps the folder and loads the org's memory.      |
 | Project control | `~/Documents/<org>/<project>`, agent `<machine>:<org>:<project>`. One project's work.                                                         |
 | Level           | One of the three above. There are exactly three. Never define a fourth.                                                                       |
 | Parent          | Project control → its org control → machine control.                                                                                          |
@@ -35,6 +36,8 @@ Use these names exactly, in every file and message.
 | Registry        | A file a control keeps to track shared things (ports, heavy-job slots, members).                                                              |
 | Ruling          | chakrit's decision on authority or policy, relayed by a control.                                                                              |
 | Task ask        | Work chakrit asked a control to hand to an agent.                                                                                             |
+| Standing grant  | The `## Control` section of an agent's instruction file: who it is, its parent, which messages it accepts and the rule entries it loads.      |
+| Wind-down       | Save, clear, exit the harness and its shell. chakrit's "stop" for an agent means this.                                                        |
 | Control page    | `control.html` in a control repo, rendered from `control.data.js`; see `rule/policy-org`.                                                     |
 | Wake-up         | Readying an agent before any task. Controls wake below; chakrit wakes a parent.                                                               |
 | Task-give       | Sending a woken agent a task ask, after checking it fits the agent's reported state.                                                          |
@@ -46,7 +49,7 @@ Use these names exactly, in every file and message.
 | Set up machine control   | `references/setup-machine.md` | `~/Documents/control` does not exist yet       |
 | Set up an org control    | `references/setup-org.md`     | `~/Documents/<org>/control` does not exist yet |
 | Set up a project control | `references/setup-project.md` | a project folder needs an agent and its clones |
-| Initiate an agent        | `references/initiation.md`    | an existing agent lacks the standing grant     |
+| Initiate an agent        | `references/initiation.md`    | an existing agent lacks setup or the grant     |
 
 Read only the file for the chosen operation. It names the sections of the shared
 files it needs: `references/operations.md`, `references/registries.md`,
@@ -74,6 +77,8 @@ A setup is done when:
 - every file the setup reference lists exists, with no `{{` left (`grep -rn '{{' .`
   prints nothing);
 - the agent's instruction file contains the standing grant and the rule-entry pointers;
+- for an org, the org root has its instruction file with `CLAUDE.md` linked to it;
+- every folder given an instruction file is onboarded into ACE, or ACE is not installed;
 - the parent's registry lists the new control (org and project controls);
 - for a machine or org control, "Plan downstream controls" in
   `references/operations.md` has either lodged the approved setups in

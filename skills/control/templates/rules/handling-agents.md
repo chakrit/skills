@@ -3,15 +3,16 @@
 Engram entry `rule/handling-agents` in project
 `<machine>-control-rules` (without engram, the file
 `~/Documents/control/rules/handling-agents.md`). The procedures a control runs on the
-agents it manages. Machine control owns this entry. Load it in full before you start,
-message, clear or wake an agent, and follow the section for the step you are on. Each
-step guards against a failure the obvious command causes: a bare `/clear` can drop
-unsaved work, and a wake-up sent to a resumed session lands on a stale conversation.
+agents it manages. Machine control owns this entry. Load it in full at the times your
+instruction file names, and follow the section for the step you are on. Each step guards
+against a failure the obvious command causes: a bare `/clear` can drop unsaved work, and
+a wake-up sent to a resumed session lands on a stale conversation.
 
 ## Start an agent
 
 Run the harness inside a shell in a tmux window, never as the window's command, so
-chakrit can restart it. Type the harness named in the registry's Backend column.
+chakrit can restart it and `scripts/control-agents` can tell the harness from the shell.
+Type the harness named in the registry's Backend column.
 
 ```sh
 tmux new-window -d -P -F '#{window_id} #{pane_id}' -c <folder>
@@ -41,9 +42,10 @@ If the resume command reports no session to resume, type the new-session command
    as chakrit.
 2. Use the harness's own agent messaging when sender and receiver both have it.
    Otherwise use `scripts/control-agents send <slug>` with the message on stdin. It
-   types only into the registered pane, while it runs a harness in the agent's folder
-   and nobody is viewing it. Never hand-type into a pane the script refused.
-3. Clear and rename an agent only through `scripts/control-agents`.
+   types only into the registered pane, in the agent's folder, while a program other
+   than the pane's shell holds it and nobody is viewing it. Never hand-type into a pane
+   the script refused.
+3. Clear, rename and wind down an agent only through `scripts/control-agents`.
 4. Quote rulings verbatim with chakrit's name and the date:
    `chakrit, 2026-11-04: "<exact words>"`.
 
@@ -55,12 +57,10 @@ asking for another wastes the agent's tokens.
 1. Read the pane: `scripts/control-agents inspect <slug>`.
 2. The agent is saved when the pane shows its report of what it saved and where, with
    nothing after the report: no newer work and no typed draft. A session resumed after
-   a wind-down usually shows exactly this: the wind-down saved and cleared, but no
-   message followed the clear, so the harness reopened the conversation before it.
+   a wind-down usually shows exactly this.
 3. Otherwise ask the agent to save ("Message an agent") and report what it saved and
-   where. It saves with its own session-save skill when it has one (an `ace` agent
-   writes `.ace/save.md` in its folder), otherwise as `rule/memory` describes. Wait
-   for the report, then read the pane again.
+   where. It saves as `rule/memory` ("Saving") describes. Wait for the report, then
+   read the pane again.
 4. If the save failed, stop: add it to Needs Attention in `control.data.js` and do not
    clear.
 
@@ -75,14 +75,28 @@ The result is the save location the agent reported, such as an engram observatio
    logs each clear to `clears.log` in your control repo.
 3. A clear holds only once a message follows it. On some harnesses, resuming a session
    whose last action was a clear reopens the conversation before the clear. When the
-   agent is to work now, send the next message at once ("Wake up an agent"). At a
-   wind-down, leave it; "Wake up an agent" clears it again on the next start.
+   agent is to work now, send the next message at once ("Wake up an agent").
 
 **Force a clear** only when chakrit orders a clear without a save, the agent is stuck or
 hung, agents are being torn down, or another circumstance makes a save impossible or
 pointless. Skip "Before a clear" and run
 `scripts/control-agents force-clear <slug> --reason '<chakrit's quoted words, or what
 happened>'`. Step 3 still applies.
+
+## Wind down an agent
+
+When chakrit says to stop, wind down or shut down an agent, this is the procedure: the
+agent saves, clears, exits its harness, and its shell exits, which closes the pane.
+
+1. Run "Before a clear".
+2. Run `scripts/control-agents wind-down <slug> --saved "<save location>"`. It types
+   `/clear` and `/quit`, waits for the shell to take the pane back, then types `exit`.
+   If the harness does not exit, the script types nothing into the shell; read the pane
+   and resolve it, or ask chakrit.
+3. Empty the agent's Window and Agent pane cells in your registry: the agent is not
+   running. Commit the registry change.
+
+"Wake up an agent" starts it again later and clears the resumed session.
 
 ## Wake up an agent
 
@@ -106,10 +120,9 @@ finished loading its context.
    WAKE-UP: Load your rules first, in full: engram entries <entries> in project
    <machine>-control-rules (mem_search the topic key, take the exact topic_key match,
    then mem_get_observation its ID), or the files in ~/Documents/control/rules/
-   without engram. Then run your session-start skill (ace, dw-start or similar);
-   without one, follow the session-start steps in your instruction file. Report your
-   current state: work in progress, open questions, anything blocking. Take no new
-   work yet.
+   without engram. Then run your session-start skill (such as ace); without one,
+   follow the session-start steps in your instruction file. Report your current state:
+   work in progress, open questions, anything blocking. Take no new work yet.
    ```
 
 4. **Wait** until the agent has reported. Read the report with
@@ -130,3 +143,44 @@ up an agent".
   leave the how to it.
 - Keep it short. Point to files, PRs or panes instead of restating them; expect the
   agent to look things up itself.
+
+## Initiate an agent
+
+Brings an agent one level below you under control: it gets the standing grant (the
+`## Control` section of its instruction file) and the rule-entry pointers, so it works
+without the control skill. Machine control initiates org controls; an org control
+initiates project controls.
+
+1. **Check the setup.** The agent's folder is set up when it has an instruction file
+   with a `## Control` section, a row in your registry, and an engram pin
+   (`.engram/config.json`); for an org control, the org root also has its instruction
+   file. If any part is missing, load the `control` skill and run its setup reference
+   for that level ("Set up an org control" or "Set up a project control"), which adds
+   the missing parts without replacing existing files. Then continue here.
+2. **Register** the agent in your registry if it is missing, and start it if it is not
+   running ("Start an agent").
+3. **Fill the block.** Take the `## Control` section, down to the next `##` heading,
+   from the agent's level template (the control skill's
+   `templates/instructions/<level>-control.md`; without the skill, copy the section
+   from a set-up sibling's instruction file). Replace every placeholder. For a project
+   control, grant a port block from your own and write it under "Ports".
+4. **Wake it** ("Wake up an agent"), then send the message below as its task, with the
+   block inside it. Never edit the agent's checkout yourself; the agent writes its own
+   instructions.
+
+   ```text
+   FROM: <your agent name> (<your folder>). This message is written by a control
+   agent, not chakrit.
+
+   INITIATION: Add the block below to your always-loaded instruction file (AGENTS.md;
+   keep CLAUDE.md consistent with it). Preserve your existing rules. Move any
+   governance rule that your level policy now covers out of your instruction file.
+   Then load the rule entries the block names, in full, as the block describes. Reply
+   with the instruction path you changed, the entries you loaded, and any conflict
+   with your existing rules.
+
+   <block>
+   ```
+
+5. **Wait for the acknowledgment.** Delivery is not acknowledgment. Record it in the
+   Agent Backlog of your `control.data.js` with the paths the agent reported.

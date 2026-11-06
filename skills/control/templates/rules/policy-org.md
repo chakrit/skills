@@ -4,7 +4,7 @@ Engram entry `rule/policy-org` in project
 `<machine>-control-rules` (without engram, the file
 `~/Documents/control/rules/policy-org.md`). Governance for every org control
 (`<machine>:<org>:control`). Your instruction file names you, your org and your
-rulings. Load this entry in full at session start and after a clear.
+rulings. Load this entry in full at the times your instruction file names.
 
 ## Role
 
@@ -60,7 +60,8 @@ look: colours, fonts and the row tokens that keep the vertical rhythm.
 
 1. Grant project port blocks from your org block. Record them in `registries/ports.md`.
 2. Ask machine control for a heavy-job slot when a project needs one. Pass it to the
-   project and return it when the project reports done.
+   project, record the project as holder in `registries/heavy-jobs.md`, and return the
+   slot when the project reports done.
 
 ## Reaching machine control
 
@@ -71,23 +72,25 @@ on?" Never start machine control or run its scripts yourself.
 
 ## Panes
 
-1. You may start, inspect, message, save, clear and stop your projects' agents and
-   panes. Use `scripts/control-agents`.
-2. Before you start, message, clear or wake an agent, load engram entry
-   `rule/handling-agents` in full and run its section for the step. A bare `/clear`
-   can drop unsaved work, and a wake-up sent to a resumed session lands on a stale
-   conversation.
+1. You may start, inspect, message, save, clear, wind down and initiate your projects'
+   agents, and stop their process panes. Use `scripts/control-agents`.
+2. Before you act on an agent, load engram entry `rule/handling-agents` in full and run
+   its section for the step. A bare `/clear` can drop unsaved work, and a wake-up sent
+   to a resumed session lands on a stale conversation.
 
-   | To                                 | Run                |
-   | ---------------------------------- | ------------------ |
-   | start or resume an agent           | "Start an agent"   |
-   | send any message                   | "Message an agent" |
-   | clear an agent, at any time        | "Clear an agent"   |
-   | bring an agent up to take work     | "Wake up an agent" |
-   | hand over a task after the wake-up | "Give a task"      |
+   | To                                           | Run                    |
+   | -------------------------------------------- | ---------------------- |
+   | start or resume an agent                     | "Start an agent"       |
+   | send any message                             | "Message an agent"     |
+   | clear an agent, at any time                  | "Clear an agent"       |
+   | stop, wind down or shut down an agent        | "Wind down an agent"   |
+   | bring an agent up to take work               | "Wake up an agent"     |
+   | hand over a task after the wake-up           | "Give a task"          |
+   | bring an agent or a new project into control | "Initiate an agent"    |
 
-3. The resting state is every agent saved and cleared. A resumed agent can still show
-   its pre-clear conversation; "Wake up an agent" handles that.
+3. When chakrit says to stop an agent, that means "Wind down an agent": save, clear,
+   exit. An agent left running rests saved and cleared; a resumed agent can still show
+   its pre-clear conversation, which "Wake up an agent" handles.
 
 ## Memory
 

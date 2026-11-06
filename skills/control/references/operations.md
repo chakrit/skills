@@ -1,7 +1,7 @@
 # Control operations
 
 Shared procedures the setup references call. The procedures controls run on agents
-every day (start, message, clear, wake, give a task) live in
+every day (start, message, clear, wind down, wake, give a task, initiate) live in
 `templates/rules/handling-agents.md`, which machine setup seeds as engram entry
 `rule/handling-agents`.
 
@@ -74,23 +74,17 @@ Machine control that needs a project pane while the org control is down manages 
 pane directly; it starts the org control first only when that is faster or the work
 needs org context.
 
-## Run a process
+## Onboard into ACE
 
-Every long-running process (dev server, preview server, test server, watcher) runs in a
-visible tmux pane in the agent's own window. Never run one through the harness's
-background shell.
+ACE is optional. Run this for every folder a setup gives an instruction file: machine
+control, the org root, the org control and each project control.
 
-Layout: the harness pane on the left at half the width, one pane per process stacked
-on the right with equal heights.
-
-```sh
-tmux split-window -d -P -F '#{pane_id}' -t <harness_pane> -c <folder>   # once per process
-tmux set-option -w -t <window_id> main-pane-width 50%
-tmux select-layout -t <window_id> main-vertical
-```
-
-The harness must be the window's first pane, so `main-vertical` keeps it on the left.
-Re-run the last two commands after adding or removing a process pane.
-
-Bind servers to `0.0.0.0` on ports from the project's block. Report pane IDs to the
-parent control.
+1. Check whether ACE is installed: `command -v ace`. If it prints nothing, skip this
+   section; the setup is complete without it.
+2. Find the school. For an org's folders it is the org's school; ask chakrit for it
+   with the org names unless chakrit already said it. For machine control, use the
+   school chakrit names; if none is known, ask chakrit.
+3. In the folder, run `ace setup <school>` in a visible tmux pane, since it may ask for
+   authentication; tell chakrit which pane waits for input.
+4. Run the `ace-init` skill in that folder to finish onboarding. Commit the files it
+   writes where the folder is a repo; the org root is not one.

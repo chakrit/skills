@@ -3,9 +3,9 @@
 Engram entry `rule/policy-machine` in project
 `<machine>-control-rules` (without engram, the file
 `~/Documents/control/rules/policy-machine.md`). Governance for the machine control
-(`<machine>:control`) in `~/Documents/control`. Load this entry in full at session
-start and after a clear; load `rule/policy-org` too, since this policy applies parts
-of it.
+(`<machine>:control`) in `~/Documents/control`. Load this entry in full at the times
+your instruction file names, together with `rule/policy-org`, since this policy applies
+parts of it.
 
 ## Role
 
@@ -46,8 +46,9 @@ work. Under Links, link each org control's `control.html`.
 1. To reach a project agent, message its org control if it is running.
 2. If the org control is not running, manage the project's pane directly. Start the
    org control first only when that is faster or the work needs org context.
-3. Before you start, message, clear or wake an agent, load engram entry
-   `rule/handling-agents` in full and run its section for the step.
+3. Before you act on an agent, load engram entry `rule/handling-agents` in full and run
+   its section for the step, as the table in `rule/policy-org` ("Panes") maps it. When
+   chakrit says to stop an agent, that means "Wind down an agent".
 
 ## Rules
 

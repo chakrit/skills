@@ -16,12 +16,12 @@ setup copies the seeds to `~/Documents/control/rules/` as the live rules, and
 Every engram project name starts with the machine, like agent names, so stores from
 two machines never share a project name.
 
-| Engram project              | Holds                               | Created by                              |
-| --------------------------- | ----------------------------------- | --------------------------------------- |
-| `<machine>-control-rules`   | the five rule entries, nothing else | "Seed the rule entries"                 |
-| `<machine>-control`         | machine control's memory            | `engram init` in `~/Documents/control`  |
-| `<machine>-<org>`           | one org control's memory            | `engram init` in the org control folder |
-| `<machine>-<org>-<project>` | one project control's memory        | `engram init` in the project folder     |
+| Engram project              | Holds                                   | Created by                                        |
+| --------------------------- | --------------------------------------- | ------------------------------------------------- |
+| `<machine>-control-rules`   | the five rule entries and a rules index | "Seed the rule entries"                           |
+| `<machine>-control`         | machine control's memory                | `engram init` in `~/Documents/control`            |
+| `<machine>-<org>`           | one org's memory                        | `engram init` in the org control and the org root |
+| `<machine>-<org>-<project>` | one project control's memory            | `engram init` in the project folder               |
 
 Only the rules project needs seeding. The other projects exist once their folder is
 pinned and the first save lands; their topic keys are conventions in `rule/memory`.
@@ -65,7 +65,8 @@ Use the project name the setup reference gives you.
    engram init <name>
    ```
 
-   This writes `.engram/config.json`. Commit it with the rest of the setup.
+   This writes `.engram/config.json`. Commit it with the rest of the setup; the org
+   root is not a repo, so there it stays uncommitted.
 4. Always pin. Clones use the remote `gh`, and engram reads only a remote named
    `origin`, so an unpinned folder resolves to its directory name and collides with
    same-named folders elsewhere.

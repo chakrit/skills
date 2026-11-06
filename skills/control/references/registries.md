@@ -24,9 +24,11 @@ templates in `templates/registries/` are starting points, not a required set.
 | `heavy-jobs.md` | machine control | heavy-job slots and their holders                            |
 | `projects.md`   | org control     | project slug, checkout, window, pane, backend, task          |
 | `ports.md`      | org control     | port blocks granted to projects, single service reservations |
+| `heavy-jobs.md` | org control     | the slot machine control granted and the project holding it  |
 
 `orgs.md` and `projects.md` are parsed by `scripts/`; their templates state the
-columns to keep.
+columns to keep. An agent that is not running keeps its row with Window and Agent pane
+empty; the script lists it and refuses to type into it.
 
 ## Nested resources
 

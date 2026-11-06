@@ -19,7 +19,16 @@ adapting control repos between orgs and machines.
   project context and may do hands-on work.
 - **Agent names:** `<machine>:control`, `<machine>:<org>:control`,
   `<machine>:<org>:<project>`. The org slug is chakrit's short name (`datawow`).
-- **No ACE dependency.** The skill works for users without ACE or its save skill.
+- **ACE is optional.** The skill works for users without ACE or its save skill. Where
+  ACE is installed, setup onboards every folder it gives an instruction file
+  (`ace setup <school>`, then `ace-init`): the org's school for org folders, a school
+  chakrit names for machine control.
+- **Org roots carry instruction files.** `~/Documents/<org>/` is not a level and not a
+  repo, but an agent started there must still load rules and the org's memory, so it
+  gets an `AGENTS.md` (owned by the org control) and shares engram project
+  `<machine>-<org>`. Every instruction file states the session-start step itself (load
+  the rule entries, then `mem_context`), because a pointer chain to the step was
+  skipped after restarts.
 - **No script configuration.** The script finds its registry from the folder layout,
   talks to the tmux server it runs in, and hard-codes Claude Code's commands. An agent
   starts another by typing the harness the registry names.
@@ -40,7 +49,7 @@ adapting control repos between orgs and machines.
   the must-load directive and engram carries the text. Seeds live in
   `templates/rules/`; machine control owns the entries and amends them with
   `mem_update` by ID, the documented safe edit, appending the quoted ruling. chakrit
-  syncs worthwhile amendments back to the seeds and handles backups himself. With
+  syncs worthwhile amendments back to the seeds and handles backups. With
   engram, engram is the only copy: no rule files are written, so edits cost no file
   I/O and nothing drifts. Without engram, setup copies the seeds to
   `~/Documents/control/rules/` as the live rules.
@@ -49,7 +58,13 @@ adapting control repos between orgs and machines.
   cross-machine sync would not merge two machines' projects. Nothing syncs today.
   Topic keys stay unprefixed: the project already places them.
 - **Procedures compose by name.** `rule/handling-agents` holds the procedures
-  controls run on agents (start, message, before a clear, clear, wake, give a task).
+  controls run on agents (start, message, before a clear, clear, wind down, wake, give
+  a task, initiate). Initiation lives there, not only in the skill, so a control can
+  bring an agent under control without loading the skill; it loads the skill only when
+  the agent's folder needs setup first.
+- **Stop means wind down.** chakrit's "stop" for an agent is save, clear, exit the
+  harness, exit the shell. `scripts/control-agents wind-down` requires `--saved` like a
+  clear and types `exit` only once the shell holds the pane again.
   Policies name its sections instead of restating them, so each rule has one home and a
   caller cannot drop a step such as the save check before a clear.
 - **Clears leave evidence.** `scripts/control-agents clear-context` requires
@@ -101,8 +116,9 @@ adapting control repos between orgs and machines.
   what engram would, one file per topic key. A rule in engram is reliable only because
   pointers name it by topic key and agents load it in full; a rule found by searching
   alone is not guaranteed to apply.
-- **Saving names one preference:** save before a clear or handoff, prefer engram's
-  `mem_session_summary`, report what was saved and where.
+- **Saving names one order:** save before a clear or handoff with the agent's own
+  session-save skill when it has one (an `ace` agent writes `.ace/save.md`), otherwise
+  engram's `mem_session_summary`; report what was saved and where.
 - **`control.html` is the one page chakrit checks,** opened in a local browser. It is
   a fixed template that renders from `control.data.js` beside it, the only live task
   record; there is no separate task file. Agents edit the small data file, never the
@@ -119,8 +135,12 @@ adapting control repos between orgs and machines.
 - **Single machine.** No sync content anywhere; chakrit manages cross-machine state.
 - **Scripts are a small reference,** not a product: one `control-agents` that lists,
   reads and types into registered panes. It targets panes only by tmux ID, re-checks
-  the pane before typing, and never changes windows or layout. Controls copy it and
-  may adapt it.
+  the pane before typing, and never changes windows or layout. Before typing it refuses
+  when the pane's own shell holds the foreground (the shell's PID equals the terminal's
+  foreground process group), instead of matching harness names, so a new harness needs
+  no change. It runs through `uv run --script` (Python 3.10 or newer), never the
+  system Python. Tests: `uv run --no-project --python '>=3.10' python -B -m unittest
+  discover -s tests` from the skill folder. Controls copy it and may adapt it.
 
 Decision provenance (chakrit's words) was recorded during design in this repository's
 ignored session ledger, not in the published package.

@@ -3,8 +3,8 @@
 Engram entry `rule/memory` in project
 `<machine>-control-rules` (without engram, the file
 `~/Documents/control/rules/memory.md`). Memory rules for every control agent at every
-level. Machine control owns this entry. Load it in full at session start and after a
-clear.
+level. Machine control owns this entry. Load it in full at the times your instruction
+file names.
 
 ## Where things go
 
@@ -58,9 +58,9 @@ before the work it governs:
    mention the key are not the rule.
 3. `mem_get_observation` with that result's ID. Search results are truncated; a rule
    read from a search result alone is incomplete.
-4. If no result has the exact key, stop the work the entry governs and tell machine
-   control the entry is missing. A machine with engram has no rule files to fall back
-   to; never work from what you remember of a rule.
+4. If no result has the exact key, stop the work the entry governs and tell your parent
+   control the entry is missing; machine control tells chakrit. A machine with engram
+   has no rule files to fall back to; never work from what you remember of a rule.
 
 ## Session
 
@@ -73,9 +73,11 @@ before the work it governs:
 
 ## Saving
 
-Save before a clear or handoff, preferring engram's `mem_session_summary`, and report
-what you saved and where. Save deliberately; nothing saves on its own. Use engram's MCP
-tools and CLI only; never install an engram plugin or hooks.
+Save before a clear or handoff and report what you saved and where. Use your own
+session-save skill when you have one (an `ace` agent writes `.ace/save.md`); otherwise
+use engram's `mem_session_summary`, or a `memory/` file without engram. Save
+deliberately; nothing saves on its own. Use engram's MCP tools and CLI only; never
+install an engram plugin or hooks.
 
 - **Search before saving.** Amend the existing entry or file on a subject instead of
   writing a second one.

@@ -40,12 +40,14 @@ rule entries every level loads, and the machine's shared resources.
    already exists, add a row to `registries/orgs.md` and a link to its
    `control.html` under links in `control.data.js`. Read `references/registries.md`
    for how registries and nested resources work.
-7. **Commit.** Commit everything with a message naming the skill revision
+7. **ACE.** Follow "Onboard into ACE" in `references/operations.md`.
+8. **Commit.** Commit everything with a message naming the skill revision
    (`git -C <this skill's repo> rev-parse --short HEAD`).
-8. **Start the agent.** Follow "Start an agent" in `templates/rules/handling-agents.md`,
-   then rename its session to `<machine>:control`.
-9. **Plan downstream.** Follow "Plan downstream controls" in
-   `references/operations.md` for org candidates under `~/Documents/`.
+9. **Leave the start to chakrit.** Machine control has no parent control to start it.
+   Add to the completion report: "Start machine control: in a tmux window, `cd
+   ~/Documents/control`, run the harness, then type `/rename <machine>:control`."
+10. **Plan downstream.** Once machine control runs, it follows "Plan downstream
+    controls" in `references/operations.md` for org candidates under `~/Documents/`.
 
 ## Done when
 

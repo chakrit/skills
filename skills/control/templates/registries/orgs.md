@@ -3,7 +3,7 @@
 Org controls on this machine. Updated by machine control only. `scripts/` parses the
 table: keep its six columns. Org is chakrit's short org slug; Checkout is relative to
 `~/Documents`, e.g. `datawow/control`; Window and Agent pane are tmux IDs (`@12`,
-`%34`).
+`%34`), both empty while the agent is not running.
 
 | Org | Checkout | Window | Agent pane | Backend | Assignment |
 | --- | -------- | ------ | ---------- | ------- | ---------- |

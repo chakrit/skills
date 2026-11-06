@@ -7,8 +7,10 @@ control owns the project's context and may do hands-on work in its clones.
 ## Steps
 
 1. **Check.** The org control must exist at `~/Documents/<org>/control`; if not, run
-   `references/setup-org.md` first. If the project folder exists and already has
-   `AGENTS.md`, stop and use `references/initiation.md` instead.
+   `references/setup-org.md` first. If the project folder already exists, this setup
+   runs for "Initiate an agent": do only the steps whose result is missing, never
+   replace an existing file, and leave the `## Control` section to the initiation
+   message, since the agent writes its own instructions.
 2. **Confirm the names.** `<project>` is chakrit's short name for the project. Ask
    chakrit for it and for the list of component repos, unless chakrit already gave both.
 3. **Create the repo.**
@@ -20,8 +22,7 @@ control owns the project's context and may do hands-on work in its clones.
    ```
 
    The project repo stays local. Never add a remote unless chakrit asks.
-4. **Copy templates,** replacing placeholders (`{{machine}}`, `{{org}}`,
-   `{{project}}`, `{{date}}`):
+4. **Copy templates,** replacing placeholders (`{{machine}}`, `{{org}}`, `{{project}}`):
 
    | Source                                      | Destination       |
    | ------------------------------------------- | ----------------- |
@@ -38,12 +39,16 @@ control owns the project's context and may do hands-on work in its clones.
    each folder to `.gitignore`.
 7. **Memory.** Follow "Set up a level's engram project" in `references/memory.md`
    with project name `<machine>-<org>-<project>`.
-8. **Register with the org control.** Ask it to add the project to its
+8. **ACE.** Follow "Onboard into ACE" in `references/operations.md`.
+9. **Register with the org control.** Ask it to add the project to its
    `registries/projects.md` and to allocate a port block (see "Reach a parent" in
    `references/operations.md`). Write the granted block into `AGENTS.md` under "Ports".
-9. **Commit,** naming the skill revision.
-10. **Start the agent** ("Start an agent" in `templates/rules/handling-agents.md`) and
-    rename its session to `<machine>:<org>:<project>`.
+10. **Commit,** naming the skill revision.
+11. **Start the agent.** If you are the org control, follow "Start an agent" in
+    `rule/handling-agents` and rename its session to `<machine>:<org>:<project>`.
+    Otherwise add to the completion report: "Start the project control: in a tmux
+    window, `cd ~/Documents/<org>/<project>`, run the harness, then type
+    `/rename <machine>:<org>:<project>`."
 
 ## Done when
 
