@@ -95,10 +95,10 @@ proposing, discussing or editing a change to a skill, build that model first:
 ## Audits and fix loops on a skill
 
 An audit checks a skill's integrity against what already exists: its own files and
-chakrit's rulings on it, which `.ace/save.ledger.md` records with chakrit's words. A fix
-makes the skill agree with itself and with those rulings. It never adds a requirement,
-step, check, branch or stop condition that no ruling asked for, and never widens or
-narrows a ruling. The tempting failure is to fill each gap an audit finds with a
+chakrit's rulings on it, recorded with chakrit's words in `.ace/control-rulings.md`
+(frozen) and, for later rulings, `.ace/save.ledger.md`. A fix makes the skill agree
+with itself and with those rulings. It never adds a requirement, step, check, branch or
+stop condition that no ruling asked for, and never widens or narrows a ruling. The tempting failure is to fill each gap an audit finds with a
 plausible new step and cite a general ruling ("align all layers", "ask chakrit when
 unclear") as its basis. Each addition is new surface for the next audit, so the loop
 never converges, and chakrit has to find and undo work nobody asked for.
