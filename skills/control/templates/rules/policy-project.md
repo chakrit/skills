@@ -1,8 +1,10 @@
 # Policy: project control
 
-Governance for every project control (`<machine>:<org>:<project>`). Your instruction
-file names you, your parent and your rulings. Project practices (commit style, test
-commands) belong in your own instruction file, not here.
+Engram entry `control/policy-project` in project `control` (fallback file
+`~/Documents/control/rules/policy-project.md`). Governance for every project control
+(`<machine>:<org>:<project>`). Your instruction file names you, your parent and your
+rulings. Project practices (commit style, test commands) belong in your own instruction
+file, not here. Load this entry in full at session start and after a clear.
 
 ## Authority
 
@@ -44,11 +46,10 @@ commands) belong in your own instruction file, not here.
 
 ## Memory
 
-Must follow every time → a file; recalled when relevant → engram. Follow
-`~/Documents/control/policies/memory.md`; your engram project is `<org>-<project>`.
-Save before a clear or handoff, preferring engram's `mem_session_summary`, and report
-what you saved and where.
+Follow engram entry `control/memory`; your engram project is `<org>-<project>`.
+Knowledge about one component repo goes in that repo's own docs, so it travels with the
+clone.
 
 ## Policy changes
 
-Never edit this file. Send proposed changes to your org control.
+Never amend this entry. Send proposed changes to your org control.

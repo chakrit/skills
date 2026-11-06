@@ -4,11 +4,27 @@ Engram (Gentleman-Programming/engram) is the shared memory for all three levels.
 level has its own engram project; all of them live in one SQLite store per machine,
 `~/.engram/engram.db`.
 
-The rules agents follow live in `templates/policies/memory.md`, which machine setup
-copies to `~/Documents/control/policies/memory.md`. Its first section is the rule that
-decides between files and engram: what an agent must follow every time, and durable
-state such as registries, goes in files loaded by path; what an agent recalls when
-relevant goes in engram.
+Engram comes first. Every rule set agents follow is an engram entry in project
+`control`, seeded from `templates/rules/<topic>.md`, and each instruction file points to
+the entries it must load and when. The memory rules themselves are the entry
+`control/memory` (`templates/rules/memory.md`); its first section decides what goes in
+engram and what stays in files. Without engram, the copies in
+`~/Documents/control/rules/` are the live rules and `memory/` folders hold what engram
+would.
+
+## Seed the rule entries
+
+Machine setup runs this once; machine control runs it again for a rule entry chakrit
+approves changing.
+
+1. If engram is not available, skip this section. The files setup copied to
+   `~/Documents/control/rules/` are the live rules.
+2. For each file in `~/Documents/control/rules/`, call engram's `mem_save` MCP tool
+   with project `control`, topic key `control/<file name without .md>` (for example
+   `control/policy-org`), the file's first heading as the title and the whole file as
+   the content. The CLI's `engram save` takes no topic key, so use the MCP tool.
+3. Check each entry: `mem_search` its topic key in project `control` and
+   `mem_get_observation` the result. The full text must match the file.
 
 ## Set up a level's engram project
 

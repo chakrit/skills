@@ -8,10 +8,10 @@ templates in `templates/registries/` are starting points, not a required set.
 ## Rules
 
 1. Keep registries under `registries/` in the owning control repo.
-2. Hold coordination facts only. Knowledge goes where `templates/policies/memory.md`
+2. Hold coordination facts only. Knowledge goes where `templates/rules/memory.md`
    says.
-3. Update the registry in the same commit as the change it records. `control.html`
-   links to each registry; never copy registry contents into it.
+3. Update the registry in the same commit as the change it records. The control page
+   (`control.data.js`) links to each registry; never copy registry contents into it.
 4. A child asks its parent to change the parent's registry. It never edits it directly.
 5. If a script parses a registry, keep the columns its template states.
 

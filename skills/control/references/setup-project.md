@@ -42,8 +42,8 @@ control owns the project's context and may do hands-on work in its clones.
    `registries/projects.md` and to allocate a port block (see "Reach a parent" in
    `references/operations.md`). Write the granted block into `AGENTS.md` under "Ports".
 9. **Commit,** naming the skill revision.
-10. **Start the agent** ("Start an agent" in `templates/policies/agents.md`) and rename
-    its session to `<machine>:<org>:<project>`.
+10. **Start the agent** ("Start an agent" in `templates/rules/handling-agents.md`) and
+    rename its session to `<machine>:<org>:<project>`.
 
 ## Done when
 

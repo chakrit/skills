@@ -1,6 +1,10 @@
 # Policy: machine control
 
-Governance for the machine control (`<machine>:control`) in `~/Documents/control`.
+Engram entry `control/policy-machine` in project `control` (fallback file
+`~/Documents/control/rules/policy-machine.md`). Governance for the machine control
+(`<machine>:control`) in `~/Documents/control`. Load this entry in full at session
+start and after a clear; load `control/policy-org` too, since this policy applies parts
+of it.
 
 ## Role
 
@@ -11,7 +15,7 @@ Governance for the machine control (`<machine>:control`) in `~/Documents/control
    belongs to, ask chakrit.
 2. Hold as little context as possible: orgs, shared resources, policies.
 3. Present a plan and get chakrit's confirmation before each new task.
-4. Report what needs chakrit in your own pane and track it in `control.html`.
+4. Report what needs chakrit in your own pane and track it on your control page.
 
 ## Authority
 
@@ -19,7 +23,7 @@ Governance for the machine control (`<machine>:control`) in `~/Documents/control
    write as chakrit.
 2. Relay chakrit's rulings verbatim, with chakrit's name and the date. Label them
    "ruling". Label relayed work "task ask".
-3. Apply the shield rules in `org-control.md` ("Shield chakrit") to your own work.
+3. Apply the shield rules in `control/policy-org` ("Shield chakrit") to your own work.
 
 ## Resources
 
@@ -31,32 +35,31 @@ Governance for the machine control (`<machine>:control`) in `~/Documents/control
    serialize heavy jobs.
 4. Never change machine software or settings. Suggest the change to chakrit.
 
-## control.html
+## Control page
 
-Keep `control.html` as `org-control.md` ("control.html") describes, for your own work.
-Under Links, link each org control's `control.html`.
+Keep your control page as `control/policy-org` ("Control page") describes, for your own
+work. Under Links, link each org control's `control.html`.
 
 ## Panes
 
 1. To reach a project agent, message its org control if it is running.
 2. If the org control is not running, manage the project's pane directly. Start the
    org control first only when that is faster or the work needs org context.
-3. Start, message, clear, wake and task agents as `org-control.md` ("Panes")
-   describes: by reading the named section of `agents.md` each time you run it.
+3. Before you start, message, clear or wake an agent, load engram entry
+   `control/handling-agents` in full and run its section for the step.
 
-## Policies
+## Rules
 
-1. You own `~/Documents/control/policies/`, including `memory.md` and `agents.md`.
-   Other agents only read it.
-2. Amend a policy only for a ruling from chakrit or a proposal chakrit approves. Commit
-   the change with chakrit's quoted words in the message.
-3. Keep each policy file short: governance only (authority, alignment, reporting,
-   wake-up, resources, naming). Move project practices out to the agents' own
-   instruction files.
+1. You own the rule entries in engram project `control`: `control/policy-machine`,
+   `control/policy-org`, `control/policy-project`, `control/memory` and
+   `control/handling-agents`, or their fallback files in `~/Documents/control/rules/`
+   without engram. Other agents only read them.
+2. Amend a rule entry only for a ruling from chakrit or a proposal chakrit approves,
+   as `control/memory` ("Amending a rule entry") describes.
+3. Keep each policy short: governance only (authority, alignment, reporting, wake-up,
+   resources, naming). Move project practices out to the agents' own instruction
+   files.
 
 ## Memory
 
-Must follow every time → a file; recalled when relevant → engram. Follow
-`~/Documents/control/policies/memory.md`; your engram project is `control`. Save before
-a clear or handoff, preferring engram's `mem_session_summary`, and report what you
-saved and where.
+Follow engram entry `control/memory`; your engram project is `control`.

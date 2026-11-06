@@ -1,12 +1,11 @@
-# Policy: handling agents
+# Rules: handling agents
 
-The procedures a control runs on the agents it manages: start, message, clear, wake
-and task them. Machine control owns this file. Level policies refer to its sections by
-name.
-
-Read a section each time you run it; do not run it from memory. Each step guards
-against a failure the obvious command causes: a bare `/clear` can drop unsaved work, and
-a wake-up sent to a resumed session lands on a stale conversation.
+Engram entry `control/handling-agents` in project `control` (fallback file
+`~/Documents/control/rules/handling-agents.md`). The procedures a control runs on the
+agents it manages. Machine control owns this entry. Load it in full before you start,
+message, clear or wake an agent, and follow the section for the step you are on. Each
+step guards against a failure the obvious command causes: a bare `/clear` can drop
+unsaved work, and a wake-up sent to a resumed session lands on a stale conversation.
 
 ## Start an agent
 
@@ -19,9 +18,9 @@ tmux send-keys -t <pane_id> '<start command>' Enter
 ```
 
 Resume the folder's previous session by default. The session keeps its name marker and
-its per-conversation settings, which a new session loses; "Wake up an agent" clears
-the old conversation. Start a new session only when the task explicitly requires a
-fresh one or the folder has no previous session to resume.
+its per-conversation settings, which a new session loses; "Wake up an agent" clears the
+old conversation. Start a new session only when the task explicitly requires a fresh
+one or the folder has no previous session to resume.
 
 | Backend  | Resume (default)      | New session |
 | -------- | --------------------- | ----------- |
@@ -58,13 +57,12 @@ asking for another wastes the agent's tokens.
    a wind-down usually shows exactly this: the wind-down saved and cleared, but no
    message followed the clear, so the harness reopened the conversation before it.
 3. Otherwise ask the agent to save ("Message an agent") and report what it saved and
-   where, preferring engram's `mem_session_summary`. Wait for the report, then read the
-   pane again.
-4. If the save failed, stop: add it to Needs Attention in `control.html` and do not
+   where, following `control/memory`. Wait for the report, then read the pane again.
+4. If the save failed, stop: add it to Needs Attention in `control.data.js` and do not
    clear.
 
 The result is the save location the agent reported, such as an engram observation or a
-session file.
+memory file.
 
 ## Clear an agent
 
@@ -77,6 +75,12 @@ session file.
    agent is to work now, send the next message at once ("Wake up an agent"). At a
    wind-down, leave it; "Wake up an agent" clears it again on the next start.
 
+**Force a clear** only when chakrit orders a clear without a save, the agent is stuck or
+hung, agents are being torn down, or another circumstance makes a save impossible or
+pointless. Skip "Before a clear" and run
+`scripts/control-agents force-clear <slug> --reason '<chakrit's quoted words, or what
+happened>'`. Step 3 still applies.
+
 ## Wake up an agent
 
 Waking an agent and giving it a task are two separate messages. Never put a task, or
@@ -87,15 +91,21 @@ finished loading its context.
 2. **Clear.** Unless the session was started new, run "Clear an agent". A resumed or
    still-running session holds its previous conversation, even when it was cleared at
    a wind-down.
-3. **Send the wake message** at once ("Message an agent"):
+3. **Send the wake message** at once ("Message an agent"). Name the engram entries the
+   agent must load: its level policy (`control/policy-org` for an org control,
+   `control/policy-project` for a project control) and `control/memory`, plus
+   `control/handling-agents` for an org control.
 
    ```text
    FROM: <your agent name> (<your folder>). This message is written by a control
    agent, not chakrit.
 
-   WAKE-UP: Run your session-start skill (ace, dw-start or similar); without one,
-   follow the session-start steps in your instruction file. Then report your current
-   state: work in progress, open questions, anything blocking. Take no new work yet.
+   WAKE-UP: Load your rules first, in full: engram entries <entries> (project
+   `control`; mem_search the topic key, then mem_get_observation), or the files in
+   ~/Documents/control/rules/ without engram. Then run your session-start skill (ace,
+   dw-start or similar); without one, follow the session-start steps in your
+   instruction file. Report your current state: work in progress, open questions,
+   anything blocking. Take no new work yet.
    ```
 
 4. **Wait** until the agent has reported. Read the report with

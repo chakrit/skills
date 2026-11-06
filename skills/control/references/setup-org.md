@@ -26,14 +26,14 @@ details; project controls own those.
    | --------------------------------------- | ------------------------ |
    | `templates/instructions/org-control.md` | `AGENTS.md`              |
    | `templates/control.html`                | `control.html`           |
+   | `templates/control.data.js`             | `control.data.js`        |
    | `templates/gitignore`                   | `.gitignore`             |
    | `templates/registries/projects.md`      | `registries/projects.md` |
    | `templates/registries/ports-org.md`     | `registries/ports.md`    |
 
-   Then `ln -s AGENTS.md CLAUDE.md`. Do not copy policy files; the instruction file
-   points to the central one. In `control.html`, under Records, link `AGENTS.md`,
-   `../../control/policies/org-control.md`, `../../control/policies/agents.md`,
-   `../../control/policies/memory.md` and each file in `registries/`. Under Links, link
+   Then `ln -s AGENTS.md CLAUDE.md`. Do not copy rule files; the instruction file
+   points to the engram entries machine control keeps. In `control.data.js`, under
+   records, link `AGENTS.md` and each file in `registries/`. Under links, link
    `../../control/control.html` as "Machine control".
 5. **Copy scripts.** Follow "Install scripts" in `references/operations.md`.
 6. **Memory.** Follow "Set up a level's engram project" in `references/memory.md`
@@ -47,8 +47,8 @@ details; project controls own those.
    that has an agent, add a row to `registries/projects.md`. Read
    `references/registries.md` for how registries and nested resources work.
 9. **Commit,** naming the skill revision.
-10. **Start the agent** ("Start an agent" in `templates/policies/agents.md`) and rename
-    its session to `<machine>:<org>:control`.
+10. **Start the agent** ("Start an agent" in `templates/rules/handling-agents.md`) and
+    rename its session to `<machine>:<org>:control`.
 11. **Plan downstream.** Follow "Plan downstream controls" in
     `references/operations.md` for project candidates under `~/Documents/<org>/`,
     including existing project agents that need initiation.

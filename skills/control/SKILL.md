@@ -3,7 +3,7 @@ name: control
 description: >-
   Set up chakrit's three-level control-agent structure on one machine: a machine
   control, org controls and project controls that coordinate coding agents in tmux,
-  with central policies, registries and engram memory. TRIGGER on "/control", "set up
+  with rules and memory in engram, and registries. TRIGGER on "/control", "set up
   control", "set up machine control", "set up an org control", "bootstrap this
   project for agents", "add this project to control", "initiate this agent", or when
   creating a folder under ~/Documents/<org>/ that agents will manage. DO NOT TRIGGER
@@ -15,28 +15,29 @@ description: >-
 # control
 
 Sets up control agents. After setup, every agent works from its own instruction file
-and the policy file it points to; no agent needs this skill again for daily work.
+and the rule entries it points to; no agent needs this skill again for daily work.
 
 ## Concepts
 
 Use these names exactly, in every file and message.
 
-| Term            | Meaning                                                                               |
-| --------------- | ------------------------------------------------------------------------------------- |
-| Machine control | `~/Documents/control`, agent `<machine>:control`. Tasks no single org owns.           |
-| Org control     | `~/Documents/<org>/control`, agent `<machine>:<org>:control`. One org's tasks.        |
-| Project control | `~/Documents/<org>/<project>`, agent `<machine>:<org>:<project>`. One project's work. |
-| Level           | One of the three above. There are exactly three. Never define a fourth.               |
-| Parent          | Project control → its org control → machine control.                                  |
-| `<machine>`     | Lowercase short hostname: `hostname -s`, lowercased (`lz49`).                         |
-| `<org>`         | chakrit's short org name (`datawow`, not `datawowio`).                                |
-| Policy          | Governance rules for one level, in `~/Documents/control/policies/<level>.md`.         |
-| Registry        | A file a control keeps to track shared things (ports, heavy-job slots, members).      |
-| Ruling          | chakrit's decision on authority or policy, relayed by a control.                      |
-| Task ask        | Work chakrit asked a control to hand to an agent.                                     |
-| Control page    | `control.html` in a control repo: the one page chakrit checks; see `org-control.md`.  |
-| Wake-up         | Readying an agent before any task. Controls wake below; chakrit wakes a parent.       |
-| Task-give       | Sending a woken agent a task ask, after checking it fits the agent's reported state.  |
+| Term            | Meaning                                                                                                                |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| Machine control | `~/Documents/control`, agent `<machine>:control`. Tasks no single org owns.                                            |
+| Org control     | `~/Documents/<org>/control`, agent `<machine>:<org>:control`. One org's tasks.                                         |
+| Project control | `~/Documents/<org>/<project>`, agent `<machine>:<org>:<project>`. One project's work.                                  |
+| Level           | One of the three above. There are exactly three. Never define a fourth.                                                |
+| Parent          | Project control → its org control → machine control.                                                                   |
+| `<machine>`     | Lowercase short hostname: `hostname -s`, lowercased (`lz49`).                                                          |
+| `<org>`         | chakrit's short org name (`datawow`, not `datawowio`).                                                                 |
+| Policy          | Governance rules for one level: engram entry `control/policy-<level>`.                                                 |
+| Rule entry      | A rule set in engram project `control`, seeded from `templates/rules/`; fallback file in `~/Documents/control/rules/`. |
+| Registry        | A file a control keeps to track shared things (ports, heavy-job slots, members).                                       |
+| Ruling          | chakrit's decision on authority or policy, relayed by a control.                                                       |
+| Task ask        | Work chakrit asked a control to hand to an agent.                                                                      |
+| Control page    | `control.html` in a control repo, rendered from `control.data.js`; see `policy-org`.                                   |
+| Wake-up         | Readying an agent before any task. Controls wake below; chakrit wakes a parent.                                        |
+| Task-give       | Sending a woken agent a task ask, after checking it fits the agent's reported state.                                   |
 
 ## Menu
 
@@ -49,7 +50,7 @@ Use these names exactly, in every file and message.
 
 Read only the file for the chosen operation. It names the sections of the shared
 files it needs: `references/operations.md`, `references/registries.md`,
-`references/memory.md` and `templates/policies/agents.md`.
+`references/memory.md` and `templates/rules/handling-agents.md`.
 
 Set up levels top-down. Before an org control, machine control must exist. Before a
 project control, its org control must exist. If a parent is missing, set it up first
@@ -72,7 +73,7 @@ A setup is done when:
 
 - every file the setup reference lists exists, with no `{{` left (`grep -rn '{{' .`
   prints nothing);
-- the agent's instruction file contains the standing grant and the policy pointer;
+- the agent's instruction file contains the standing grant and the rule-entry pointers;
 - the parent's registry lists the new control (org and project controls);
 - for a machine or org control, "Plan downstream controls" in
   `references/operations.md` has either lodged the approved setups in `control.html`
