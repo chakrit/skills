@@ -11,6 +11,10 @@ Copy this skill's `scripts/` into the control repo as `scripts/`. Project contro
 skip this; they reach their parent through messages. To refresh later, copy the
 skill's `scripts/` again and review the diff before committing.
 
+The script runs through `uv`. Check `command -v uv`. If it prints nothing, do not
+install it; add this line to the completion report: `uv missing: install uv before
+using scripts/control-agents`.
+
 ## Point the control page at PragmataPro
 
 `control.html` loads PragmataPro from its font files with `file://` URLs, because
@@ -95,6 +99,7 @@ its values fill the Environment placeholders of `machine-control.md` or `org-roo
    | `{{school}}`         | the ACE school, or `none` without ACE                       |
    | `{{resume_command}}` | what to type to resume the folder's last session            |
    | `{{new_command}}`    | what to type to start a new session                         |
+   | `{{start_skill}}`    | the skill that loads a session's context, or `none`         |
    | `{{init_skill}}`     | the skill that onboards a folder, or `none`                 |
    | `{{save_skill}}`     | the skill that saves a session before a clear, or `none`    |
 

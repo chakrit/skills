@@ -16,7 +16,7 @@ Engram first. Use files only for what must be read by path or shown on a page.
 | Knowledge and findings an agent recalls when relevant      | engram, the level's project              | `memory/<topic>.md` in the level's folder |
 | Decisions and their reasoning, beyond the quoted ruling    | engram, the level's project              | `memory/<topic>.md`                       |
 | Agents' wake-up and state reports                          | engram, the reporting agent's project    | `memory/<topic>.md`                       |
-| Done tasks, once they leave `control.data.js`              | engram, the control's project            | `memory/tasks-done.md`                    |
+| Done tasks, once they leave `control.data.js`              | engram, the control's project            | `memory/done-<yyyy-mm>-<slug>.md`         |
 | Registries (ports, heavy-job slots, members)               | files in `registries/`                   | files in `registries/`                    |
 | Live tasks and Needs Attention                             | `control.data.js`                        | `control.data.js`                         |
 | About one component repo                                   | that repo's own docs tree                | that repo's own docs tree                 |

@@ -44,5 +44,6 @@ resume command; `none` means the org has no such step.
 | School      | {{school}}           |
 | Resume      | `{{resume_command}}` |
 | New session | `{{new_command}}`    |
+| Start skill | {{start_skill}}      |
 | Init skill  | {{init_skill}}       |
 | Save skill  | {{save_skill}}       |

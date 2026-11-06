@@ -18,9 +18,9 @@ rule entries every level loads, and the machine's shared resources.
 
 3. **Copy templates.** First follow "Record the environment" in
    `references/operations.md` for machine control. Copy from this skill's directory,
-   replacing placeholders (`{{machine}}`, `{{date}}`, `{{home}}` with the home folder
-   path such as `/Users/chakrit`, `{{title}}` with `<MACHINE> Control` in capitals,
-   such as `LZ49 Control`, and the Environment placeholders):
+   replacing placeholders (`{{machine}}`, `{{date}}` as `YYYY-MM-DD`, `{{home}}` with
+   the home folder path such as `/Users/chakrit`, `{{title}}` with `<MACHINE> Control`
+   in capitals, such as `LZ49 Control`, and the Environment placeholders):
 
    | Source                                      | Destination                |
    | ------------------------------------------- | -------------------------- |
@@ -49,7 +49,7 @@ rule entries every level loads, and the machine's shared resources.
    (`git -C <this skill's repo> rev-parse --short HEAD`).
 10. **Leave the start to chakrit.** Machine control has no parent control to start it.
     Add to the completion report: "Start machine control: in a tmux window, `cd
-    ~/Documents/control`, type the resume command from its Environment table, then
+    ~/Documents/control`, type the new-session command from its Environment table, then
     `/rename <machine>:control`. Then ask it to run its backlog row 'Plan downstream
     controls'."
 

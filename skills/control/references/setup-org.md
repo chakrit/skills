@@ -23,8 +23,8 @@ line. It does not hold project details; project controls own those.
    ```
 
 4. **Copy templates,** replacing placeholders (`{{machine}}`, `{{org}}`,
-   `{{github_org}}`, `{{date}}`, `{{home}}` with the home folder path such as
-   `/Users/chakrit`, and `{{title}}` with `<org> Control`):
+   `{{github_org}}`, `{{date}}` as `YYYY-MM-DD`, `{{home}}` with the home folder path
+   such as `/Users/chakrit`, and `{{title}}` with `<org> Control`):
 
    | Source                                  | Destination                |
    | --------------------------------------- | -------------------------- |
@@ -52,7 +52,7 @@ line. It does not hold project details; project controls own those.
 8. **ACE.** Follow "Onboard into ACE" in `references/operations.md` for the org control
    and the org root.
 9. **Register with machine control.** The org needs a row in machine control's
-   `registries/orgs.md`, a link from machine control's `control.html`, and a port
+   `registries/orgs.md`, a link in machine control's `control.data.js`, and a port
    block. If you are machine control, add them yourself and commit in
    `~/Documents/control`. Otherwise ask machine control (see "Reach a parent" in
    `references/operations.md`). Record the block in `registries/ports.md`.
@@ -69,9 +69,9 @@ line. It does not hold project details; project controls own those.
     `rule/handling-agents` (it starts the agent and renames its session to
     `<machine>:<org>:control`), then send "Plan downstream controls" as its task
     ("Give a task"). Otherwise add to the completion report: "Start the org control: in
-    a tmux window, `cd ~/Documents/<org>/control`, type the resume command from the org
-    root's Environment table, then `/rename <machine>:<org>:control`. Then ask it to run
-    its backlog row 'Plan downstream controls'."
+    a tmux window, `cd ~/Documents/<org>/control`, type the new-session command from
+    the org root's Environment table, then `/rename <machine>:<org>:control`. Then ask
+    it to run its backlog row 'Plan downstream controls'."
 
 ## Done when
 

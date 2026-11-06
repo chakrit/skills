@@ -21,9 +21,9 @@ adapting control repos between orgs and machines.
   `<machine>:<org>:<project>`. The org slug is chakrit's short name (`datawow`).
 - **ACE is preferred, never required, and named per environment.** An environment may
   wrap ACE in its own launcher and skills, so the skill hard-codes none of them. Setup
-  records each environment's school, resume and new-session commands, init skill and
-  save skill in an Environment table (machine control's instruction file and each org
-  root's), and starting, waking, saving and onboarding read that table.
+  records each environment's school, resume and new-session commands, start skill, init
+  skill and save skill in an Environment table (machine control's instruction file and
+  each org root's), and starting, waking, saving and onboarding read that table.
 - **Org roots carry instruction files.** `~/Documents/<org>/` is not a level and not a
   repo, but an agent started there must still load rules and the org's memory, so it
   gets an `AGENTS.md` (owned by the org control) and shares engram project

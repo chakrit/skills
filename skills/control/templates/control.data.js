@@ -10,7 +10,7 @@
  * not a string.
  *
  * title      Page title.
- * updated    Date of the last edit, such as "Nov 6". Set it on every edit.
+ * updated    Date of the last edit, such as "2026-11-06". Set it on every edit.
  * tasks      Work only chakrit can do, by group: doing (In progress), todo (To do),
  *            done (Done). Row: {"item": "", "source": "", "since": ""}.
  * attention  Decisions and approvals an agent is waiting on, one entry per waiting agent:

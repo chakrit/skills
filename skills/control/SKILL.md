@@ -74,8 +74,9 @@ and tell chakrit you did.
 
 A setup is done when:
 
-- every file the setup reference lists exists, with no `{{` left (`grep -rn '{{' .`
-  prints nothing);
+- every file the setup reference lists exists, with no `{{` left: in the new repo,
+  `git grep --untracked -n '{{'` prints nothing (it skips the ignored clones), and for
+  an org, `grep -n '{{' ~/Documents/<org>/AGENTS.md` prints nothing;
 - the agent's instruction file contains the standing grant and the rule-entry pointers;
 - for an org, the org root has its instruction file with `CLAUDE.md` linked to it;
 - every folder given an instruction file is onboarded as its Environment table says

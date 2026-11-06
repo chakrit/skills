@@ -113,9 +113,10 @@ finished loading its context.
    WAKE-UP: Load your rules first, in full: engram entries <entries> in project
    <machine>-control-rules (mem_search the topic key, take the exact topic_key match,
    then mem_get_observation its ID), or the files in ~/Documents/control/rules/
-   without engram. Then run the session-start skill your instructions name; without
-   one, follow the session-start steps in your instruction file. Report your current
-   state: work in progress, open questions, anything blocking. Take no new work yet.
+   without engram. Then run the Start skill in your org root's Environment table
+   (~/Documents/<org>/AGENTS.md); when it is none, follow the session-start steps in
+   your instruction file. Report your current state: work in progress, open questions,
+   anything blocking. Take no new work yet.
    ```
 
 4. **Wait** until the agent has reported. Read the report with
@@ -155,12 +156,15 @@ initiates project controls.
 3. **Fill the block.** Take the `## Control` section, down to the next `##` heading,
    from the agent's level template (the control skill's
    `templates/instructions/<level>-control.md`; without the skill, copy the section
-   from a set-up sibling's instruction file). Replace every placeholder. For a project
-   control, grant a port block from your own, record it in your `registries/ports.md`,
-   and write it in the block under "Ports".
+   from a set-up sibling's instruction file). Replace every placeholder. Grant a port
+   block if the agent has none: machine control grants an org control a block from
+   8000–9000, an org control grants a project control a block from its own. Record it
+   in your `registries/ports.md`. For a project control, write it in the block under
+   "Ports"; for an org control, add a line after the block asking it to record the
+   block in its `registries/ports.md`.
 4. **Wake it** ("Wake up an agent"), then send the message below as its task, with the
-   block inside it. Never edit the agent's checkout yourself; the agent writes its own
-   instructions.
+   block inside it. Never edit the agent's instruction file yourself; the agent writes
+   its own instructions.
 
    ```text
    FROM: <your agent name> (<your folder>). This message is written by a control

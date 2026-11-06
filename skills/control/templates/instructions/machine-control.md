@@ -45,6 +45,7 @@ root's Environment table instead. `none` means there is no such step.
 | School      | {{school}}           |
 | Resume      | `{{resume_command}}` |
 | New session | `{{new_command}}`    |
+| Start skill | {{start_skill}}      |
 | Init skill  | {{init_skill}}       |
 | Save skill  | {{save_skill}}       |
 
