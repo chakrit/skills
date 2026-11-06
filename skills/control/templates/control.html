@@ -124,8 +124,13 @@
   input[name=view]:focus-visible ~ .shell .views { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: var(--radius); }
 
   /* Tables: one tbody per group; the tbody class sets the group's tone. */
-  table { width: 100%; border-collapse: collapse; background: var(--panel); border-radius: var(--radius); overflow: hidden; }
-  th, td { text-align: left; vertical-align: top; box-shadow: inset 0 -1px 0 var(--rule); }
+  /* Fixed layout: column widths come from the column definitions in the script, so long
+     text in one column cannot squeeze a short one into a word per line. */
+  table {
+    width: 100%; table-layout: fixed; border-collapse: collapse;
+    background: var(--panel); border-radius: var(--radius); overflow: hidden;
+  }
+  th, td { text-align: left; vertical-align: top; overflow-wrap: break-word; box-shadow: inset 0 -1px 0 var(--rule); }
   thead th { color: var(--table-head); background: var(--table-head-bg); }
   tbody th {
     --tone-ink: color-mix(in srgb, var(--tone), #000 var(--tone-shade));
@@ -182,23 +187,14 @@
 <main>
 <section id="tasks" class="panel">
   <div class="head"><h2>Tasks</h2><p class="meta">0 items</p></div>
-  <table>
-    <thead><tr><th>Item</th><th>Source</th><th>Since</th></tr></thead>
-  </table>
 </section>
 
 <section id="attention" class="panel">
   <div class="head"><h2>Needs Attention</h2><p class="meta">0 items</p></div>
-  <table>
-    <thead><tr><th>Item</th><th>Where to act</th><th>Recommendation</th><th>Since</th></tr></thead>
-  </table>
 </section>
 
 <section id="agents" class="panel">
   <div class="head"><h2>Agent Backlog</h2><p class="meta">0 items</p></div>
-  <table>
-    <thead><tr><th>Item</th><th>Agent</th><th>Source</th><th>Next / evidence</th></tr></thead>
-  </table>
 </section>
 </main>
 </div>
@@ -226,23 +222,28 @@
     { key: 'done', label: 'Done' },
   ];
 
-  // One entry per table column, in column order: the data field and the cell class.
+  // One entry per table column, in column order: the data field, the header, the cell
+  // class and the width. Short fields get a fixed width; prose columns take '' and share
+  // what is left equally.
   const TASK_COLUMNS = [
-    { field: 'item', cell: '' },
-    { field: 'source', cell: 'dim' },
-    { field: 'since', cell: 'dim when' },
+    { field: 'item', label: 'Item', cell: '', width: '' },
+    { field: 'source', label: 'Source', cell: 'dim', width: '16rem' },
+    { field: 'since', label: 'Since', cell: 'dim when', width: '6rem' },
   ];
   const ATTENTION_COLUMNS = [
-    { field: 'item', cell: '' },
-    { field: 'where', cell: 'dim' },
-    { field: 'recommendation', cell: '' },
-    { field: 'since', cell: 'dim when' },
+    { field: 'item', label: 'Item', cell: '', width: '' },
+    { field: 'where', label: 'Where to act', cell: 'dim', width: '12rem' },
+    { field: 'recommendation', label: 'Recommendation', cell: '', width: '' },
+    { field: 'since', label: 'Since', cell: 'dim when', width: '6rem' },
   ];
   const BACKLOG_COLUMNS = [
-    { field: 'item', cell: '' },
-    { field: 'agent', cell: 'dim' },
-    { field: 'source', cell: 'dim' },
-    { field: 'next', cell: 'dim' },
+    { field: 'item', label: 'Item', cell: '', width: '' },
+    { field: 'agent', label: 'Agent', cell: 'dim', width: '13rem' },
+    { field: 'source', label: 'Source', cell: 'dim', width: '14rem' },
+    { field: 'next', label: 'Next / evidence', cell: 'dim', width: '' },
+  ];
+  const PROBLEM_COLUMNS = [
+    { field: 'problem', label: 'Problem', cell: '', width: '' },
   ];
 
   const LINK_SCHEMA = { label: text, href: relativeHref };
@@ -276,9 +277,9 @@
     document.getElementById('title').textContent = control.title;
     document.getElementById('updated').textContent = `updated ${control.updated}`;
     document.getElementById('links').append(...linkItems(control.links));
-    fillView('tasks', statusBodies(control.tasks, TASK_GROUPS, TASK_COLUMNS), taskCount);
-    fillView('attention', attentionBodies(control.attention), attentionCount);
-    fillView('agents', statusBodies(control.backlog, BACKLOG_GROUPS, BACKLOG_COLUMNS), backlogCount);
+    fillView('tasks', TASK_COLUMNS, statusBodies(control.tasks, TASK_GROUPS, TASK_COLUMNS), taskCount);
+    fillView('attention', ATTENTION_COLUMNS, attentionBodies(control.attention), attentionCount);
+    fillView('agents', BACKLOG_COLUMNS, statusBodies(control.backlog, BACKLOG_GROUPS, BACKLOG_COLUMNS), backlogCount);
     document.getElementById('count-attention').classList.toggle('hot', attentionCount > 0);
   }
 
@@ -287,21 +288,39 @@
     head.append(element('h2', '', 'Control data error'),
       element('p', 'meta', 'Fix control.data.js, then reload this page.'));
     const rows = found.map((problem) => ({ problem }));
-    const table = element('table');
-    table.append(groupBody('blocked', ['Problems'], rows, [{ field: 'problem', cell: '' }]));
+    const body = groupBody('blocked', ['Problems'], rows, PROBLEM_COLUMNS);
     const section = element('section');
-    section.append(head, table);
+    section.append(head, columnTable(PROBLEM_COLUMNS, [body]));
 
     document.getElementById('updated').textContent = 'no valid data';
     document.querySelector('main').replaceChildren(section);
   }
 
-  function fillView(id, bodies, rowCount) {
+  function fillView(id, columns, bodies, rowCount) {
     const section = document.getElementById(id);
 
-    section.querySelector('table').append(...bodies);
+    section.append(columnTable(columns, bodies));
     section.querySelector('.meta').textContent = rowCount === 1 ? '1 item' : `${rowCount} items`;
     document.getElementById(`count-${id}`).textContent = String(rowCount);
+  }
+
+  function columnTable(columns, bodies) {
+    const colgroup = element('colgroup');
+    colgroup.append(...columns.map(columnWidth));
+    const headRow = element('tr');
+    headRow.append(...columns.map((column) => element('th', '', column.label)));
+    const head = element('thead');
+    head.append(headRow);
+
+    const table = element('table');
+    table.append(colgroup, head, ...bodies);
+    return table;
+  }
+
+  function columnWidth(column) {
+    const col = element('col');
+    col.style.width = column.width;
+    return col;
   }
 
   function statusBodies(groups, defs, columns) {
