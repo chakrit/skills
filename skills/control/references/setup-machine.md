@@ -23,7 +23,6 @@ rule entries every level loads, and the machine's shared resources.
    | Source                                      | Destination                |
    | ------------------------------------------- | -------------------------- |
    | `templates/instructions/machine-control.md` | `AGENTS.md`                |
-   | `templates/rules/*.md`                      | `rules/`                   |
    | `templates/control.html`                    | `control.html`             |
    | `templates/control.data.js`                 | `control.data.js`          |
    | `templates/gitignore`                       | `.gitignore`               |
@@ -49,5 +48,6 @@ rule entries every level loads, and the machine's shared resources.
 
 ## Done when
 
-The completion list in `SKILL.md` holds, `rules/` holds the five rule files, and with
-engram each of the five entries is found by `mem_search` in project `control`.
+The completion list in `SKILL.md` holds. With engram, each of the five rule entries is
+found by `mem_search` in project `control` and no `rules/` folder exists. Without
+engram, `rules/` holds the five rule files.

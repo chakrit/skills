@@ -17,8 +17,8 @@
  *            {"agent": "<agent name>", "items": [row, ...]}.
  *            Row: {"item": "", "where": "", "recommendation": "", "since": ""}, where
  *            "where" names the place chakrit acts. Remove a row once chakrit acts, and
- *            an agent's entry once it has no rows. Its sidebar count turns warning-coloured
- *            while it has rows.
+ *            an agent's entry once it has no rows. Its sidebar count turns
+ *            warning-coloured while it has rows.
  * backlog    Every task agents own, by group: blocked (Blocked), waiting (Waiting on
  *            chakrit), doing (In progress), todo (Queued), done (Done).
  *            Row: {"item": "", "agent": "", "source": "", "next": ""}. "source" is

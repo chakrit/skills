@@ -40,9 +40,8 @@ details; project controls own those.
    with project name `<org>`.
 7. **Register with machine control.** Ask machine control to add the org to
    `registries/orgs.md`, to link this org's `control.html` from its own, and to
-   allocate a port block (see "Reach
-   a parent" in `references/operations.md`). Record the block it grants in
-   `registries/ports.md`.
+   allocate a port block (see "Reach a parent" in `references/operations.md`). Record
+   the block it grants in `registries/ports.md`.
 8. **Register existing projects.** For each project folder under `~/Documents/<org>/`
    that has an agent, add a row to `registries/projects.md`. Read
    `references/registries.md` for how registries and nested resources work.

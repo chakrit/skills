@@ -35,7 +35,7 @@ Use these names exactly, in every file and message.
 | Registry        | A file a control keeps to track shared things (ports, heavy-job slots, members).                                       |
 | Ruling          | chakrit's decision on authority or policy, relayed by a control.                                                       |
 | Task ask        | Work chakrit asked a control to hand to an agent.                                                                      |
-| Control page    | `control.html` in a control repo, rendered from `control.data.js`; see `policy-org`.                                   |
+| Control page    | `control.html` in a control repo, rendered from `control.data.js`; see `control/policy-org`.                           |
 | Wake-up         | Readying an agent before any task. Controls wake below; chakrit wakes a parent.                                        |
 | Task-give       | Sending a woken agent a task ask, after checking it fits the agent's reported state.                                   |
 
@@ -76,8 +76,8 @@ A setup is done when:
 - the agent's instruction file contains the standing grant and the rule-entry pointers;
 - the parent's registry lists the new control (org and project controls);
 - for a machine or org control, "Plan downstream controls" in
-  `references/operations.md` has either lodged the approved setups in `control.html`
-  or is waiting on chakrit's answer to the candidate list;
+  `references/operations.md` has either lodged the approved setups in
+  `control.data.js` or is waiting on chakrit's answer to the candidate list;
 - the work is committed in the new repo.
 
 Report the folder, the agent name, the commit hash and any steps left for chakrit.

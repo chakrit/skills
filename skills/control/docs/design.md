@@ -34,8 +34,9 @@ adapting control repos between orgs and machines.
   `mem_search` then `mem_get_observation`. The wake message repeats the entries to
   load, so the reminder is in the agent's context at once. Seeds live in
   `templates/rules/`; machine control owns the entries and amends them on chakrit's
-  rulings, with the quoted ruling in the entry. Without engram, the copies in
-  `~/Documents/control/rules/` are the live rules, as policy files were before.
+  rulings, with the quoted ruling in the entry. With engram, engram is the only copy:
+  no rule files are written, so edits cost no file I/O and nothing drifts. Without
+  engram, setup copies the seeds to `~/Documents/control/rules/` as the live rules.
 - **Procedures compose by name.** `control/handling-agents` holds the procedures
   controls run on agents (start, message, before a clear, clear, wake, give a task).
   Policies name its sections instead of restating them, so each rule has one home and a
@@ -67,7 +68,7 @@ adapting control repos between orgs and machines.
 - **Setup plans the level below.** After a machine or org control is set up or
   initiated, it scans one level down for folders that should get controls, asks
   chakrit (or applies chakrit's existing request), lodges the approved setups in
-  `control.html` and runs them, so the structure is completed rather than grown one
+  `control.data.js` and runs them, so the structure is completed rather than grown one
   folder at a time.
 - **Controls confirm every new task.** Org and machine controls present a plan and get
   chakrit's confirmation before each new task.
@@ -100,9 +101,9 @@ adapting control repos between orgs and machines.
   can do), Needs Attention (what an agent waits on, grouped by agent) and Agent
   Backlog (agents' tasks, grouped by status). Registries stay Markdown; the page links
   them rather than rendering them, so a port or heavy-job change touches one file. One
-  template gives every page the same look and a vertical rhythm built from row tokens. Machine control keeps work across orgs and
-  anything that belongs to no org; it sends one org's tasks, including that org's
-  project tasks, to the org control.
+  template gives every page the same look and a vertical rhythm built from row tokens.
+  Machine control keeps work across orgs and anything that belongs to no org; it sends
+  one org's tasks, including that org's project tasks, to the org control.
 - **Single machine.** No sync content anywhere; chakrit manages cross-machine state.
 - **Scripts are a small reference,** not a product: one `control-agents` that lists,
   reads and types into registered panes. It targets panes only by tmux ID, re-checks

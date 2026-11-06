@@ -1,8 +1,8 @@
 # Initiate an agent
 
 Gives an existing agent the standing grant and the rule-entry pointers, so it works from
-its own instruction file without this skill. Use it for an agent that predates its control,
-or one whose instruction file lacks a "Control" section.
+its own instruction file without this skill. Use it for an agent that predates its
+control, or one whose instruction file lacks a "Control" section.
 
 ## Steps
 
@@ -15,7 +15,7 @@ or one whose instruction file lacks a "Control" section.
    Never edit the agent's checkout yourself; the agent writes its own instructions.
 3. **Wait for the acknowledgment.** The agent replies with the instruction path it
    changed and the rule entries it loaded. Delivery is not acknowledgment.
-4. **Record it** in the Agent Backlog of the control's `control.html`, and add the
+4. **Record it** in the Agent Backlog of the control's `control.data.js`, and add the
    agent to the control's registry if it is missing.
 5. **Plan downstream.** When the initiated agent is an org control, run steps 1–2 of
    "Plan downstream controls" in `references/operations.md` for its org folder. Send

@@ -8,18 +8,19 @@ Engram comes first. Every rule set agents follow is an engram entry in project
 `control`, seeded from `templates/rules/<topic>.md`, and each instruction file points to
 the entries it must load and when. The memory rules themselves are the entry
 `control/memory` (`templates/rules/memory.md`); its first section decides what goes in
-engram and what stays in files. Without engram, the copies in
-`~/Documents/control/rules/` are the live rules and `memory/` folders hold what engram
-would.
+engram and what stays in files. With engram, engram is the only copy of the rules.
+Without engram, setup copies the seeds to `~/Documents/control/rules/` as the live
+rules, and `memory/` folders hold what engram would.
 
 ## Seed the rule entries
 
 Machine setup runs this once; machine control runs it again for a rule entry chakrit
 approves changing.
 
-1. If engram is not available, skip this section. The files setup copied to
-   `~/Documents/control/rules/` are the live rules.
-2. For each file in `~/Documents/control/rules/`, call engram's `mem_save` MCP tool
+1. If engram is not available (no `mem_save` tool), copy this skill's
+   `templates/rules/*.md` to `~/Documents/control/rules/` and stop; those files are the
+   live rules. With engram, write no `rules/` folder: engram is the only copy.
+2. For each file in this skill's `templates/rules/`, call engram's `mem_save` MCP tool
    with project `control`, topic key `control/<file name without .md>` (for example
    `control/policy-org`), the file's first heading as the title and the whole file as
    the content. The CLI's `engram save` takes no topic key, so use the MCP tool.

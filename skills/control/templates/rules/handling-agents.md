@@ -57,12 +57,14 @@ asking for another wastes the agent's tokens.
    a wind-down usually shows exactly this: the wind-down saved and cleared, but no
    message followed the clear, so the harness reopened the conversation before it.
 3. Otherwise ask the agent to save ("Message an agent") and report what it saved and
-   where, following `control/memory`. Wait for the report, then read the pane again.
+   where. It saves with its own session-save skill when it has one (an `ace` agent
+   writes `.ace/save.md` in its folder), otherwise as `control/memory` describes. Wait
+   for the report, then read the pane again.
 4. If the save failed, stop: add it to Needs Attention in `control.data.js` and do not
    clear.
 
-The result is the save location the agent reported, such as an engram observation or a
-memory file.
+The result is the save location the agent reported, such as an engram observation, a
+`.ace/save.md` path or a memory file.
 
 ## Clear an agent
 

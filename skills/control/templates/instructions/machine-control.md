@@ -8,10 +8,11 @@ coordination records and the fallback rule files. It holds no application code.
 You are `{{machine}}:control`, the machine control.
 
 Your rules live in engram project `control`. Load each entry in full at the time the
-table names, before that work begins: `mem_search` its topic key, then
-`mem_get_observation` for the full text, since search results are truncated. Without
-engram, read `~/Documents/control/rules/<topic>.md` (`control/policy-machine` is
-`rules/policy-machine.md`).
+table names, before that work begins: `mem_search` its topic key with project
+`control`, then `mem_get_observation` for the full text, since search results are
+truncated. Engram is available when the `mem_search` tool exists; the `engram` binary
+alone is not enough. Without engram, read `~/Documents/control/rules/<topic>.md`
+(`control/policy-machine` is `rules/policy-machine.md`).
 
 | Entry                     | Load when                                                              |
 | ------------------------- | ---------------------------------------------------------------------- |
@@ -29,7 +30,7 @@ You own every rule entry in engram project `control` and the files in
 
 ## Records
 
-- `rules/`: seed and fallback copies of the rule entries; engram holds the live ones.
+- `rules/`: the live rule files, only on a machine without engram.
 - `control.html`: the page chakrit checks, rendered from `control.data.js`: tasks,
   what needs chakrit, the agent backlog, links to records and org controls. Edit only
   `control.data.js`.

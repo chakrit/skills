@@ -51,8 +51,9 @@ before the work it governs:
    `control`.
 2. `mem_get_observation` with the result's ID. Search results are truncated; a rule
    read from a search result alone is incomplete.
-3. If nothing is found, read the fallback file the pointer names, and tell machine
-   control the entry is missing.
+3. If nothing is found, stop the work the entry governs and tell machine control the
+   entry is missing. A machine with engram has no rule files to fall back to; never
+   work from what you remember of a rule.
 
 ## Session
 

@@ -40,7 +40,7 @@ rather than set up one folder at a time.
    send chakrit the candidate list with the suggested names, and ask which to set up.
    Wait for chakrit's answer. Never move or rename a folder chakrit has not named.
 3. **Lodge.** Add one Agent Backlog entry per approved candidate in the new control's
-   `control.html`, with chakrit's quoted words as the source. Commit.
+   `control.data.js`, with chakrit's quoted words as the source. Commit.
 4. **Do.** Run the setup or initiation for each approved candidate, one at a time.
    Each org control set up this way runs this section again for its own projects.
    Mark each backlog entry done with its commit hash.
