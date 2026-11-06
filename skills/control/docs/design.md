@@ -70,11 +70,12 @@ adapting control repos between orgs and machines.
   Policies name its sections instead of restating them, so each rule has one home and a
   caller cannot drop a step such as the save check before a clear.
 - **Clears leave evidence.** `scripts/control-agents clear-context` requires
-  `--saved <location>`; `force-clear` requires `--reason` and is allowed only when
-  chakrit orders it, the agent is stuck or hung, agents are being torn down, or a
-  similar circumstance requires it. Both log to `clears.log`. The script cannot verify
-  either value, so the flags are a prompt to run the procedure and an audit trail, not
-  proof.
+  `--saved <location>`; `force-clear` requires `--ruling` with chakrit's quoted words,
+  a last resort for when chakrit orders a clear without a save or approves one because
+  the agent is stuck, hung or being torn down. The flag is named for its source, so an
+  agent cannot fill it with a reason of its own. Both log to `clears.log`. The script
+  cannot verify either value, so the flags are a prompt to run the procedure and an
+  audit trail, not proof.
 - **Resume, then clear.** Agents start by resuming their previous session because it
   keeps the session's name marker and per-conversation settings, which a new session
   loses. A clear followed by no message does not hold on some harnesses: the next

@@ -35,7 +35,7 @@ HARNESS_EXIT_COMMAND = "/quit"
 HARNESS_EXIT_SECONDS = 10
 HARNESS_EXIT_POLL_SECONDS = 0.2
 # One line per clear: time, slug, kind (`saved`, `wind-down`, `forced`), and where the
-# save went or why the clear was forced.
+# save went or chakrit's ruling that forced it.
 CLEAR_LOG = "clears.log"
 BEFORE_A_CLEAR = ('the "Before a clear" section of engram entry rule/handling-agents '
                   "(fallback ~/Documents/control/rules/handling-agents.md)")
@@ -43,7 +43,7 @@ SAVED_HINT = f"run {BEFORE_A_CLEAR}, then pass --saved with where the save went"
 CLEAR_DETAIL_HINTS = {
     "saved": SAVED_HINT,
     "wind-down": SAVED_HINT,
-    "forced": "pass --reason with chakrit's quoted words or what happened",
+    "forced": "ask chakrit, then pass --ruling with chakrit's quoted words",
 }
 
 
@@ -230,14 +230,15 @@ def main(arguments: list[str]) -> int:
     down.add_argument("slug")
     down.add_argument("--saved", default="", metavar="LOCATION", help=saved_help)
     force = actions.add_parser(
-        "force-clear", help="type /clear without a save; lossy, see its --help for when",
-        epilog=f"Skips {BEFORE_A_CLEAR}, so unsaved work is lost. Allowed only when "
-               "chakrit ordered a clear without a save, the agent is stuck or hung, "
-               "agents are being torn down, or another special circumstance requires it.")
+        "force-clear", help="type /clear without a save; lossy, only on chakrit's ruling",
+        epilog=f"Skips {BEFORE_A_CLEAR}, so unsaved work is lost. A last resort, allowed "
+               "only on chakrit's ruling: chakrit ordered a clear without a save, or "
+               "approved one because the agent is stuck or hung, agents are being torn "
+               "down, or another special circumstance requires it. Ask chakrit first.")
     force.add_argument("slug")
-    force.add_argument("--reason", default="", metavar="TEXT",
-                       help="chakrit's quoted words, or what happened; logged to "
-                            + CLEAR_LOG)
+    force.add_argument("--ruling", default="", metavar="TEXT",
+                       help="chakrit's quoted words ordering or approving the clear; "
+                            "logged to " + CLEAR_LOG)
     rename = actions.add_parser("rename-session", help="type /rename NAME")
     rename.add_argument("slug")
     rename.add_argument("name")
@@ -276,7 +277,7 @@ def run(options: argparse.Namespace, agents: dict[str, Agent], repository: Path)
     elif options.command == "wind-down":
         wind_down(entry, clear_record(now, entry, "wind-down", options.saved), repository)
     elif options.command == "force-clear":
-        clear(entry, clear_record(now, entry, "forced", options.reason), repository)
+        clear(entry, clear_record(now, entry, "forced", options.ruling), repository)
     else:
         check_session_name(options.name)
         type_line(entry, f"/rename {options.name}")

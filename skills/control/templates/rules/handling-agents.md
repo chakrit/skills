@@ -71,11 +71,13 @@ session file its save skill wrote, or a memory file.
    whose last action was a clear reopens the conversation before the clear. When the
    agent is to work now, send the next message at once ("Wake up an agent").
 
-**Force a clear** only when chakrit orders a clear without a save, the agent is stuck or
-hung, agents are being torn down, or another circumstance makes a save impossible or
-pointless. Skip "Before a clear" and run
-`scripts/control-agents force-clear <slug> --reason '<chakrit's quoted words, or what
-happened>'`. Step 3 still applies.
+**Force a clear** only on chakrit's ruling, as a last resort: chakrit orders a clear
+without a save, or approves one because the agent is stuck or hung, agents are being
+torn down, or another circumstance makes a save impossible or pointless. Without
+chakrit's words, ask chakrit first (add it to Needs Attention in `control.data.js`).
+Skip "Before a clear" and run
+`scripts/control-agents force-clear <slug> --ruling '<chakrit's quoted words>'`. Step
+3 still applies.
 
 ## Wind down an agent
 

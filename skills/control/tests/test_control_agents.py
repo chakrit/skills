@@ -133,7 +133,7 @@ class ClearRecordTest(unittest.TestCase):
 
     def test_detail_must_be_one_printed_line(self) -> None:
         for kind, hint in (("saved", "--saved"), ("wind-down", "--saved"),
-                           ("forced", "--reason")):
+                           ("forced", "--ruling")):
             for detail in self.UNPRINTABLE:
                 with self.subTest(kind=kind, detail=detail):
                     with self.assertRaisesRegex(ValueError, hint):
