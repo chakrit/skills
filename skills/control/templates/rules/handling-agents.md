@@ -114,10 +114,14 @@ finished loading its context.
    <machine>-control-rules (mem_search the topic key, take the exact topic_key match,
    then mem_get_observation its ID), or the files in ~/Documents/control/rules/
    without engram. Then run the Start skill in your org root's Environment table
-   (~/Documents/<org>/AGENTS.md); when it is none, follow the session-start steps in
-   your instruction file. Report your current state: work in progress, open questions,
-   anything blocking. Take no new work yet.
+   (~/Documents/<org>/AGENTS.md); when it is none, call mem_context for engram project
+   <agent's engram project>, or read the file list of your memory/ folder without
+   engram. Report your current state: work in progress, open questions, anything
+   blocking. Take no new work yet.
    ```
+
+   The agent's engram project is `<machine>-<org>` for an org control and
+   `<machine>-<org>-<project>` for a project control.
 
 4. **Wait** until the agent has reported. Read the report with
    `scripts/control-agents inspect <slug>`.

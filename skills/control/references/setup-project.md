@@ -11,7 +11,9 @@ control owns the project's context and may do hands-on work in its clones.
    steps whose result is missing and never replace an existing file. If it already has
    `AGENTS.md` or `CLAUDE.md`, never write or link either file, including their
    `## Repos` rows and Ports: "Initiate an agent" sends the `## Control` section, since
-   the agent writes its own instructions.
+   the agent writes its own instructions. When this setup runs for "Initiate an agent"
+   and writes a missing `AGENTS.md`, leave out its `## Control` section, down to the
+   next `##` heading, for the same reason.
 2. **Confirm the names.** `<project>` is chakrit's short name for the project. Ask
    chakrit for it and for the list of component repos, unless chakrit already gave both.
 3. **Create the repo.**
@@ -50,8 +52,9 @@ control owns the project's context and may do hands-on work in its clones.
    add only the registry row; initiation grants the block.
 10. **Commit,** naming the skill revision.
 11. **Start the agent.** When this setup runs for "Initiate an agent", skip this step;
-    initiation starts and wakes the agent. If you are the org control, follow "Start an
-    agent" in `rule/handling-agents`. Otherwise add to the completion report: "Start the
+    initiation starts and wakes the agent. If you are the org control, follow "Wake up
+    an agent" in `rule/handling-agents` (it starts the agent and renames its session to
+    `<machine>:<org>:<project>`). Otherwise add to the completion report: "Start the
     project control: in a tmux window, `cd ~/Documents/<org>/<project>`, type the
     new-session command from the org root's Environment table, then
     `/rename <machine>:<org>:<project>`."

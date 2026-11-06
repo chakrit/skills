@@ -65,6 +65,8 @@ an org control sends it as a task after the wake, and chakrit asks machine contr
      For a project candidate, suggest the folder name as `<project>` and its clones'
      remotes as `repos.txt` lines.
    - Skip folders without git repos and list them as skipped.
+   - List every other folder that matches no row as unclassified, with what it holds,
+     and ask chakrit about it in step 2.
 2. **Check authorization.** If chakrit already asked for downstream setup ("set up
    all the orgs", "do the projects too"), quote those words and continue. Otherwise
    send chakrit the candidate list with the suggested names, and ask which to set up.
@@ -113,8 +115,11 @@ root, the org control and each project control. Use the Environment table that g
 the folder: machine control's own, or the org root's for every folder in the org.
 
 1. If the school is `none`, skip this section; the setup is complete without ACE.
-2. In the folder, set up the school in a visible tmux pane (`ace setup <school>`, or
-   the command the org's instructions name instead), since it may ask for
-   authentication; tell chakrit which pane waits for input.
-3. Run the init skill in that folder to finish onboarding. Commit the files it writes
-   where the folder is a repo; the org root is not one.
+2. In the folder, set up the school in a visible tmux pane with the environment's
+   school-setup command (`ace setup <school>` for plain ACE; for a wrapped environment,
+   find it as "Record the environment" finds its values, and ask chakrit when unclear),
+   since it may ask for authentication; tell chakrit which pane waits for input.
+3. In the same pane, start a session with the New session command from the Environment
+   table and ask it to run the init skill, so the skill onboards that folder. When it
+   finishes, quit that session. Commit the files it writes where the folder is a repo;
+   the org root is not one.

@@ -12,6 +12,8 @@ line. It does not hold project details; project controls own those.
    do only the steps whose result is missing and never replace an existing file. If it
    already has `AGENTS.md` or `CLAUDE.md`, never write or link either file: "Initiate an
    agent" sends the `## Control` section, since the agent writes its own instructions.
+   When this setup runs for "Initiate an agent" and writes a missing `AGENTS.md`, leave
+   out its `## Control` section, down to the next `##` heading, for the same reason.
 2. **Confirm the names.** `<org>` is chakrit's short name for the org. Ask chakrit for
    it and for the GitHub org it maps to, unless chakrit already said both. Then follow
    "Record the environment" in `references/operations.md` for the org.

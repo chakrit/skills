@@ -78,6 +78,8 @@ A setup is done when:
   `git grep --untracked -n '{{'` prints nothing (it skips the ignored clones), and for
   an org, `grep -n '{{' ~/Documents/<org>/AGENTS.md` prints nothing;
 - the agent's instruction file contains the standing grant and the rule-entry pointers;
+  when the setup runs for "Initiate an agent", the agent adds them itself and the
+  initiation's acknowledgment meets this item;
 - for an org, the org root has its instruction file with `CLAUDE.md` linked to it;
 - every folder given an instruction file is onboarded as its Environment table says
   ("Onboard into ACE" in `references/operations.md`), or its school is `none`;
