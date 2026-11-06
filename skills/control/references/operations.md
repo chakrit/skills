@@ -119,7 +119,7 @@ the folder: machine control's own, or the org root's for every folder in the org
    school-setup command (`ace setup <school>` for plain ACE; for a wrapped environment,
    find it as "Record the environment" finds its values, and ask chakrit when unclear),
    since it may ask for authentication; tell chakrit which pane waits for input.
-3. In the same pane, start a session with the New session command from the Environment
-   table and ask it to run the init skill, so the skill onboards that folder. When it
-   finishes, quit that session. Commit the files it writes where the folder is a repo;
+3. If the init skill is `none`, skip this step. In the same pane, start a session with
+   the New session command from the Environment table and ask it to run the init
+   skill, so the skill onboards that folder. When it finishes, quit that session. Commit the files it writes where the folder is a repo;
    the org root is not one.

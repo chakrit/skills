@@ -152,11 +152,11 @@ initiates project controls.
 1. **Check the setup.** The agent's folder is set up when it has an instruction file,
    a row in your registry, and, when `command -v engram` prints a path, an engram pin
    (`.engram/config.json`); for an org control, the org root also has its instruction
-   file. If any part is missing, load the `control` skill and run its setup reference
-   for that level ("Set up an org control" or "Set up a project control"), which adds
-   the missing parts without replacing existing files. Then continue here.
-2. **Register** the agent in your registry if it is missing, and start it if it is not
-   running ("Start an agent").
+   file with an Environment table and, under the same engram condition, its own pin.
+   If any part is missing, load the `control` skill and run its setup reference for
+   that level ("Set up an org control" or "Set up a project control"), which adds the
+   missing parts without replacing existing files. Then continue here.
+2. **Start** the agent if it is not running ("Start an agent").
 3. **Fill the block.** Take the `## Control` section, down to the next `##` heading,
    from the agent's level template (the control skill's
    `templates/instructions/<level>-control.md`; without the skill, copy the section

@@ -85,7 +85,8 @@ A setup is done when:
   ("Onboard into ACE" in `references/operations.md`), or its school is `none`;
 - the parent's registry lists the new control (org and project controls);
 - for a machine or org control, its `control.data.js` has an Agent Backlog row "Plan
-  downstream controls" for the new control;
+  downstream controls" for the new control, except when the setup runs for "Initiate
+  an agent", which sends the planning as a task;
 - the work is committed in the new repo.
 
 Report the folder, the agent name, the commit hash and any steps left for chakrit.

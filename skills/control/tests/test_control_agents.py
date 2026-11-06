@@ -111,7 +111,8 @@ class SessionNameTest(unittest.TestCase):
     def test_only_agent_names_pass(self) -> None:
         for name in ("lz49:control", "lz49:acme:control", "lz49:acme:web-v2"):
             agents.check_session_name(name)
-        for name in ("web", "lz49:acme:web:extra", "Lz49:control", "lz49:control\n/quit"):
+        for name in ("web", "lz49:acme:web:extra", "Lz49:control", "lz49:acme:web_v2",
+                     "lz49:control\n/quit"):
             with self.subTest(name=name):
                 with self.assertRaises(ValueError):
                     agents.check_session_name(name)

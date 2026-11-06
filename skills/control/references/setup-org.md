@@ -45,9 +45,10 @@ line. It does not hold project details; project controls own those.
    PragmataPro" in `references/operations.md`.
 5. **Org root.** Copy `templates/instructions/org-root.md` to
    `~/Documents/<org>/AGENTS.md` with the same placeholders and the Environment
-   placeholders, and run
-   `ln -s AGENTS.md CLAUDE.md` there. The org root is not a git repo; never run
-   `git init` in it.
+   placeholders, and run `ln -s AGENTS.md CLAUDE.md` there. If the org root already has
+   `AGENTS.md` or `CLAUDE.md`, never replace or relink it: show chakrit the existing file
+   and the filled template, and ask how to combine them. The org root is not a git repo;
+   never run `git init` in it.
 6. **Copy scripts.** Follow "Install scripts" in `references/operations.md`.
 7. **Memory.** Follow "Set up a level's engram project" in `references/memory.md`
    with project name `<machine>-<org>`, once in `~/Documents/<org>/control` and once in
@@ -64,24 +65,30 @@ line. It does not hold project details; project controls own those.
 10. **Register existing projects.** For each project folder under `~/Documents/<org>/`
     that has an agent, add a row to `registries/projects.md`, with Window and Agent
     pane empty unless it is running. Read `references/registries.md` for how
-    registries and nested resources work.
+    registries and nested resources work. When this setup runs for "Initiate an agent",
+    skip this step: the org control keeps its own registry, and its planning task
+    registers what is missing.
 11. **Lodge downstream planning.** Add an Agent Backlog row to `control.data.js` (group
     `todo`): item "Plan downstream controls (`control` skill,
     `references/operations.md`)", agent `<machine>:<org>:control`, source chakrit's
-    request, next "after first start".
-12. **Commit,** naming the skill revision.
+    request, next "after first start". When this setup runs for "Initiate an agent",
+    skip this step; initiation sends the planning as a task.
+12. **Commit** what this setup wrote, naming the skill revision.
 13. **Start the agent.** When this setup runs for "Initiate an agent", skip this step;
     initiation starts, wakes and tasks the agent. If you are machine control, follow
     "Wake up an agent" in `rule/handling-agents` (it starts the agent and renames its
-    session to
-    `<machine>:<org>:control`), then send "Plan downstream controls" as its task
-    ("Give a task"). Otherwise add to the completion report: "Start the org control: in
-    a tmux window, `cd ~/Documents/<org>/control`, type the new-session command from
-    the org root's Environment table, then `/rename <machine>:<org>:control`. Then ask
-    it to run its backlog row 'Plan downstream controls'."
+    session to `<machine>:<org>:control`), then send "Plan downstream controls" as its
+    task ("Give a task"). Otherwise add to the completion report: "Start the org
+    control: in a tmux window, `cd ~/Documents/<org>/control`, type the new-session
+    command from the org root's Environment table, then `/rename
+    <machine>:<org>:control`. Tell machine control the window and pane IDs (`tmux
+    display-message -p '#{window_id} #{pane_id}'` in that pane) for its
+    `registries/orgs.md`. Then ask it to run its backlog row 'Plan downstream
+    controls'."
 
 ## Done when
 
 The completion list in `SKILL.md` holds, `~/Documents/<org>/AGENTS.md` exists with
-`CLAUDE.md` linked to it, and machine control's `registries/orgs.md` lists the org with
-its port block.
+`CLAUDE.md` linked to it (or chakrit has ruled how to combine an existing file), and
+machine control's `registries/orgs.md` lists the org. Outside initiation, machine
+control's `registries/ports.md` also lists its port block.

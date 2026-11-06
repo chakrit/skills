@@ -57,7 +57,9 @@ control owns the project's context and may do hands-on work in its clones.
     `<machine>:<org>:<project>`). Otherwise add to the completion report: "Start the
     project control: in a tmux window, `cd ~/Documents/<org>/<project>`, type the
     new-session command from the org root's Environment table, then
-    `/rename <machine>:<org>:<project>`."
+    `/rename <machine>:<org>:<project>`. Tell the org control the window and pane IDs
+    (`tmux display-message -p '#{window_id} #{pane_id}'` in that pane) for its
+    `registries/projects.md`."
 
 ## Done when
 
