@@ -74,8 +74,7 @@ session file its save skill wrote, or a memory file.
 **Force a clear** only on chakrit's ruling, as a last resort: chakrit orders a clear
 without a save, or approves one because the agent is stuck or hung, agents are being
 torn down, or another circumstance makes a save impossible or pointless. Without
-chakrit's words, ask chakrit first (add it to Needs Attention in `control.data.js`).
-Skip "Before a clear" and run
+chakrit's words, ask chakrit first. Skip "Before a clear" and run
 `scripts/control-agents force-clear <slug> --ruling '<chakrit's quoted words>'`. Step
 3 still applies.
 
@@ -116,14 +115,10 @@ finished loading its context.
    <machine>-control-rules (mem_search the topic key, take the exact topic_key match,
    then mem_get_observation its ID), or the files in ~/Documents/control/rules/
    without engram. Then run the Start skill in your org root's Environment table
-   (~/Documents/<org>/AGENTS.md); when it is none, call mem_context for engram project
-   <agent's engram project>, or read the file list of your memory/ folder without
-   engram. Report your current state: work in progress, open questions, anything
-   blocking. Take no new work yet.
+   (~/Documents/<org>/AGENTS.md); when it is none, follow the session-start steps in
+   your instruction file. Report your current state: work in progress, open questions,
+   anything blocking. Take no new work yet.
    ```
-
-   The agent's engram project is `<machine>-<org>` for an org control and
-   `<machine>-<org>-<project>` for a project control.
 
 4. **Wait** until the agent has reported. Read the report with
    `scripts/control-agents inspect <slug>`.
@@ -154,18 +149,16 @@ initiates project controls.
 1. **Check the setup.** The agent's folder is set up when it has an instruction file,
    a row in your registry, and, when `command -v engram` prints a path, an engram pin
    (`.engram/config.json`); for an org control, the org root also has its instruction
-   file with an Environment table and, under the same engram condition, its own pin.
-   If any part is missing, load the `control` skill and run its setup reference for
-   that level ("Set up an org control" or "Set up a project control"), which adds the
-   missing parts without replacing existing files. Then continue here.
+   file. If any part is missing, load the `control` skill and run its setup reference
+   for that level ("Set up an org control" or "Set up a project control"), which adds
+   the missing parts without replacing existing files. Then continue here.
 2. **Start** the agent if it is not running ("Start an agent").
 3. **Fill the block.** Take the `## Control` section, down to the next `##` heading,
    from the agent's level template (the control skill's
    `templates/instructions/<level>-control.md`; without the skill, copy the section
-   from a set-up sibling's instruction file, or load the skill when no sibling is set
-   up). Replace every placeholder. Grant a port block if the agent has none: machine
-   control grants an org control a block from 8000–9000, an org control grants a
-   project control a block from its own. Record it
+   from a set-up sibling's instruction file). Replace every placeholder. Grant a port
+   block if the agent has none: machine control grants an org control a block from
+   8000–9000, an org control grants a project control a block from its own. Record it
    in your `registries/ports.md`. For a project control, write it in the block under
    "Ports"; for an org control, add a line after the block asking it to record the
    block in its `registries/ports.md`.

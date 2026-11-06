@@ -31,12 +31,9 @@ pinned and the first save lands; their topic keys are conventions in `rule/memor
 Machine setup runs this once, after "Set up a level's engram project" for machine
 control.
 
-1. If engram's MCP tools are not available (no `mem_save` tool) and `command -v engram`
-   prints nothing, copy this skill's `templates/rules/*.md` to
-   `~/Documents/control/rules/` and stop; those files are the live rules. If the binary
-   is on PATH but the tools are missing, stop and tell chakrit that engram's MCP server
-   is not registered in this harness; write no rule files. With engram, write no
-   `rules/` folder: engram is the only copy.
+1. If engram's MCP tools are not available (no `mem_save` tool), copy this skill's
+   `templates/rules/*.md` to `~/Documents/control/rules/` and stop; those files are the
+   live rules. With engram, write no `rules/` folder: engram is the only copy.
 2. Create the rules project with one CLI save. `mem_save` refuses a project engram does
    not know yet, and the rules project has no folder to pin it:
 

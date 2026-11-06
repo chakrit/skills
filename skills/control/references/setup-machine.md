@@ -38,9 +38,8 @@ rule entries every level loads, and the machine's shared resources.
 5. **Memory.** Follow "Set up a level's engram project" in `references/memory.md`
    with project name `<machine>-control`, then "Seed the rule entries" in the same file.
 6. **Register existing orgs.** For each folder `~/Documents/<org>/control` that
-   already exists, add a row to `registries/orgs.md`, its line under `## GitHub orgs`
-   (from its `AGENTS.md` or its repos' remotes; ask chakrit when unclear), and a link to
-   its `control.html` under links in `control.data.js`. Read `references/registries.md`
+   already exists, add a row to `registries/orgs.md` and a link to its
+   `control.html` under links in `control.data.js`. Read `references/registries.md`
    for how registries and nested resources work.
 7. **ACE.** Follow "Onboard into ACE" in `references/operations.md`.
 8. **Lodge downstream planning.** Add an Agent Backlog row to `control.data.js` (group

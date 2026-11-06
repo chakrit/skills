@@ -45,10 +45,8 @@ line. It does not hold project details; project controls own those.
    PragmataPro" in `references/operations.md`.
 5. **Org root.** Copy `templates/instructions/org-root.md` to
    `~/Documents/<org>/AGENTS.md` with the same placeholders and the Environment
-   placeholders, and run `ln -s AGENTS.md CLAUDE.md` there. If the org root already has
-   `AGENTS.md` or `CLAUDE.md`, never replace or relink it: show chakrit the existing file
-   and the filled template, and ask how to combine them. The org root is not a git repo;
-   never run `git init` in it.
+   placeholders, and run `ln -s AGENTS.md CLAUDE.md` there. The org root is not a git
+   repo; never run `git init` in it.
 6. **Copy scripts.** Follow "Install scripts" in `references/operations.md`.
 7. **Memory.** Follow "Set up a level's engram project" in `references/memory.md`
    with project name `<machine>-<org>`, once in `~/Documents/<org>/control` and once in
@@ -56,12 +54,12 @@ line. It does not hold project details; project controls own those.
 8. **ACE.** Follow "Onboard into ACE" in `references/operations.md` for the org control
    and the org root.
 9. **Register with machine control.** The org needs a row in machine control's
-   `registries/orgs.md`, its line under `## GitHub orgs` there, a link in machine
-   control's `control.data.js`, and a port block. If you are machine control, add them
-   yourself and commit in `~/Documents/control`. Otherwise ask machine control (see
-   "Reach a parent" in `references/operations.md`). Record the block in
-   `registries/ports.md`. When this setup runs for "Initiate an agent", add only the row,
-   the GitHub orgs line and the link; initiation grants the block.
+   `registries/orgs.md`, a link in machine control's `control.data.js`, and a port
+   block. If you are machine control, add them yourself and commit in
+   `~/Documents/control`. Otherwise ask machine control (see "Reach a parent" in
+   `references/operations.md`). Record the block in `registries/ports.md`. When this
+   setup runs for "Initiate an agent", add only the row and the link; initiation grants
+   the block.
 10. **Register existing projects.** For each project folder under `~/Documents/<org>/`
     that has an agent, add a row to `registries/projects.md`, with Window and Agent
     pane empty unless it is running. Read `references/registries.md` for how
@@ -81,14 +79,11 @@ line. It does not hold project details; project controls own those.
     task ("Give a task"). Otherwise add to the completion report: "Start the org
     control: in a tmux window, `cd ~/Documents/<org>/control`, type the new-session
     command from the org root's Environment table, then `/rename
-    <machine>:<org>:control`. Tell machine control the window and pane IDs (`tmux
-    display-message -p '#{window_id} #{pane_id}'` in that pane) for its
-    `registries/orgs.md`. Then ask it to run its backlog row 'Plan downstream
+    <machine>:<org>:control`. Then ask it to run its backlog row 'Plan downstream
     controls'."
 
 ## Done when
 
 The completion list in `SKILL.md` holds, `~/Documents/<org>/AGENTS.md` exists with
-`CLAUDE.md` linked to it (or chakrit has ruled how to combine an existing file), and
-machine control's `registries/orgs.md` lists the org. Outside initiation, machine
-control's `registries/ports.md` also lists its port block.
+`CLAUDE.md` linked to it, and machine control's `registries/orgs.md` lists the org.
+Outside initiation, machine control's `registries/ports.md` also lists its port block.
