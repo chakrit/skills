@@ -28,7 +28,9 @@ what the published skills should contain: those skills run for other agents, on 
 machines and setups, under their own rules. Do not copy those preferences into a skill,
 and do not report a skill as conflicting with them. Judge a skill against its own
 `SKILL.md`, its docs and chakrit's rulings on that skill. A personal preference enters a
-skill only when chakrit asks for it in that skill.
+skill only when chakrit asks for it in that skill. When a skill conflicts with
+chakrit's personal instructions, leave the conflict alone: chakrit rules on it when
+invoking the skill.
 
 ## Editing and feedback routing
 
