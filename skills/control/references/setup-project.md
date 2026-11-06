@@ -7,10 +7,11 @@ control owns the project's context and may do hands-on work in its clones.
 ## Steps
 
 1. **Check.** The org control must exist at `~/Documents/<org>/control`; if not, run
-   `references/setup-org.md` first. If the project folder already exists, this setup
-   runs for "Initiate an agent": do only the steps whose result is missing, never
-   replace an existing file, and leave the `## Control` section to the initiation
-   message, since the agent writes its own instructions.
+   `references/setup-org.md` first. If the project folder already exists, do only the
+   steps whose result is missing and never replace an existing file. If it already has
+   `AGENTS.md` or `CLAUDE.md`, never write or link either file, including their
+   `## Repos` rows and Ports: "Initiate an agent" sends the `## Control` section, since
+   the agent writes its own instructions.
 2. **Confirm the names.** `<project>` is chakrit's short name for the project. Ask
    chakrit for it and for the list of component repos, unless chakrit already gave both.
 3. **Create the repo.**
@@ -48,10 +49,11 @@ control owns the project's context and may do hands-on work in its clones.
    block into `AGENTS.md` under "Ports". When this setup runs for "Initiate an agent",
    add only the registry row; initiation grants the block.
 10. **Commit,** naming the skill revision.
-11. **Start the agent.** If you are the org control, follow "Start an agent" in
-    `rule/handling-agents`. Otherwise add to the completion report: "Start the project
-    control: in a tmux window, `cd ~/Documents/<org>/<project>`, type the new-session
-    command from the org root's Environment table, then
+11. **Start the agent.** When this setup runs for "Initiate an agent", skip this step;
+    initiation starts and wakes the agent. If you are the org control, follow "Start an
+    agent" in `rule/handling-agents`. Otherwise add to the completion report: "Start the
+    project control: in a tmux window, `cd ~/Documents/<org>/<project>`, type the
+    new-session command from the org root's Environment table, then
     `/rename <machine>:<org>:<project>`."
 
 ## Done when

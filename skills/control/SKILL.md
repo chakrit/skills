@@ -5,7 +5,7 @@ description: >-
   control, org controls and project controls that coordinate coding agents in tmux,
   with rules and memory in engram, and registries. TRIGGER on "/control", "set up
   control", "set up machine control", "set up an org control", "bootstrap this
-  project for agents", "add this project to control", "initiate this agent", or when
+  project for agents", "add this project to control", "initiate an agent", or when
   creating a folder under ~/Documents/<org>/ that agents will manage. DO NOT TRIGGER
   for day-to-day control work after setup (agents follow their local instructions and
   policies), for single-repo ACE onboarding (ace-init), or for editing an existing

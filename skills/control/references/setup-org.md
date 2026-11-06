@@ -9,8 +9,9 @@ line. It does not hold project details; project controls own those.
 
 1. **Check.** Machine control must exist at `~/Documents/control`; if not, run
    `references/setup-machine.md` first. If `~/Documents/<org>/control` already exists,
-   this setup runs for "Initiate an agent": do only the steps whose result is missing,
-   and never replace an existing file.
+   do only the steps whose result is missing and never replace an existing file. If it
+   already has `AGENTS.md` or `CLAUDE.md`, never write or link either file: "Initiate an
+   agent" sends the `## Control` section, since the agent writes its own instructions.
 2. **Confirm the names.** `<org>` is chakrit's short name for the org. Ask chakrit for
    it and for the GitHub org it maps to, unless chakrit already said both. Then follow
    "Record the environment" in `references/operations.md` for the org.
@@ -52,10 +53,12 @@ line. It does not hold project details; project controls own those.
 8. **ACE.** Follow "Onboard into ACE" in `references/operations.md` for the org control
    and the org root.
 9. **Register with machine control.** The org needs a row in machine control's
-   `registries/orgs.md`, a link in machine control's `control.data.js`, and a port
-   block. If you are machine control, add them yourself and commit in
-   `~/Documents/control`. Otherwise ask machine control (see "Reach a parent" in
-   `references/operations.md`). Record the block in `registries/ports.md`.
+   `registries/orgs.md`, its line under `## GitHub orgs` there, a link in machine
+   control's `control.data.js`, and a port block. If you are machine control, add them
+   yourself and commit in `~/Documents/control`. Otherwise ask machine control (see
+   "Reach a parent" in `references/operations.md`). Record the block in
+   `registries/ports.md`. When this setup runs for "Initiate an agent", add only the row,
+   the GitHub orgs line and the link; initiation grants the block.
 10. **Register existing projects.** For each project folder under `~/Documents/<org>/`
     that has an agent, add a row to `registries/projects.md`, with Window and Agent
     pane empty unless it is running. Read `references/registries.md` for how
@@ -65,8 +68,10 @@ line. It does not hold project details; project controls own those.
     `references/operations.md`)", agent `<machine>:<org>:control`, source chakrit's
     request, next "after first start".
 12. **Commit,** naming the skill revision.
-13. **Start the agent.** If you are machine control, follow "Wake up an agent" in
-    `rule/handling-agents` (it starts the agent and renames its session to
+13. **Start the agent.** When this setup runs for "Initiate an agent", skip this step;
+    initiation starts, wakes and tasks the agent. If you are machine control, follow
+    "Wake up an agent" in `rule/handling-agents` (it starts the agent and renames its
+    session to
     `<machine>:<org>:control`), then send "Plan downstream controls" as its task
     ("Give a task"). Otherwise add to the completion report: "Start the org control: in
     a tmux window, `cd ~/Documents/<org>/control`, type the new-session command from

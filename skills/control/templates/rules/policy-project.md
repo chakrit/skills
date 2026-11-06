@@ -28,9 +28,10 @@ file, not here. Load this entry in full at the times your instruction file names
 
 1. Ports: use only your block (in your instruction file). Ask your org control for a
    block or a service reservation before configuring a new port. Bind to `0.0.0.0`.
-2. Heavy jobs (full test suites, installs, image builds, native compiles): ask your org
-   control for a slot with the command, expected duration and reason. Start only after
-   the grant. Run with `nice -n 19`. Report done or aborted at once.
+2. Heavy jobs (full test suites, browser test runs, dependency installs, image builds,
+   native compiles): ask your org control for a slot with the command, expected
+   duration and reason. Start only after the grant. Run with `nice -n 19`. Report done
+   or aborted at once.
 3. Every long-running process runs in a visible tmux pane in your own window: harness
    on the left, processes stacked on the right. Never in the harness's background
    shell. Starting dev and preview servers this way is allowed.

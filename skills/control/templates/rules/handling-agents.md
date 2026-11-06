@@ -146,7 +146,7 @@ without the control skill. Machine control initiates org controls; an org contro
 initiates project controls.
 
 1. **Check the setup.** The agent's folder is set up when it has an instruction file,
-   a row in your registry, and an engram pin
+   a row in your registry, and, when `command -v engram` prints a path, an engram pin
    (`.engram/config.json`); for an org control, the org root also has its instruction
    file. If any part is missing, load the `control` skill and run its setup reference
    for that level ("Set up an org control" or "Set up a project control"), which adds
@@ -156,9 +156,10 @@ initiates project controls.
 3. **Fill the block.** Take the `## Control` section, down to the next `##` heading,
    from the agent's level template (the control skill's
    `templates/instructions/<level>-control.md`; without the skill, copy the section
-   from a set-up sibling's instruction file). Replace every placeholder. Grant a port
-   block if the agent has none: machine control grants an org control a block from
-   8000–9000, an org control grants a project control a block from its own. Record it
+   from a set-up sibling's instruction file, or load the skill when no sibling is set
+   up). Replace every placeholder. Grant a port block if the agent has none: machine
+   control grants an org control a block from 8000–9000, an org control grants a
+   project control a block from its own. Record it
    in your `registries/ports.md`. For a project control, write it in the block under
    "Ports"; for an org control, add a line after the block asking it to record the
    block in its `registries/ports.md`.
