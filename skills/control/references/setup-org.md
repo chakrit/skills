@@ -34,7 +34,8 @@ details; project controls own those.
 
    Then `ln -s AGENTS.md CLAUDE.md`. Do not copy rule files; the instruction file
    points to the engram entries machine control keeps. In `control.data.js`, under
-   links, link `../../control/control.html` as "Machine control".
+   links, link `../../control/control.html` as "Machine control". Follow "Point the
+   control page at PragmataPro" in `references/operations.md`.
 5. **Copy scripts.** Follow "Install scripts" in `references/operations.md`.
 6. **Memory.** Follow "Set up a level's engram project" in `references/memory.md`
    with project name `<machine>-<org>`.

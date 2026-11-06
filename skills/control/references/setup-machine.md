@@ -31,7 +31,8 @@ rule entries every level loads, and the machine's shared resources.
    | `templates/registries/ports-machine.md`     | `registries/ports.md`      |
    | `templates/registries/heavy-jobs.md`        | `registries/heavy-jobs.md` |
 
-   Then `ln -s AGENTS.md CLAUDE.md`.
+   Then `ln -s AGENTS.md CLAUDE.md`, and follow "Point the control page at
+   PragmataPro" in `references/operations.md`.
 4. **Copy scripts.** Follow "Install scripts" in `references/operations.md`.
 5. **Memory.** Follow "Set up a level's engram project" in `references/memory.md`
    with project name `<machine>-control`, then "Seed the rule entries" in the same file.

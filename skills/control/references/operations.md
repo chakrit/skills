@@ -11,6 +11,22 @@ Copy this skill's `scripts/` into the control repo as `scripts/`. Project contro
 skip this; they reach their parent through messages. To refresh later, copy the
 skill's `scripts/` again and review the diff before committing.
 
+## Point the control page at PragmataPro
+
+`control.html` loads PragmataPro from its font files with `file://` URLs, because
+Safari does not let a page use a user-installed font by name. The template's four
+`@font-face` URLs name the files of one install; check them on this machine after
+copying the page. Never copy font files into the control repo or the skill.
+
+1. List the installed files: `ls ~/Library/Fonts /Library/Fonts`, and look for names
+   starting with `PragmataPro`.
+2. If they are installed, set each `@font-face` URL in `control.html` to the matching
+   file's absolute `file://` path: regular and bold of PragmataPro, regular and bold
+   of PragmataPro Mono. File names carry a version (`PragmataProR_09.ttf`), so match
+   the installed version.
+3. If PragmataPro is not installed, delete the four `@font-face` rules; the page falls
+   back to Iosevka Charon.
+
 ## Plan downstream controls
 
 Run after a machine control or an org control is set up or initiated. It finds the
