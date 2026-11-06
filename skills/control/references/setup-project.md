@@ -23,12 +23,12 @@ control owns the project's context and may do hands-on work in its clones.
 4. **Copy templates,** replacing placeholders (`{{machine}}`, `{{org}}`,
    `{{project}}`, `{{date}}`):
 
-   | Source                                      | Destination        |
-   | ------------------------------------------- | ------------------ |
-   | `templates/instructions/project-control.md` | `AGENTS.md`        |
-   | `templates/gitignore`                       | `.gitignore`       |
-   | `templates/project/repos.txt`               | `repos.txt`        |
-   | `templates/project/clone-repos`             | `bin/clone-repos`  |
+   | Source                                      | Destination       |
+   | ------------------------------------------- | ----------------- |
+   | `templates/instructions/project-control.md` | `AGENTS.md`       |
+   | `templates/gitignore`                       | `.gitignore`      |
+   | `templates/project/repos.txt`               | `repos.txt`       |
+   | `templates/project/clone-repos`             | `bin/clone-repos` |
 
    Then `ln -s AGENTS.md CLAUDE.md` and `chmod +x bin/clone-repos`.
 5. **List the clones.** Write one line per component repo in `repos.txt`:
@@ -37,7 +37,7 @@ control owns the project's context and may do hands-on work in its clones.
 6. **Clone.** Run `bin/clone-repos`. It clones missing repos with remote `gh` and adds
    each folder to `.gitignore`.
 7. **Memory.** Follow "Set up a level's engram project" in `references/memory.md`
-   with project name `<org>-<project>`.
+   with project name `<machine>-<org>-<project>`.
 8. **Register with the org control.** Ask it to add the project to its
    `registries/projects.md` and to allocate a port block (see "Reach a parent" in
    `references/operations.md`). Write the granted block into `AGENTS.md` under "Ports".

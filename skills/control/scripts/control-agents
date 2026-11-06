@@ -28,7 +28,7 @@ SESSION_NAME = re.compile(r"[a-z0-9][a-z0-9_-]*(:[a-z0-9][a-z0-9_-]*){1,2}")
 PASTE_SETTLE_SECONDS = 1
 # One line per clear: time, slug, `saved` and where the save went, or `forced` and why.
 CLEAR_LOG = "clears.log"
-BEFORE_A_CLEAR = ('the "Before a clear" section of engram entry control/handling-agents '
+BEFORE_A_CLEAR = ('the "Before a clear" section of engram entry rule/handling-agents '
                   "(fallback ~/Documents/control/rules/handling-agents.md)")
 
 

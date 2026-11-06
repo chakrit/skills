@@ -1,6 +1,7 @@
 # Policy: org control
 
-Engram entry `control/policy-org` in project `control` (fallback file
+Engram entry `rule/policy-org` in project
+`<machine>-control-rules` (without engram, the file
 `~/Documents/control/rules/policy-org.md`). Governance for every org control
 (`<machine>:<org>:control`). Your instruction file names you, your org and your
 rulings. Load this entry in full at session start and after a clear.
@@ -48,7 +49,7 @@ the same commit as the change it records:
 3. **Agent Backlog:** every task agents own, grouped by status, with the agent, its
    source (chakrit's verbatim words or the reporting agent) and the next step or
    evidence (commit, PR, save location). When a done task leaves the page, save it to
-   engram as `control/memory` describes.
+   engram as `rule/memory` describes.
 4. **Records:** links to your instruction file and registry files. Link Markdown files
    on disk; never copy their contents into the page.
 5. **Links:** the other control pages: machine control's from an org control, each
@@ -75,7 +76,7 @@ on?" Never start machine control or run its scripts yourself.
 1. You may start, inspect, message, save, clear and stop your projects' agents and
    panes. Use `scripts/control-agents`.
 2. Before you start, message, clear or wake an agent, load engram entry
-   `control/handling-agents` in full and run its section for the step. A bare `/clear`
+   `rule/handling-agents` in full and run its section for the step. A bare `/clear`
    can drop unsaved work, and a wake-up sent to a resumed session lands on a stale
    conversation.
 
@@ -92,7 +93,7 @@ on?" Never start machine control or run its scripts yourself.
 
 ## Memory
 
-Follow engram entry `control/memory`; your engram project is `<org>`.
+Follow engram entry `rule/memory`; your engram project is `<machine>-<org>`.
 
 ## Policy changes
 

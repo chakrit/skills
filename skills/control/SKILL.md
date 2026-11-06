@@ -21,23 +21,23 @@ and the rule entries it points to; no agent needs this skill again for daily wor
 
 Use these names exactly, in every file and message.
 
-| Term            | Meaning                                                                                                                |
-| --------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| Machine control | `~/Documents/control`, agent `<machine>:control`. Tasks no single org owns.                                            |
-| Org control     | `~/Documents/<org>/control`, agent `<machine>:<org>:control`. One org's tasks.                                         |
-| Project control | `~/Documents/<org>/<project>`, agent `<machine>:<org>:<project>`. One project's work.                                  |
-| Level           | One of the three above. There are exactly three. Never define a fourth.                                                |
-| Parent          | Project control → its org control → machine control.                                                                   |
-| `<machine>`     | Lowercase short hostname: `hostname -s`, lowercased (`lz49`).                                                          |
-| `<org>`         | chakrit's short org name (`datawow`, not `datawowio`).                                                                 |
-| Policy          | Governance rules for one level: engram entry `control/policy-<level>`.                                                 |
-| Rule entry      | A rule set in engram project `control`, seeded from `templates/rules/`; fallback file in `~/Documents/control/rules/`. |
-| Registry        | A file a control keeps to track shared things (ports, heavy-job slots, members).                                       |
-| Ruling          | chakrit's decision on authority or policy, relayed by a control.                                                       |
-| Task ask        | Work chakrit asked a control to hand to an agent.                                                                      |
-| Control page    | `control.html` in a control repo, rendered from `control.data.js`; see `control/policy-org`.                           |
-| Wake-up         | Readying an agent before any task. Controls wake below; chakrit wakes a parent.                                        |
-| Task-give       | Sending a woken agent a task ask, after checking it fits the agent's reported state.                                   |
+| Term            | Meaning                                                                                                                                       |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| Machine control | `~/Documents/control`, agent `<machine>:control`. Tasks no single org owns.                                                                   |
+| Org control     | `~/Documents/<org>/control`, agent `<machine>:<org>:control`. One org's tasks.                                                                |
+| Project control | `~/Documents/<org>/<project>`, agent `<machine>:<org>:<project>`. One project's work.                                                         |
+| Level           | One of the three above. There are exactly three. Never define a fourth.                                                                       |
+| Parent          | Project control → its org control → machine control.                                                                                          |
+| `<machine>`     | Lowercase short hostname: `hostname -s`, lowercased (`lz49`).                                                                                 |
+| `<org>`         | chakrit's short org name (`datawow`, not `datawowio`).                                                                                        |
+| Policy          | Governance rules for one level: engram entry `control/policy-<level>`.                                                                        |
+| Rule entry      | A rule set in engram project `<machine>-control-rules`, seeded from `templates/rules/`; files in `~/Documents/control/rules/` without engram. |
+| Registry        | A file a control keeps to track shared things (ports, heavy-job slots, members).                                                              |
+| Ruling          | chakrit's decision on authority or policy, relayed by a control.                                                                              |
+| Task ask        | Work chakrit asked a control to hand to an agent.                                                                                             |
+| Control page    | `control.html` in a control repo, rendered from `control.data.js`; see `rule/policy-org`.                                                     |
+| Wake-up         | Readying an agent before any task. Controls wake below; chakrit wakes a parent.                                                               |
+| Task-give       | Sending a woken agent a task ask, after checking it fits the agent's reported state.                                                          |
 
 ## Menu
 

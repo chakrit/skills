@@ -1,6 +1,7 @@
 # Policy: project control
 
-Engram entry `control/policy-project` in project `control` (fallback file
+Engram entry `rule/policy-project` in project
+`<machine>-control-rules` (without engram, the file
 `~/Documents/control/rules/policy-project.md`). Governance for every project control
 (`<machine>:<org>:<project>`). Your instruction file names you, your parent and your
 rulings. Project practices (commit style, test commands) belong in your own instruction
@@ -46,7 +47,8 @@ file, not here. Load this entry in full at session start and after a clear.
 
 ## Memory
 
-Follow engram entry `control/memory`; your engram project is `<org>-<project>`.
+Follow engram entry `rule/memory`; your engram project is
+`<machine>-<org>-<project>`.
 Knowledge about one component repo goes in that repo's own docs, so it travels with the
 clone.
 

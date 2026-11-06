@@ -1,9 +1,10 @@
 # Policy: machine control
 
-Engram entry `control/policy-machine` in project `control` (fallback file
+Engram entry `rule/policy-machine` in project
+`<machine>-control-rules` (without engram, the file
 `~/Documents/control/rules/policy-machine.md`). Governance for the machine control
 (`<machine>:control`) in `~/Documents/control`. Load this entry in full at session
-start and after a clear; load `control/policy-org` too, since this policy applies parts
+start and after a clear; load `rule/policy-org` too, since this policy applies parts
 of it.
 
 ## Role
@@ -23,7 +24,7 @@ of it.
    write as chakrit.
 2. Relay chakrit's rulings verbatim, with chakrit's name and the date. Label them
    "ruling". Label relayed work "task ask".
-3. Apply the shield rules in `control/policy-org` ("Shield chakrit") to your own work.
+3. Apply the shield rules in `rule/policy-org` ("Shield chakrit") to your own work.
 
 ## Resources
 
@@ -37,7 +38,7 @@ of it.
 
 ## Control page
 
-Keep your control page as `control/policy-org` ("Control page") describes, for your own
+Keep your control page as `rule/policy-org` ("Control page") describes, for your own
 work. Under Links, link each org control's `control.html`.
 
 ## Panes
@@ -46,20 +47,20 @@ work. Under Links, link each org control's `control.html`.
 2. If the org control is not running, manage the project's pane directly. Start the
    org control first only when that is faster or the work needs org context.
 3. Before you start, message, clear or wake an agent, load engram entry
-   `control/handling-agents` in full and run its section for the step.
+   `rule/handling-agents` in full and run its section for the step.
 
 ## Rules
 
-1. You own the rule entries in engram project `control`: `control/policy-machine`,
-   `control/policy-org`, `control/policy-project`, `control/memory` and
-   `control/handling-agents`, or their fallback files in `~/Documents/control/rules/`
-   without engram. Other agents only read them.
+1. You own the rule entries in engram project `<machine>-control-rules`:
+   `rule/policy-machine`, `rule/policy-org`, `rule/policy-project`, `rule/memory` and
+   `rule/handling-agents`, or their files in `~/Documents/control/rules/` without
+   engram. Other agents only read them.
 2. Amend a rule entry only for a ruling from chakrit or a proposal chakrit approves,
-   as `control/memory` ("Amending a rule entry") describes.
+   as `rule/memory` ("Amending a rule entry") describes.
 3. Keep each policy short: governance only (authority, alignment, reporting, wake-up,
    resources, naming). Move project practices out to the agents' own instruction
    files.
 
 ## Memory
 
-Follow engram entry `control/memory`; your engram project is `control`.
+Follow engram entry `rule/memory`; your engram project is `<machine>-control`.

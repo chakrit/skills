@@ -1,6 +1,7 @@
 # Rules: handling agents
 
-Engram entry `control/handling-agents` in project `control` (fallback file
+Engram entry `rule/handling-agents` in project
+`<machine>-control-rules` (without engram, the file
 `~/Documents/control/rules/handling-agents.md`). The procedures a control runs on the
 agents it manages. Machine control owns this entry. Load it in full before you start,
 message, clear or wake an agent, and follow the section for the step you are on. Each
@@ -58,7 +59,7 @@ asking for another wastes the agent's tokens.
    message followed the clear, so the harness reopened the conversation before it.
 3. Otherwise ask the agent to save ("Message an agent") and report what it saved and
    where. It saves with its own session-save skill when it has one (an `ace` agent
-   writes `.ace/save.md` in its folder), otherwise as `control/memory` describes. Wait
+   writes `.ace/save.md` in its folder), otherwise as `rule/memory` describes. Wait
    for the report, then read the pane again.
 4. If the save failed, stop: add it to Needs Attention in `control.data.js` and do not
    clear.
@@ -94,20 +95,21 @@ finished loading its context.
    still-running session holds its previous conversation, even when it was cleared at
    a wind-down.
 3. **Send the wake message** at once ("Message an agent"). Name the engram entries the
-   agent must load: its level policy (`control/policy-org` for an org control,
-   `control/policy-project` for a project control) and `control/memory`, plus
-   `control/handling-agents` for an org control.
+   agent must load: its level policy (`rule/policy-org` for an org control,
+   `rule/policy-project` for a project control) and `rule/memory`, plus
+   `rule/handling-agents` for an org control.
 
    ```text
    FROM: <your agent name> (<your folder>). This message is written by a control
    agent, not chakrit.
 
-   WAKE-UP: Load your rules first, in full: engram entries <entries> (project
-   `control`; mem_search the topic key, then mem_get_observation), or the files in
-   ~/Documents/control/rules/ without engram. Then run your session-start skill (ace,
-   dw-start or similar); without one, follow the session-start steps in your
-   instruction file. Report your current state: work in progress, open questions,
-   anything blocking. Take no new work yet.
+   WAKE-UP: Load your rules first, in full: engram entries <entries> in project
+   <machine>-control-rules (mem_search the topic key, take the exact topic_key match,
+   then mem_get_observation its ID), or the files in ~/Documents/control/rules/
+   without engram. Then run your session-start skill (ace, dw-start or similar);
+   without one, follow the session-start steps in your instruction file. Report your
+   current state: work in progress, open questions, anything blocking. Take no new
+   work yet.
    ```
 
 4. **Wait** until the agent has reported. Read the report with

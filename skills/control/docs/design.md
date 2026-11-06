@@ -26,18 +26,29 @@ adapting control repos between orgs and machines.
 - **After setup, agents shouldn't need to load the skill.** Setup writes each agent's
   instruction file with the standing grant and pointers to the rule entries it loads.
   Small context means each agent loads only what it needs and should.
-- **Rules live in engram, loaded by pointer.** Five rule entries in engram project
-  `control`: one policy per level (`control/policy-machine`, `-org`, `-project`,
-  governance only), `control/memory`, and `control/handling-agents`. Each instruction
-  file has a table naming every entry it loads and the trigger for loading it (session
-  start, after a clear, before a save, before handling an agent), loaded in full with
-  `mem_search` then `mem_get_observation`. The wake message repeats the entries to
-  load, so the reminder is in the agent's context at once. Seeds live in
-  `templates/rules/`; machine control owns the entries and amends them on chakrit's
-  rulings, with the quoted ruling in the entry. With engram, engram is the only copy:
-  no rule files are written, so edits cost no file I/O and nothing drifts. Without
-  engram, setup copies the seeds to `~/Documents/control/rules/` as the live rules.
-- **Procedures compose by name.** `control/handling-agents` holds the procedures
+- **Rules live in engram, loaded by pointer.** Five rule entries in a dedicated engram
+  project, `<machine>-control-rules`: one policy per level (`rule/policy-machine`,
+  `-org`, `-project`, governance only), `rule/memory`, and `rule/handling-agents`.
+  A dedicated project keeps ordinary memories from colliding with a rule key, since a
+  save under an existing key replaces the entry, and keeps key searches free of noise.
+  Each instruction file has a table naming every entry it loads and the trigger for
+  loading it (session start, after a clear, before a save, before handling an agent).
+  Engram returns full text only through `mem_get_observation(id)`; search returns
+  previews, with an exact `topic_key` match ranked first. So loading is: search the
+  key, take the exact `topic_key` match, fetch it by ID. Engram's docs put must-follow
+  behaviour in the system prompt; here the instruction file and the wake message carry
+  the must-load directive and engram carries the text. Seeds live in
+  `templates/rules/`; machine control owns the entries and amends them with
+  `mem_update` by ID, the documented safe edit, appending the quoted ruling. chakrit
+  syncs worthwhile amendments back to the seeds and handles backups himself. With
+  engram, engram is the only copy: no rule files are written, so edits cost no file
+  I/O and nothing drifts. Without engram, setup copies the seeds to
+  `~/Documents/control/rules/` as the live rules.
+- **Engram project names carry the machine,** like agent names (`<machine>-control`,
+  `<machine>-<org>`, `<machine>-<org>-<project>`, `<machine>-control-rules`), so a later
+  cross-machine sync would not merge two machines' projects. Nothing syncs today.
+  Topic keys stay unprefixed: the project already places them.
+- **Procedures compose by name.** `rule/handling-agents` holds the procedures
   controls run on agents (start, message, before a clear, clear, wake, give a task).
   Policies name its sections instead of restating them, so each rule has one home and a
   caller cannot drop a step such as the save check before a clear.

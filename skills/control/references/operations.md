@@ -3,7 +3,7 @@
 Shared procedures the setup references call. The procedures controls run on agents
 every day (start, message, clear, wake, give a task) live in
 `templates/rules/handling-agents.md`, which machine setup seeds as engram entry
-`control/handling-agents`.
+`rule/handling-agents`.
 
 ## Install scripts
 

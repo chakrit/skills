@@ -37,7 +37,7 @@ details; project controls own those.
    `../../control/control.html` as "Machine control".
 5. **Copy scripts.** Follow "Install scripts" in `references/operations.md`.
 6. **Memory.** Follow "Set up a level's engram project" in `references/memory.md`
-   with project name `<org>`.
+   with project name `<machine>-<org>`.
 7. **Register with machine control.** Ask machine control to add the org to
    `registries/orgs.md`, to link this org's `control.html` from its own, and to
    allocate a port block (see "Reach a parent" in `references/operations.md`). Record

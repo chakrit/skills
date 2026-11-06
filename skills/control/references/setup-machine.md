@@ -34,7 +34,7 @@ rule entries every level loads, and the machine's shared resources.
    `AGENTS.md` and each file in `registries/`.
 4. **Copy scripts.** Follow "Install scripts" in `references/operations.md`.
 5. **Memory.** Follow "Set up a level's engram project" in `references/memory.md`
-   with project name `control`, then "Seed the rule entries" in the same file.
+   with project name `<machine>-control`, then "Seed the rule entries" in the same file.
 6. **Register existing orgs.** For each folder `~/Documents/<org>/control` that
    already exists, add a row to `registries/orgs.md` and a link to its
    `control.html` under links in `control.data.js`. Read `references/registries.md`
@@ -48,6 +48,6 @@ rule entries every level loads, and the machine's shared resources.
 
 ## Done when
 
-The completion list in `SKILL.md` holds. With engram, each of the five rule entries is
-found by `mem_search` in project `control` and no `rules/` folder exists. Without
-engram, `rules/` holds the five rule files.
+The completion list in `SKILL.md` holds. With engram, each of the five rule entries
+loads by exact topic key from project `<machine>-control-rules`, and no `rules/` folder
+exists. Without engram, `rules/` holds the five rule files.
