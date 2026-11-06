@@ -77,7 +77,7 @@ session file its save skill wrote, or a memory file.
 without a save, or approves one because the agent is stuck or hung, agents are being
 torn down, or another circumstance requires it. Without the user's words, ask the user
 first. Skip "Before a clear" and run
-`scripts/control-agents force-clear <slug> --ruling '<the user's quoted words>'`. Step
+`scripts/control-agents force-clear <slug> --ruling "<the user's quoted words>"`. Step
 3 still applies.
 
 ## Wind down an agent
