@@ -78,11 +78,18 @@ proposing, discussing or editing a change to a skill, build that model first:
    may hold, who reads each one, when it is loaded (whole at session start, a section
    on demand, only during setup), who owns and amends it, and where installed copies
    live on the machine.
-3. List the skill's stated constraints on structure and content, with `file:line`
+3. For each file the change touches, name the agent that reads it first and what that
+   agent is doing at that moment (in the control skill: a control starting an agent, a
+   project control just woken, a setup running in another org's environment). Write
+   only what that agent needs for that task and cannot already get from its own
+   context: its instruction file, the instructions and skills its environment loads,
+   its harness. A fact the reader already gets from its environment does not belong in
+   the skill; a copy goes stale and contradicts the source.
+4. List the skill's stated constraints on structure and content, with `file:line`
    (for example "governance only", "one file per level", "loaded whole").
-4. Check every proposal against that model and those constraints before presenting it.
+5. Check every proposal against that model and those constraints before presenting it.
    When a request conflicts with one, say so and quote the rule; do not choose silently.
-5. When the user corrects a proposal, recheck the next one against the whole model, not
+6. When the user corrects a proposal, recheck the next one against the whole model, not
    only against the correction.
 
 ## Audits and fix loops on a skill
