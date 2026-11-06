@@ -17,7 +17,8 @@ rule entries every level loads, and the machine's shared resources.
    ```
 
 3. **Copy templates.** Copy from this skill's directory, replacing placeholders
-   (`{{machine}}`, `{{date}}`, and `{{title}}` with `<MACHINE> Control` in capitals,
+   (`{{machine}}`, `{{date}}`, `{{home}}` with the home folder path such as
+   `/Users/chakrit`, and `{{title}}` with `<MACHINE> Control` in capitals,
    such as `LZ49 Control`):
 
    | Source                                      | Destination                |

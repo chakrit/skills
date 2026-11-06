@@ -13,6 +13,14 @@
     || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 </script>
 <style>
+  /* PragmataPro from the installed font files. Safari does not let pages use a
+     user-installed font by name, but it loads the file itself. Machines without
+     PragmataPro fall back to Iosevka Charon. */
+  @font-face { font-family: "PragmataPro"; font-weight: 400; src: url("file://{{home}}/Library/Fonts/PragmataProR_09.ttf"); }
+  @font-face { font-family: "PragmataPro"; font-weight: 600; src: url("file://{{home}}/Library/Fonts/PragmataProB_09.ttf"); }
+  @font-face { font-family: "PragmataPro Mono"; font-weight: 400; src: url("file://{{home}}/Library/Fonts/PragmataPro_Mono_R_09.ttf"); }
+  @font-face { font-family: "PragmataPro Mono"; font-weight: 600; src: url("file://{{home}}/Library/Fonts/PragmataPro_Mono_B_09.ttf"); }
+
   /* Colours: FEMS portal light and dark themes. */
   [data-theme="light"] {
     color-scheme: light;

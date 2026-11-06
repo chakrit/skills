@@ -20,7 +20,8 @@ details; project controls own those.
    ```
 
 4. **Copy templates,** replacing placeholders (`{{machine}}`, `{{org}}`,
-   `{{github_org}}`, `{{date}}`, and `{{title}}` with `<org> Control`):
+   `{{github_org}}`, `{{date}}`, `{{home}}` with the home folder path such as
+   `/Users/chakrit`, and `{{title}}` with `<org> Control`):
 
    | Source                                  | Destination              |
    | --------------------------------------- | ------------------------ |
