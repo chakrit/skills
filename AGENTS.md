@@ -27,10 +27,10 @@ how an agent works with chakrit while editing this repository. They say nothing 
 what the published skills should contain: those skills run for other agents, on other
 machines and setups, under their own rules. Do not copy those preferences into a skill,
 and do not report a skill as conflicting with them. Judge a skill against its own
-`SKILL.md`, its docs and chakrit's rulings on that skill. A personal preference enters a
-skill only when chakrit asks for it in that skill. When a skill conflicts with
-chakrit's personal instructions, leave the conflict alone: chakrit rules on it when
-invoking the skill.
+`SKILL.md`, its spec in `docs/spec/` and chakrit's rulings on that skill. A personal
+preference enters a skill only when chakrit asks for it in that skill. When a skill
+conflicts with chakrit's personal instructions, leave the conflict alone: chakrit rules
+on it when invoking the skill.
 
 ## Editing and feedback routing
 
@@ -68,12 +68,12 @@ those actions and name the destination before executing them.
 ## Context setup before a skill discussion or edit
 
 A skill is a small system: its files have roles, readers, owners and loading rules, and
-its docs record why. A proposal that answers only the request at hand tends to break a
-rule written elsewhere in the skill, and each later fix breaks another. Before
+its spec records the design. A proposal that answers only the request at hand tends to
+break a rule written elsewhere in the skill, and each later fix breaks another. Before
 proposing, discussing or editing a change to a skill, build that model first:
 
-1. Read the skill's `SKILL.md`, its `docs/` (especially any design document), and every
-   file the change touches or names.
+1. Read the skill's `SKILL.md`, its spec (`docs/spec/<skill>.md`, when it has one), and
+   every file the change touches or names.
 2. Write down, for yourself, the skill's layout model: which files exist and what each
    may hold, who reads each one, when it is loaded (whole at session start, a section
    on demand, only during setup), who owns and amends it, and where installed copies
@@ -125,9 +125,11 @@ never converges, and chakrit has to find and undo work nobody asked for.
   Follow the upstream ownership and command-target checks in this file.
 - `skills/lowfat-pantry/` is imported from chakrit/lowfat-pantry.
 - `skills/smoke/` is imported from chakrit/smoke.
-- Each published skill keeps its runtime references in `references/` and supporting
-  documentation in `docs/` within its own directory. Preserve relative references,
-  source attribution, and the root MIT license. README.md is the catalog and source record.
+- A published skill's folder holds only what agents running the skill need: `SKILL.md`,
+  `references/`, and its own templates, scripts and tests. It has no `docs/`; material
+  for agents editing the skill goes in this repository's `docs/`. Preserve relative
+  references, source attribution, and the root MIT license. README.md is the catalog
+  and source record.
 - Kien-thai's research docs, corpus, and evaluation tooling remain upstream; links
   are in README.md. Do not migrate them into this school as part of a skill refresh.
 - `.agents/skills/` contains generated links. Edit owned packages through `skills/`.
@@ -170,11 +172,33 @@ source for those skills when absent from this school's active set.
 Use the current branch and the `gh` remote. Wrap prose at 90 columns where practical,
 align Markdown table pipes, and always capitalize PRODIGY9.
 
-## Durable documentation
+## Durable artifacts
 
-Skill documentation belongs alongside its package. No repository-wide docs tree is
-established. Use `ace-docs` before creating the first repository-wide architecture,
-domain, or design document.
+`docs/` holds this project's durable record.
+
+**`docs/spec/` is authoritative — read the relevant spec before working, and comply.**
+It owes no justification: a rule that departs from mainstream practice, from what you
+would have picked, or from what you expected is not grounds to escalate, annotate, or
+re-open it. If a spec is wrong, raise it with the user and amend the spec.
+
+**Everything settled is a `docs/spec/` amendment** — an instruction you were given, an
+approach that was agreed, a library that was picked, a convention or preference that
+was fixed. Write it there as it was given: the rule, at the length it was given, with
+no note of what it was chosen over and no reason supplied, unless a normal agent would
+take the rule for a mistake without one; then give the shortest reason that stops it
+from being "fixed" or reopened. A one-sentence rule — "use RESTful routes" — is a
+complete entry. There is no decisions log.
+
+File new material by the gate, first match wins: our own design or surface → `spec/`.
+
+**Before writing under `docs/`, read `docs/README.md`, then the destination folder's
+`README.md`.** The root file defines the routing gate. The folder file defines its
+filing test, filename format, and lifecycle rules. Both are binding.
+
+**`docs/spec/README.md` indexes every spec file — keep it current.** Read the index
+before adding a spec file, so you amend the existing doc on a subject instead of
+writing a second one. Adding, renaming, or retiring a file updates its row in the same
+change.
 
 ## Git checkpoints
 

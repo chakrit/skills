@@ -53,8 +53,8 @@ upstream; a later import refresh brings those changes into this collection.
 
 ## Documentation and references
 
-Each skill owns its `references/` and, when needed, `docs/` directory. Fact-check's
-[design notes](skills/fact-check/docs/design.md) travel with its package.
+Each skill owns its `references/`. Notes for agents editing a skill live in this
+repository's [`docs/spec/`](docs/spec/), not in the published package.
 Kien-thai's [research and maintenance docs](https://github.com/chakrit/kien-thai/tree/main/docs),
 [corpus](https://github.com/chakrit/kien-thai/tree/main/corpus), and
 [evaluation tooling](https://github.com/chakrit/kien-thai/tree/main/tests) remain
