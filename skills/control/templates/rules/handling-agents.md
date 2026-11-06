@@ -101,8 +101,8 @@ Waking an agent and giving it a task are two separate messages. Never put a task
 background on one, in the wake message: an agent may jump to the task before it has
 finished loading its context.
 
-1. **Start.** If the agent is not running (agent messaging does not show it and the
-   script refuses its recorded pane), start it ("Start an agent").
+1. **Start.** If the script refuses the agent's recorded pane, find its pane as your
+   registry's header says; if it has none, start it ("Start an agent").
 2. **Clear.** Unless the session was started new, run "Clear an agent". A resumed or
    still-running session holds its previous conversation, even when it was cleared at
    a wind-down.
