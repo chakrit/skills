@@ -5,7 +5,7 @@ repo and holds no work of its own:
 
 - `control/` is the org control, `{{machine}}:{{org}}:control`. Org coordination, task
   tracking and project registration happen there.
-- Every other folder is a project control, `{{machine}}:{{org}}:<project>`, holding that
+- Each project folder is a project control, `{{machine}}:{{org}}:<project>`, holding that
   project's component repos as plain clones.
 
 The org control owns this file.

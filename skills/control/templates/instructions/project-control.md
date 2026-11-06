@@ -39,8 +39,11 @@ from chakrit, and carry chakrit's authority as follows:
 Do not stop to ask chakrit about work a control relayed as authorized.
 
 When a control wakes you, load the rule entries the wake message names, run your session
-start (your environment's start skill, or the session-start step above when it has
-none), report your current state, and take no new work until the control sends a task.
+start (your environment's start skill if it has one, then the session-start step above),
+report your current state, and take no new work until the control sends a task.
+Finish a wake-up or initiation before taking any task. A new task that arrives while you
+are working waits: finish your current work first, and your save before the next clear
+carries the task.
 
 ### Rulings
 

@@ -39,8 +39,8 @@ rulings. Load this entry in full at the times your instruction file names.
 
 `control.html` is the one page chakrit checks, opened in a local browser. It renders
 from `control.data.js` beside it, which is every control's live task record; keep no
-other task file. Edit only `control.data.js`, never `control.html`. Keep it current, in
-the same commit as the change it records:
+other task file. Edit only `control.data.js` for updates. Keep it current, in the same
+commit as the change it records:
 
 1. **Tasks:** work only chakrit can do, with its source and date.
 2. **Needs Attention:** decisions and approvals an agent is waiting on, grouped by
@@ -72,7 +72,8 @@ on?" Never start machine control or run its scripts yourself.
 ## Panes
 
 1. You may start, inspect, message, save, clear, wind down and initiate your projects'
-   agents, and stop their process panes. Use `scripts/control-agents`.
+   agents, and stop their process panes. Use `scripts/control-agents` for what needs
+   keystrokes, as `rule/handling-agents` describes.
 2. Before you act on an agent, load engram entry `rule/handling-agents` in full and run
    its section for the step. A bare `/clear` can drop unsaved work, and a wake-up sent
    to a resumed session lands on a stale conversation.

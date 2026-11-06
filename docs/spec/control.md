@@ -83,6 +83,11 @@ machines.
   save already reported) and sends the wake message at once.
 - Waking and giving a task are separate messages: an agent given both at once may skip
   orientation. The control checks the task against the agent's state report first.
+- Messages never interrupt an agent's work. A ruling or reply within its current work
+  needs no wake. A control holds a new task for a busy agent until it reports done or
+  is idle. A task that reaches a busy agent anyway waits for its current work, and the
+  agent's own save carries it through the clear. An agent finishes a wake-up or
+  initiation before taking any task.
 - Messages go through the harness's agent messaging first; `scripts/control-agents`
   is the fallback, and the only way to send keystroke-only commands (`/clear`,
   `/rename`, `/quit`).
@@ -119,7 +124,9 @@ machines.
 - Knowledge about one component repo goes in that repo's own docs, so it travels with
   the clone.
 - `control.html` is the one page chakrit checks. It is a fixed template rendering
-  `control.data.js`, the only live task record. Agents edit only the data file. The
+  `control.data.js`, the only live task record. Agents edit only the data file for
+  updates, and change `control.html` when the user asks for a different view (pages,
+  columns). The
   data is JSON wrapped as `window.CONTROL = {...};` and loaded by a script tag, since a
   page opened from disk cannot `fetch` a local file. Views: Tasks, Needs Attention and
   Agent Backlog. The page shows no registries or records.

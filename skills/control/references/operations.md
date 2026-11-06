@@ -79,7 +79,7 @@ an org control sends it as a task after the wake, and chakrit asks machine contr
 
 ## Reach a parent
 
-Messages run downward through `scripts/control-agents`; nothing runs upward. An agent
+Nothing runs upward: `scripts/control-agents` only types into agents below. An agent
 that needs its parent (for a port, a heavy-job slot, a ruling) uses the harness's own
 agent messaging when it reaches the parent. Otherwise it asks chakrit to start the
 parent and relay the message, for example: "We need a port for the XYZ server and the

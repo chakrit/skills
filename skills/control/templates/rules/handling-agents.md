@@ -131,8 +131,10 @@ finished loading its context.
 
 ## Give a task
 
-Send the task ask or ruling as its own message ("Message an agent"), only after "Wake
-up an agent".
+Send a new task ask as its own message ("Message an agent"), only after "Wake up an
+agent". If the agent is still working, hold the task until it reports done or sits
+idle, then wake it (the wake saves and clears it first) and send the task. A ruling or
+reply within the agent's current work is a plain "Message an agent", with no wake.
 
 - Give the context from chakrit's conversation with you that the agent cannot know:
   the goal, constraints, deadlines, decisions, granted resources.

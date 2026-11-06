@@ -97,7 +97,7 @@ engram's MCP tools and CLI only; never install an engram plugin or hooks.
 - **Never use a `rule/` key** outside the rules project. `rule/` names rule entries
   only.
 - **Lead the title with search terms** (repo, environment, identifiers) and end the
-  body with a `Keywords:` line of synonyms, Thai and English terms and error strings.
+  body with a `Keywords:` line of synonyms and error strings.
   Search matches substrings only.
 - **Cite sources** by repo-relative path or commit hash.
 
