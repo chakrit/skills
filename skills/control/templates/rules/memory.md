@@ -40,7 +40,7 @@ agent names, so two machines' stores never share a project name.
 | --------------------------- | --------------------------------------- | ---------------------------------------- |
 | `<machine>-control-rules`   | the five rule entries and a rules index | machine control                          |
 | `<machine>-control`         | machine control's memory                | machine control                          |
-| `<machine>-<org>`           | one org's memory                        | the org control, agents in the org root  |
+| `<machine>-<org>`           | one org control's memory                | that org control                         |
 | `<machine>-<org>-<project>` | one project control's memory            | that project control                     |
 
 The project says where an entry lives; the topic key names it inside the project. Save

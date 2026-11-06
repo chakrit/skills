@@ -40,6 +40,16 @@ Finish a wake-up or initiation before taking any task. A new task that arrives w
 are working waits: finish your current work first, and your save before the next clear
 carries the task.
 
+### Environment
+
+How a folder in this org (this repo and each project) is onboarded into ACE. `none`
+means the org has no such step.
+
+| Item       | Value          |
+| ---------- | -------------- |
+| School     | {{school}}     |
+| Init skill | {{init_skill}} |
+
 ### Rulings
 
 (none yet)
@@ -51,9 +61,6 @@ carries the task.
   `control.data.js` for updates.
 - `registries/projects.md`: project controls and their last-known panes.
 - `registries/ports.md`: the org's port block and the blocks granted to projects.
-- `../AGENTS.md` (with `../CLAUDE.md` linked to it): the org root's instruction file,
-  with the org's Environment table. You own and update it. The org root is not a git
-  repo, so nothing tracks its history.
 
 Commit completed coordination work as it happens. Never push without the user's
 authorization.

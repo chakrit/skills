@@ -27,9 +27,9 @@ appears only as an example name, and no rule rests on what chakrit wants.
   that belongs to no org, and sends one org's tasks to that org control. Org controls
   track tasks and alignment, not project details. Project controls own project context
   and may do hands-on work.
-- The org root `~/Documents/<org>/` is neither a level nor a repo, yet carries an
-  `AGENTS.md` owned by the org control and shares engram project `<machine>-<org>`: an
-  agent started there must still load rules and the org's memory.
+- Every control (machine, org and project) is a local git repo. It needs no remote; it
+  tracks the control's own edits. Initiation runs `git init` in a control folder that
+  is not one.
 - Single machine. No sync content anywhere.
 - Projects keep `repos.txt` and `bin/clone-repos`; clones are plain and gitignored.
   No submodules.
@@ -69,7 +69,7 @@ appears only as an example name, and no rule rests on what chakrit wants.
 - An agent started through its environment already has that environment's start and
   save skills; waking and saving name none.
 - A control starts agents below it with the command that started its own session.
-- The Environment table (machine control's instruction file, each org root's) holds
+- The Environment table (machine control's instruction file, each org control's) holds
   only the school and init skill, for onboarding.
 
 ## Agent handling

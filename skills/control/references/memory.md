@@ -20,7 +20,7 @@ two machines never share a project name.
 | --------------------------- | --------------------------------------- | ------------------------------------------------- |
 | `<machine>-control-rules`   | the five rule entries and a rules index | "Seed the rule entries"                           |
 | `<machine>-control`         | machine control's memory                | `engram init` in `~/Documents/control`            |
-| `<machine>-<org>`           | one org's memory                        | `engram init` in the org control and the org root |
+| `<machine>-<org>`           | one org control's memory                | `engram init` in the org control                  |
 | `<machine>-<org>-<project>` | one project control's memory            | `engram init` in the project folder               |
 
 Only the rules project needs seeding. The other projects exist once their folder is
@@ -65,8 +65,7 @@ Use the project name the setup reference gives you.
    engram init <name>
    ```
 
-   This writes `.engram/config.json`. Commit it with the rest of the setup; the org
-   root is not a repo, so there it stays uncommitted.
+   This writes `.engram/config.json`. Commit it with the rest of the setup.
 4. Always pin. An unpinned folder takes its name from its `origin` remote or, without
    one, from its directory, and collides with same-named folders elsewhere.
 5. If a session ever starts inside a component clone, pin that clone with the same
@@ -89,6 +88,5 @@ registrations. Give the user this list when the user asks how to install engram:
 4. Do NOT run `engram setup claude-code`. It installs hooks and a plugin and offers
    to rewrite ~/.claude/settings.json.
 5. For each "engram pin pending" line a setup reported, run `engram init <name>` in
-   the named folder, then commit .engram/config.json there if the folder is a git
-   repo (the org root is not).
+   the named folder, then commit .engram/config.json there.
 ```

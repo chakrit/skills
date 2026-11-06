@@ -150,17 +150,19 @@ Brings an agent one level below you under control: it gets the standing grant (t
 without the control skill. Machine control initiates org controls; an org control
 initiates project controls.
 
-1. **Check the setup.** The agent's folder is set up when it has an instruction file,
-   a row in your registry, and, when `command -v engram` prints a path, an engram pin
-   (`.engram/config.json`); for an org control, the org root also has its instruction
-   file. If any part is missing, load the `control` skill and run its setup reference
+1. **Check the setup.** The agent's folder is set up when it is a git repo and has an
+   instruction file, a row in your registry, and, when `command -v engram` prints a
+   path, an engram pin (`.engram/config.json`). If it is not a git repo, run `git init`
+   in it. If any other part is missing, load the `control` skill and run its setup reference
    for that level ("Set up an org control" or "Set up a project control"), which adds
    the missing parts without replacing existing files. Then continue here.
 2. **Start** the agent if it is not running ("Start an agent").
 3. **Fill the block.** Take the `## Control` section, down to the next `##` heading,
    from the agent's level template (the control skill's
    `templates/instructions/<level>-control.md`; without the skill, copy the section
-   from a set-up sibling's instruction file). Replace every placeholder. Grant a port
+   from a set-up sibling's instruction file). Replace every placeholder; for an org
+   control's Environment rows, take the values from the instruction files already in
+   its org's projects, or ask the user. Grant a port
    block if the agent has none: machine control grants an org control a block from
    8000–9000, an org control grants a project control a block from its own. Record it
    in your `registries/ports.md`. For a project control, write it in the block under
@@ -188,4 +190,4 @@ initiates project controls.
    Agent Backlog of your `control.data.js` with the paths the agent reported.
 6. **Hand an org control its planning.** For an org control, send "Plan downstream
    controls" as its next task ("Give a task"): it loads the `control` skill and runs
-   that section of `references/operations.md` for its own org folder.
+   that section of `references/operations.md` for its own org.

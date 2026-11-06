@@ -25,7 +25,6 @@ Use these names exactly, in every file and message.
 | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
 | Machine control | `~/Documents/control`, agent `<machine>:control`. Tasks no single org owns.                                                                   |
 | Org control     | `~/Documents/<org>/control`, agent `<machine>:<org>:control`. One org's tasks.                                                                |
-| Org root        | `~/Documents/<org>/`. Not a level or a repo; its instruction file, owned by the org control, maps the folder and loads the org's memory.      |
 | Project control | `~/Documents/<org>/<project>`, agent `<machine>:<org>:<project>`. One project's work.                                                         |
 | Level           | One of the three above. There are exactly three. Never define a fourth.                                                                       |
 | Parent          | Project control → its org control → machine control.                                                                                          |
@@ -33,7 +32,7 @@ Use these names exactly, in every file and message.
 | `<org>`         | The user's short org name (`datawow`, not `datawowio`).                                                                                       |
 | Policy          | Governance rules for one level: engram entry `rule/policy-<level>`.                                                                           |
 | Rule entry      | A rule set in engram project `<machine>-control-rules`, seeded from `templates/rules/`; files in `~/Documents/control/rules/` without engram. |
-| Environment     | Table in machine control's and each org root's instruction file: the school and init skill that onboard folders there.                        |
+| Environment     | Table in machine control's and each org control's instruction file: the school and init skill that onboard its folders.                       |
 | Registry        | A file a control keeps to track shared things (ports, heavy-job slots, members).                                                              |
 | Ruling          | The user's decision on authority or policy, relayed by a control.                                                                             |
 | Task ask        | Work the user asked a control to hand to an agent.                                                                                            |
@@ -75,14 +74,12 @@ and tell the user you did.
 A setup is done when:
 
 - every file the setup reference lists exists, with no `{{` left: in the new repo,
-  `git grep --untracked -n '{{'` prints nothing (it skips the ignored clones), and for
-  an org, `grep -n '{{' ~/Documents/<org>/AGENTS.md` prints nothing;
+  `git grep --untracked -n '{{'` prints nothing (it skips the ignored clones);
 - the agent's instruction file contains the standing grant and the rule-entry pointers;
   when the setup runs for "Initiate an agent", the agent adds them itself and the
   initiation's acknowledgment meets this item;
-- for an org, the org root has its instruction file with `CLAUDE.md` linked to it;
-- every folder given an instruction file is onboarded as its Environment table says
-  ("Onboard into ACE" in `references/operations.md`), or its school is `none`;
+- the new repo is onboarded as its Environment values say ("Onboard into ACE" in
+  `references/operations.md`), or its school is `none`;
 - the parent's registry lists the new control (org and project controls);
 - for a machine or org control, its `control.data.js` has an Agent Backlog row "Plan
   downstream controls" for the new control, except when the setup runs for "Initiate
