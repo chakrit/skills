@@ -60,12 +60,13 @@ your block.
 
 Layout: the harness pane on the left at half the width, one pane per process stacked on
 the right with equal heights. The harness must be the window's first pane, so
-`main-vertical` keeps it on the left.
+`main-vertical` keeps it on the left. Target `"$TMUX_PANE"`, your harness's own pane, as
+written: an untargeted or mistyped target lands in whatever window the user is viewing.
 
 ```sh
-tmux split-window -d -P -F '#{pane_id}' -t <harness_pane> -c <folder>   # once per process
-tmux set-option -w -t <window_id> main-pane-width 50%
-tmux select-layout -t <window_id> main-vertical
+tmux split-window -d -P -F '#{pane_id}' -t "$TMUX_PANE" -c <folder>   # once per process
+tmux set-option -w -t "$TMUX_PANE" main-pane-width 50%
+tmux select-layout -t "$TMUX_PANE" main-vertical
 ```
 
 Re-run the last two commands after adding or removing a process pane. Report the pane

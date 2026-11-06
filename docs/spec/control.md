@@ -105,7 +105,9 @@ appears only as an example name, and no rule rests on what chakrit wants.
   pane; it reaches project work through the org control, starting and waking it when
   it is not running.
 - Long-running processes, dev and preview servers included, run only in tmux panes
-  the user can see, never in the harness's own shell.
+  the user can see, never in the harness's own shell. A project control creates and lays
+  out its process panes against `"$TMUX_PANE"`, never a typed pane or window ID, so a
+  wrong target cannot land in the window the user is viewing.
 - After a machine or org control is set up or initiated, it scans one level down for
   folders that should get controls, gets the user's approval, and runs the setups. Setup
   lodges this as a backlog row; a parent sends it as a task after the wake, and the user
