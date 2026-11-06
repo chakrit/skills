@@ -1,10 +1,14 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.10"
+# ///
 """Read and type into the panes of the agents this control registers.
 
 Reference script for the control skill. Run it from the control repo's scripts/,
 inside the tmux server that holds the agents. Every tmux call targets the registered
 pane by its server-unique ID, and the pane is checked again before each keystroke.
-The script never creates, renames, resizes or moves windows or panes.
+The script never creates, renames, resizes or moves windows or panes. Only wind-down
+ends one: it exits the harness and then the pane's shell, which closes the pane.
 """
 
 import argparse
@@ -16,7 +20,6 @@ import subprocess
 import sys
 import time
 
-HARNESSES = frozenset({"claude", "codex"})
 SLUG = re.compile(r"[a-z0-9][a-z0-9-]*")
 WINDOW = re.compile(r"@[0-9]+")
 PANE = re.compile(r"%[0-9]+")
@@ -26,14 +29,27 @@ CHECKOUT = re.compile(r"[A-Za-z0-9_][A-Za-z0-9._-]*(/[A-Za-z0-9_][A-Za-z0-9._-]*
 SESSION_NAME = re.compile(r"[a-z0-9][a-z0-9_-]*(:[a-z0-9][a-z0-9_-]*){1,2}")
 # The harness drops part of a paste when Enter follows at once.
 PASTE_SETTLE_SECONDS = 1
-# One line per clear: time, slug, `saved` and where the save went, or `forced` and why.
+# `/quit` exits Claude Code, Codex, opencode and pi; pi has no `/exit`.
+HARNESS_EXIT_COMMAND = "/quit"
+# A harness quits within a few seconds of its exit command; longer means it did not.
+HARNESS_EXIT_SECONDS = 10
+HARNESS_EXIT_POLL_SECONDS = 0.2
+# One line per clear: time, slug, kind (`saved`, `wind-down`, `forced`), and where the
+# save went or why the clear was forced.
 CLEAR_LOG = "clears.log"
 BEFORE_A_CLEAR = ('the "Before a clear" section of engram entry rule/handling-agents '
                   "(fallback ~/Documents/control/rules/handling-agents.md)")
+SAVED_HINT = f"run {BEFORE_A_CLEAR}, then pass --saved with where the save went"
+CLEAR_DETAIL_HINTS = {
+    "saved": SAVED_HINT,
+    "wind-down": SAVED_HINT,
+    "forced": "pass --reason with chakrit's quoted words or what happened",
+}
 
 
 @dataclass(frozen=True)
 class Agent:
+    """A registered agent; Window and pane are empty while it is not running."""
     slug: str
     checkout: Path
     window: str
@@ -64,24 +80,45 @@ def parse(text: str, root: Path) -> dict[str, Agent]:
 
 def agent(row: list[str], root: Path) -> Agent:
     slug, checkout, window, pane = row[:4]
-    if not WINDOW.fullmatch(window) or not PANE.fullmatch(pane):
-        raise ValueError(f"{slug}: Window and Agent pane must be tmux IDs like @3, %7")
     if not CHECKOUT.fullmatch(checkout):
         raise ValueError(f"{slug}: Checkout must be a folder inside {root}")
+    stopped = window == "" and pane == ""
+    if not stopped and not (WINDOW.fullmatch(window) and PANE.fullmatch(pane)):
+        raise ValueError(f"{slug}: Window and Agent pane must be tmux IDs like @3, %7, "
+                         "or both empty for an agent that is not running")
 
     return Agent(slug, root / checkout, window, pane)
 
 
-def check_pane(entry: Agent, info: str) -> None:
-    window, path, command, dead = info.rstrip("\n").split("\t")
+def listing(registered: dict[str, Agent]) -> str:
+    return "".join(f"{entry.slug}\t{entry.window or '-'}\t{entry.pane or '-'}\t"
+                   f"{entry.checkout}\t{'running' if entry.pane else 'not running'}\n"
+                   for entry in registered.values())
+
+
+def running(entry: Agent) -> Agent:
+    if not entry.pane:
+        raise ValueError(f"{entry.slug} is not running; start it first")
+
+    return entry
+
+
+def check_pane(entry: Agent, info: str) -> int:
+    """Check the pane is live, in its window and folder; return its shell's PID."""
+    window, path, dead, pane_pid = info.rstrip("\n").split("\t")
     if dead != "0":
         raise ValueError(f"{entry.slug}: pane {entry.pane} is missing or dead")
     if window != entry.window:
         raise ValueError(f"{entry.slug}: pane {entry.pane} is not in {entry.window}")
     if Path(path) != entry.checkout:
         raise ValueError(f"{entry.slug}: pane {entry.pane} is not in {entry.checkout}")
-    if command not in HARNESSES:
-        raise ValueError(f"{entry.slug}: pane {entry.pane} runs {command}, not a harness")
+
+    return int(pane_pid)
+
+
+def shell_holds_foreground(pane_pid: int, ps_output: str) -> bool:
+    """True when the pane's shell leads the terminal's foreground group: its prompt."""
+    return int(ps_output.strip()) == pane_pid
 
 
 def check_unwatched(entry: Agent, clients: str) -> None:
@@ -94,27 +131,10 @@ def check_session_name(name: str) -> None:
         raise ValueError(f"{name!r} is not an agent name like lz49:acme:web")
 
 
-def saved_clear_record(entry: Agent, location: str, now: datetime) -> str:
-    if not one_printed_line(location):
-        raise ValueError(f"{entry.slug}: run {BEFORE_A_CLEAR}, then pass --saved with "
-                         "where the save went, on one line")
+def clear_record(now: datetime, entry: Agent, kind: str, detail: str) -> str:
+    if not (detail.strip() and detail.isprintable()):
+        raise ValueError(f"{entry.slug}: {CLEAR_DETAIL_HINTS[kind]}, on one line")
 
-    return clear_line(now, entry, "saved", location)
-
-
-def forced_clear_record(entry: Agent, reason: str, now: datetime) -> str:
-    if not one_printed_line(reason):
-        raise ValueError(f"{entry.slug}: pass --reason with chakrit's quoted words or "
-                         "what happened, on one line")
-
-    return clear_line(now, entry, "forced", reason)
-
-
-def one_printed_line(text: str) -> bool:
-    return bool(text.strip()) and text.isprintable()
-
-
-def clear_line(now: datetime, entry: Agent, kind: str, detail: str) -> str:
     return f"{now.isoformat()}\t{entry.slug}\t{kind}\t{detail}\n"
 
 
@@ -123,53 +143,92 @@ def append_clear_record(repository: Path, record: str) -> None:
         log.write(record)
 
 
+def command(*arguments: str, stdin: str | None = None) -> str:
+    return subprocess.run(arguments, input=stdin, capture_output=True, text=True,
+                          check=True).stdout
+
+
 def tmux(*arguments: str, stdin: str | None = None) -> str:
-    return subprocess.run(("tmux", *arguments), input=stdin, capture_output=True,
-                          text=True, check=True).stdout
+    return command("tmux", *arguments, stdin=stdin)
 
 
-def verify(entry: Agent) -> None:
-    check_pane(entry, tmux("display-message", "-p", "-t", entry.pane,
-                           "#{window_id}\t#{pane_current_path}\t"
-                           "#{pane_current_command}\t#{pane_dead}"))
+def at_prompt(entry: Agent) -> bool:
+    """Verify the pane, then report whether its shell sits at its prompt."""
+    pane_pid = check_pane(entry, tmux("display-message", "-p", "-t", entry.pane,
+                                      "#{window_id}\t#{pane_current_path}\t"
+                                      "#{pane_dead}\t#{pane_pid}"))
+    return shell_holds_foreground(pane_pid,
+                                  command("ps", "-o", "tpgid=", "-p", str(pane_pid)))
+
+
+def check_harness(entry: Agent) -> None:
+    if at_prompt(entry):
+        raise ValueError(f"{entry.slug}: pane {entry.pane} shows a shell prompt, not a "
+                         "harness; not typing")
 
 
 def type_line(entry: Agent, text: str) -> None:
     buffer = f"control-{entry.slug}"
-    verify(entry)
+    check_harness(entry)
     check_unwatched(entry, tmux("list-clients", "-F", "#{pane_id}"))
 
     tmux("load-buffer", "-b", buffer, "-", stdin=text)
     tmux("paste-buffer", "-p", "-d", "-b", buffer, "-t", entry.pane)
     time.sleep(PASTE_SETTLE_SECONDS)
-    verify(entry)
+    check_harness(entry)
     tmux("send-keys", "-t", entry.pane, "Enter")
 
 
-def clear_and_log(entry: Agent, record: str, repository: Path) -> None:
+def clear(entry: Agent, record: str, repository: Path) -> None:
     type_line(entry, "/clear")
     append_clear_record(repository, record)
 
 
+def wind_down(entry: Agent, record: str, repository: Path) -> None:
+    clear(entry, record, repository)
+    type_line(entry, HARNESS_EXIT_COMMAND)
+
+    wait_for_prompt(entry)
+    check_unwatched(entry, tmux("list-clients", "-F", "#{pane_id}"))
+    tmux("send-keys", "-t", entry.pane, "exit", "Enter")
+
+
+def wait_for_prompt(entry: Agent) -> None:
+    deadline = time.monotonic() + HARNESS_EXIT_SECONDS
+    while not at_prompt(entry):
+        if time.monotonic() > deadline:
+            raise ValueError(f"{entry.slug}: the harness in pane {entry.pane} did not exit "
+                             f"within {HARNESS_EXIT_SECONDS}s; nothing was typed into the "
+                             "shell")
+        time.sleep(HARNESS_EXIT_POLL_SECONDS)
+
+
 def inspect(entry: Agent) -> str:
-    verify(entry)
+    at_prompt(entry)
     return tmux("capture-pane", "-p", "-t", entry.pane, "-S", "-200")
 
 
 def main(arguments: list[str]) -> int:
     commands = argparse.ArgumentParser(prog="control-agents", description=__doc__)
     actions = commands.add_subparsers(dest="command", required=True)
-    actions.add_parser("list", help="print the registered agents")
+    actions.add_parser("list", help="print the registered agents and whether each runs")
     for name, text in (("inspect", "print the last 200 lines of the agent's pane"),
                        ("send", "type the message on stdin and press Enter")):
         actions.add_parser(name, help=text).add_argument("slug")
-    clear = actions.add_parser(
+    saved_help = ("where the agent reported its save went, such as an engram observation "
+                  "or a session file; logged to " + CLEAR_LOG)
+    clearing = actions.add_parser(
         "clear-context", help=f"type /clear; run {BEFORE_A_CLEAR} first",
         epilog=f"Run {BEFORE_A_CLEAR} first. A bare /clear can drop unsaved work.")
-    clear.add_argument("slug")
-    clear.add_argument("--saved", default="", metavar="LOCATION",
-                       help="where the agent reported its save went, such as an engram "
-                            "observation or a session file; logged to " + CLEAR_LOG)
+    clearing.add_argument("slug")
+    clearing.add_argument("--saved", default="", metavar="LOCATION", help=saved_help)
+    down = actions.add_parser(
+        "wind-down", help="clear, exit the harness, then exit the pane's shell",
+        epilog=f"Run {BEFORE_A_CLEAR} first. chakrit's \"stop\", \"wind down\" or "
+               "\"shut down\" for an agent mean this. Afterwards empty the agent's "
+               "Window and Agent pane cells in the registry.")
+    down.add_argument("slug")
+    down.add_argument("--saved", default="", metavar="LOCATION", help=saved_help)
     force = actions.add_parser(
         "force-clear", help="type /clear without a save; lossy, see its --help for when",
         epilog=f"Skips {BEFORE_A_CLEAR}, so unsaved work is lost. Allowed only when "
@@ -190,7 +249,7 @@ def main(arguments: list[str]) -> int:
         agents = parse(path.read_text(encoding="utf-8"), root)
         output = run(options, agents, repository)
     except subprocess.CalledProcessError as error:
-        print(f"control-agents: tmux: {error.stderr.strip()}", file=sys.stderr)
+        print(f"control-agents: {error.cmd[0]}: {error.stderr.strip()}", file=sys.stderr)
         return 1
     except (OSError, ValueError) as error:
         print(f"control-agents: {error}", file=sys.stderr)
@@ -202,22 +261,22 @@ def main(arguments: list[str]) -> int:
 
 def run(options: argparse.Namespace, agents: dict[str, Agent], repository: Path) -> str:
     if options.command == "list":
-        return "".join(f"{entry.slug}\t{entry.window}\t{entry.pane}\t{entry.checkout}\n"
-                       for entry in agents.values())
+        return listing(agents)
     if options.slug not in agents:
         raise ValueError(f"{options.slug} is not in the registry")
-    entry = agents[options.slug]
+    entry = running(agents[options.slug])
+    now = datetime.now().astimezone()
 
     if options.command == "inspect":
         return inspect(entry)
     if options.command == "send":
         type_line(entry, sys.stdin.read().rstrip("\n"))
     elif options.command == "clear-context":
-        record = saved_clear_record(entry, options.saved, datetime.now().astimezone())
-        clear_and_log(entry, record, repository)
+        clear(entry, clear_record(now, entry, "saved", options.saved), repository)
+    elif options.command == "wind-down":
+        wind_down(entry, clear_record(now, entry, "wind-down", options.saved), repository)
     elif options.command == "force-clear":
-        record = forced_clear_record(entry, options.reason, datetime.now().astimezone())
-        clear_and_log(entry, record, repository)
+        clear(entry, clear_record(now, entry, "forced", options.reason), repository)
     else:
         check_session_name(options.name)
         type_line(entry, f"/rename {options.name}")
