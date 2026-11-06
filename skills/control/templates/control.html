@@ -164,11 +164,6 @@
   </ul>
 
   <nav>
-    <h2>Records</h2>
-    <ul id="records"></ul>
-  </nav>
-
-  <nav>
     <h2>Links</h2>
     <ul id="links"></ul>
   </nav>
@@ -249,7 +244,6 @@
     tasks: shape(groupsSchema(TASK_GROUPS, TASK_COLUMNS)),
     attention: listOf(shape({ agent: text, items: listOf(shape(rowSchema(ATTENTION_COLUMNS))) })),
     backlog: shape(groupsSchema(BACKLOG_GROUPS, BACKLOG_COLUMNS)),
-    records: listOf(shape(LINK_SCHEMA)),
     links: listOf(shape(LINK_SCHEMA)),
   };
   const NOT_LOADED = 'window.CONTROL is not set: control.data.js is missing next to this '
@@ -273,7 +267,6 @@
     document.title = control.title;
     document.getElementById('title').textContent = control.title;
     document.getElementById('updated').textContent = `updated ${control.updated}`;
-    document.getElementById('records').append(...linkItems(control.records));
     document.getElementById('links').append(...linkItems(control.links));
     fillView('tasks', statusBodies(control.tasks, TASK_GROUPS, TASK_COLUMNS), taskCount);
     fillView('attention', attentionBodies(control.attention), attentionCount);

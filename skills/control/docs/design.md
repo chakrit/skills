@@ -110,9 +110,10 @@ adapting control repos between orgs and machines.
   loaded with a script tag, because a page opened from disk cannot `fetch` a local
   file. Machine and org controls keep the same three views: Tasks (work only chakrit
   can do), Needs Attention (what an agent waits on, grouped by agent) and Agent
-  Backlog (agents' tasks, grouped by status). Registries stay Markdown; the page links
-  them rather than rendering them, so a port or heavy-job change touches one file. One
-  template gives every page the same look and a vertical rhythm built from row tokens.
+  Backlog (agents' tasks, grouped by status). The page shows no records: a page opened
+  from disk cannot read or render other local files, and links to raw Markdown added
+  little. Registries stay Markdown files of their own. One template gives every page
+  the same look and a vertical rhythm built from row tokens.
   Machine control keeps work across orgs and anything that belongs to no org; it sends
   one org's tasks, including that org's project tasks, to the org control.
 - **Single machine.** No sync content anywhere; chakrit manages cross-machine state.

@@ -50,9 +50,7 @@ the same commit as the change it records:
    source (chakrit's verbatim words or the reporting agent) and the next step or
    evidence (commit, PR, save location). When a done task leaves the page, save it to
    engram as `rule/memory` describes.
-4. **Records:** links to your instruction file and registry files. Link Markdown files
-   on disk; never copy their contents into the page.
-5. **Links:** the other control pages: machine control's from an org control, each
+4. **Links:** the other control pages: machine control's from an org control, each
    org control's from machine control.
 
 Change `control.html` itself only when chakrit asks for a different view, and keep the

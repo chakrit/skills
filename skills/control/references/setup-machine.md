@@ -30,8 +30,7 @@ rule entries every level loads, and the machine's shared resources.
    | `templates/registries/ports-machine.md`     | `registries/ports.md`      |
    | `templates/registries/heavy-jobs.md`        | `registries/heavy-jobs.md` |
 
-   Then `ln -s AGENTS.md CLAUDE.md`. In `control.data.js`, under records, link
-   `AGENTS.md` and each file in `registries/`.
+   Then `ln -s AGENTS.md CLAUDE.md`.
 4. **Copy scripts.** Follow "Install scripts" in `references/operations.md`.
 5. **Memory.** Follow "Set up a level's engram project" in `references/memory.md`
    with project name `<machine>-control`, then "Seed the rule entries" in the same file.

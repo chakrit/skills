@@ -33,8 +33,7 @@ details; project controls own those.
 
    Then `ln -s AGENTS.md CLAUDE.md`. Do not copy rule files; the instruction file
    points to the engram entries machine control keeps. In `control.data.js`, under
-   records, link `AGENTS.md` and each file in `registries/`. Under links, link
-   `../../control/control.html` as "Machine control".
+   links, link `../../control/control.html` as "Machine control".
 5. **Copy scripts.** Follow "Install scripts" in `references/operations.md`.
 6. **Memory.** Follow "Set up a level's engram project" in `references/memory.md`
    with project name `<machine>-<org>`.

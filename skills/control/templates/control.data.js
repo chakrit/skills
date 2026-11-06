@@ -25,10 +25,9 @@
  *            chakrit's verbatim words or the reporting agent; "next" names the next step,
  *            or the commit, PR or save location as evidence. Drop done rows older than a
  *            week.
- * records    This control's instruction and registry files: {"label": "", "href": ""},
- *            href relative to this file.
- * links      Related control pages, same shape as records: org controls on machine
- *            control's page, machine control on an org control's page.
+ * links      Related control pages: {"label": "", "href": ""}, href relative to this
+ *            file. Org controls on machine control's page, machine control on an org
+ *            control's page.
  */
 window.CONTROL = {
   "title": "{{title}}",
@@ -46,6 +45,5 @@ window.CONTROL = {
     "todo": [],
     "done": []
   },
-  "records": [],
   "links": []
 };

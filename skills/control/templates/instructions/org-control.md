@@ -40,8 +40,8 @@ sends a task.
 ## Records
 
 - `control.html`: the page chakrit checks, rendered from `control.data.js`: tasks,
-  what needs chakrit, the agent backlog, links to records and machine control. Edit
-  only `control.data.js`.
+  what needs chakrit, the agent backlog, a link to machine control. Edit only
+  `control.data.js`.
 - `registries/projects.md`: project controls, their windows and current tasks.
 - `registries/ports.md`: the org's port block and the blocks granted to projects.
 

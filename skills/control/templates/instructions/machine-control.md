@@ -34,7 +34,7 @@ You own every rule entry in engram project `{{machine}}-control-rules` and the f
 
 - `rules/`: the live rule files, only on a machine without engram.
 - `control.html`: the page chakrit checks, rendered from `control.data.js`: tasks,
-  what needs chakrit, the agent backlog, links to records and org controls. Edit only
+  what needs chakrit, the agent backlog, links to org controls. Edit only
   `control.data.js`.
 - `registries/orgs.md`: org controls.
 - `registries/ports.md`: port blocks granted to orgs.
