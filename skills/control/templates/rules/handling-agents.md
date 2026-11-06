@@ -26,8 +26,7 @@ old conversation. Type the New session command only when the task explicitly req
 a fresh session or the resume command reports no session to resume.
 
 - Never `exec` the harness. Never rename tmux windows.
-- Record the window and pane IDs in your registry, with the command you typed in
-  Backend, then rename the harness session:
+- Record the window and pane IDs in your registry, then rename the harness session:
   `scripts/control-agents rename-session <slug> <agent-name>`.
 
 ## Message an agent

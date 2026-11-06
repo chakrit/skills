@@ -13,11 +13,11 @@ HOME = Path("/home/chakrit")
 DOCUMENTS = HOME / "Documents"
 REGISTRY = """# Projects
 
-| Project | Checkout | Window | Agent pane | Backend | Assignment |
-| ------- | -------- | ------ | ---------- | ------- | ---------- |
-| web     | web      | @3     | %7         | claude  | login page |
-| api-v2  | api      | @4     | %9         | codex   |            |
-| docs    | docs     |        |            | claude  |            |
+| Project | Checkout | Window | Agent pane |
+| ------- | -------- | ------ | ---------- |
+| web     | web      | @3     | %7         |
+| api-v2  | api      | @4     | %9         |
+| docs    | docs     |        |            |
 """
 WEB = agents.Agent("web", DOCUMENTS / "acme/web", "@3", "%7")
 DOCS = agents.Agent("docs", DOCUMENTS / "acme/docs", "", "")
@@ -50,34 +50,34 @@ class RegistryTest(unittest.TestCase):
         })
 
     def test_parse_refuses_targets_that_are_not_tmux_ids(self) -> None:
-        for row in ("| web | web | main:1 | %7 | claude | |",
-                    "| web | web | @3 | main:1.0 | claude | |",
-                    "| web | web | @3 | | claude | |",
-                    "| web | web | | %7 | claude | |",
-                    "| web | ../other | @3 | %7 | claude | |",
-                    "| web | /etc | @3 | %7 | claude | |",
-                    "| web | a/.. | @3 | %7 | claude | |",
-                    "| web | ../other | | | claude | |"):
+        for row in ("| web | web | main:1 | %7 |",
+                    "| web | web | @3 | main:1.0 |",
+                    "| web | web | @3 | |",
+                    "| web | web | | %7 |",
+                    "| web | ../other | @3 | %7 |",
+                    "| web | /etc | @3 | %7 |",
+                    "| web | a/.. | @3 | %7 |",
+                    "| web | ../other | | |"):
             with self.subTest(row=row):
                 with self.assertRaises(ValueError):
                     agents.parse(row, DOCUMENTS / "acme")
 
 
 class ListingTest(unittest.TestCase):
-    def test_listing_marks_stopped_agents(self) -> None:
+    def test_listing_marks_agents_with_no_pane_recorded(self) -> None:
         self.assertEqual(
             agents.listing({"web": WEB, "docs": DOCS}),
-            f"web\t@3\t%7\t{DOCUMENTS}/acme/web\trunning\n"
-            f"docs\t-\t-\t{DOCUMENTS}/acme/docs\tnot running\n")
+            f"web\t@3\t%7\t{DOCUMENTS}/acme/web\n"
+            f"docs\t-\t-\t{DOCUMENTS}/acme/docs\tno pane recorded\n")
 
 
-class RunningTest(unittest.TestCase):
-    def test_running_agent_is_returned(self) -> None:
-        self.assertEqual(agents.running(WEB), WEB)
+class RecordedPaneTest(unittest.TestCase):
+    def test_agent_with_a_recorded_pane_is_returned(self) -> None:
+        self.assertEqual(agents.recorded_pane(WEB), WEB)
 
-    def test_stopped_agent_is_refused(self) -> None:
-        with self.assertRaisesRegex(ValueError, "docs is not running; start it first"):
-            agents.running(DOCS)
+    def test_agent_with_no_pane_recorded_is_refused(self) -> None:
+        with self.assertRaisesRegex(ValueError, "docs has no pane recorded"):
+            agents.recorded_pane(DOCS)
 
 
 class PaneTest(unittest.TestCase):

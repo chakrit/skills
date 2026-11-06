@@ -5,8 +5,10 @@
 """Read and type into the panes of the agents this control registers.
 
 Reference script for the control skill. Run it from the control repo's scripts/,
-inside the tmux server that holds the agents. Every tmux call targets the registered
-pane by its server-unique ID, and the pane is checked again before each keystroke.
+inside the tmux server that holds the agents. The registry's Window and Agent pane are
+the last-known IDs, which chakrit's own moves can make stale; every tmux call targets
+that pane by its server-unique ID, and the pane is checked again before each keystroke,
+so a stale ID is refused rather than typed into.
 The script never creates, renames, resizes or moves windows or panes. Only wind-down
 ends one: it exits the harness and then the pane's shell, which closes the pane.
 """
@@ -49,7 +51,7 @@ CLEAR_DETAIL_HINTS = {
 
 @dataclass(frozen=True)
 class Agent:
-    """A registered agent; Window and pane are empty while it is not running."""
+    """A registered agent; Window and pane are empty when no pane is recorded."""
     slug: str
     checkout: Path
     window: str
@@ -73,32 +75,36 @@ def parse(text: str, root: Path) -> dict[str, Agent]:
             if line.strip().startswith("|"))
     cells = ([cell.strip() for cell in row] for row in rows)
     agents = (agent(row, root) for row in cells
-              if len(row) == 6 and SLUG.fullmatch(row[0]))
+              if len(row) == 4 and SLUG.fullmatch(row[0]))
 
     return {entry.slug: entry for entry in agents}
 
 
 def agent(row: list[str], root: Path) -> Agent:
-    slug, checkout, window, pane = row[:4]
+    slug, checkout, window, pane = row
     if not CHECKOUT.fullmatch(checkout):
         raise ValueError(f"{slug}: Checkout must be a folder inside {root}")
-    stopped = window == "" and pane == ""
-    if not stopped and not (WINDOW.fullmatch(window) and PANE.fullmatch(pane)):
+    unrecorded = window == "" and pane == ""
+    if not unrecorded and not (WINDOW.fullmatch(window) and PANE.fullmatch(pane)):
         raise ValueError(f"{slug}: Window and Agent pane must be tmux IDs like @3, %7, "
-                         "or both empty for an agent that is not running")
+                         "or both empty when no pane is recorded")
 
     return Agent(slug, root / checkout, window, pane)
 
 
 def listing(registered: dict[str, Agent]) -> str:
-    return "".join(f"{entry.slug}\t{entry.window or '-'}\t{entry.pane or '-'}\t"
-                   f"{entry.checkout}\t{'running' if entry.pane else 'not running'}\n"
-                   for entry in registered.values())
+    return "".join(listing_line(entry) for entry in registered.values())
 
 
-def running(entry: Agent) -> Agent:
+def listing_line(entry: Agent) -> str:
+    known = f"{entry.slug}\t{entry.window or '-'}\t{entry.pane or '-'}\t{entry.checkout}"
+    return known + ("\n" if entry.pane else "\tno pane recorded\n")
+
+
+def recorded_pane(entry: Agent) -> Agent:
     if not entry.pane:
-        raise ValueError(f"{entry.slug} is not running; start it first")
+        raise ValueError(f"{entry.slug} has no pane recorded; find its pane in tmux or "
+                         "start it, then record the IDs in the registry")
 
     return entry
 
@@ -211,7 +217,7 @@ def inspect(entry: Agent) -> str:
 def main(arguments: list[str]) -> int:
     commands = argparse.ArgumentParser(prog="control-agents", description=__doc__)
     actions = commands.add_subparsers(dest="command", required=True)
-    actions.add_parser("list", help="print the registered agents and whether each runs")
+    actions.add_parser("list", help="print the registered agents and their last-known panes")
     for name, text in (("inspect", "print the last 200 lines of the agent's pane"),
                        ("send", "type the message on stdin and press Enter")):
         actions.add_parser(name, help=text).add_argument("slug")
@@ -265,7 +271,7 @@ def run(options: argparse.Namespace, agents: dict[str, Agent], repository: Path)
         return listing(agents)
     if options.slug not in agents:
         raise ValueError(f"{options.slug} is not in the registry")
-    entry = running(agents[options.slug])
+    entry = recorded_pane(agents[options.slug])
     now = datetime.now().astimezone()
 
     if options.command == "inspect":

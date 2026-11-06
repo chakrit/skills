@@ -62,7 +62,7 @@ line. It does not hold project details; project controls own those.
    the block.
 10. **Register existing projects.** For each project folder under `~/Documents/<org>/`
     that has an agent, add a row to `registries/projects.md`, with Window and Agent
-    pane empty unless it is running. Read `references/registries.md` for how
+    pane filled when you see its pane and empty otherwise. Read `references/registries.md` for how
     registries and nested resources work. When this setup runs for "Initiate an agent",
     skip this step: the org control keeps its own registry, and its planning task
     registers what is missing.

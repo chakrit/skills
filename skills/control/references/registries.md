@@ -19,15 +19,18 @@ templates in `templates/registries/` are starting points, not a required set.
 
 | Registry        | Owner           | Tracks                                                       |
 | --------------- | --------------- | ------------------------------------------------------------ |
-| `orgs.md`       | machine control | org slug, checkout, window, pane, backend, task; GitHub orgs |
+| `orgs.md`       | machine control | org slug, checkout, last-known window and pane; GitHub orgs  |
 | `ports.md`      | machine control | port blocks granted to org controls                          |
 | `heavy-jobs.md` | machine control | heavy-job slots and the project holding each                 |
-| `projects.md`   | org control     | project slug, checkout, window, pane, backend, task          |
+| `projects.md`   | org control     | project slug, checkout, last-known window and pane           |
 | `ports.md`      | org control     | port blocks granted to projects, single service reservations |
 
 `orgs.md` and `projects.md` are parsed by `scripts/`; their templates state the
-columns to keep. An agent that is not running keeps its row with Window and Agent pane
-empty; the script lists it and refuses to type into it.
+columns to keep. Rows record who exists, not live state: Window and Agent pane are the
+last-known IDs the script types into, used only for what needs keystrokes or an agent
+the harness's agent messaging cannot reach. chakrit starts and moves agents too, so a
+control uses them as they are and corrects a row only when the script refuses the pane
+or the cells are empty.
 
 ## Nested resources
 
