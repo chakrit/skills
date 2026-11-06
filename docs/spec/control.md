@@ -36,8 +36,8 @@ appears only as an example name, and no rule rests on what chakrit wants.
 
 ## Instructions and rules
 
-- After setup no agent loads the skill again. Each agent's instruction file carries
-  the standing grant and pointers to the rule entries it loads.
+- After setup no agent needs the skill for daily work. Each agent's instruction file
+  carries the standing grant and pointers to the rule entries it loads.
 - Every instruction file states the session-start step itself (load the rule entries,
   then `mem_context`) instead of pointing to it: a pointer chain to the step was
   skipped after restarts.
