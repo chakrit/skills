@@ -16,10 +16,11 @@ rule entries every level loads, and the machine's shared resources.
    git init
    ```
 
-3. **Copy templates.** Copy from this skill's directory, replacing placeholders
-   (`{{machine}}`, `{{date}}`, `{{home}}` with the home folder path such as
-   `/Users/chakrit`, and `{{title}}` with `<MACHINE> Control` in capitals,
-   such as `LZ49 Control`):
+3. **Copy templates.** First follow "Record the environment" in
+   `references/operations.md` for machine control. Copy from this skill's directory,
+   replacing placeholders (`{{machine}}`, `{{date}}`, `{{home}}` with the home folder
+   path such as `/Users/chakrit`, `{{title}}` with `<MACHINE> Control` in capitals,
+   such as `LZ49 Control`, and the Environment placeholders):
 
    | Source                                      | Destination                |
    | ------------------------------------------- | -------------------------- |
@@ -41,13 +42,16 @@ rule entries every level loads, and the machine's shared resources.
    `control.html` under links in `control.data.js`. Read `references/registries.md`
    for how registries and nested resources work.
 7. **ACE.** Follow "Onboard into ACE" in `references/operations.md`.
-8. **Commit.** Commit everything with a message naming the skill revision
+8. **Lodge downstream planning.** Add an Agent Backlog row to `control.data.js` (group
+   `todo`): item "Plan downstream controls (`control` skill, `references/operations.md`)",
+   agent `<machine>:control`, source chakrit's request, next "after first start".
+9. **Commit.** Commit everything with a message naming the skill revision
    (`git -C <this skill's repo> rev-parse --short HEAD`).
-9. **Leave the start to chakrit.** Machine control has no parent control to start it.
-   Add to the completion report: "Start machine control: in a tmux window, `cd
-   ~/Documents/control`, run the harness, then type `/rename <machine>:control`."
-10. **Plan downstream.** Once machine control runs, it follows "Plan downstream
-    controls" in `references/operations.md` for org candidates under `~/Documents/`.
+10. **Leave the start to chakrit.** Machine control has no parent control to start it.
+    Add to the completion report: "Start machine control: in a tmux window, `cd
+    ~/Documents/control`, type the resume command from its Environment table, then
+    `/rename <machine>:control`. Then ask it to run its backlog row 'Plan downstream
+    controls'."
 
 ## Done when
 

@@ -31,8 +31,9 @@ Use these names exactly, in every file and message.
 | Parent          | Project control → its org control → machine control.                                                                                          |
 | `<machine>`     | Lowercase short hostname: `hostname -s`, lowercased (`lz49`).                                                                                 |
 | `<org>`         | chakrit's short org name (`datawow`, not `datawowio`).                                                                                        |
-| Policy          | Governance rules for one level: engram entry `control/policy-<level>`.                                                                        |
+| Policy          | Governance rules for one level: engram entry `rule/policy-<level>`.                                                                           |
 | Rule entry      | A rule set in engram project `<machine>-control-rules`, seeded from `templates/rules/`; files in `~/Documents/control/rules/` without engram. |
+| Environment     | Table in machine control's and each org root's instruction file: how agents there start, onboard and save.                                    |
 | Registry        | A file a control keeps to track shared things (ports, heavy-job slots, members).                                                              |
 | Ruling          | chakrit's decision on authority or policy, relayed by a control.                                                                              |
 | Task ask        | Work chakrit asked a control to hand to an agent.                                                                                             |
@@ -67,8 +68,7 @@ and tell chakrit you did.
 3. Copy templates, then replace every `{{placeholder}}`. A file with a leftover
    `{{` is not done.
 4. Keep policy and instruction files short. Agents skip long instructions.
-5. Commit each finished setup in the new repo with the `gh` remote convention; never
-   push.
+5. Commit each finished setup in the new repo; never push.
 
 ## Completion
 
@@ -78,11 +78,11 @@ A setup is done when:
   prints nothing);
 - the agent's instruction file contains the standing grant and the rule-entry pointers;
 - for an org, the org root has its instruction file with `CLAUDE.md` linked to it;
-- every folder given an instruction file is onboarded into ACE, or ACE is not installed;
+- every folder given an instruction file is onboarded as its Environment table says
+  ("Onboard into ACE" in `references/operations.md`), or its school is `none`;
 - the parent's registry lists the new control (org and project controls);
-- for a machine or org control, "Plan downstream controls" in
-  `references/operations.md` has either lodged the approved setups in
-  `control.data.js` or is waiting on chakrit's answer to the candidate list;
+- for a machine or org control, its `control.data.js` has an Agent Backlog row "Plan
+  downstream controls" for the new control;
 - the work is committed in the new repo.
 
 Report the folder, the agent name, the commit hash and any steps left for chakrit.

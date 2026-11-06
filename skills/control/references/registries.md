@@ -21,10 +21,9 @@ templates in `templates/registries/` are starting points, not a required set.
 | --------------- | --------------- | ------------------------------------------------------------ |
 | `orgs.md`       | machine control | org slug, checkout, window, pane, backend, task; GitHub orgs |
 | `ports.md`      | machine control | port blocks granted to org controls                          |
-| `heavy-jobs.md` | machine control | heavy-job slots and their holders                            |
+| `heavy-jobs.md` | machine control | heavy-job slots and the project holding each                 |
 | `projects.md`   | org control     | project slug, checkout, window, pane, backend, task          |
 | `ports.md`      | org control     | port blocks granted to projects, single service reservations |
-| `heavy-jobs.md` | org control     | the slot machine control granted and the project holding it  |
 
 `orgs.md` and `projects.md` are parsed by `scripts/`; their templates state the
 columns to keep. An agent that is not running keeps its row with Window and Agent pane
@@ -32,15 +31,14 @@ empty; the script lists it and refuses to type into it.
 
 ## Nested resources
 
-Shared machine resources nest the same way the levels do:
-
-- **Ports.** chakrit's open range is 8000–9000. Machine control grants each org control
-  a block; the org control grants each project a smaller block from it and reserves
-  single service ports inside that. Example sizes: 100 ports per org, 20 per project.
-- **Heavy-job slots.** Machine control owns the machine's slots (for example one big
-  job and one light job). An org control asks machine control for a slot when one of
-  its projects needs it, passes it to the project, and returns it when the project
-  reports done.
+- **Ports nest the way the levels do.** chakrit's open range is 8000–9000. Machine
+  control grants each org control a block; the org control grants each project a
+  smaller block from it and reserves single service ports inside that. Example sizes:
+  100 ports per org, 20 per project.
+- **Heavy-job slots stay with machine control.** Only machine control keeps a
+  `heavy-jobs.md`; it records the holder as `<org>:<project>`. An org control relays a
+  project's request to machine control, passes the grant on, and relays the done
+  report. No org control keeps a copy.
 
 A project asks its org control. An org control asks machine control. Nobody skips a
 level; see "Reach a parent" in `references/operations.md`.

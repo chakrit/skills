@@ -59,9 +59,8 @@ look: colours, fonts and the row tokens that keep the vertical rhythm.
 ## Resources
 
 1. Grant project port blocks from your org block. Record them in `registries/ports.md`.
-2. Ask machine control for a heavy-job slot when a project needs one. Pass it to the
-   project, record the project as holder in `registries/heavy-jobs.md`, and return the
-   slot when the project reports done.
+2. Relay a project's heavy-job request to machine control, which alone records slots.
+   Pass the grant to the project, and relay its done or aborted report at once.
 
 ## Reaching machine control
 

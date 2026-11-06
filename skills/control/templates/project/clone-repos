@@ -1,6 +1,6 @@
 #!/bin/sh
-# Clone every repo listed in repos.txt that is not cloned yet, with remote "gh",
-# and make sure each clone folder is ignored by this project repo.
+# Clone every repo listed in repos.txt that is not cloned yet, and make sure each
+# clone folder is ignored by this project repo.
 set -eu
 
 root=$(cd "$(dirname "$0")/.." && pwd)
@@ -26,7 +26,7 @@ while read -r folder url extra; do
     echo "have   $folder"
   else
     echo "clone  $folder"
-    git clone --origin gh "$url" "$root/$folder"
+    git clone "$url" "$root/$folder"
   fi
 
   if ! grep -qxF "/$folder/" "$ignore"; then

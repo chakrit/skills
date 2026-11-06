@@ -30,8 +30,9 @@ parts of it.
 
 1. Grant each org control a port block from 8000–9000. Record it in
    `registries/ports.md`.
-2. Own the heavy-job slots in `registries/heavy-jobs.md`. Before each grant, check free
-   memory and disk.
+2. Own the heavy-job slots in `registries/heavy-jobs.md`, the only record of them.
+   Grant through the org control and record the holder as `<org>:<project>`. Before
+   each grant, check free memory and disk.
 3. Watch disk, memory and CPU. When one runs low, tell org controls to pause or
    serialize heavy jobs.
 4. Never change machine software or settings. Suggest the change to chakrit.
@@ -43,10 +44,9 @@ work. Under Links, link each org control's `control.html`.
 
 ## Panes
 
-1. To reach a project agent, message its org control if it is running.
-2. If the org control is not running, manage the project's pane directly. Start the
-   org control first only when that is faster or the work needs org context.
-3. Before you act on an agent, load engram entry `rule/handling-agents` in full and run
+1. Never act on a project agent's pane. Reach project work through its org control;
+   if the org control is not running, start and wake it ("Wake up an agent").
+2. Before you act on an agent, load engram entry `rule/handling-agents` in full and run
    its section for the step, as the table in `rule/policy-org` ("Panes") maps it. When
    chakrit says to stop an agent, that means "Wind down an agent".
 

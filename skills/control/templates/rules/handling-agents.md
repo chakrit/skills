@@ -12,28 +12,22 @@ a wake-up sent to a resumed session lands on a stale conversation.
 
 Run the harness inside a shell in a tmux window, never as the window's command, so
 chakrit can restart it and `scripts/control-agents` can tell the harness from the shell.
-Type the harness named in the registry's Backend column.
+Take the start commands from the Environment table in the org root's instruction file,
+`~/Documents/<org>/AGENTS.md`, for the agent's org.
 
 ```sh
 tmux new-window -d -P -F '#{window_id} #{pane_id}' -c <folder>
 tmux send-keys -t <pane_id> '<start command>' Enter
 ```
 
-Resume the folder's previous session by default. The session keeps its name marker and
-its per-conversation settings, which a new session loses; "Wake up an agent" clears the
-old conversation. Start a new session only when the task explicitly requires a fresh
-one or the folder has no previous session to resume.
-
-| Backend  | Resume (default)      | New session |
-| -------- | --------------------- | ----------- |
-| `ace`    | `ace`                 | `ace new`   |
-| `claude` | `claude --continue`   | `claude`    |
-| `codex`  | `codex resume --last` | `codex`     |
-
-If the resume command reports no session to resume, type the new-session command.
+Type the Resume command by default. The session keeps its name marker and its
+per-conversation settings, which a new session loses; "Wake up an agent" clears the
+old conversation. Type the New session command only when the task explicitly requires
+a fresh session or the resume command reports no session to resume.
 
 - Never `exec` the harness. Never rename tmux windows.
-- Record the window and pane IDs in your registry, then rename the harness session:
+- Record the window and pane IDs in your registry, with the command you typed in
+  Backend, then rename the harness session:
   `scripts/control-agents rename-session <slug> <agent-name>`.
 
 ## Message an agent
@@ -65,7 +59,7 @@ asking for another wastes the agent's tokens.
    clear.
 
 The result is the save location the agent reported, such as an engram observation, a
-`.ace/save.md` path or a memory file.
+session file its save skill wrote, or a memory file.
 
 ## Clear an agent
 
@@ -110,8 +104,7 @@ finished loading its context.
    a wind-down.
 3. **Send the wake message** at once ("Message an agent"). Name the engram entries the
    agent must load: its level policy (`rule/policy-org` for an org control,
-   `rule/policy-project` for a project control) and `rule/memory`, plus
-   `rule/handling-agents` for an org control.
+   `rule/policy-project` for a project control) and `rule/memory`.
 
    ```text
    FROM: <your agent name> (<your folder>). This message is written by a control
@@ -120,9 +113,9 @@ finished loading its context.
    WAKE-UP: Load your rules first, in full: engram entries <entries> in project
    <machine>-control-rules (mem_search the topic key, take the exact topic_key match,
    then mem_get_observation its ID), or the files in ~/Documents/control/rules/
-   without engram. Then run your session-start skill (such as ace); without one,
-   follow the session-start steps in your instruction file. Report your current state:
-   work in progress, open questions, anything blocking. Take no new work yet.
+   without engram. Then run the session-start skill your instructions name; without
+   one, follow the session-start steps in your instruction file. Report your current
+   state: work in progress, open questions, anything blocking. Take no new work yet.
    ```
 
 4. **Wait** until the agent has reported. Read the report with
@@ -151,8 +144,8 @@ Brings an agent one level below you under control: it gets the standing grant (t
 without the control skill. Machine control initiates org controls; an org control
 initiates project controls.
 
-1. **Check the setup.** The agent's folder is set up when it has an instruction file
-   with a `## Control` section, a row in your registry, and an engram pin
+1. **Check the setup.** The agent's folder is set up when it has an instruction file,
+   a row in your registry, and an engram pin
    (`.engram/config.json`); for an org control, the org root also has its instruction
    file. If any part is missing, load the `control` skill and run its setup reference
    for that level ("Set up an org control" or "Set up a project control"), which adds
@@ -163,7 +156,8 @@ initiates project controls.
    from the agent's level template (the control skill's
    `templates/instructions/<level>-control.md`; without the skill, copy the section
    from a set-up sibling's instruction file). Replace every placeholder. For a project
-   control, grant a port block from your own and write it under "Ports".
+   control, grant a port block from your own, record it in your `registries/ports.md`,
+   and write it in the block under "Ports".
 4. **Wake it** ("Wake up an agent"), then send the message below as its task, with the
    block inside it. Never edit the agent's checkout yourself; the agent writes its own
    instructions.
@@ -184,3 +178,6 @@ initiates project controls.
 
 5. **Wait for the acknowledgment.** Delivery is not acknowledgment. Record it in the
    Agent Backlog of your `control.data.js` with the paths the agent reported.
+6. **Hand an org control its planning.** For an org control, send "Plan downstream
+   controls" as its next task ("Give a task"): it loads the `control` skill and runs
+   that section of `references/operations.md` for its own org folder.

@@ -48,9 +48,9 @@ sends a task.
   `control.data.js`.
 - `registries/projects.md`: project controls, their windows and current tasks.
 - `registries/ports.md`: the org's port block and the blocks granted to projects.
-- `registries/heavy-jobs.md`: the heavy-job slot the org holds and which project has it.
-- `../AGENTS.md` (with `../CLAUDE.md` linked to it): the org root's instruction file.
-  You own and update it. The org root is not a git repo, so nothing tracks its history.
+- `../AGENTS.md` (with `../CLAUDE.md` linked to it): the org root's instruction file,
+  with the org's Environment table. You own and update it. The org root is not a git
+  repo, so nothing tracks its history.
 
 Commit completed coordination work as it happens. Never push without chakrit's
 authorization.

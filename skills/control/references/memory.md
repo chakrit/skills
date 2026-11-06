@@ -67,9 +67,8 @@ Use the project name the setup reference gives you.
 
    This writes `.engram/config.json`. Commit it with the rest of the setup; the org
    root is not a repo, so there it stays uncommitted.
-4. Always pin. Clones use the remote `gh`, and engram reads only a remote named
-   `origin`, so an unpinned folder resolves to its directory name and collides with
-   same-named folders elsewhere.
+4. Always pin. An unpinned folder takes its name from its `origin` remote or, without
+   one, from its directory, and collides with same-named folders elsewhere.
 5. If a session ever starts inside a component clone, pin that clone with the same
    name and add `.engram/` to the clone's `.git/info/exclude`. Never commit `.engram/`
    into a component repo.

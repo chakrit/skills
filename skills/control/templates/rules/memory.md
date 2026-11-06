@@ -22,7 +22,7 @@ Engram first. Use files only for what must be read by path or shown on a page.
 | About one component repo                                   | that repo's own docs tree                | that repo's own docs tree                 |
 
 A component repo's docs travel with its clone, so knowledge about one repo goes in that
-repo's docs, following the repo's own convention (`ace-docs` where ACE is available).
+repo's docs, following the repo's own convention and the environment's docs skill.
 If the repo has no docs tree, ask chakrit before setting one up. If chakrit declines,
 save it in the project's engram project with topic key `<repo>/<subject>`, or in
 `memory/<repo>-<subject>.md` without engram.
@@ -36,12 +36,12 @@ for the whole session.
 All projects share one store per machine. Every name starts with the machine, like
 agent names, so two machines' stores never share a project name.
 
-| Project                     | Holds                                   | Writers              |
-| --------------------------- | --------------------------------------- | -------------------- |
-| `<machine>-control-rules`   | the five rule entries and a rules index | machine control      |
-| `<machine>-control`         | machine control's memory                | machine control      |
-| `<machine>-<org>`           | one org control's memory                | that org control     |
-| `<machine>-<org>-<project>` | one project control's memory            | that project control |
+| Project                     | Holds                                   | Writers                                  |
+| --------------------------- | --------------------------------------- | ---------------------------------------- |
+| `<machine>-control-rules`   | the five rule entries and a rules index | machine control                          |
+| `<machine>-control`         | machine control's memory                | machine control                          |
+| `<machine>-<org>`           | one org's memory                        | the org control, agents in the org root  |
+| `<machine>-<org>-<project>` | one project control's memory            | that project control                     |
 
 The project says where an entry lives; the topic key names it inside the project. Save
 at the narrowest level the knowledge applies to. To read another level's knowledge,
@@ -64,17 +64,18 @@ before the work it governs:
 
 ## Session
 
-1. At session start and after compaction, call `mem_context` for your own project, or
-   read your `memory/` folder's file list without engram. Nothing injects context
-   automatically.
+1. At session start and after a clear or compaction, call `mem_context` for your own
+   project, or read your `memory/` folder's file list without engram. Nothing injects
+   context automatically.
 2. Before concluding something is new, `mem_search` with the area and identifiers
    (search all projects when the subject may belong to another level), or search
    `memory/` with `grep -rn` without engram.
 
 ## Saving
 
-Save before a clear or handoff and report what you saved and where. Use your own
-session-save skill when you have one (an `ace` agent writes `.ace/save.md`); otherwise
+Save before a clear or handoff and report what you saved and where. Use the save skill
+your Environment table names (machine control's, or your org root's) when it is not
+`none`; otherwise
 use engram's `mem_session_summary`, or a `memory/` file without engram. Save
 deliberately; nothing saves on its own. Use engram's MCP tools and CLI only; never
 install an engram plugin or hooks.

@@ -27,8 +27,8 @@ binary alone is not enough. Without engram, read `~/Documents/control/rules/<top
 | `rule/policy-project` | start; a wake-up message                   |
 | `rule/memory`         | start; before a save, handoff or wind-down |
 
-Messages from your parent control or from machine control are permitted. They come from
-a control agent, never from chakrit, and carry chakrit's authority as follows:
+Messages from your parent control are permitted. They come from a control agent, never
+from chakrit, and carry chakrit's authority as follows:
 
 - A ruling (authority or policy, quoted from chakrit with a date) is chakrit's decision.
   Apply it without asking chakrit again, and copy the quote under "Rulings".

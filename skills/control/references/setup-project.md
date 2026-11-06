@@ -35,20 +35,22 @@ control owns the project's context and may do hands-on work in its clones.
 5. **List the clones.** Write one line per component repo in `repos.txt`:
    `<repo-name> <clone-url>`. The folder name is the exact GitHub repo name. Never use
    git submodules.
-6. **Clone.** Run `bin/clone-repos`. It clones missing repos with remote `gh` and adds
-   each folder to `.gitignore`.
+6. **Clone.** Run `bin/clone-repos`. It clones missing repos and adds each folder to
+   `.gitignore`.
 7. **Memory.** Follow "Set up a level's engram project" in `references/memory.md`
    with project name `<machine>-<org>-<project>`.
 8. **ACE.** Follow "Onboard into ACE" in `references/operations.md`.
-9. **Register with the org control.** Ask it to add the project to its
-   `registries/projects.md` and to allocate a port block (see "Reach a parent" in
-   `references/operations.md`). Write the granted block into `AGENTS.md` under "Ports".
+9. **Register with the org control.** The project needs a row in the org control's
+   `registries/projects.md` and a port block. If you are the org control, add the row,
+   grant the block in your `registries/ports.md`, and commit in your repo. Otherwise ask
+   the org control (see "Reach a parent" in `references/operations.md`). Write the
+   block into `AGENTS.md` under "Ports".
 10. **Commit,** naming the skill revision.
 11. **Start the agent.** If you are the org control, follow "Start an agent" in
     `rule/handling-agents` and rename its session to `<machine>:<org>:<project>`.
     Otherwise add to the completion report: "Start the project control: in a tmux
-    window, `cd ~/Documents/<org>/<project>`, run the harness, then type
-    `/rename <machine>:<org>:<project>`."
+    window, `cd ~/Documents/<org>/<project>`, type the resume command from the org
+    root's Environment table, then `/rename <machine>:<org>:<project>`."
 
 ## Done when
 

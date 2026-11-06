@@ -19,10 +19,11 @@ adapting control repos between orgs and machines.
   project context and may do hands-on work.
 - **Agent names:** `<machine>:control`, `<machine>:<org>:control`,
   `<machine>:<org>:<project>`. The org slug is chakrit's short name (`datawow`).
-- **ACE is optional.** The skill works for users without ACE or its save skill. Where
-  ACE is installed, setup onboards every folder it gives an instruction file
-  (`ace setup <school>`, then `ace-init`): the org's school for org folders, a school
-  chakrit names for machine control.
+- **ACE is preferred, never required, and named per environment.** An environment may
+  wrap ACE in its own launcher and skills, so the skill hard-codes none of them. Setup
+  records each environment's school, resume and new-session commands, init skill and
+  save skill in an Environment table (machine control's instruction file and each org
+  root's), and starting, waking, saving and onboarding read that table.
 - **Org roots carry instruction files.** `~/Documents/<org>/` is not a level and not a
   repo, but an agent started there must still load rules and the org's memory, so it
   gets an `AGENTS.md` (owned by the org control) and shares engram project
@@ -30,8 +31,9 @@ adapting control repos between orgs and machines.
   the rule entries, then `mem_context`), because a pointer chain to the step was
   skipped after restarts.
 - **No script configuration.** The script finds its registry from the folder layout,
-  talks to the tmux server it runs in, and hard-codes Claude Code's commands. An agent
-  starts another by typing the harness the registry names.
+  talks to the tmux server it runs in, and hard-codes the harness slash commands. An
+  agent starts another by typing the resume command from the org root's Environment
+  table.
 - **After setup, agents shouldn't need to load the skill.** Setup writes each agent's
   instruction file with the standing grant and pointers to the rule entries it loads.
   Small context means each agent loads only what it needs and should.
@@ -81,8 +83,9 @@ adapting control repos between orgs and machines.
   wake message at once.
 - **Registries** are a building block: files a control keeps to track shared things.
   The templates are examples, not a required set.
-- **Resources nest.** Machine control grants port blocks and heavy-job slots to org
-  controls; org controls sub-allocate to projects.
+- **Ports nest; heavy-job slots do not.** Machine control grants port blocks to org
+  controls, and org controls sub-allocate to projects. Heavy-job slots are recorded only
+  in machine control's registry, holder `<org>:<project>`; org controls relay requests.
 - **Two message classes.** Rulings (authority, policy) are chakrit's decisions and are
   applied as given. Task asks may be misread in relay; the receiving agent pushes back
   and the control resolves it with chakrit.
@@ -95,29 +98,32 @@ adapting control repos between orgs and machines.
   initiated, it scans one level down for folders that should get controls, asks
   chakrit (or applies chakrit's existing request), lodges the approved setups in
   `control.data.js` and runs them, so the structure is completed rather than grown one
-  folder at a time.
+  folder at a time. The new control runs the scan itself. Setup lodges it as a backlog
+  row; a parent sends it as a task after the wake, and chakrit triggers it for machine
+  control.
 - **Controls confirm every new task.** Org and machine controls present a plan and get
   chakrit's confirmation before each new task.
 - **Nothing runs upward.** Controls start, message and clear the agents below them. A
   child reaches its parent through the harness's own agent messaging, or asks chakrit
   to start the parent and relay; it never starts a parent or runs its scripts. Machine
-  control manages project panes directly when the org control is down, unless waking
-  the org control is faster or needs its context.
-- **Visible processes.** chakrit's global "leave server startup to me" is exempt in this
-  setup; every long-running process runs in a visible tmux pane instead.
+  control never acts on a project's pane; it reaches project work through the org
+  control, starting and waking it when it is not running.
+- **Visible processes.** Agents may start long-running processes, dev and preview
+  servers included, only in tmux panes chakrit can see, never in the harness's own
+  shell.
 - **No submodules.** Projects keep `repos.txt` and `bin/clone-repos`; clones are plain
   and gitignored.
 - **Engram first; files for what is read by path or shown.** Engram holds rules,
   knowledge, decisions and their reasoning, agents' state reports and done tasks.
   Registries and live tasks stay in files, for now, because scripts and the control
   page read them by path. Knowledge about one component repo goes in that repo's own
-  docs, so it travels with the clone (`ace-docs` where ACE exists; none is set up
-  without chakrit's permission). Without engram, a `memory/` folder per level holds
+  docs, so it travels with the clone (with the environment's docs skill; none is set
+  up without chakrit's permission). Without engram, a `memory/` folder per level holds
   what engram would, one file per topic key. A rule in engram is reliable only because
   pointers name it by topic key and agents load it in full; a rule found by searching
   alone is not guaranteed to apply.
 - **Saving names one order:** save before a clear or handoff with the agent's own
-  session-save skill when it has one (an `ace` agent writes `.ace/save.md`), otherwise
+  session-save skill when its Environment table names one, otherwise
   engram's `mem_session_summary`; report what was saved and where.
 - **`control.html` is the one page chakrit checks,** opened in a local browser. It is
   a fixed template that renders from `control.data.js` beside it, the only live task

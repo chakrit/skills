@@ -34,6 +34,15 @@ binary alone is not enough. Without engram, read `~/Documents/control/rules/<top
 | `rule/policy-org` | start (how this org is run; read only)     |
 | `rule/memory`     | start; before a save, handoff or wind-down |
 
-Messages from the org control or machine control are permitted. They come from a control
-agent, never from chakrit. A ruling (quoted from chakrit with a date) is chakrit's
-decision; a task ask that does not fit what you know gets pushed back to the control.
+## Environment
+
+How every agent in this org starts, onboards and saves. Controls start agents with the
+resume command; `none` means the org has no such step.
+
+| Item        | Value                |
+| ----------- | -------------------- |
+| School      | {{school}}           |
+| Resume      | `{{resume_command}}` |
+| New session | `{{new_command}}`    |
+| Init skill  | {{init_skill}}       |
+| Save skill  | {{save_skill}}       |

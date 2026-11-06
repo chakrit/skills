@@ -29,15 +29,25 @@ copying the page. Never copy font files into the control repo or the skill.
 
 ## Plan downstream controls
 
-Run after a machine control or an org control is set up or initiated. It finds the
-folders one level down that should get their own control, so the structure is complete
-rather than set up one folder at a time.
+The new machine or org control runs this itself, after its setup or initiation. It
+finds the folders one level down that should get their own control, so the structure
+is complete rather than set up one folder at a time. Setup lodges it as an Agent
+Backlog row in the new control's `control.data.js`; a parent that set up or initiated
+an org control sends it as a task after the wake, and chakrit asks machine control.
 
 1. **Scan** the new control's level:
-   - **Machine control:** every folder `~/Documents/<name>/` except `control`. A
-     folder is an org candidate when it has no `control/` subfolder and holds git
-     repos (`find ~/Documents/<name> -maxdepth 3 -name .git`). Suggest the folder
-     name as `<org>` and the GitHub org from its repos' `gh` remotes.
+   - **Machine control:** every folder `~/Documents/<name>/` except `control`.
+     Classify each one:
+
+     | Folder holds                                          | Candidate for                   |
+     | ----------------------------------------------------- | ------------------------------- |
+     | `control/AGENTS.md` with a `## Control` section       | nothing; register it if missing |
+     | `control/AGENTS.md` or `control/CLAUDE.md` without it | `references/initiation.md`      |
+     | git repos and no `control/`                           | `references/setup-org.md`       |
+
+     Find git repos with `find ~/Documents/<name> -maxdepth 3 -name .git`. For an org
+     candidate, suggest the folder name as `<org>` and the GitHub org from
+     its repos' remotes.
    - **Org control:** every folder `~/Documents/<org>/<name>/` except `control`.
      Classify each one:
 
@@ -49,7 +59,7 @@ rather than set up one folder at a time.
      | one git repo at its top level                   | ask chakrit which project owns it |
 
      For a project candidate, suggest the folder name as `<project>` and its clones'
-     `gh` remotes as `repos.txt` lines.
+     remotes as `repos.txt` lines.
    - Skip folders without git repos and list them as skipped.
 2. **Check authorization.** If chakrit already asked for downstream setup ("set up
    all the orgs", "do the projects too"), quote those words and continue. Otherwise
@@ -58,8 +68,8 @@ rather than set up one folder at a time.
 3. **Lodge.** Add one Agent Backlog entry per approved candidate in the new control's
    `control.data.js`, with chakrit's quoted words as the source. Commit.
 4. **Do.** Run the setup or initiation for each approved candidate, one at a time.
-   Each org control set up this way runs this section again for its own projects.
-   Mark each backlog entry done with its commit hash.
+   An org control set up or initiated this way gets this section as its task. Mark each
+   backlog entry done with its commit hash.
 
 ## Reach a parent
 
@@ -70,21 +80,36 @@ parent and relay the message, for example: "We need a port for the XYZ server an
 org control is not running; can you start it and pass this on?" A child never starts
 its parent or runs the parent's scripts.
 
-Machine control that needs a project pane while the org control is down manages that
-pane directly; it starts the org control first only when that is faster or the work
-needs org context.
+## Record the environment
+
+ACE is preferred where it exists and never required. An environment may wrap it: an
+org's school can ship its own launcher and init skill in place of `ace` and `ace-init`.
+Never assume the plain ACE names. Run this once for machine control and once per org;
+its values fill the Environment placeholders of `machine-control.md` or `org-root.md`.
+
+1. Find the values in the org's school, the instruction files already in the org's
+   folders, or chakrit's words. Ask chakrit when any value is unclear.
+
+   | Placeholder          | Value                                                       |
+   | -------------------- | ----------------------------------------------------------- |
+   | `{{school}}`         | the ACE school, or `none` without ACE                       |
+   | `{{resume_command}}` | what to type to resume the folder's last session            |
+   | `{{new_command}}`    | what to type to start a new session                         |
+   | `{{init_skill}}`     | the skill that onboards a folder, or `none`                 |
+   | `{{save_skill}}`     | the skill that saves a session before a clear, or `none`    |
+
+2. Without ACE, use the plain harness: for Claude Code, `claude --continue` and
+   `claude`; for Codex, `codex resume --last` and `codex`.
 
 ## Onboard into ACE
 
-ACE is optional. Run this for every folder a setup gives an instruction file: machine
-control, the org root, the org control and each project control.
+Run this for every folder a setup gives an instruction file: machine control, the org
+root, the org control and each project control. Use the Environment table that governs
+the folder: machine control's own, or the org root's for every folder in the org.
 
-1. Check whether ACE is installed: `command -v ace`. If it prints nothing, skip this
-   section; the setup is complete without it.
-2. Find the school. For an org's folders it is the org's school; ask chakrit for it
-   with the org names unless chakrit already said it. For machine control, use the
-   school chakrit names; if none is known, ask chakrit.
-3. In the folder, run `ace setup <school>` in a visible tmux pane, since it may ask for
+1. If the school is `none`, skip this section; the setup is complete without ACE.
+2. In the folder, set up the school in a visible tmux pane (`ace setup <school>`, or
+   the command the org's instructions name instead), since it may ask for
    authentication; tell chakrit which pane waits for input.
-4. Run the `ace-init` skill in that folder to finish onboarding. Commit the files it
-   writes where the folder is a repo; the org root is not one.
+3. Run the init skill in that folder to finish onboarding. Commit the files it writes
+   where the folder is a repo; the org root is not one.

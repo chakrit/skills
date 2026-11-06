@@ -8,9 +8,6 @@ The procedure is the section "Initiate an agent" in `templates/rules/handling-ag
 which machine setup seeds as engram entry `rule/handling-agents`, so controls run it
 without loading this skill. Follow that section. Its setup check sends you to
 `references/setup-org.md` or `references/setup-project.md`; those references fill in
-only the missing parts of an existing folder.
-
-After initiating an org control, run steps 1–2 of "Plan downstream controls" in
-`references/operations.md` for its org folder, and send the approved candidates to the
-org control as a task ask ("Give a task"); the org control initiates or sets up each
-one itself.
+only the missing parts of an existing folder. For an org control, its last step hands
+the org control "Plan downstream controls" in `references/operations.md`, which the org
+control runs itself.

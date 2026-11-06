@@ -12,7 +12,8 @@ line. It does not hold project details; project controls own those.
    this setup runs for "Initiate an agent": do only the steps whose result is missing,
    and never replace an existing file.
 2. **Confirm the names.** `<org>` is chakrit's short name for the org. Ask chakrit for
-   it and for the GitHub org it maps to, unless chakrit already said both.
+   it and for the GitHub org it maps to, unless chakrit already said both. Then follow
+   "Record the environment" in `references/operations.md` for the org.
 3. **Create the repo.**
 
    ```sh
@@ -33,16 +34,15 @@ line. It does not hold project details; project controls own those.
    | `templates/gitignore`                   | `.gitignore`               |
    | `templates/registries/projects.md`      | `registries/projects.md`   |
    | `templates/registries/ports-org.md`     | `registries/ports.md`      |
-   | `templates/registries/heavy-jobs.md`    | `registries/heavy-jobs.md` |
 
-   Then `ln -s AGENTS.md CLAUDE.md`. `registries/heavy-jobs.md` starts with every
-   holder `none`; it records the project holding a slot machine control granted the
-   org. Do not copy rule files; the instruction file points to the engram entries
-   machine control keeps. In `control.data.js`, under links, link
+   Then `ln -s AGENTS.md CLAUDE.md`. Do not copy rule files; the instruction file
+   points to the engram entries machine control keeps. In `control.data.js`, under
+   links, link
    `../../control/control.html` as "Machine control". Follow "Point the control page at
    PragmataPro" in `references/operations.md`.
 5. **Org root.** Copy `templates/instructions/org-root.md` to
-   `~/Documents/<org>/AGENTS.md` with the same placeholders, and run
+   `~/Documents/<org>/AGENTS.md` with the same placeholders and the Environment
+   placeholders, and run
    `ln -s AGENTS.md CLAUDE.md` there. The org root is not a git repo; never run
    `git init` in it.
 6. **Copy scripts.** Follow "Install scripts" in `references/operations.md`.
@@ -51,23 +51,27 @@ line. It does not hold project details; project controls own those.
    `~/Documents/<org>/`. Both folders share the org's memory.
 8. **ACE.** Follow "Onboard into ACE" in `references/operations.md` for the org control
    and the org root.
-9. **Register with machine control.** Ask machine control to add the org to
-   `registries/orgs.md`, to link this org's `control.html` from its own, and to
-   allocate a port block (see "Reach a parent" in `references/operations.md`). Record
-   the block it grants in `registries/ports.md`.
+9. **Register with machine control.** The org needs a row in machine control's
+   `registries/orgs.md`, a link from machine control's `control.html`, and a port
+   block. If you are machine control, add them yourself and commit in
+   `~/Documents/control`. Otherwise ask machine control (see "Reach a parent" in
+   `references/operations.md`). Record the block in `registries/ports.md`.
 10. **Register existing projects.** For each project folder under `~/Documents/<org>/`
     that has an agent, add a row to `registries/projects.md`, with Window and Agent
     pane empty unless it is running. Read `references/registries.md` for how
     registries and nested resources work.
-11. **Commit,** naming the skill revision.
-12. **Start the agent.** If you are machine control, follow "Start an agent" in
-    `rule/handling-agents` and rename its session to `<machine>:<org>:control`.
-    Otherwise add to the completion report: "Start the org control: in a tmux window,
-    `cd ~/Documents/<org>/control`, run the harness, then type
-    `/rename <machine>:<org>:control`."
-13. **Plan downstream.** Once the org control runs, it follows "Plan downstream
-    controls" in `references/operations.md` for project candidates under
-    `~/Documents/<org>/`, including existing project agents that need initiation.
+11. **Lodge downstream planning.** Add an Agent Backlog row to `control.data.js` (group
+    `todo`): item "Plan downstream controls (`control` skill,
+    `references/operations.md`)", agent `<machine>:<org>:control`, source chakrit's
+    request, next "after first start".
+12. **Commit,** naming the skill revision.
+13. **Start the agent.** If you are machine control, follow "Wake up an agent" in
+    `rule/handling-agents` (it starts the agent and renames its session to
+    `<machine>:<org>:control`), then send "Plan downstream controls" as its task
+    ("Give a task"). Otherwise add to the completion report: "Start the org control: in
+    a tmux window, `cd ~/Documents/<org>/control`, type the resume command from the org
+    root's Environment table, then `/rename <machine>:<org>:control`. Then ask it to run
+    its backlog row 'Plan downstream controls'."
 
 ## Done when
 
