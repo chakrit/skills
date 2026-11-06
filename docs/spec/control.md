@@ -144,6 +144,9 @@ appears only as an example name, and no rule rests on what chakrit wants.
   windows or layout, except that wind-down's exit closes the agent's pane.
 - It refuses to type when the pane's own shell holds the terminal's foreground group,
   instead of matching harness names, so a new harness needs no change.
+- It refuses to type when the pane's cursor line holds a letter or digit left of the
+  cursor: typed input the paste would join. It reads only left of the cursor, since an
+  empty prompt's placeholder sits to the right.
 - It runs through `uv run --script` (Python 3.10 or newer). Tests, from
   `skills/control/`: `uv run --no-project --python '>=3.10' python -B -m unittest
   discover -s tests`.

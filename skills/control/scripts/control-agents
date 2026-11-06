@@ -132,6 +132,16 @@ def check_unwatched(entry: Agent, clients: str) -> None:
         raise ValueError(f"{entry.slug}: someone is viewing {entry.pane}; not typing")
 
 
+def check_no_draft(entry: Agent, cursor_x: int, line: str) -> None:
+    """Refuse a prompt whose text left of the cursor holds more than prompt marks.
+
+    Text right of the cursor can be an empty prompt's placeholder, so it is not read.
+    """
+    if any(character.isalnum() for character in line[:cursor_x]):
+        raise ValueError(f"{entry.slug}: the prompt in pane {entry.pane} holds typed "
+                         "input; not typing")
+
+
 def check_session_name(name: str) -> None:
     if not SESSION_NAME.fullmatch(name):
         raise ValueError(f"{name!r} is not an agent name like lz49:acme:web")
@@ -173,10 +183,19 @@ def check_harness(entry: Agent) -> None:
                          "harness; not typing")
 
 
+def cursor_line(entry: Agent) -> tuple[int, str]:
+    """Return the cursor's column and the text of the pane line it sits on."""
+    cursor_x, cursor_y = tmux("display-message", "-p", "-t", entry.pane,
+                              "#{cursor_x}\t#{cursor_y}").rstrip("\n").split("\t")
+    line = tmux("capture-pane", "-p", "-t", entry.pane, "-S", cursor_y, "-E", cursor_y)
+    return int(cursor_x), line.rstrip("\n")
+
+
 def type_line(entry: Agent, text: str) -> None:
     buffer = f"control-{entry.slug}"
     check_harness(entry)
     check_unwatched(entry, tmux("list-clients", "-F", "#{pane_id}"))
+    check_no_draft(entry, *cursor_line(entry))
 
     tmux("load-buffer", "-b", buffer, "-", stdin=text)
     tmux("paste-buffer", "-p", "-d", "-b", buffer, "-t", entry.pane)

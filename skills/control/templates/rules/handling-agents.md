@@ -38,8 +38,8 @@ the command reports no session to resume.
 2. Use the harness's own agent messaging when sender and receiver both have it.
    Otherwise use `scripts/control-agents send <slug>` with the message on stdin. It
    types only into the registered pane, in the agent's folder, while a program other
-   than the pane's shell holds it and nobody is viewing it. Never hand-type into a pane
-   the script refused.
+   than the pane's shell holds it, nobody is viewing it, and its prompt holds no typed
+   input. Never hand-type into a pane the script refused.
 3. Clear, rename and wind down an agent only through `scripts/control-agents`.
 4. Quote rulings verbatim with the user's name and the date:
    `chakrit, 2026-11-04: "<exact words>"`.

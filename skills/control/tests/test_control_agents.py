@@ -107,6 +107,24 @@ class ForegroundTest(unittest.TestCase):
         self.assertFalse(agents.shell_holds_foreground(4100, " 4188\n"))
 
 
+class DraftTest(unittest.TestCase):
+    """A paste joins whatever the agent's prompt already holds; see docs/spec/control.md
+    "Script"."""
+
+    def test_empty_prompts_pass(self) -> None:
+        for line, cursor_x in (("❯", 2), ("│ >                        │", 4),
+                               ("› Ask Codex to do anything", 2), ("", 0)):
+            with self.subTest(line=line):
+                agents.check_no_draft(WEB, cursor_x, line)
+
+    def test_prompt_holding_typed_input_is_refused(self) -> None:
+        for line, cursor_x in (("❯ fix the login bug", 19), ("│ > hello        │", 9),
+                               ("❯ 42", 4), ("› ok Ask Codex", 4)):
+            with self.subTest(line=line):
+                with self.assertRaisesRegex(ValueError, "typed input"):
+                    agents.check_no_draft(WEB, cursor_x, line)
+
+
 class SessionNameTest(unittest.TestCase):
     def test_only_agent_names_pass(self) -> None:
         for name in ("lz49:control", "lz49:acme:control", "lz49:acme:web-v2"):
