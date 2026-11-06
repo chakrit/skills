@@ -20,6 +20,16 @@ use the separate `prod9/school` workflow.
   for this repository's skill edits or feedback. Do not copy its workflow skills
   into the published collection or add PROD9 as an import to solve editing setup.
 
+## Personal instructions are not skill requirements
+
+chakrit's user-level instructions (`~/.claude/CLAUDE.md` and its equivalents) govern
+how an agent works with chakrit while editing this repository. They say nothing about
+what the published skills should contain: those skills run for other agents, on other
+machines and setups, under their own rules. Do not copy those preferences into a skill,
+and do not report a skill as conflicting with them. Judge a skill against its own
+`SKILL.md`, its docs and chakrit's rulings on that skill. A personal preference enters a
+skill only when chakrit asks for it in that skill.
+
 ## Editing and feedback routing
 
 Before editing or preparing feedback, identify the exact skill, its source repository,
