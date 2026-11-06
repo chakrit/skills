@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{{title}}</title>
+<title>Control</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Iosevka+Charon:wght@400;600&family=Iosevka+Charon+Mono:wght@400;600&display=swap">
@@ -141,17 +141,11 @@
 </head>
 <body>
 <!--
-  Starter control page. Keep the look (colours, fonts, row tokens) so every control page
-  reads the same; adapt views, columns and groups when chakrit asks or the work needs it.
-
-  Each view's table holds one <tbody> per group, in the order shown in its comment.
-  A group opens with a heading row; its class sets the colour:
-    <tbody class="doing">
-      <tr><th colspan="3" scope="rowgroup">In progress <span class="count">1</span></th></tr>
-      <tr><td>Item</td><td class="dim">Source</td><td class="dim when">Nov 4</td></tr>
-    </tbody>
-  Group classes: todo, doing, waiting, blocked, done, agent. Leave out empty groups.
-  Keep every count (sidebar, group heading, head meta line) equal to the rows it counts.
+  Fixed template: every view, count and link renders from control.data.js next to this
+  file, and agents update the page by editing only that file. Keep the look (colours,
+  fonts, row tokens) so every control page reads the same. Change views, columns or
+  groups here, together with the data shape documented in control.data.js, only when
+  chakrit asks.
 -->
 <input type="radio" name="view" id="view-tasks">
 <input type="radio" name="view" id="view-attention" checked>
@@ -159,29 +153,24 @@
 <div class="shell">
 <aside>
   <div class="head">
-    <h1>{{title}}</h1>
-    <p class="meta">updated {{date}}</p>
+    <h1 id="title">Control</h1>
+    <p class="meta" id="updated">loading control.data.js</p>
   </div>
 
   <ul class="views">
-    <li><label for="view-tasks">Tasks <span class="count">0</span></label></li>
-    <li><label for="view-attention">Needs Attention <span class="count">0</span></label></li>
-    <li><label for="view-agents">Agent Backlog <span class="count">0</span></label></li>
+    <li><label for="view-tasks">Tasks <span class="count" id="count-tasks"></span></label></li>
+    <li><label for="view-attention">Needs Attention <span class="count" id="count-attention"></span></label></li>
+    <li><label for="view-agents">Agent Backlog <span class="count" id="count-agents"></span></label></li>
   </ul>
 
   <nav>
     <h2>Records</h2>
-    <!-- One link per instruction, policy and registry file, by relative path. -->
-    <ul>
-    </ul>
+    <ul id="records"></ul>
   </nav>
 
   <nav>
     <h2>Links</h2>
-    <!-- One link per related control page: org controls on machine control's page,
-         machine control on an org control's page. -->
-    <ul>
-    </ul>
+    <ul id="links"></ul>
   </nav>
 
   <button id="theme" type="button" aria-label="Switch theme"></button>
@@ -190,7 +179,6 @@
 <main>
 <section id="tasks" class="panel">
   <div class="head"><h2>Tasks</h2><p class="meta">0 items</p></div>
-  <!-- Work only chakrit can do. Groups: doing (In progress), todo (To do), done (Done). -->
   <table>
     <thead><tr><th>Item</th><th>Source</th><th>Since</th></tr></thead>
   </table>
@@ -198,9 +186,6 @@
 
 <section id="attention" class="panel">
   <div class="head"><h2>Needs Attention</h2><p class="meta">0 items</p></div>
-  <!-- Decisions and approvals an agent is waiting on. One "agent" group per waiting
-       agent, headed "Agents · <code>agent name</code>". Remove a row once chakrit acts.
-       Add class "hot" to the sidebar count while this view has rows. -->
   <table>
     <thead><tr><th>Item</th><th>Where to act</th><th>Recommendation</th><th>Since</th></tr></thead>
   </table>
@@ -208,10 +193,6 @@
 
 <section id="agents" class="panel">
   <div class="head"><h2>Agent Backlog</h2><p class="meta">0 items</p></div>
-  <!-- Every task agents own. Groups: blocked (Blocked), waiting (Waiting on chakrit),
-       doing (In progress), todo (Queued), done (Done). Source is chakrit's verbatim
-       words or the reporting agent; Next / evidence names the next step or the commit,
-       PR or save location. Drop done rows older than a week. -->
   <table>
     <thead><tr><th>Item</th><th>Agent</th><th>Source</th><th>Next / evidence</th></tr></thead>
   </table>
@@ -224,6 +205,212 @@
     root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
     localStorage.setItem('control-theme', root.dataset.theme);
   });
+</script>
+<!-- A script tag, not fetch: browsers block fetch of local files on a file:// page. -->
+<script src="control.data.js"></script>
+<script>
+  // Group order and labels; each key is also the tbody class that sets the group's tone.
+  const TASK_GROUPS = [
+    { key: 'doing', label: 'In progress' },
+    { key: 'todo', label: 'To do' },
+    { key: 'done', label: 'Done' },
+  ];
+  const BACKLOG_GROUPS = [
+    { key: 'blocked', label: 'Blocked' },
+    { key: 'waiting', label: 'Waiting on chakrit' },
+    { key: 'doing', label: 'In progress' },
+    { key: 'todo', label: 'Queued' },
+    { key: 'done', label: 'Done' },
+  ];
+
+  // One entry per table column, in column order: the data field and the cell class.
+  const TASK_COLUMNS = [
+    { field: 'item', cell: '' },
+    { field: 'source', cell: 'dim' },
+    { field: 'since', cell: 'dim when' },
+  ];
+  const ATTENTION_COLUMNS = [
+    { field: 'item', cell: '' },
+    { field: 'where', cell: 'dim' },
+    { field: 'recommendation', cell: '' },
+    { field: 'since', cell: 'dim when' },
+  ];
+  const BACKLOG_COLUMNS = [
+    { field: 'item', cell: '' },
+    { field: 'agent', cell: 'dim' },
+    { field: 'source', cell: 'dim' },
+    { field: 'next', cell: 'dim' },
+  ];
+
+  const LINK_SCHEMA = { label: text, href: relativeHref };
+  const CONTROL_SCHEMA = {
+    title: text,
+    updated: text,
+    tasks: shape(groupsSchema(TASK_GROUPS, TASK_COLUMNS)),
+    attention: listOf(shape({ agent: text, items: listOf(shape(rowSchema(ATTENTION_COLUMNS))) })),
+    backlog: shape(groupsSchema(BACKLOG_GROUPS, BACKLOG_COLUMNS)),
+    records: listOf(shape(LINK_SCHEMA)),
+    links: listOf(shape(LINK_SCHEMA)),
+  };
+  const NOT_LOADED = 'window.CONTROL is not set: control.data.js is missing next to this '
+    + 'page, has a syntax error, or does not assign window.CONTROL.';
+
+  const data = window.CONTROL;
+  const problems = isRecord(data) ? shapeProblems(data, CONTROL_SCHEMA, 'CONTROL') : [NOT_LOADED];
+  if (problems.length > 0) {
+    renderProblems(problems);
+  } else {
+    render(data);
+  }
+
+  // Rendering. Every data value enters the page through textContent or an href.
+
+  function render(control) {
+    const taskCount = TASK_GROUPS.flatMap((group) => control.tasks[group.key]).length;
+    const attentionCount = control.attention.flatMap((entry) => entry.items).length;
+    const backlogCount = BACKLOG_GROUPS.flatMap((group) => control.backlog[group.key]).length;
+
+    document.title = control.title;
+    document.getElementById('title').textContent = control.title;
+    document.getElementById('updated').textContent = `updated ${control.updated}`;
+    document.getElementById('records').append(...linkItems(control.records));
+    document.getElementById('links').append(...linkItems(control.links));
+    fillView('tasks', statusBodies(control.tasks, TASK_GROUPS, TASK_COLUMNS), taskCount);
+    fillView('attention', attentionBodies(control.attention), attentionCount);
+    fillView('agents', statusBodies(control.backlog, BACKLOG_GROUPS, BACKLOG_COLUMNS), backlogCount);
+    document.getElementById('count-attention').classList.toggle('hot', attentionCount > 0);
+  }
+
+  function renderProblems(found) {
+    const head = element('div', 'head');
+    head.append(element('h2', '', 'Control data error'),
+      element('p', 'meta', 'Fix control.data.js, then reload this page.'));
+    const rows = found.map((problem) => ({ problem }));
+    const table = element('table');
+    table.append(groupBody('blocked', ['Problems'], rows, [{ field: 'problem', cell: '' }]));
+    const section = element('section');
+    section.append(head, table);
+
+    document.getElementById('updated').textContent = 'no valid data';
+    document.querySelector('main').replaceChildren(section);
+  }
+
+  function fillView(id, bodies, rowCount) {
+    const section = document.getElementById(id);
+
+    section.querySelector('table').append(...bodies);
+    section.querySelector('.meta').textContent = rowCount === 1 ? '1 item' : `${rowCount} items`;
+    document.getElementById(`count-${id}`).textContent = String(rowCount);
+  }
+
+  function statusBodies(groups, defs, columns) {
+    return defs
+      .filter((group) => groups[group.key].length > 0)
+      .map((group) => groupBody(group.key, [group.label], groups[group.key], columns));
+  }
+
+  function attentionBodies(entries) {
+    return entries
+      .filter((entry) => entry.items.length > 0)
+      .map((entry) => groupBody('agent', ['Agents · ', element('code', '', entry.agent)],
+        entry.items, ATTENTION_COLUMNS));
+  }
+
+  function groupBody(tone, heading, rows, columns) {
+    const th = element('th');
+    th.colSpan = columns.length;
+    th.scope = 'rowgroup';
+    th.append(...heading, ' ', element('span', 'count', String(rows.length)));
+    const headRow = element('tr');
+    headRow.append(th);
+
+    const body = element('tbody', tone);
+    body.append(headRow, ...rows.map((row) => cellRow(row, columns)));
+    return body;
+  }
+
+  function cellRow(row, columns) {
+    const tr = element('tr');
+    tr.append(...columns.map((column) => element('td', column.cell, row[column.field])));
+    return tr;
+  }
+
+  function linkItems(links) {
+    return links.map((link) => {
+      const anchor = element('a', '', link.label);
+      anchor.href = link.href;
+      const item = element('li');
+      item.append(anchor);
+      return item;
+    });
+  }
+
+  function element(tag, className = '', content = '') {
+    const node = document.createElement(tag);
+    node.className = className;
+    node.textContent = content;
+    return node;
+  }
+
+  // Validation: a check takes (value, path) and returns a list of problem messages.
+
+  function shapeProblems(value, schema, path) {
+    if (!isRecord(value)) return [`${path} must be an object`];
+
+    const keys = Object.keys(schema);
+    const present = keys.filter((key) => Object.hasOwn(value, key));
+    const missing = keys
+      .filter((key) => !Object.hasOwn(value, key))
+      .map((key) => `${path}.${key} is missing`);
+    const unknown = Object.keys(value)
+      .filter((key) => !Object.hasOwn(schema, key))
+      .map((key) => `${path}.${key} is not a known key`);
+    const invalid = present.flatMap((key) => schema[key](value[key], `${path}.${key}`));
+
+    return [...missing, ...unknown, ...invalid];
+  }
+
+  function shape(schema) {
+    return (value, path) => shapeProblems(value, schema, path);
+  }
+
+  function listOf(check) {
+    return (value, path) => Array.isArray(value)
+      ? value.flatMap((entry, index) => check(entry, `${path}[${index}]`))
+      : [`${path} must be a list`];
+  }
+
+  function rowSchema(columns) {
+    return Object.fromEntries(columns.map((column) => [column.field, text]));
+  }
+
+  function groupsSchema(groups, columns) {
+    const rows = listOf(shape(rowSchema(columns)));
+    return Object.fromEntries(groups.map((group) => [group.key, rows]));
+  }
+
+  function text(value, path) {
+    return typeof value === 'string' ? [] : [`${path} must be a string`];
+  }
+
+  function relativeHref(value, path) {
+    if (typeof value !== 'string') return text(value, path);
+
+    return isRelativePath(value) ? [] : [`${path} must be a path relative to this page`];
+  }
+
+  // RFC 3986 relative-path reference: no leading slash and no colon in the first segment,
+  // so no scheme (javascript:, https:) and no absolute path. Backslashes are refused
+  // because browsers may read them as slashes.
+  function isRelativePath(href) {
+    const firstSegment = href.split('/')[0];
+    return href !== '' && !href.startsWith('/') && !firstSegment.includes(':')
+      && !href.includes('\\');
+  }
+
+  function isRecord(value) {
+    return typeof value === 'object' && value !== null && !Array.isArray(value);
+  }
 </script>
 </body>
 </html>
