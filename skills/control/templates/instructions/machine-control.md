@@ -50,7 +50,7 @@ Environment table instead. `none` means there is no such step.
 - `rules/`: the live rule files, only on a machine without engram.
 - `control.html`: the page the user checks, rendered from `control.data.js`: tasks,
   what needs the user, the agent backlog, links to org controls. Edit only
-  `control.data.js`.
+  `control.data.js` for updates.
 - `registries/orgs.md`: org controls.
 - `registries/ports.md`: port blocks granted to orgs.
 - `registries/heavy-jobs.md`: heavy-job slots and their holders.
