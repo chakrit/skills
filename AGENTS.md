@@ -32,6 +32,26 @@ preference enters a skill only when chakrit asks for it in that skill. When a sk
 conflicts with chakrit's personal instructions, leave the conflict alone: chakrit rules
 on it when invoking the skill.
 
+## The control setup running this agent is not the control skill
+
+The agent editing this repository usually runs as a controlled agent in chakrit's own
+control setup: a control agent wakes it, relays tasks and rulings, and it loads live
+rules from engram project `<machine>-control-rules` (or `~/Documents/control/rules/`
+without engram). Machine control installed those rules from an earlier version of the
+`control` skill and amends them on its own, so they and `skills/control/` drift apart in
+both directions. Mixing the two either leaves a warranted skill change unmade or edits
+the skill to match one machine's live setup.
+
+- Follow the live rules for your own conduct as a controlled agent: messaging,
+  reporting, resources, memory. They do not tell you what the skill says or should say.
+- Judge a change to `skills/control/` only against the skill's own files, its spec and
+  chakrit's rulings on the skill, as for any skill. A live rule that already holds a
+  change (for example, refusing to type into a pane with typed input) does not make
+  the skill change unnecessary. When chakrit and you agree a change is warranted, make
+  it in the skill whether or not the live rules carry it.
+- A skill change does not update the live rules, and you never edit them: machine
+  control owns them. When they differ from a landed skill change, tell your control.
+
 ## Editing and feedback routing
 
 Before editing or preparing feedback, identify the exact skill, its source repository,
