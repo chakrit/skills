@@ -65,9 +65,10 @@ and tell the user you did.
    shell profiles, MCP registrations). Write the steps for the user instead.
 3. Machine setup copies templates, then replaces every `{{placeholder}}`; a file with
    a leftover `{{` is not done. Org and project setups copy templates as they are and
-   never edit an agent's files: the agent fills them in when it is initiated.
+   never edit or commit an agent's files: the agent fills them in and commits them when
+   it is initiated.
 4. Keep policy and instruction files short. Agents skip long instructions.
-5. Commit each finished setup in the control's repo; never push.
+5. Machine setup commits what it wrote in its own repo; never push.
 
 ## Completion
 
@@ -82,7 +83,7 @@ A setup is done when:
   or the environment has no school;
 - for machine control, its `control.data.js` has an Agent Backlog row "Plan downstream
   controls"; an org control gets the planning as a task after its initiation;
-- what the setup wrote is committed, except in a single-repo project's folder, where
-  the agent commits its own files.
+- for machine control, what the setup wrote is committed.
 
-Report the folder, the agent name, the commit hash and any steps left for the user.
+Report the folder, the agent name, machine setup's commit hash and any steps left for
+the user.

@@ -39,9 +39,7 @@ plain clones.
 
    When you copied `AGENTS.md`, run `ln -s AGENTS.md CLAUDE.md`. For a wrapper, run
    `chmod +x bin/clone-repos`.
-6. **Commit** in a wrapper what this setup wrote, naming the skill revision. In a
-   single-repo project's folder, commit nothing; the agent commits its own files.
-7. **Initiate.** If you came here from "Initiate an agent", return there. If you are
+6. **Initiate.** If you came here from "Initiate an agent", return there. If you are
    the org control, follow "Initiate an agent" in `rule/handling-agents`. Otherwise add
    to the completion report: "Ask `<machine>:<org>:control` to initiate
    `<machine>:<org>:<project>` in `~/Documents/<org>/<project>`."

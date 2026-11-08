@@ -62,16 +62,16 @@ appears only as an example name, and no rule rests on what chakrit wants.
   there so a control can run it without the skill; it loads the skill only when the
   agent's folder needs setup first.
 - Policies name these procedures instead of restating them.
-- A control never edits another agent's files. Org and project setup only puts the
-  folder in place: use it, clone the repo (single-repo project) or `git init`, run the
-  school setup, and copy the level's templates as they are, the instruction template
-  only when the folder has no instruction file. Then the parent initiates the agent,
-  which takes its files over: fills the template values or adds the `## Control`
-  block to its own file, records its port block, pins engram, clones its repos, runs
-  its init skill. There is one initiation message; the control adapts it to what it
-  sees in the folder and gives the agent the parent's own context (names, port block,
-  how folders are onboarded, rulings, repos). Machine setup, which has no parent to
-  initiate it, fills its own templates.
+- A control never edits or commits another agent's files. Org and project setup only
+  puts the folder in place: use it, clone the repo (single-repo project) or `git
+  init`, run the school setup, and copy the level's templates as they are, the
+  instruction template only when the folder has no instruction file. Then the parent
+  initiates the agent, which takes its files over: fills the template values or adds
+  the `## Control` block to its own file, records its port block, pins engram, clones
+  its repos, runs its init skill. There is one initiation message; the control adapts
+  it to what it sees in the folder and gives the agent the parent's own context
+  (names, port block, how folders are onboarded, rulings, repos). Machine setup, which
+  has no parent to initiate it, fills its own templates.
 - The agent reports everything it did; the parent judges the report and only then
   sets the agent's registry Status from `initiating` to `initiated`. The downstream
   scan reads that Status, never the folder's files.

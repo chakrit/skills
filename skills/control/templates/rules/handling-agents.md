@@ -198,9 +198,10 @@ over.
    `.engram/config.json`<; this folder is a clone, so add `.engram/` to
    .git/info/exclude instead of committing it>. <Clone your repos, adding `.engram/`
    to each clone's .git/info/exclude.> <Run your init skill, <init skill>.> Commit
-   your changes. Then load the rule entries your instruction file names, in full, as
-   it describes. Reply with everything you did: the files you changed, the entries you
-   loaded, whether engram is installed, and any conflict with your existing rules.
+   your changes and the files setup copied. Then load the rule entries your
+   instruction file names, in full, as it describes. Reply with everything you did:
+   the files you changed, the entries you loaded, whether engram is installed, and any
+   conflict with your existing rules.
 
    <values>
    <block>

@@ -50,7 +50,7 @@ carries the task.
 - `control.html`: the page the user checks, rendered from `control.data.js`: tasks,
   what needs the user, the agent backlog, a link to machine control. Edit only
   `control.data.js` for updates.
-- `registries/projects.md`: project controls and their last-known panes.
+- `registries/projects.md`: project controls and their Status.
 - `registries/ports.md`: the org's port block and the blocks granted to projects.
 
 Commit completed coordination work as it happens. Never push without the user's

@@ -42,8 +42,7 @@ those.
    run `ln -s AGENTS.md CLAUDE.md`. Do not copy rule files; the instruction file points
    to the engram entries machine control keeps.
 6. **Copy scripts.** Follow "Install scripts" in `references/operations.md`.
-7. **Commit** what this setup wrote, naming the skill revision.
-8. **Initiate.** If you came here from "Initiate an agent", return there. If you are
+7. **Initiate.** If you came here from "Initiate an agent", return there. If you are
    machine control, follow "Initiate an agent" in `rule/handling-agents`. Otherwise
    add to the completion report: "Ask `<machine>:control` to initiate
    `<machine>:<org>:control` in `~/Documents/<org>/control`."
