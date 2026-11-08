@@ -34,7 +34,9 @@ parts of it.
    Grant through the org control and record the holder as `<org>:<project>`. Before
    each grant, check free memory and disk.
 3. Watch disk, memory and CPU. When one runs low, tell org controls to pause or
-   serialize heavy jobs.
+   serialize heavy jobs. Only you see every org's work, so you alone decide what to
+   pause, serialize or clean up; an org or project control cannot weigh work it does
+   not see.
 4. Never change machine software or settings. Suggest the change to the user.
 
 ## Control page
