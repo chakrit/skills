@@ -28,8 +28,15 @@ old conversation. Start a new session only when the task explicitly requires one
 the command reports no session to resume.
 
 - Never `exec` the harness. Never rename tmux windows.
-- Record the window and pane IDs in your registry, then rename the harness session:
-  `scripts/control-agents rename-session <slug> <agent-name>`.
+- Tag the pane with the agent's name, then rename the harness session:
+
+  ```sh
+  tmux set-option -p -t <pane_id> @agent <agent-name>
+  scripts/control-agents rename-session <slug> <agent-name>
+  ```
+
+  `scripts/control-agents` finds an agent only by this tag. The agent re-tags its own
+  pane at every session start, so the tag comes back after a tmux restart.
 
 ## Message an agent
 
@@ -38,7 +45,7 @@ the command reports no session to resume.
 2. Use the harness's own agent messaging when sender and receiver both have it.
    Otherwise read the pane with `scripts/control-agents inspect <slug>`, then use
    `scripts/control-agents send <slug>` with the message on stdin. It types only into
-   the registered pane, in the agent's folder, while a program other than the pane's
+   the one pane tagged with the agent's name, in the agent's folder, while a program other than the pane's
    shell holds it, nobody is viewing it, its prompt holds no typed input, and it has
    printed nothing since your last `inspect`. When it refuses for new output, inspect
    again and retry. Never hand-type into a pane the script refused.
@@ -91,9 +98,7 @@ agent saves, clears, exits its harness, and its shell exits, which closes the pa
 2. Run `scripts/control-agents wind-down <slug> --saved "<save location>"`. It types
    `/clear` and `/quit`, waits for the shell to take the pane back, then types `exit`.
    If the harness does not exit, the script types nothing into the shell; read the pane
-   and resolve it, or ask the user.
-3. Empty the agent's Window and Agent pane cells in your registry: the agent is not
-   running. Commit the registry change.
+   and resolve it, or ask the user. The pane closes, and its tag with it.
 
 "Wake up an agent" starts it again later and clears the resumed session.
 
@@ -103,8 +108,9 @@ Waking an agent and giving it a task are two separate messages. Never put a task
 background on one, in the wake message: an agent may jump to the task before it has
 finished loading its context.
 
-1. **Start.** If the script refuses the agent's recorded pane, find its pane as your
-   registry's header says; if it has none, start it ("Start an agent").
+1. **Start.** If the script finds no pane tagged with the agent's name, look for the
+   agent's harness in a pane open in its folder and tag it ("Start an agent"); if it
+   has none, start it.
 2. **Clear.** Unless the session was started new, run "Clear an agent". A resumed or
    still-running session holds its previous conversation, even when it was cleared at
    a wind-down.
@@ -158,7 +164,8 @@ over.
    for that level ("Set up an org control" or "Set up a project control"), which
    returns you here.
 2. **Start** the agent if it is not running ("Start an agent").
-3. **Record it.** Add the agent's row to your registry if it has none. Grant a port
+3. **Record it.** Add the agent's row to your registry with Status `initiating` if it
+   has none. Grant a port
    block if it has none: machine control grants an org control a block from
    8000–9000, an org control grants a project control a block from its own. Record it
    in your `registries/ports.md`. Machine control also adds the org's line under
@@ -167,11 +174,12 @@ over.
 4. **Write the message.** Start from the message below and adapt it to what you see in
    the agent's folder: whether its instruction file is the level template as copied or
    its own file, which other templates setup copied, and what is still missing. Give
-   only what the agent cannot find itself: its agent name, parent and engram project,
-   its port block, and for an org control its GitHub org, the Environment values its
-   setup recorded and the control page's font steps ("Point the control page at
-   PragmataPro" in the control skill's `references/operations.md`); for a project, its
-   repos. When the instruction file is its own, include the `## Control` section, down
+   the context from your own work that the agent cannot find itself: its agent name,
+   parent and engram project, its port block, how folders are onboarded here (the
+   school and init skill you use), and any rulings or context it needs; for an org
+   control, its GitHub org and the control page's font steps ("Point the control page
+   at PragmataPro" in the control skill's `references/operations.md`); for a project,
+   its repos. When the instruction file is its own, include the `## Control` section, down
    to the next `##` heading, of the agent's level template (the control skill's
    `templates/instructions/<level>-control.md`; without the skill, from a set-up
    sibling's instruction file).
@@ -186,20 +194,23 @@ over.
    below to it>. Keep your existing rules, and move any governance rule your level
    policy now covers out of it. Fill the {{values}} in <the other files setup
    copied>. Record your port block <under "Ports" | in registries/ports.md>. When
-   `command -v engram` prints a path, run `engram init <engram project>`; in a repo
-   shared with others, add `.engram/` to `.git/info/exclude` instead of committing it.
-   <Clone your repos. Run your init skill, <init skill>.> Commit your changes. Then
-   load the rule entries your instruction file names, in full, as it describes. Reply
-   with the files you changed, the entries you loaded, whether engram is installed,
-   and any conflict with your existing rules.
+   `command -v engram` prints a path, run `engram init <engram project>` and commit
+   `.engram/config.json`<; this folder is a clone, so add `.engram/` to
+   .git/info/exclude instead of committing it>. <Clone your repos, adding `.engram/`
+   to each clone's .git/info/exclude.> <Run your init skill, <init skill>.> Commit
+   your changes. Then load the rule entries your instruction file names, in full, as
+   it describes. Reply with everything you did: the files you changed, the entries you
+   loaded, whether engram is installed, and any conflict with your existing rules.
 
    <values>
    <block>
    ```
 
 5. **Wake it** ("Wake up an agent"), then send the message as its task.
-6. **Wait for the acknowledgment.** Delivery is not acknowledgment. Record it in the
-   Agent Backlog of your `control.data.js` with the paths the agent reported.
+6. **Judge the report.** Delivery is not acknowledgment; wait for the agent's report.
+   When it shows everything the message asked for done, set the agent's Status to
+   `initiated` in your registry and commit. Otherwise reply with what is missing and
+   judge the next report.
 7. **Hand an org control its planning.** For an org control, send "Plan downstream
    controls" as its next task ("Give a task"): it loads the `control` skill and runs
    that section of `references/operations.md` for its own org.

@@ -41,32 +41,18 @@ control to run it; machine control sends it to an org control as a task after
 initiating it.
 
 1. **Scan** the new control's level:
-   - **Machine control:** every folder `~/Documents/<name>/` except `control`.
-     Classify each one:
-
-     | Folder holds                                          | Candidate for                   |
-     | ----------------------------------------------------- | ------------------------------- |
-     | `control/AGENTS.md` with a `## Control` section       | nothing; register it if missing |
-     | `control/AGENTS.md` or `control/CLAUDE.md` without it | `references/initiation.md`      |
-     | git repos and no `control/`                           | `references/setup-org.md`       |
-
-     Find git repos with `find ~/Documents/<name> -maxdepth 3 -name .git`. For an org
-     candidate, suggest the folder name as `<org>` and the GitHub org from
-     its repos' remotes. Registering an org also adds its line under `## GitHub orgs`
-     in `registries/orgs.md`: find out its GitHub org, and flag the user only when you
-     cannot.
-   - **Org control:** every folder `~/Documents/<org>/<name>/` except `control`. Each
-     one that is a git repo, or holds git repos, is a project. Classify it by its
-     top-level instruction file:
-
-     | `AGENTS.md` or `CLAUDE.md`        | Candidate for                   |
-     | --------------------------------- | ------------------------------- |
-     | has a `## Control` section        | nothing; register it if missing |
-     | exists without that section       | `references/initiation.md`      |
-     | neither exists                    | `references/setup-project.md`   |
-
-     Suggest the folder name as `<project>`. For a folder holding several repos, suggest
-     their remotes as `repos.txt` lines.
+   - **Machine control:** every folder `~/Documents/<name>/` except `control` that
+     holds git repos (`find ~/Documents/<name> -maxdepth 3 -name .git`). Its org
+     control is `~/Documents/<name>/control`.
+   - **Org control:** every folder `~/Documents/<org>/<name>/` except `control` that is
+     a git repo or holds git repos. Each one is a project.
+   - Classify each by your own registry (`registries/orgs.md` or
+     `registries/projects.md`), never by the folder's files: a row with Status
+     `initiated` needs nothing; anything else is a candidate for "Initiate an agent",
+     which runs the setup first when the folder needs it.
+   - Suggest the folder name as `<org>` or `<project>`. For an org, suggest the GitHub
+     org from its repos' remotes; flag the user only when you cannot find it. For a
+     folder holding several repos, suggest their remotes as `repos.txt` lines.
    - Skip folders without git repos and list them as skipped.
 2. **Check authorization.** If the user already asked for downstream setup ("set up
    all the orgs", "do the projects too"), quote those words and continue. Otherwise
@@ -74,7 +60,7 @@ initiating it.
    Wait for the user's answer. Never move or rename a folder the user has not named.
 3. **Lodge.** Add one Agent Backlog entry per approved candidate in the new control's
    `control.data.js`, with the user's quoted words as the source. Commit.
-4. **Do.** Run the setup or initiation for each approved candidate, one at a time.
+4. **Do.** Run "Initiate an agent" for each approved candidate, one at a time.
    An org control set up or initiated this way gets this section as its task. Mark each
    backlog entry done with its commit hash.
 
@@ -87,36 +73,20 @@ parent and relay the message, for example: "We need a port for the XYZ server an
 org control is not running; can you start it and pass this on?" A child never starts
 its parent or runs the parent's scripts.
 
-## Record the environment
-
-ACE is preferred where it exists and never required. An environment may use its own CLI
-and init skill in place of `ace` and `ace-init`. Never assume the plain ACE names. Run
-this once for machine control and once per org control; its values fill the
-Environment placeholders of `machine-control.md` or `org-control.md`. An agent started in a folder
-already gets its environment's start and save skills from the environment itself, so
-only onboarding, which runs before that, needs these values.
-
-Find the values in the org's school, the instruction files already in the org's
-projects, or the user's words. Ask the user when any value is unclear.
-
-| Placeholder      | Value                                       |
-| ---------------- | ------------------------------------------- |
-| `{{school}}`     | the ACE school, or `none` without ACE       |
-| `{{init_skill}}` | the skill that onboards a folder, or `none` |
-
 ## Onboard into ACE
 
-Run this in every control a setup creates. Use the Environment values that govern the
-control: machine control's, or its org control's for the org control and each of its
-projects. For an org control, use the values its setup recorded in "Record the
-environment"; its own table may not be written yet.
+Run this in every control a setup creates. ACE is preferred where it exists and never
+required. An environment may use its own CLI and init skill in place of `ace` and
+`ace-init`, so never assume the plain ACE names: use the school and init skill your own
+environment uses, from your instruction file, your school or the user's words. Ask the
+user when either is unclear.
 
-1. If the school is `none`, skip this section; the setup is complete without ACE.
-2. In the folder, set up the school in a visible tmux pane with the command the
-   environment uses for it, found as "Record the environment" finds its values; prefer
-   ACE's own where `ace` is installed. It may ask for authentication; tell the user
-   which pane waits for input.
-3. If the init skill is `none`, skip this step. For machine control, run the init
-   skill in its folder to finish onboarding and commit the files it writes. An org or
-   project control runs its own init skill when it is initiated, since the init skill
-   writes the agent's instructions.
+1. If your environment has no school, skip this section; the setup is complete without
+   ACE.
+2. In the folder, set up the school in a visible tmux pane with the command your
+   environment uses for it; prefer ACE's own where `ace` is installed. It may ask for
+   authentication; tell the user which pane waits for input.
+3. For machine control, run the init skill in its folder to finish onboarding and
+   commit the files it writes. An org or project control runs its own init skill when
+   it is initiated, since the init skill writes the agent's instructions; the
+   initiation message names it.

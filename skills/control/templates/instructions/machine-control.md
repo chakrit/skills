@@ -35,16 +35,6 @@ You own every rule entry in engram project `{{machine}}-control-rules` and the f
 
 (none yet)
 
-## Environment
-
-How this repo is onboarded into ACE. Each org control keeps its own table for its org.
-`none` means there is no such step.
-
-| Item       | Value          |
-| ---------- | -------------- |
-| School     | {{school}}     |
-| Init skill | {{init_skill}} |
-
 ## Records
 
 - `rules/`: the live rule files, only on a machine without engram.

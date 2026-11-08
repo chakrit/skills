@@ -12,7 +12,8 @@ Your parent is `{{machine}}:control` in `~/Documents/control`.
 **At session start and after a clear or compaction,** load every entry the table marks
 "start", then call `mem_context` for your engram project `{{machine}}-{{org}}` (without
 engram, read the file list of `memory/`). Nothing loads these for you: skip this and you
-work with no rules and no memory.
+work with no rules and no memory. Then tag your pane so machine control's script can
+find you: `tmux set-option -p -t "$TMUX_PANE" @agent {{machine}}:{{org}}:control`.
 
 Your rules live in engram project `{{machine}}-control-rules`. Load each entry in full:
 `mem_search` its topic key with project `{{machine}}-control-rules`, take the result
@@ -39,16 +40,6 @@ report your current state, and take no new work until the control sends a task.
 Finish a wake-up or initiation before taking any task. A new task that arrives while you
 are working waits: finish your current work first, and your save before the next clear
 carries the task.
-
-### Environment
-
-How a folder in this org (this repo and each project) is onboarded into ACE. `none`
-means the org has no such step.
-
-| Item       | Value          |
-| ---------- | -------------- |
-| School     | {{school}}     |
-| Init skill | {{init_skill}} |
 
 ### Rulings
 

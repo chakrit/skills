@@ -67,13 +67,14 @@ says. Use the project name the setup reference gives you.
    engram init <name>
    ```
 
-   This writes `.engram/config.json`. Commit it with the rest of the setup, except in
-   a component repo: a single-repo project's folder, or a clone in a wrapper.
+   This writes `.engram/config.json`. Commit it with the rest of the setup.
 4. Always pin. An unpinned folder takes its name from its `origin` remote or, without
    one, from its directory, and collides with same-named folders elsewhere.
-5. In a component repo, add `.engram/` to its `.git/info/exclude` instead. Never commit
-   `.engram/` into a component repo. If a session ever starts inside a clone in a
-   wrapper, pin that clone with the wrapper's name the same way.
+5. Only project controls hold clones of repos with a remote: a single-repo project's
+   folder, and each clone in a wrapper. There, shared with others or not, add
+   `.engram/` to `.git/info/exclude` instead of committing it. Machine control, org
+   controls and wrappers have no remote and commit it. If a session ever starts inside
+   a clone in a wrapper, pin that clone with the wrapper's name the same way.
 6. Do not use engram project aliases. They do not affect project resolution.
 
 ## Install steps for the user
@@ -91,6 +92,7 @@ registrations. Give the user this list when the user asks how to install engram:
 4. Do NOT run `engram setup claude-code`. It installs hooks and a plugin and offers
    to rewrite ~/.claude/settings.json.
 5. For each "engram pin pending" line a setup reported, run `engram init <name>` in
-   the named folder, then commit .engram/config.json there, except in a component
-   repo, where .engram/ goes in .git/info/exclude.
+   the named folder, then commit .engram/config.json there, except in a clone of a
+   repo with a remote (a single-repo project, or a clone in a wrapper), where
+   .engram/ goes in .git/info/exclude.
 ```

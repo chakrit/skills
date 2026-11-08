@@ -15,8 +15,7 @@ those.
    GitHub org that may be named differently. The user's request usually holds both
    ("set up fi/ to manage my Forward Insight stuff"); otherwise find them from the
    environment (the org's repos and their remotes, `gh`). Flag the user only when you
-   cannot settle one. Then follow "Record the environment" in
-   `references/operations.md` for the org.
+   cannot settle one.
 3. **Get the folder.** If it exists, use it, and run `git init` in it when it is not a
    git repo. Otherwise:
 

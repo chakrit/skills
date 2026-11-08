@@ -32,7 +32,6 @@ Use these names exactly, in every file and message.
 | `<org>`         | The user's short org name (`datawow`, not `datawowio`).                                                                                       |
 | Policy          | Governance rules for one level: engram entry `rule/policy-<level>`.                                                                           |
 | Rule entry      | A rule set in engram project `<machine>-control-rules`, seeded from `templates/rules/`; files in `~/Documents/control/rules/` without engram. |
-| Environment     | Table in machine control's and each org control's instruction file: the school and init skill that onboard its folders.                       |
 | Registry        | A file a control keeps to track shared things (ports, heavy-job slots, members).                                                              |
 | Ruling          | The user's decision on authority or policy, relayed by a control.                                                                             |
 | Task ask        | Work the user asked a control to hand to an agent.                                                                                            |
@@ -79,8 +78,8 @@ A setup is done when:
 - the agent's instruction file contains the standing grant and the rule-entry pointers:
   machine setup writes them; for an org or project control, the initiation's
   acknowledgment meets this item, or the report asks the parent to initiate it;
-- the control's repo is onboarded as its Environment values say ("Onboard into ACE" in
-  `references/operations.md`), or its school is `none`;
+- the control's repo is onboarded ("Onboard into ACE" in `references/operations.md`),
+  or the environment has no school;
 - for machine control, its `control.data.js` has an Agent Backlog row "Plan downstream
   controls"; an org control gets the planning as a task after its initiation;
 - what the setup wrote is committed, except in a single-repo project's folder, where

@@ -69,8 +69,12 @@ appears only as an example name, and no rule rests on what chakrit wants.
   which takes its files over: fills the template values or adds the `## Control`
   block to its own file, records its port block, pins engram, clones its repos, runs
   its init skill. There is one initiation message; the control adapts it to what it
-  sees in the folder. Machine setup, which has no parent to initiate it, fills its
-  own templates.
+  sees in the folder and gives the agent the parent's own context (names, port block,
+  how folders are onboarded, rulings, repos). Machine setup, which has no parent to
+  initiate it, fills its own templates.
+- The agent reports everything it did; the parent judges the report and only then
+  sets the agent's registry Status from `initiating` to `initiated`. The downstream
+  scan reads that Status, never the folder's files.
 
 ## Environment
 
@@ -79,8 +83,9 @@ appears only as an example name, and no rule rests on what chakrit wants.
 - An agent started through its environment already has that environment's start and
   save skills; waking and saving name none.
 - A control starts agents below it with the command that started its own session.
-- The Environment table (machine control's instruction file, each org control's) holds
-  only the school and init skill, for onboarding.
+- No instruction file keeps an Environment table. Whoever runs a setup onboards the
+  folder the way its own environment does, and the parent passes that in the
+  initiation message.
 
 ## Agent handling
 
@@ -126,18 +131,19 @@ appears only as an example name, and no rule rests on what chakrit wants.
 
 - Registries are Markdown files a control keeps to track shared things; the templates
   are examples, not a required set.
-- Agent rows hold slug, checkout and the last-known window and pane. The user starts
-  and moves agents alongside the controls, so the pane IDs are a cache: controls use
-  them as they are and correct a row only when the script refuses the pane or the cells
-  are empty.
+- Agent rows hold the slug and Status only; no script reads a registry. The script
+  finds a running agent's pane by the tmux pane option `@agent <agent name>`, which the
+  control sets at start and the agent sets on its own pane at every session start, so
+  it returns after a tmux restart. The script derives the agent's folder from the
+  layout and refuses a tagged pane open elsewhere. It refuses the slug `control`, which
+  would match an org control's own tag as one of its projects.
 - Ports nest: machine control grants blocks to org controls, which grant blocks to
   projects. Heavy-job slots do not nest: only machine control records them, holder
   `<org>:<project>`; org controls relay requests.
 - Machine control alone decides what to pause, serialize or clean up when disk,
   memory or CPU runs low: only the top level sees every agent's work.
 - Engram holds rules, knowledge, decisions, state reports and done tasks. Registries
-  and live tasks stay in files, for now, because scripts and the control page read
-  them by path. Without engram, a `memory/` folder per level holds what engram would.
+  and live tasks stay in files, for now. Without engram, a `memory/` folder per level holds what engram would.
 - Knowledge about one component repo goes in that repo's own docs, so it travels with
   the clone.
 - `control.html` is the one page the user checks. It is a fixed template rendering
@@ -150,8 +156,9 @@ appears only as an example name, and no rule rests on what chakrit wants.
 
 ## Script
 
-- One reference script, `scripts/control-agents`, with no configuration: it finds its
-  registry from the folder layout, talks to the tmux server it runs in, and hard-codes
+- One reference script, `scripts/control-agents`, with no configuration: it derives
+  its agents' names and folders from the folder layout, finds their panes by tag,
+  talks to the tmux server it runs in, and hard-codes
   the harness slash commands. Controls copy it and may adapt it.
 - It targets panes only by tmux ID, re-checks the pane before typing, and never changes
   windows or layout, except that wind-down's exit closes the agent's pane.
