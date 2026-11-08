@@ -10,7 +10,9 @@ Your parent is `{{machine}}:{{org}}:control` in `~/Documents/{{org}}/control`.
 **At session start and after a clear or compaction,** load every entry the table marks
 "start", then call `mem_context` for your engram project `{{machine}}-{{org}}-{{project}}`
 (without engram, read the file list of `memory/`). Nothing loads these for you: skip
-this and you work with no rules and no memory.
+this and you work with no rules and no memory. Then tag your pane so your org control's
+script can find you: `tmux set-option -p -t "$TMUX_PANE" @agent
+{{machine}}:{{org}}:{{project}}`.
 
 Your rules live in engram project `{{machine}}-control-rules`. Load each entry in full:
 `mem_search` its topic key with project `{{machine}}-control-rules`, take the result

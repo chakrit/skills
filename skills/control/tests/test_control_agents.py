@@ -1,4 +1,4 @@
-"""Registry lookup and pane checks of scripts/control-agents; no live tmux."""
+"""Pane lookup and pane checks of scripts/control-agents; no live tmux."""
 
 from datetime import datetime, timezone
 from pathlib import Path
@@ -11,84 +11,85 @@ agents = SimpleNamespace(**runpy.run_path(str(SCRIPT)))
 
 HOME = Path("/home/chakrit")
 DOCUMENTS = HOME / "Documents"
-REGISTRY = """# Projects
+MACHINE = agents.MachineControl("lz49", DOCUMENTS)
+ACME = agents.OrgControl("lz49", DOCUMENTS / "acme")
+# `tmux list-panes -a -F '#{pane_id}\t#{@agent}'`; an untagged pane prints an empty name.
+PANES = agents.parse_tagged("%1\t\n"
+                            "%7\tlz49:acme:web\n"
+                            "%9\tlz49:acme:api-v2\n"
+                            "%3\tlz49:acme:control\n"
+                            "%6\tlz49:control\n"
+                            "%4\tlz49:other:web\n"
+                            "%5\tgz44:acme:web\n"
+                            "%8\tlz49:acme:docs:extra\n")
+WEB = agents.Agent("web", DOCUMENTS / "acme/web", "%7")
 
-| Project | Checkout | Window | Agent pane |
-| ------- | -------- | ------ | ---------- |
-| web     | web      | @3     | %7         |
-| api-v2  | api      | @4     | %9         |
-| docs    | docs     |        |            |
-"""
-WEB = agents.Agent("web", DOCUMENTS / "acme/web", "@3", "%7")
-DOCS = agents.Agent("docs", DOCUMENTS / "acme/docs", "", "")
 
+class ScopeTest(unittest.TestCase):
+    def test_machine_control_manages_org_controls(self) -> None:
+        self.assertEqual(agents.control_scope(DOCUMENTS / "control", HOME, "lz49"),
+                         MACHINE)
 
-class RegistryTest(unittest.TestCase):
-    def test_machine_control_reads_orgs_relative_to_documents(self) -> None:
-        self.assertEqual(agents.registry(DOCUMENTS / "control", HOME),
-                         (DOCUMENTS / "control/registries/orgs.md", DOCUMENTS))
-
-    def test_org_control_reads_projects_relative_to_its_org(self) -> None:
-        self.assertEqual(agents.registry(DOCUMENTS / "acme/control", HOME),
-                         (DOCUMENTS / "acme/control/registries/projects.md",
-                          DOCUMENTS / "acme"))
+    def test_org_control_manages_its_org_projects(self) -> None:
+        self.assertEqual(agents.control_scope(DOCUMENTS / "acme/control", HOME, "lz49"),
+                         ACME)
 
     def test_other_folders_are_refused(self) -> None:
         for repository in (DOCUMENTS / "acme/web", DOCUMENTS / "acme/x/control",
                            HOME / "control", DOCUMENTS / "control/control"):
             with self.subTest(repository=repository):
                 with self.assertRaises(ValueError):
-                    agents.registry(repository, HOME)
+                    agents.control_scope(repository, HOME, "lz49")
 
-    def test_parse_reads_slug_rows_only(self) -> None:
-        parsed = agents.parse(REGISTRY, DOCUMENTS / "acme")
+    def test_slug_gives_the_agent_name_and_folder(self) -> None:
+        self.assertEqual((MACHINE.name("acme"), MACHINE.folder("acme")),
+                         ("lz49:acme:control", DOCUMENTS / "acme/control"))
+        self.assertEqual((ACME.name("web"), ACME.folder("web")),
+                         ("lz49:acme:web", DOCUMENTS / "acme/web"))
 
-        self.assertEqual(parsed, {
-            "web": WEB,
-            "api-v2": agents.Agent("api-v2", DOCUMENTS / "acme/api", "@4", "%9"),
-            "docs": DOCS,
-        })
 
-    def test_parse_refuses_targets_that_are_not_tmux_ids(self) -> None:
-        for row in ("| web | web | main:1 | %7 |",
-                    "| web | web | @3 | main:1.0 |",
-                    "| web | web | @3 | |",
-                    "| web | web | | %7 |",
-                    "| web | ../other | @3 | %7 |",
-                    "| web | /etc | @3 | %7 |",
-                    "| web | a/.. | @3 | %7 |",
-                    "| web | ../other | | |"):
-            with self.subTest(row=row):
-                with self.assertRaises(ValueError):
-                    agents.parse(row, DOCUMENTS / "acme")
+class FindAgentTest(unittest.TestCase):
+    def test_the_one_tagged_pane_is_found(self) -> None:
+        self.assertEqual(agents.find_agent(ACME, "web", PANES), WEB)
+        self.assertEqual(agents.find_agent(MACHINE, "acme", PANES),
+                         agents.Agent("acme", DOCUMENTS / "acme/control", "%3"))
+
+    def test_untagged_agent_is_refused_with_the_tagging_command(self) -> None:
+        with self.assertRaisesRegex(
+                ValueError, "^docs: no pane is tagged @agent lz49:acme:docs; tag the "
+                            "agent's pane with `tmux set-option -p -t <pane> @agent "
+                            "lz49:acme:docs`$"):
+            agents.find_agent(ACME, "docs", PANES)
+
+    def test_name_on_several_panes_is_refused_naming_them(self) -> None:
+        doubled = PANES + agents.parse_tagged("%12\tlz49:acme:web\n")
+        with self.assertRaisesRegex(ValueError, "^web: .*%7.*%12"):
+            agents.find_agent(ACME, "web", doubled)
+
+    def test_slugs_that_are_not_managed_agents_are_refused(self) -> None:
+        for slug in ("", "Web", "../web", "web:x", "-web", "control"):
+            with self.subTest(slug=slug):
+                with self.assertRaisesRegex(ValueError, "not a slug"):
+                    agents.find_agent(ACME, slug, PANES)
 
 
 class ListingTest(unittest.TestCase):
-    def test_listing_marks_agents_with_no_pane_recorded(self) -> None:
-        self.assertEqual(
-            agents.listing({"web": WEB, "docs": DOCS}),
-            f"web\t@3\t%7\t{DOCUMENTS}/acme/web\n"
-            f"docs\t-\t-\t{DOCUMENTS}/acme/docs\tno pane recorded\n")
+    def test_org_control_lists_its_tagged_projects(self) -> None:
+        self.assertEqual(agents.listing(ACME, PANES),
+                         f"web\t%7\t{DOCUMENTS}/acme/web\n"
+                         f"api-v2\t%9\t{DOCUMENTS}/acme/api-v2\n")
 
-
-class RecordedPaneTest(unittest.TestCase):
-    def test_agent_with_a_recorded_pane_is_returned(self) -> None:
-        self.assertEqual(agents.recorded_pane(WEB), WEB)
-
-    def test_agent_with_no_pane_recorded_is_refused(self) -> None:
-        with self.assertRaisesRegex(ValueError, "docs has no pane recorded"):
-            agents.recorded_pane(DOCS)
+    def test_machine_control_lists_its_tagged_org_controls(self) -> None:
+        self.assertEqual(agents.listing(MACHINE, PANES),
+                         f"acme\t%3\t{DOCUMENTS}/acme/control\n")
 
 
 class PaneTest(unittest.TestCase):
-    def test_registered_live_pane_returns_its_shell_pid(self) -> None:
-        self.assertEqual(agents.check_pane(WEB, f"@3\t{DOCUMENTS}/acme/web\t0\t4100\n"),
-                         4100)
+    def test_live_pane_in_the_agent_folder_returns_its_shell_pid(self) -> None:
+        self.assertEqual(agents.check_pane(WEB, f"{DOCUMENTS}/acme/web\t0\t4100\n"), 4100)
 
     def test_mismatched_panes_are_refused(self) -> None:
-        for info in (f"@3\t{DOCUMENTS}/acme/web\t1\t4100",
-                     f"@8\t{DOCUMENTS}/acme/web\t0\t4100",
-                     f"@3\t{DOCUMENTS}/acme/api\t0\t4100"):
+        for info in (f"{DOCUMENTS}/acme/web\t1\t4100", f"{DOCUMENTS}/acme/api\t0\t4100"):
             with self.subTest(info=info):
                 with self.assertRaises(ValueError):
                     agents.check_pane(WEB, info)
