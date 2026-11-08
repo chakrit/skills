@@ -7,7 +7,8 @@ is not fully set up, the setup for its level runs first.
 The procedure is the section "Initiate an agent" in `templates/rules/handling-agents.md`,
 which machine setup seeds as engram entry `rule/handling-agents`, so controls run it
 without loading this skill. Follow that section. Its setup check sends you to
-`references/setup-org.md` or `references/setup-project.md`; those references fill in
-only the missing parts of an existing folder. For an org control, its last step hands
+`references/setup-org.md` or `references/setup-project.md`; those put the folder in
+place without editing existing files, then return you to initiation, where the agent
+takes over its files. For an org control, its last step hands
 the org control "Plan downstream controls" in `references/operations.md`, which the org
 control runs itself.

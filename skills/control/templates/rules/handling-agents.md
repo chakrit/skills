@@ -36,10 +36,12 @@ the command reports no session to resume.
 1. Identify the sender in the first line: `FROM: <agent-name> (<folder>)`. Never write
    as the user.
 2. Use the harness's own agent messaging when sender and receiver both have it.
-   Otherwise use `scripts/control-agents send <slug>` with the message on stdin. It
-   types only into the registered pane, in the agent's folder, while a program other
-   than the pane's shell holds it, nobody is viewing it, and its prompt holds no typed
-   input. Never hand-type into a pane the script refused.
+   Otherwise read the pane with `scripts/control-agents inspect <slug>`, then use
+   `scripts/control-agents send <slug>` with the message on stdin. It types only into
+   the registered pane, in the agent's folder, while a program other than the pane's
+   shell holds it, nobody is viewing it, its prompt holds no typed input, and it has
+   printed nothing since your last `inspect`. When it refuses for new output, inspect
+   again and retry. Never hand-type into a pane the script refused.
 3. Clear, rename and wind down an agent only through `scripts/control-agents`.
 4. Quote rulings verbatim with the user's name and the date:
    `chakrit, 2026-11-04: "<exact words>"`.
@@ -148,46 +150,56 @@ reply within the agent's current work is a plain "Message an agent", with no wak
 Brings an agent one level below you under control: it gets the standing grant (the
 `## Control` section of its instruction file) and the rule-entry pointers, so it works
 without the control skill. Machine control initiates org controls; an org control
-initiates project controls.
+initiates project controls. Never edit the agent's files yourself; the agent takes them
+over.
 
-1. **Check the setup.** The agent's folder is set up when it is a git repo and has an
-   instruction file, a row in your registry, and, when `command -v engram` prints a
-   path, an engram pin (`.engram/config.json`). If it is not a git repo, run `git init`
-   in it. If any other part is missing, load the `control` skill and run its setup reference
-   for that level ("Set up an org control" or "Set up a project control"), which adds
-   the missing parts without replacing existing files. Then continue here.
+1. **Check the setup.** The agent's folder is set up when it is a git repo with an
+   instruction file. If it is not, load the `control` skill and run its setup reference
+   for that level ("Set up an org control" or "Set up a project control"), which
+   returns you here.
 2. **Start** the agent if it is not running ("Start an agent").
-3. **Fill the block.** Take the `## Control` section, down to the next `##` heading,
-   from the agent's level template (the control skill's
-   `templates/instructions/<level>-control.md`; without the skill, copy the section
-   from a set-up sibling's instruction file). Replace every placeholder; for an org
-   control's Environment rows, take the values from the instruction files already in
-   its org's projects, or ask the user. Grant a port
-   block if the agent has none: machine control grants an org control a block from
+3. **Record it.** Add the agent's row to your registry if it has none. Grant a port
+   block if it has none: machine control grants an org control a block from
    8000–9000, an org control grants a project control a block from its own. Record it
-   in your `registries/ports.md`. For a project control, write it in the block under
-   "Ports"; for an org control, add a line after the block asking it to record the
-   block in its `registries/ports.md`.
-4. **Wake it** ("Wake up an agent"), then send the message below as its task, with the
-   block inside it. Never edit the agent's instruction file yourself; the agent writes
-   its own instructions.
+   in your `registries/ports.md`. Machine control also adds the org's line under
+   `## GitHub orgs` in `registries/orgs.md` and a link to the org's `control.html` in
+   its `control.data.js`. Commit.
+4. **Write the message.** Start from the message below and adapt it to what you see in
+   the agent's folder: whether its instruction file is the level template as copied or
+   its own file, which other templates setup copied, and what is still missing. Give
+   only what the agent cannot find itself: its agent name, parent and engram project,
+   its port block, and for an org control its GitHub org, the Environment values its
+   setup recorded and the control page's font steps ("Point the control page at
+   PragmataPro" in the control skill's `references/operations.md`); for a project, its
+   repos. When the instruction file is its own, include the `## Control` section, down
+   to the next `##` heading, of the agent's level template (the control skill's
+   `templates/instructions/<level>-control.md`; without the skill, from a set-up
+   sibling's instruction file).
 
    ```text
    FROM: <your agent name> (<your folder>). This message is written by a control
    agent, not the user.
 
-   INITIATION: Add the block below to your always-loaded instruction file (AGENTS.md;
-   keep CLAUDE.md consistent with it). Preserve your existing rules. Move any
-   governance rule that your level policy now covers out of your instruction file.
-   Then load the rule entries the block names, in full, as the block describes. Reply
-   with the instruction path you changed, the entries you loaded, and any conflict
-   with your existing rules.
+   INITIATION: Take over your instruction file (AGENTS.md; keep CLAUDE.md a link to
+   it). It is <the control template as copied: replace every {{value}} with the
+   values below and adapt it to this folder | your own: add the `## Control` block
+   below to it>. Keep your existing rules, and move any governance rule your level
+   policy now covers out of it. Fill the {{values}} in <the other files setup
+   copied>. Record your port block <under "Ports" | in registries/ports.md>. When
+   `command -v engram` prints a path, run `engram init <engram project>`; in a repo
+   shared with others, add `.engram/` to `.git/info/exclude` instead of committing it.
+   <Clone your repos. Run your init skill, <init skill>.> Commit your changes. Then
+   load the rule entries your instruction file names, in full, as it describes. Reply
+   with the files you changed, the entries you loaded, whether engram is installed,
+   and any conflict with your existing rules.
 
+   <values>
    <block>
    ```
 
-5. **Wait for the acknowledgment.** Delivery is not acknowledgment. Record it in the
+5. **Wake it** ("Wake up an agent"), then send the message as its task.
+6. **Wait for the acknowledgment.** Delivery is not acknowledgment. Record it in the
    Agent Backlog of your `control.data.js` with the paths the agent reported.
-6. **Hand an org control its planning.** For an org control, send "Plan downstream
+7. **Hand an org control its planning.** For an org control, send "Plan downstream
    controls" as its next task ("Give a task"): it loads the `control` skill and runs
    that section of `references/operations.md` for its own org.

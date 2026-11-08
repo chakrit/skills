@@ -64,8 +64,9 @@ and tell the user you did.
 1. Run on one machine only. Never write cross-machine sync steps.
 2. Never install software or change global configuration (Homebrew, `~/.claude*`,
    shell profiles, MCP registrations). Write the steps for the user instead.
-3. Copy templates, then replace every `{{placeholder}}`. A file with a leftover
-   `{{` is not done.
+3. Machine setup copies templates, then replaces every `{{placeholder}}`; a file with
+   a leftover `{{` is not done. Org and project setups copy templates as they are and
+   never edit an agent's files: the agent fills them in when it is initiated.
 4. Keep policy and instruction files short. Agents skip long instructions.
 5. Commit each finished setup in the control's repo; never push.
 
@@ -73,17 +74,16 @@ and tell the user you did.
 
 A setup is done when:
 
-- every file the setup reference lists exists, with no `{{` left: `grep -n '{{'` on
-  the files this setup wrote prints nothing;
-- the agent's instruction file contains the standing grant and the rule-entry pointers;
-  when the setup runs for "Initiate an agent", the agent adds them itself and the
-  initiation's acknowledgment meets this item;
+- every file the setup reference lists exists; for machine control, with no `{{`
+  left: `grep -n '{{'` on the files this setup wrote prints nothing;
+- the agent's instruction file contains the standing grant and the rule-entry pointers:
+  machine setup writes them; for an org or project control, the initiation's
+  acknowledgment meets this item, or the report asks the parent to initiate it;
 - the control's repo is onboarded as its Environment values say ("Onboard into ACE" in
   `references/operations.md`), or its school is `none`;
-- the parent's registry lists the new control (org and project controls);
-- for a machine or org control, its `control.data.js` has an Agent Backlog row "Plan
-  downstream controls" for the new control, except when the setup runs for "Initiate
-  an agent", which sends the planning as a task;
-- the work is committed in the control's repo.
+- for machine control, its `control.data.js` has an Agent Backlog row "Plan downstream
+  controls"; an org control gets the planning as a task after its initiation;
+- what the setup wrote is committed, except in a single-repo project's folder, where
+  the agent commits its own files.
 
 Report the folder, the agent name, the commit hash and any steps left for the user.

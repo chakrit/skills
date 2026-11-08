@@ -1,26 +1,23 @@
 # Set up a project control
 
-Sets up the project folder `~/Documents/<org>/<project>` and its agent
-`<machine>:<org>:<project>`. The project control owns the project's context and may do
-hands-on work in its repos. A single-repo project's folder is that repo. A project with
-several repos gets a local wrapper repo that holds them as plain clones.
+Puts the project folder `~/Documents/<org>/<project>` in place for its agent
+`<machine>:<org>:<project>`. Setup only creates the folder and copies templates; the
+agent takes over its own files when it is initiated. A single-repo project's folder is
+that repo. A project with several repos gets a local wrapper repo that holds them as
+plain clones.
 
 ## Steps
 
 1. **Check.** The org control must exist at `~/Documents/<org>/control`; if not, run
-   `references/setup-org.md` first. If the project folder already exists, do only the
-   steps whose result is missing and never replace an existing file. If it already has
-   `AGENTS.md` or `CLAUDE.md`, never write or link either file, including their
-   `## Repos` rows and Ports: "Initiate an agent" sends the `## Control` section, since
-   the agent writes its own instructions. When this setup runs for "Initiate an agent"
-   and writes a missing `AGENTS.md`, leave out its `## Control` section, down to the
-   next `##` heading, for the same reason.
+   `references/setup-org.md` first. Never replace or edit an existing file in the
+   project folder.
 2. **Work out the names.** `<project>` is the user's short name for the project.
    The user's request usually holds it and the project's repos; otherwise find them
    from the environment (the folder's repos and their remotes, `gh`). Flag the user
    only when you cannot settle one.
-3. **Create the repo.** A single-repo project's folder is a clone of that repo; clone
-   it there if it is missing. For a project with several repos, create the wrapper:
+3. **Get the folder.** If it exists, use it, and run `git init` in it when it is not a
+   git repo. Otherwise, for a single-repo project, clone the repo to
+   `~/Documents/<org>/<project>`. For a project with several repos, create the wrapper:
 
    ```sh
    mkdir -p ~/Documents/<org>/<project>
@@ -29,42 +26,26 @@ several repos gets a local wrapper repo that holds them as plain clones.
    ```
 
    The wrapper repo stays local. Never add a remote unless the user asks.
-4. **Copy templates,** replacing placeholders (`{{machine}}`, `{{org}}`, `{{project}}`):
+4. **ACE.** Follow "Onboard into ACE" in `references/operations.md`.
+5. **Copy templates as they are.** Fill in nothing: the agent replaces the template
+   values when it is initiated.
 
-   | Source                                      | Destination       | Projects           |
-   | ------------------------------------------- | ----------------- | ------------------ |
-   | `templates/instructions/project-control.md` | `AGENTS.md`       | all                |
-   | `templates/gitignore`                       | `.gitignore`      | several repos only |
-   | `templates/project/repos.txt`               | `repos.txt`       | several repos only |
-   | `templates/project/clone-repos`             | `bin/clone-repos` | several repos only |
+   | Source                                      | Destination       | When                                               |
+   | ------------------------------------------- | ----------------- | -------------------------------------------------- |
+   | `templates/instructions/project-control.md` | `AGENTS.md`       | the folder has neither `AGENTS.md` nor `CLAUDE.md` |
+   | `templates/gitignore`                       | `.gitignore`      | several repos, when missing                        |
+   | `templates/project/repos.txt`               | `repos.txt`       | several repos, when missing                        |
+   | `templates/project/clone-repos`             | `bin/clone-repos` | several repos, when missing                        |
 
-   Then `ln -s AGENTS.md CLAUDE.md`, and for a wrapper `chmod +x bin/clone-repos`.
-5. **List the repos.** Add one row per repo to the `## Repos` table in `AGENTS.md` with
-   only the Folder cell filled; the project control fills the rest. A single-repo
-   project has one row, Folder `.`. In a wrapper, also write one line per repo in
-   `repos.txt`: `<repo-name> <clone-url>`. The folder name is the exact GitHub repo
-   name. Never use git submodules.
-6. **Clone.** In a wrapper, run `bin/clone-repos`. It clones missing repos and adds
-   each folder to `.gitignore`.
-7. **Memory.** Follow "Set up a level's engram project" in `references/memory.md`
-   with project name `<machine>-<org>-<project>`.
-8. **ACE.** Follow "Onboard into ACE" in `references/operations.md`.
-9. **Register with the org control.** The project needs a row in the org control's
-   `registries/projects.md` and a port block. If you are the org control, add the row,
-   grant the block in your `registries/ports.md`, and commit in your repo. Otherwise ask
-   the org control (see "Reach a parent" in `references/operations.md`). Write the
-   block into `AGENTS.md` under "Ports". When this setup runs for "Initiate an agent",
-   add only the registry row; initiation grants the block.
-10. **Commit,** naming the skill revision.
-11. **Start the agent.** When this setup runs for "Initiate an agent", skip this step;
-    initiation starts and wakes the agent. If you are the org control, follow "Start an
-    agent" in `rule/handling-agents`. Otherwise add to the completion report: "Start the
-    project control: in a tmux window, `cd ~/Documents/<org>/<project>`, start a new
-    session the way you start agents in this org, then
-    `/rename <machine>:<org>:<project>`."
+   When you copied `AGENTS.md`, run `ln -s AGENTS.md CLAUDE.md`. For a wrapper, run
+   `chmod +x bin/clone-repos`.
+6. **Commit** in a wrapper what this setup wrote, naming the skill revision. In a
+   single-repo project's folder, commit nothing; the agent commits its own files.
+7. **Initiate.** If you came here from "Initiate an agent", return there. If you are
+   the org control, follow "Initiate an agent" in `rule/handling-agents`. Otherwise add
+   to the completion report: "Ask `<machine>:<org>:control` to initiate
+   `<machine>:<org>:<project>` in `~/Documents/<org>/<project>`."
 
 ## Done when
 
-The completion list in `SKILL.md` holds, the project's repos are cloned (in a wrapper,
-every repo in `repos.txt`, each ignored), and the org control's projects registry lists
-the project.
+The completion list in `SKILL.md` holds.

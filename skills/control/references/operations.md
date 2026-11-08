@@ -35,9 +35,10 @@ copying the page. Never copy font files into the control repo or the skill.
 
 The new machine or org control runs this itself, after its setup or initiation. It
 finds the folders one level down that should get their own control, so the structure
-is complete rather than set up one folder at a time. Setup lodges it as an Agent
-Backlog row in the new control's `control.data.js`; a parent that set up or initiated
-an org control sends it as a task after the wake, and the user asks machine control.
+is complete rather than set up one folder at a time. Machine setup lodges it as an
+Agent Backlog row in machine control's `control.data.js`, and the user asks machine
+control to run it; machine control sends it to an org control as a task after
+initiating it.
 
 1. **Scan** the new control's level:
    - **Machine control:** every folder `~/Documents/<name>/` except `control`.
@@ -115,5 +116,7 @@ environment"; its own table may not be written yet.
    environment uses for it, found as "Record the environment" finds its values; prefer
    ACE's own where `ace` is installed. It may ask for authentication; tell the user
    which pane waits for input.
-3. If the init skill is `none`, skip this step. Run the init skill in that folder to
-   finish onboarding. Commit the files it writes.
+3. If the init skill is `none`, skip this step. For machine control, run the init
+   skill in its folder to finish onboarding and commit the files it writes. An org or
+   project control runs its own init skill when it is initiated, since the init skill
+   writes the agent's instructions.

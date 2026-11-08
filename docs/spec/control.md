@@ -28,8 +28,8 @@ appears only as an example name, and no rule rests on what chakrit wants.
   track tasks and alignment, not project details. Project controls own project context
   and may do hands-on work.
 - Every control (machine, org and project) is a local git repo. It needs no remote; it
-  tracks the control's own edits. Initiation runs `git init` in a control folder that
-  is not one.
+  tracks the control's own edits. Setup runs `git init` in a control folder that is not
+  one.
 - Single machine. No sync content anywhere.
 - A single-repo project's control runs in that repo's own folder. A project with
   several repos gets a local wrapper repo that keeps `repos.txt` and `bin/clone-repos`;
@@ -62,6 +62,15 @@ appears only as an example name, and no rule rests on what chakrit wants.
   there so a control can run it without the skill; it loads the skill only when the
   agent's folder needs setup first.
 - Policies name these procedures instead of restating them.
+- A control never edits another agent's files. Org and project setup only puts the
+  folder in place: use it, clone the repo (single-repo project) or `git init`, run the
+  school setup, and copy the level's templates as they are, the instruction template
+  only when the folder has no instruction file. Then the parent initiates the agent,
+  which takes its files over: fills the template values or adds the `## Control`
+  block to its own file, records its port block, pins engram, clones its repos, runs
+  its init skill. There is one initiation message; the control adapts it to what it
+  sees in the folder. Machine setup, which has no parent to initiate it, fills its
+  own templates.
 
 ## Environment
 
@@ -124,6 +133,8 @@ appears only as an example name, and no rule rests on what chakrit wants.
 - Ports nest: machine control grants blocks to org controls, which grant blocks to
   projects. Heavy-job slots do not nest: only machine control records them, holder
   `<org>:<project>`; org controls relay requests.
+- Machine control alone decides what to pause, serialize or clean up when disk,
+  memory or CPU runs low: only the top level sees every agent's work.
 - Engram holds rules, knowledge, decisions, state reports and done tasks. Registries
   and live tasks stay in files, for now, because scripts and the control page read
   them by path. Without engram, a `memory/` folder per level holds what engram would.
@@ -145,7 +156,12 @@ appears only as an example name, and no rule rests on what chakrit wants.
 - It targets panes only by tmux ID, re-checks the pane before typing, and never changes
   windows or layout, except that wind-down's exit closes the agent's pane.
 - It refuses to type when the pane's own shell holds the terminal's foreground group,
-  instead of matching harness names, so a new harness needs no change.
+  instead of matching harness names, so a new harness needs no change. The one
+  exception is wind-down's fixed `exit`, typed once the harness has quit.
+- `send` refuses a pane that printed since the control's last `inspect`, or was never
+  inspected: `inspect` records the pane's `pane_last_output_time` in `inspected.tsv`.
+  The control then inspects again and retries. Idle harness screens print nothing, so
+  the check passes for an idle agent and refuses a busy one.
 - It refuses to type when the pane's cursor line holds a letter or digit left of the
   cursor: typed input the paste would join. It reads only left of the cursor, since an
   empty prompt's placeholder sits to the right.

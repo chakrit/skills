@@ -1,25 +1,24 @@
 # Set up an org control
 
-Creates the org control repo `~/Documents/<org>/control` and its agent
-`<machine>:<org>:control`. An org control tracks tasks and keeps project controls in
-line. It does not hold project details; project controls own those.
+Puts the org control repo `~/Documents/<org>/control` in place for its agent
+`<machine>:<org>:control`. Setup only creates the folder and copies templates; the
+agent takes over its own files when it is initiated. An org control tracks tasks and
+keeps project controls in line. It does not hold project details; project controls own
+those.
 
 ## Steps
 
 1. **Check.** Machine control must exist at `~/Documents/control`; if not, run
-   `references/setup-machine.md` first. If `~/Documents/<org>/control` already exists,
-   do only the steps whose result is missing and never replace an existing file. If it
-   already has `AGENTS.md` or `CLAUDE.md`, never write or link either file: "Initiate an
-   agent" sends the `## Control` section, since the agent writes its own instructions.
-   When this setup runs for "Initiate an agent" and writes a missing `AGENTS.md`, leave
-   out its `## Control` section, down to the next `##` heading, for the same reason.
+   `references/setup-machine.md` first. Never replace or edit an existing file in
+   `~/Documents/<org>/control`.
 2. **Work out the names.** `<org>` is the user's short name for the org and maps to a
    GitHub org that may be named differently. The user's request usually holds both
    ("set up fi/ to manage my Forward Insight stuff"); otherwise find them from the
    environment (the org's repos and their remotes, `gh`). Flag the user only when you
    cannot settle one. Then follow "Record the environment" in
    `references/operations.md` for the org.
-3. **Create the repo.**
+3. **Get the folder.** If it exists, use it, and run `git init` in it when it is not a
+   git repo. Otherwise:
 
    ```sh
    mkdir -p ~/Documents/<org>/control
@@ -27,59 +26,29 @@ line. It does not hold project details; project controls own those.
    git init
    ```
 
-4. **Copy templates,** replacing placeholders (`{{machine}}`, `{{org}}`,
-   `{{github_org}}`, `{{date}}` as `YYYY-MM-DD`, `{{home}}` with the home folder path
-   such as `/Users/chakrit`, `{{title}}` with `<org> Control`, and the Environment
-   placeholders):
+4. **ACE.** Follow "Onboard into ACE" in `references/operations.md`.
+5. **Copy templates as they are,** each only when its destination is missing. Fill in
+   nothing: the agent replaces the template values when it is initiated.
 
-   | Source                                  | Destination                |
-   | --------------------------------------- | -------------------------- |
-   | `templates/instructions/org-control.md` | `AGENTS.md`                |
-   | `templates/control.html`                | `control.html`             |
-   | `templates/control.data.js`             | `control.data.js`          |
-   | `templates/gitignore`                   | `.gitignore`               |
-   | `templates/registries/projects.md`      | `registries/projects.md`   |
-   | `templates/registries/ports-org.md`     | `registries/ports.md`      |
+   | Source                                  | Destination              |
+   | --------------------------------------- | ------------------------ |
+   | `templates/instructions/org-control.md` | `AGENTS.md`              |
+   | `templates/control.html`                | `control.html`           |
+   | `templates/control.data.js`             | `control.data.js`        |
+   | `templates/gitignore`                   | `.gitignore`             |
+   | `templates/registries/projects.md`      | `registries/projects.md` |
+   | `templates/registries/ports-org.md`     | `registries/ports.md`    |
 
-   Then `ln -s AGENTS.md CLAUDE.md`. Do not copy rule files; the instruction file
-   points to the engram entries machine control keeps. In `control.data.js`, under
-   links, link
-   `../../control/control.html` as "Machine control". Follow "Point the control page at
-   PragmataPro" in `references/operations.md`.
-5. **Copy scripts.** Follow "Install scripts" in `references/operations.md`.
-6. **Memory.** Follow "Set up a level's engram project" in `references/memory.md`
-   with project name `<machine>-<org>`.
-7. **ACE.** Follow "Onboard into ACE" in `references/operations.md`.
-8. **Register with machine control.** The org needs a row and a `## GitHub orgs` line
-   in machine control's `registries/orgs.md`, a link in machine control's
-   `control.data.js`, and a port block. If you are machine control, add them yourself
-   and commit in `~/Documents/control`. Otherwise ask machine control (see "Reach a
-   parent" in `references/operations.md`). Record the block in `registries/ports.md`.
-   When this setup runs for "Initiate an agent", add only the row, the GitHub orgs line
-   and the link; initiation grants the block.
-9. **Register existing projects.** For each project folder under `~/Documents/<org>/`
-    that has an agent, add a row to `registries/projects.md`, with Window and Agent
-    pane filled when you see its pane and empty otherwise. Read
-    `references/registries.md` for how registries and nested resources work. When this
-    setup runs for "Initiate an agent", skip this step: the org control keeps its own
-    registry, and its planning task registers what is missing.
-10. **Lodge downstream planning.** Add an Agent Backlog row to `control.data.js` (group
-    `todo`): item "Plan downstream controls (`control` skill,
-    `references/operations.md`)", agent `<machine>:<org>:control`, source the user's
-    request, next "after first start". When this setup runs for "Initiate an agent",
-    skip this step; initiation sends the planning as a task.
-11. **Commit** what this setup wrote, naming the skill revision.
-12. **Start the agent.** When this setup runs for "Initiate an agent", skip this step;
-    initiation starts, wakes and tasks the agent. If you are machine control, follow
-    "Wake up an agent" in `rule/handling-agents` (it starts the agent and renames its
-    session to `<machine>:<org>:control`), then send "Plan downstream controls" as its
-    task ("Give a task"). Otherwise add to the completion report: "Start the org
-    control: in a tmux window, `cd ~/Documents/<org>/control`, start a new session the
-    way you start agents in this org, then `/rename <machine>:<org>:control`. Then ask
-    it to run its backlog row 'Plan downstream controls'."
+   Copy `AGENTS.md` only when the folder has neither `AGENTS.md` nor `CLAUDE.md`, then
+   run `ln -s AGENTS.md CLAUDE.md`. Do not copy rule files; the instruction file points
+   to the engram entries machine control keeps.
+6. **Copy scripts.** Follow "Install scripts" in `references/operations.md`.
+7. **Commit** what this setup wrote, naming the skill revision.
+8. **Initiate.** If you came here from "Initiate an agent", return there. If you are
+   machine control, follow "Initiate an agent" in `rule/handling-agents`. Otherwise
+   add to the completion report: "Ask `<machine>:control` to initiate
+   `<machine>:<org>:control` in `~/Documents/<org>/control`."
 
 ## Done when
 
-The completion list in `SKILL.md` holds, and machine control's `registries/orgs.md`
-lists the org.
-Outside initiation, machine control's `registries/ports.md` also lists its port block.
+The completion list in `SKILL.md` holds.

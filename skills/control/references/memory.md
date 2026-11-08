@@ -53,7 +53,9 @@ control.
 
 ## Set up a level's engram project
 
-Use the project name the setup reference gives you.
+Machine setup runs this for machine control. Org and project controls pin their own
+folders when they are initiated, as the initiation message in `rule/handling-agents`
+says. Use the project name the setup reference gives you.
 
 1. Check whether engram is installed: `command -v engram`.
 2. If it prints nothing, do not install it. Report this line in the setup's completion
@@ -89,5 +91,6 @@ registrations. Give the user this list when the user asks how to install engram:
 4. Do NOT run `engram setup claude-code`. It installs hooks and a plugin and offers
    to rewrite ~/.claude/settings.json.
 5. For each "engram pin pending" line a setup reported, run `engram init <name>` in
-   the named folder, then commit .engram/config.json there.
+   the named folder, then commit .engram/config.json there, except in a component
+   repo, where .engram/ goes in .git/info/exclude.
 ```
