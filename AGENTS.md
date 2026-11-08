@@ -223,9 +223,13 @@ change.
 ## Git checkpoints
 
 Commit coherent, completed slices autonomously after completing the checks required for
-that work. Do not ask for permission to make a local commit. A local commit does not
-authorize pushing, publishing, merging, releasing, deploying, or any other change to
-shared or external state; each requires separate user authorization.
+that work. Do not ask for permission to make a local commit.
+
+Push this repository's current branch to `gh` without asking, once its commits are
+complete and their checks pass (chakrit, 2026-11-08: "you have push autonomy for this
+repo"). This covers plain pushes only, never a force-push. Merging, releasing, opening
+issues or PRs, editing other repositories, and every other change to shared or external
+state each still require separate user authorization.
 
 ## Merging pull requests
 
