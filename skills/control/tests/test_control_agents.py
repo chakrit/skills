@@ -157,5 +157,49 @@ class ClearRecordTest(unittest.TestCase):
                         agents.clear_record(self.NOW, WEB, kind, detail)
 
 
+class InspectionTest(unittest.TestCase):
+    """`send` refuses a pane that printed since the control's last `inspect`."""
+
+    SEEN = {"web": agents.Inspection("%7", 1762594200)}
+
+    def test_inspections_round_trip_one_line_per_slug(self) -> None:
+        text = "api-v2\t%9\t1762594100\nweb\t%7\t1762594200\n"
+        parsed = agents.parse_inspections(text)
+
+        self.assertEqual(parsed, {"api-v2": agents.Inspection("%9", 1762594100),
+                                  "web": agents.Inspection("%7", 1762594200)})
+        self.assertEqual(agents.inspections_text(parsed), text)
+
+    def test_malformed_inspection_lines_are_refused(self) -> None:
+        for line in ("web\t%7", "web\t@3\t1762594200", "Web\t%7\t1762594200",
+                     "web\t%7\tnow", "web\t%7\t-1", "web\t%7\t1\textra"):
+            with self.subTest(line=line):
+                with self.assertRaisesRegex(ValueError, agents.INSPECTIONS):
+                    agents.parse_inspections(line + "\n")
+
+    def test_output_time_must_be_a_tmux_timestamp(self) -> None:
+        self.assertEqual(agents.parse_output_time(WEB, "1762594200\n"), 1762594200)
+        for text in ("", "\n", "soon\n", "-5\n"):
+            with self.subTest(text=text):
+                with self.assertRaises(ValueError):
+                    agents.parse_output_time(WEB, text)
+
+    def test_pane_quiet_since_its_inspect_passes(self) -> None:
+        for output_time in (1762594100, 1762594200):
+            with self.subTest(output_time=output_time):
+                agents.check_inspected(WEB, self.SEEN, output_time)
+
+    def test_pane_never_inspected_is_refused(self) -> None:
+        for seen in ({}, {"api-v2": agents.Inspection("%9", 1762594200)},
+                     {"web": agents.Inspection("%12", 1762594200)}):
+            with self.subTest(seen=seen):
+                with self.assertRaisesRegex(ValueError, "inspect web.*retry"):
+                    agents.check_inspected(WEB, seen, 1762594200)
+
+    def test_pane_that_printed_since_its_inspect_is_refused(self) -> None:
+        with self.assertRaisesRegex(ValueError, "printed since.*inspect web again.*retry"):
+            agents.check_inspected(WEB, self.SEEN, 1762594201)
+
+
 if __name__ == "__main__":
     unittest.main()

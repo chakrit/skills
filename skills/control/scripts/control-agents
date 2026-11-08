@@ -47,6 +47,11 @@ CLEAR_DETAIL_HINTS = {
     "wind-down": SAVED_HINT,
     "forced": "ask the user, then pass --ruling with the user's quoted words",
 }
+# One line per inspected agent: slug, pane ID, and the pane's #{pane_last_output_time}
+# (epoch seconds) read just before `inspect` captured it. `send` refuses a pane that has
+# printed since, so the control never answers a screen it has not read.
+INSPECTIONS = "inspected.tsv"
+OUTPUT_TIME = re.compile(r"[0-9]+")
 
 
 @dataclass(frozen=True)
@@ -159,6 +164,69 @@ def append_clear_record(repository: Path, record: str) -> None:
         log.write(record)
 
 
+@dataclass(frozen=True)
+class Inspection:
+    """The pane `inspect` last read, and its `#{pane_last_output_time}` just before."""
+    pane: str
+    output_time: int
+
+
+def parse_inspections(text: str) -> dict[str, Inspection]:
+    return dict(inspection_line(line) for line in text.splitlines())
+
+
+def inspection_line(line: str) -> tuple[str, Inspection]:
+    fields = line.split("\t")
+    if not (len(fields) == 3 and SLUG.fullmatch(fields[0]) and PANE.fullmatch(fields[1])
+            and OUTPUT_TIME.fullmatch(fields[2])):
+        raise ValueError(f"{INSPECTIONS}: {line!r} is not a slug, a pane ID and an "
+                         "output time separated by tabs")
+
+    slug, pane, output_time = fields
+    return slug, Inspection(pane, int(output_time))
+
+
+def inspections_text(inspections: dict[str, Inspection]) -> str:
+    return "".join(f"{slug}\t{seen.pane}\t{seen.output_time}\n"
+                   for slug, seen in sorted(inspections.items()))
+
+
+def parse_output_time(entry: Agent, text: str) -> int:
+    output_time = text.rstrip("\n")
+    if not OUTPUT_TIME.fullmatch(output_time):
+        raise ValueError(f"{entry.slug}: tmux gave {output_time!r} as the last output "
+                         f"time of pane {entry.pane}")
+
+    return int(output_time)
+
+
+def check_inspected(entry: Agent, inspections: dict[str, Inspection],
+                    output_time: int) -> None:
+    """Refuse a pane the control has not read since it last printed."""
+    seen = inspections.get(entry.slug)
+    if seen is None or seen.pane != entry.pane:
+        raise ValueError(f"{entry.slug}: pane {entry.pane} has not been inspected; run "
+                         f"inspect {entry.slug}, read it, then retry; nothing was typed")
+    if output_time > seen.output_time:
+        raise ValueError(f"{entry.slug}: pane {entry.pane} printed since the last "
+                         f"inspect; run inspect {entry.slug} again, read it, then retry; "
+                         "nothing was typed")
+
+
+def read_inspections(repository: Path) -> dict[str, Inspection]:
+    path = repository / INSPECTIONS
+    if not path.exists():
+        return {}
+
+    return parse_inspections(path.read_text(encoding="utf-8"))
+
+
+def record_inspection(repository: Path, entry: Agent, output_time: int) -> None:
+    inspections = {**read_inspections(repository),
+                   entry.slug: Inspection(entry.pane, output_time)}
+    (repository / INSPECTIONS).write_text(inspections_text(inspections), encoding="utf-8")
+
+
 def command(*arguments: str, stdin: str | None = None) -> str:
     return subprocess.run(arguments, input=stdin, capture_output=True, text=True,
                           check=True).stdout
@@ -228,18 +296,42 @@ def wait_for_prompt(entry: Agent) -> None:
         time.sleep(HARNESS_EXIT_POLL_SECONDS)
 
 
-def inspect(entry: Agent) -> str:
+def last_output_time(entry: Agent) -> int:
+    return parse_output_time(entry, tmux("display-message", "-p", "-t", entry.pane,
+                                         "#{pane_last_output_time}"))
+
+
+def inspect(entry: Agent, repository: Path) -> str:
+    """Capture the pane and record when it last printed, read first so output that
+    arrives during the capture makes the next `send` refuse rather than pass."""
     at_prompt(entry)
-    return tmux("capture-pane", "-p", "-t", entry.pane, "-S", "-200")
+
+    output_time = last_output_time(entry)
+    capture = tmux("capture-pane", "-p", "-t", entry.pane, "-S", "-200")
+    record_inspection(repository, entry, output_time)
+
+    return capture
+
+
+def send(entry: Agent, text: str, repository: Path) -> None:
+    check_inspected(entry, read_inspections(repository), last_output_time(entry))
+
+    type_line(entry, text)
 
 
 def main(arguments: list[str]) -> int:
     commands = argparse.ArgumentParser(prog="control-agents", description=__doc__)
     actions = commands.add_subparsers(dest="command", required=True)
     actions.add_parser("list", help="print the registered agents and their last-known panes")
-    for name, text in (("inspect", "print the last 200 lines of the agent's pane"),
-                       ("send", "type the message on stdin and press Enter")):
-        actions.add_parser(name, help=text).add_argument("slug")
+    actions.add_parser(
+        "inspect", help="print the agent's pane and 200 lines of its history",
+        epilog=f"Records when the pane last printed in {INSPECTIONS}, which send checks."
+    ).add_argument("slug")
+    actions.add_parser(
+        "send", help="type the message on stdin and press Enter",
+        epilog="Refuses, typing nothing, a pane not inspected since it last printed: "
+               "run inspect, read it, then retry."
+    ).add_argument("slug")
     saved_help = ("where the agent reported its save went, such as an engram observation "
                   "or a session file; logged to " + CLEAR_LOG)
     clearing = actions.add_parser(
@@ -295,9 +387,9 @@ def run(options: argparse.Namespace, agents: dict[str, Agent], repository: Path)
     now = datetime.now().astimezone()
 
     if options.command == "inspect":
-        return inspect(entry)
+        return inspect(entry, repository)
     if options.command == "send":
-        type_line(entry, sys.stdin.read().rstrip("\n"))
+        send(entry, sys.stdin.read().rstrip("\n"), repository)
     elif options.command == "clear-context":
         clear(entry, clear_record(now, entry, "saved", options.saved), repository)
     elif options.command == "wind-down":

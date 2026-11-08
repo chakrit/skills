@@ -8,6 +8,9 @@
 # scripts/control-agents audit trail of clears
 /clears.log
 
+# scripts/control-agents record of each agent pane's last inspect
+/inspected.tsv
+
 # Python tool artifacts
 __pycache__/
 *.py[cod]
