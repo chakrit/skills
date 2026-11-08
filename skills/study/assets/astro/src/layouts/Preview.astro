@@ -1,0 +1,47 @@
+---
+import Option from "../components/preview/Option.astro";
+import Toolbar from "../components/preview/Toolbar.astro";
+import { discover } from "../components/preview/discover.js";
+import { studyTitle } from "../study.js";
+import "../styles/preview.css";
+
+const { meta, options = [], indexHref = "/preview/", lang = "en" } = Astro.props;
+const ids = options.map(({ id }) => id);
+if (new Set(ids).size !== ids.length) throw new Error("Option letters must be unique");
+const previews = await discover(import.meta.glob("../pages/preview/*.astro"), indexHref);
+const title = options.length > 0 ? `${meta.title} · ${studyTitle}` : studyTitle;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>{title}</title>
+    <slot name="head" />
+  </head>
+  <body class="pv-body">
+    <div class="pv-shell" data-pv-frame>
+      <main class="pv-main">
+        {options.length === 0 && <div class="pv-start">
+          <h1>Use the toolbar</h1>
+          <svg class="pv-start__arrow" viewBox="0 0 100 100" aria-hidden="true">
+            <path d="M85 8C39 8 24 30 24 86M13 73L24 87L37 73" />
+          </svg>
+        </div>}
+        {options.map(({ id, name, width, component: Component, props = {} }, i) => (
+          <Option {id} {name} {width} hidden={i !== 0}>
+            <Component {...props} />
+          </Option>
+        ))}
+      </main>
+      <Toolbar {meta} {options} {previews} {indexHref} currentHref={Astro.url.pathname} />
+    </div>
+  </body>
+</html>
+
+<script>
+  import { initialize } from "../scripts/preview.js";
+  document.querySelectorAll("[data-pv-frame]").forEach(initialize);
+</script>

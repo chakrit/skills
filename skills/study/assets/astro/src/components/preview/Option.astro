@@ -1,0 +1,7 @@
+---
+const { id, name, width = "64rem", hidden = false } = Astro.props;
+---
+
+<section class="pv-option" id={id} {hidden} aria-label={`${id}: ${name}`}>
+  <div class="pv-page" style={`--pv-page-width: ${width}`}><slot /></div>
+</section>

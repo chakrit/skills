@@ -1,0 +1,72 @@
+.pv-body {
+  margin: 0;
+}
+
+.pv-shell {
+  min-height: 100dvh;
+  background: #0b0c10;
+}
+
+.pv-main {
+  position: relative;
+  min-width: 0;
+  min-height: 100dvh;
+  background: #0b0c10;
+  isolation: isolate;
+  overflow: clip;
+}
+
+.pv-option {
+  position: relative;
+  background: #0b0c10;
+  isolation: isolate;
+  overflow: clip;
+}
+
+.pv-option[hidden] {
+  display: none;
+}
+
+.pv-page {
+  container-type: inline-size;
+  width: min(100%, var(--pv-page-width));
+  min-width: 0;
+  margin-inline: auto;
+  background: var(--pv-page-background, transparent);
+  position: relative;
+  contain: layout paint;
+  isolation: isolate;
+  overflow: clip;
+}
+
+.pv-start {
+  position: relative;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  color: #a4a8b0;
+}
+
+.pv-start h1 {
+  margin: 0;
+  padding-bottom: 5rem;
+  font: 400 clamp(1.5rem, 4vw, 2.5rem) / 1.2 Georgia, serif;
+}
+
+.pv-start__arrow {
+  position: fixed;
+  left: 2rem;
+  bottom: 10.75rem;
+  width: 100px;
+  height: 100px;
+  fill: none;
+  stroke: #8a8f98;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+[data-pv-moved] .pv-start__arrow,
+[data-pv-open="true"] .pv-start__arrow {
+  display: none;
+}

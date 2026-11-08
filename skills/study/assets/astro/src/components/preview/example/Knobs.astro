@@ -1,0 +1,32 @@
+---
+const { slug, option } = Astro.props;
+const group = `${slug}-${option}-radius`;
+---
+
+<fieldset class="example-knobs">
+  <legend>Corner radius</legend>
+  <label>
+    <input type="radio" name={group} id={`${group}-soft`} checked />
+    Soft
+  </label>
+  <label>
+    <input type="radio" name={group} id={`${group}-round`} />
+    Round
+  </label>
+</fieldset>
+
+<style>
+  .example-knobs {
+    display: grid;
+    gap: 0.5rem;
+    border: 1px solid #555;
+    color: inherit;
+    font: inherit;
+  }
+
+  .example-knobs label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+</style>

@@ -12,6 +12,9 @@ ordinary skill directories.
 | `1-by-1`        | Walk decisions one at a time     | Yes             |
 | `wrap-up`       | Close a work session cleanly     | Yes             |
 | `control`       | Set up control-agent hierarchy   | Yes             |
+| `study`         | Visual decision studies          | Yes             |
+| `de-slop`       | Strip AI tells from design, copy | Yes             |
+| `gh-admin`      | GitHub org admin via OpenTofu    | Yes             |
 | `lowfat-pantry` | Command-output filter pantry     | Imported        |
 | `kien-thai`     | Natural Thai writing             | Imported        |
 | `kode-thai`     | Iterative Thai writing audits    | Imported        |
@@ -43,7 +46,7 @@ mutation against PROD9 or change `ace.toml` to select this collection.
 
 [AGENTS.md](AGENTS.md) defines the editing boundaries, command-target checks, and
 feedback destinations. Feedback for fact-check, learn, note-taker, safety-audit,
-1-by-1, wrap-up, and control belongs in `chakrit/skills`. Feedback for the Thai skills
+1-by-1, wrap-up, control, study, de-slop, and gh-admin belongs in `chakrit/skills`. Feedback for the Thai skills
 belongs in `chakrit/kien-thai`; lowfat-pantry feedback belongs in
 `chakrit/lowfat-pantry`; smoke feedback belongs in `chakrit/smoke`, beside the
 SMOKE CLI it documents.
@@ -73,6 +76,15 @@ The direct ingestions started from these revisions:
 - `1-by-1` and `wrap-up`: Chakrit's personal agent configuration
   (`claude/.claude/skills/` in `chakrit/dotfiles`), including its uncommitted edits
   as of 2026-11-03.
+- `study`: `skills/study/` in `appbaobao/school` at
+  `269553d88af3ab70cc06850867f3a93c865e9471`.
+- `de-slop`: `skills/de-slop/` in `appbaobao/school` at
+  `269553d88af3ab70cc06850867f3a93c865e9471`, identical to the copies in
+  `prod9/school` and `datawowio/school`.
+- `gh-admin`: `skills/gh-org-admin/` in `prod9/school` at
+  `f804ec5a07868ca42a0ffdef137943751ff5a7f9`, renamed, with the secret files committed
+  encrypted with git-crypt (`terraform.tfstate` always, `terraform.tfvars` when the repo
+  commits it).
 
 These skills are maintained here after ingestion and are not refreshed by
 `ace school pull`.

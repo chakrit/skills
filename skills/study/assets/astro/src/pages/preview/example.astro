@@ -1,0 +1,8 @@
+---
+import Preview from "../../layouts/Preview.astro";
+import { meta as importedMeta, options } from "../../components/preview/example/options.js";
+
+export const meta = importedMeta;
+---
+
+<Preview {meta} {options} />

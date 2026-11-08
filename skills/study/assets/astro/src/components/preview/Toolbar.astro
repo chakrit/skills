@@ -1,0 +1,142 @@
+---
+import "../../styles/toolbar.css";
+
+const {
+  meta,
+  options = [],
+  previews = [],
+  indexHref = "/preview/",
+  currentHref = indexHref,
+} = Astro.props;
+const lists = [
+  { id: "questions", title: "Questions", items: meta.questions ?? [] },
+  { id: "notes", title: "Notes", items: meta.notes ?? [] },
+].filter(({ items }) => items.length > 0);
+const ready = previews.filter(({ building, settled, broken }) => !building && !settled && !broken);
+const groups = [...new Set(ready.map(({ group }) => group))];
+const sections = groups.map(group => ({
+  title: group, items: ready.filter(preview => preview.group === group),
+}));
+const building = previews.filter(preview => preview.building && !preview.broken);
+if (building.length > 0) sections.push({ title: "Building", items: building });
+const broken = previews.filter(preview => preview.broken);
+if (broken.length > 0) sections.push({ title: "Broken right now", items: broken });
+const settled = previews.filter(preview => preview.settled && !preview.building && !preview.broken);
+if (settled.length > 0) sections.push({ title: "Settled", items: settled });
+
+function previewLabel(preview) {
+  if (preview.broken) return `${preview.title} · Build failed`;
+  if (preview.building) return `${preview.title} · Building`;
+  if (preview.settled) return `${preview.title} · Settled ${preview.settled}`;
+  const questions = preview.questions?.length ?? 0;
+  const label = `${preview.title} · Awaiting selection`;
+  return questions > 0 ? `${label} · ${questions} open questions` : label;
+}
+---
+
+<aside class="pv-toolbar" aria-label="Study toolbar" data-pv-toolbar>
+  <div class="pv-toolbar__preview">
+    <label for="pv-preview">Preview</label>
+    <div class="pv-toolbar__select" data-pv-stepper>
+      <button type="button" data-pv-step="-1" aria-label="Previous preview">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m10 4-4 4 4 4" /></svg>
+      </button>
+      <div class="pv-toolbar__field">
+        <select id="pv-preview" data-pv-navigation>
+          <option value={indexHref} selected={currentHref === indexHref}>Start</option>
+          {sections.map(({ title, items }) => (
+            <optgroup label={title}>
+              {items.map(preview => (
+                <option value={preview.href} selected={currentHref === preview.href}>
+                  {previewLabel(preview)}
+                </option>
+              ))}
+            </optgroup>
+          ))}
+        </select>
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4" /></svg>
+      </div>
+      <button type="button" data-pv-step="1" aria-label="Next preview">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 4 4 4-4 4" /></svg>
+      </button>
+    </div>
+  </div>
+  <div class="pv-toolbar__options">
+    <label for="pv-options">Options</label>
+    <div class="pv-toolbar__select" data-pv-stepper>
+      <button type="button" data-pv-step="-1" aria-label="Previous option"
+        disabled={options.length === 0}>
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m10 4-4 4 4 4" /></svg>
+      </button>
+      <div class="pv-toolbar__field">
+        <select id="pv-options" data-pv-select disabled={options.length === 0}>
+          {options.length === 0 && <option>No options yet</option>}
+          {options.map(({ id, name }, index) => (
+            <option value={id} selected={index === 0}>{id} · {name}</option>
+          ))}
+        </select>
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4" /></svg>
+      </div>
+      <button type="button" data-pv-step="1" aria-label="Next option"
+        disabled={options.length === 0}>
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 4 4 4-4 4" /></svg>
+      </button>
+    </div>
+  </div>
+  <div class="pv-toolbar__actions">
+    <button class="pv-toolbar__grip" type="button" data-pv-drag
+      aria-label="Move toolbar; use arrow keys" title="Move toolbar">
+      <svg viewBox="0 0 12 20" aria-hidden="true">
+        <circle cx="3" cy="4" r="1" /><circle cx="9" cy="4" r="1" />
+        <circle cx="3" cy="10" r="1" /><circle cx="9" cy="10" r="1" />
+        <circle cx="3" cy="16" r="1" /><circle cx="9" cy="16" r="1" />
+      </svg>
+    </button>
+    <button type="button" id="pv-toggle-settings" data-pv-panel-toggle="settings"
+      aria-expanded="false" aria-controls="pv-panel-settings"
+      disabled={options.length === 0 && !meta.note && !meta.building && !meta.settled}>
+      Settings <span class="pv-toolbar__count" data-pv-knob-count hidden></span>
+    </button>
+    {lists.map(({ id, title, items }) => (
+      <button type="button" id={`pv-toggle-${id}`} data-pv-panel-toggle={id}
+        aria-expanded="false" aria-controls={`pv-panel-${id}`}>
+        {title} <span class="pv-toolbar__count">{items.length}</span>
+      </button>
+    ))}
+  </div>
+  <div class="pv-toolbar__expanded" data-pv-expanded hidden>
+    <header>
+      <span class="pv-toolbar__eyebrow">STUDY</span>
+      <h1 class="pv-toolbar__title">{meta.title}</h1>
+    </header>
+    {meta.building && <p class="pv-toolbar__building">Under edit</p>}
+    {meta.settled && <p class="pv-toolbar__note">Settled {meta.settled}</p>}
+    {meta.note && <p class="pv-toolbar__note">{meta.note}</p>}
+    <section class="pv-panel" id="pv-panel-settings" data-pv-panel="settings"
+      aria-labelledby="pv-toggle-settings">
+      <h2>Option settings</h2>
+      {options.length === 0 && <p>No option settings yet.</p>}
+      {options.map(({ id, name, note, sidebar: Sidebar, sidebarProps = {} }, index) => (
+        <section class="pv-detail" data-pv-detail={id} hidden={index !== 0}>
+          <h3 class="pv-detail__name">{id} · {name}</h3>
+          {note && <p class="pv-detail__note">{note}</p>}
+          {Sidebar && <div class="pv-detail__extra"><Sidebar {...sidebarProps} /></div>}
+        </section>
+      ))}
+    </section>
+    {lists.map(({ id, title, items }) => (
+      <section class="pv-panel" id={`pv-panel-${id}`}
+        aria-labelledby={`pv-toggle-${id}`} data-pv-panel={id} hidden>
+        <h2>{title}</h2>
+        {id === "questions" && (
+          <p class="pv-panel__hint">Answer in chat by ID.</p>
+        )}
+        <ul class="pv-list">
+          {items.map(({ id: itemId, text }) => (
+            <li><span class="pv-list__id">{itemId}</span><p>{text}</p></li>
+          ))}
+        </ul>
+      </section>
+    ))}
+  </div>
+</aside>

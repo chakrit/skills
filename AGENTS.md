@@ -59,11 +59,12 @@ and the target file. Resolve symlinks before writing. Read this repository's act
 `skills/<name>/` content when reviewing its published packages, even if a skill with
 that name is already loaded through PROD9.
 
-- **fact-check, learn, note-taker, safety-audit, 1-by-1, wrap-up, and control:** edit their
-  directories under `skills/` here.
+- **fact-check, learn, note-taker, safety-audit, 1-by-1, wrap-up, control, study,
+  de-slop, and gh-admin:** edit their directories under `skills/` here.
   Route feedback and proposed changes to `chakrit/skills`, including feedback about
-  copies loaded through PROD9. Former standalone repositories and copies extracted
-  from PROD9 are ingestion sources, not the ongoing maintenance destinations.
+  copies loaded through PROD9 or another school. Former standalone repositories and
+  copies extracted from other schools are ingestion sources, not the ongoing
+  maintenance destinations.
 - **kien-thai and kode-thai:** the local directories are imported copies. Route
   feedback and fixes to `chakrit/kien-thai`, then refresh the declared import after
   an authorized upstream change. Do not patch the imported copies as a lasting fix.
@@ -138,9 +139,9 @@ never converges, and chakrit has to find and undo work nobody asked for.
 ## Ownership and layout
 
 - `skills/fact-check/`, `skills/learn/`, `skills/note-taker/`,
-  `skills/safety-audit/`, `skills/1-by-1/`, `skills/wrap-up/`, and `skills/control/` are
-  maintained
-  directly in this repository.
+  `skills/safety-audit/`, `skills/1-by-1/`, `skills/wrap-up/`, `skills/control/`,
+  `skills/study/`, `skills/de-slop/`, and `skills/gh-admin/` are maintained directly in
+  this repository.
 - `skills/kien-thai/` and `skills/kode-thai/` are imported from chakrit/kien-thai.
   Follow the upstream ownership and command-target checks in this file.
 - `skills/lowfat-pantry/` is imported from chakrit/lowfat-pantry.

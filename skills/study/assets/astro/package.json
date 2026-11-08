@@ -1,0 +1,8 @@
+{
+  "name": "study-preview",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev"
+  }
+}

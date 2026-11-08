@@ -1,0 +1,56 @@
+---
+const { radius } = Astro.props;
+---
+
+<div class="example-mock" style={`--example-initial-radius: ${radius}`}>
+  <h2 data-pv-piece>Form heading goes here</h2>
+  <label data-pv-piece>
+    Field label goes here
+    <input type="text" placeholder="Example value" />
+  </label>
+  <button data-pv-piece type="button">Example action</button>
+</div>
+
+<style>
+  .example-mock {
+    box-sizing: border-box;
+    padding: 2rem;
+    color: #202124;
+    background: #f4f1eb;
+    font: 1rem / 1.5 system-ui, sans-serif;
+  }
+
+  .example-mock h2 {
+    margin: 0 0 1rem;
+    font-size: 1.25rem;
+  }
+
+  .example-mock label {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .example-mock :where(input, button) {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    padding: 0.75rem;
+    border: 1px solid #555;
+    border-radius: var(--example-radius, var(--example-initial-radius));
+    font: inherit;
+  }
+
+  .example-mock button {
+    margin-top: 1rem;
+    color: #fff;
+    background: #35373c;
+  }
+
+  :global(:root:has(#example-B-radius-soft:checked) #B .example-mock) {
+    --example-radius: 0.5rem;
+  }
+
+  :global(:root:has(#example-B-radius-round:checked) #B .example-mock) {
+    --example-radius: 1.25rem;
+  }
+</style>
