@@ -8,11 +8,13 @@ Reference script for the control skill. Run it from the control repo's scripts/,
 inside the tmux server that holds the agents. Each agent's pane carries the tmux pane
 option @agent set to the agent's full name: <machine>:<org>:control for an org control,
 which the machine control manages, and <machine>:<org>:<project> for a project, which
-its org control manages. The script finds the one pane tagged with the name a slug
-gives, refuses when none or several carry it, and checks the pane again before each
-keystroke. It never sets the tag, and never creates, renames, resizes or moves windows
-or panes. Only wind-down ends one: it exits the harness and then the pane's shell,
-which closes the pane.
+its org control manages. <org> and <project> are slugs: the folder name lowercased, each
+character other than a-z, 0-9, `.`, `_` and `-` turned into `-`. The script finds the
+one pane tagged with the name a slug gives, refuses when none or several carry it, and
+checks before each keystroke that the pane sits in a folder whose name gives that slug.
+It never sets the tag, and never creates, renames, resizes or moves windows or panes.
+Only wind-down ends one: it exits the harness and then the pane's shell, which closes
+the pane.
 """
 
 import argparse
@@ -24,10 +26,11 @@ import subprocess
 import sys
 import time
 
-SLUG = re.compile(r"[a-z0-9][a-z0-9-]*")
+SLUG = re.compile(r"[a-z0-9._-]+")
+NOT_SLUG_CHARACTERS = re.compile(r"[^a-z0-9._-]")
 PANE = re.compile(r"%[0-9]+")
 # Agent names: machine:control, machine:org:control, machine:org:project.
-SESSION_NAME = re.compile(r"[a-z0-9][a-z0-9_-]*(:[a-z0-9][a-z0-9_-]*){1,2}")
+SESSION_NAME = re.compile(r"[a-z0-9._-]+(:[a-z0-9._-]+){1,2}")
 # The harness drops part of a paste when Enter follows at once.
 PASTE_SETTLE_SECONDS = 1
 # `/quit` exits Claude Code, Codex, opencode and pi; pi has no `/exit`.
@@ -54,14 +57,6 @@ OUTPUT_TIME = re.compile(r"[0-9]+")
 
 
 @dataclass(frozen=True)
-class Agent:
-    """A managed agent: its slug, the folder its pane must sit in, and its pane."""
-    slug: str
-    folder: Path
-    pane: str
-
-
-@dataclass(frozen=True)
 class MachineControl:
     """~/Documents/control, whose agents are the org controls."""
     machine: str
@@ -70,11 +65,15 @@ class MachineControl:
     def name(self, slug: str) -> str:
         return f"{self.machine}:{slug}:control"
 
-    def folder(self, slug: str) -> Path:
-        return self.documents / slug / "control"
-
     def slug_in(self, name: str) -> str:
         return name.removeprefix(f"{self.machine}:").removesuffix(":control")
+
+    def slug_at(self, folder: Path) -> str | None:
+        """The slug of the org control in `folder`, or None when it holds none."""
+        if folder.name != "control" or folder.parent.parent != self.documents:
+            return None
+
+        return slug_of(folder.parent.name)
 
 
 @dataclass(frozen=True)
@@ -84,22 +83,35 @@ class OrgControl:
     org: Path
 
     def name(self, slug: str) -> str:
-        return f"{self.machine}:{self.org.name}:{slug}"
-
-    def folder(self, slug: str) -> Path:
-        return self.org / slug
+        return f"{self.machine}:{slug_of(self.org.name)}:{slug}"
 
     def slug_in(self, name: str) -> str:
-        return name.removeprefix(f"{self.machine}:{self.org.name}:")
+        return name.removeprefix(f"{self.machine}:{slug_of(self.org.name)}:")
+
+    def slug_at(self, folder: Path) -> str | None:
+        """The slug of the project in `folder`, or None when it holds none."""
+        if folder.parent != self.org:
+            return None
+
+        return slug_of(folder.name)
 
 
 Scope = MachineControl | OrgControl
 
 
 @dataclass(frozen=True)
-class Tagged:
-    """A pane and the agent name its @agent option holds."""
+class Agent:
+    """A managed agent: the control managing it, its slug and its pane."""
+    scope: Scope
+    slug: str
     pane: str
+
+
+@dataclass(frozen=True)
+class Tagged:
+    """A pane, the folder it sits in and the agent name its @agent option holds."""
+    pane: str
+    folder: Path
     name: str
 
 
@@ -114,14 +126,21 @@ def control_scope(repository: Path, home: Path, machine: str) -> Scope:
     raise ValueError(f"{repository} is not a machine control or an org control")
 
 
+def slug_of(folder_name: str) -> str:
+    """Two folders can give one slug; the user accepted that for names with unusual
+    characters. Their agents then share a tag, which find_agent refuses."""
+    return NOT_SLUG_CHARACTERS.sub("-", folder_name.lower())
+
+
 def is_slug(slug: str) -> bool:
-    """`control` names a control itself, never an agent one manages."""
-    return SLUG.fullmatch(slug) is not None and slug != "control"
+    """`control` names a control itself, never an agent one manages; no folder is named
+    `.` or `..`."""
+    return SLUG.fullmatch(slug) is not None and slug not in ("control", ".", "..")
 
 
 def parse_tagged(text: str) -> list[Tagged]:
-    fields = (line.split("\t", 1) for line in text.splitlines())
-    return [Tagged(pane, name) for pane, name in fields if name]
+    fields = (line.split("\t", 2) for line in text.splitlines())
+    return [Tagged(pane, Path(folder), name) for pane, folder, name in fields if name]
 
 
 def find_agent(scope: Scope, slug: str, tagged: list[Tagged]) -> Agent:
@@ -137,24 +156,25 @@ def find_agent(scope: Scope, slug: str, tagged: list[Tagged]) -> Agent:
     if len(panes) > 1:
         raise ValueError(f"{slug}: panes {', '.join(panes)} are all tagged @agent {name}; "
                          "untag every pane but the agent's own")
-    return Agent(slug, scope.folder(slug), panes[0])
+    return Agent(scope, slug, panes[0])
 
 
 def listing(scope: Scope, tagged: list[Tagged]) -> str:
     slugs = ((scope.slug_in(entry.name), entry) for entry in tagged)
     managed = ((slug, entry) for slug, entry in slugs
                if is_slug(slug) and scope.name(slug) == entry.name)
-    return "".join(f"{slug}\t{entry.pane}\t{scope.folder(slug)}\n"
-                   for slug, entry in managed)
+    return "".join(f"{slug}\t{entry.pane}\t{entry.folder}\n" for slug, entry in managed)
 
 
 def check_pane(entry: Agent, info: str) -> int:
-    """Check the pane is live and in the agent's folder; return its shell's PID."""
+    """Check the pane is live and in a folder giving the agent's slug; return its
+    shell's PID."""
     path, dead, pane_pid = info.rstrip("\n").split("\t")
     if dead != "0":
         raise ValueError(f"{entry.slug}: pane {entry.pane} is missing or dead")
-    if Path(path) != entry.folder:
-        raise ValueError(f"{entry.slug}: pane {entry.pane} is not in {entry.folder}")
+    if entry.scope.slug_at(Path(path)) != entry.slug:
+        raise ValueError(f"{entry.slug}: pane {entry.pane} is in {path}, not in a folder "
+                         f"whose name gives {entry.slug}")
 
     return int(pane_pid)
 
@@ -398,7 +418,8 @@ def main(arguments: list[str]) -> int:
     try:
         scope = control_scope(repository, Path.home().resolve(),
                               command("hostname", "-s").strip().lower())
-        tagged = parse_tagged(tmux("list-panes", "-a", "-F", "#{pane_id}\t#{@agent}"))
+        tagged = parse_tagged(tmux("list-panes", "-a", "-F",
+                                   "#{pane_id}\t#{pane_current_path}\t#{@agent}"))
         output = run(options, scope, tagged, repository)
     except subprocess.CalledProcessError as error:
         print(f"control-agents: {error.cmd[0]}: {error.stderr.strip()}", file=sys.stderr)

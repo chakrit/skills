@@ -30,6 +30,7 @@ Use these names exactly, in every file and message.
 | Parent          | Project control → its org control → machine control.                                                                                          |
 | `<machine>`     | Lowercase short hostname: `hostname -s`, lowercased (`lz49`).                                                                                 |
 | `<org>`         | The user's short org name (`datawow`, not `datawowio`).                                                                                       |
+| Slug            | `<org>` and `<project>` in agent names, tags and engram projects: the folder name lowercased, each character outside `a-z0-9._-` as `-`.      |
 | Policy          | Governance rules for one level: engram entry `rule/policy-<level>`.                                                                           |
 | Rule entry      | A rule set in engram project `<machine>-control-rules`, seeded from `templates/rules/`; files in `~/Documents/control/rules/` without engram. |
 | Registry        | A file a control keeps to track shared things (ports, heavy-job slots, members).                                                              |

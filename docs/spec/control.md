@@ -23,6 +23,11 @@ appears only as an example name, and no rule rests on what chakrit wants.
   (`~/Documents/<org>/<project>`).
 - Agent names: `<machine>:control`, `<machine>:<org>:control`,
   `<machine>:<org>:<project>`. `<org>` is the user's short name (`datawow`).
+- In agent names, `@agent` tags and engram project names, `<org>` and `<project>` are
+  slugs: the folder name lowercased, each character outside `a-z0-9._-` turned into
+  `-`. Folders keep any name the filesystem allows; no folder is refused or renamed. Two
+  folders can give one slug; that collision is accepted, since unusual names are rare,
+  and the script refuses the shared tag.
 - Higher levels hold less context. Machine control keeps work across orgs and work
   that belongs to no org, and sends one org's tasks to that org control. Org controls
   track tasks and alignment, not project details. Project controls own project context
@@ -135,8 +140,9 @@ appears only as an example name, and no rule rests on what chakrit wants.
 - Agent rows hold the slug and Status only; no script reads a registry. The script
   finds a running agent's pane by the tmux pane option `@agent <agent name>`, which the
   control sets at start and the agent sets on its own pane at every session start, so
-  it returns after a tmux restart. The script derives the agent's folder from the
-  layout and refuses a tagged pane open elsewhere. It refuses the slug `control`, which
+  it returns after a tmux restart. The script never looks up a folder: it reads the
+  tagged pane's folder and refuses the pane unless that folder sits at the agent's
+  level and its name gives the agent's slug. It refuses the slug `control`, which
   would match an org control's own tag as one of its projects.
 - Ports nest: machine control grants blocks to org controls, which grant blocks to
   projects. Heavy-job slots do not nest: only machine control records them, holder
@@ -158,9 +164,9 @@ appears only as an example name, and no rule rests on what chakrit wants.
 ## Script
 
 - One reference script, `scripts/control-agents`, with no configuration: it derives
-  its agents' names and folders from the folder layout, finds their panes by tag,
-  talks to the tmux server it runs in, and hard-codes
-  the harness slash commands. Controls copy it and may adapt it.
+  its agents' names from the folder layout, finds their panes by tag, talks to the tmux
+  server it runs in, and hard-codes the harness slash commands. Controls copy it and
+  may adapt it.
 - It targets panes only by tmux ID, re-checks the pane before typing, and never changes
   windows or layout, except that wind-down's exit closes the agent's pane.
 - It refuses to type when the pane's own shell holds the terminal's foreground group,

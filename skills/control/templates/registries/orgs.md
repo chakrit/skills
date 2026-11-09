@@ -1,7 +1,8 @@
 # Orgs
 
-Org controls on this machine. Updated by machine control only. Org is the user's short
-org slug; its control lives in `~/Documents/<org>/control`. Status is `initiating` from
+Org controls on this machine. Updated by machine control only. Org is the slug of the
+org folder's name: lowercased, each character outside `a-z0-9._-` turned into `-`; its
+control lives in `~/Documents/<org folder>/control`. Status is `initiating` from
 the row's first write during "Initiate an agent", and `initiated` once you accept the
 agent's report that everything is done. `scripts/control-agents` does not read this
 file; it finds each agent's pane by its `@agent` tmux tag.

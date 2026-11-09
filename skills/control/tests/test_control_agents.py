@@ -13,16 +13,17 @@ HOME = Path("/home/chakrit")
 DOCUMENTS = HOME / "Documents"
 MACHINE = agents.MachineControl("lz49", DOCUMENTS)
 ACME = agents.OrgControl("lz49", DOCUMENTS / "acme")
-# `tmux list-panes -a -F '#{pane_id}\t#{@agent}'`; an untagged pane prints an empty name.
-PANES = agents.parse_tagged("%1\t\n"
-                            "%7\tlz49:acme:web\n"
-                            "%9\tlz49:acme:api-v2\n"
-                            "%3\tlz49:acme:control\n"
-                            "%6\tlz49:control\n"
-                            "%4\tlz49:other:web\n"
-                            "%5\tgz44:acme:web\n"
-                            "%8\tlz49:acme:docs:extra\n")
-WEB = agents.Agent("web", DOCUMENTS / "acme/web", "%7")
+# `tmux list-panes -a -F '#{pane_id}\t#{pane_current_path}\t#{@agent}'`; an untagged
+# pane prints an empty name.
+PANES = agents.parse_tagged(f"%1\t{HOME}\t\n"
+                            f"%7\t{DOCUMENTS}/acme/web\tlz49:acme:web\n"
+                            f"%9\t{DOCUMENTS}/acme/API_v2\tlz49:acme:api_v2\n"
+                            f"%3\t{DOCUMENTS}/acme/control\tlz49:acme:control\n"
+                            f"%6\t{DOCUMENTS}/control\tlz49:control\n"
+                            f"%4\t{DOCUMENTS}/other/web\tlz49:other:web\n"
+                            f"%5\t{DOCUMENTS}/acme/web\tgz44:acme:web\n"
+                            f"%8\t{DOCUMENTS}/acme/docs\tlz49:acme:docs:extra\n")
+WEB = agents.Agent(ACME, "web", "%7")
 
 
 class ScopeTest(unittest.TestCase):
@@ -41,18 +42,46 @@ class ScopeTest(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     agents.control_scope(repository, HOME, "lz49")
 
-    def test_slug_gives_the_agent_name_and_folder(self) -> None:
-        self.assertEqual((MACHINE.name("acme"), MACHINE.folder("acme")),
-                         ("lz49:acme:control", DOCUMENTS / "acme/control"))
-        self.assertEqual((ACME.name("web"), ACME.folder("web")),
-                         ("lz49:acme:web", DOCUMENTS / "acme/web"))
+    def test_slug_gives_the_agent_name(self) -> None:
+        self.assertEqual(MACHINE.name("acme"), "lz49:acme:control")
+        self.assertEqual(ACME.name("web"), "lz49:acme:web")
+        self.assertEqual(agents.OrgControl("lz49", DOCUMENTS / "AppBaoBao").name("web"),
+                         "lz49:appbaobao:web")
+
+    def test_agent_folders_give_their_slug(self) -> None:
+        for scope, folder, slug in ((ACME, "acme/web", "web"),
+                                    (ACME, "acme/AppBaoBao.com", "appbaobao.com"),
+                                    (MACHINE, "AppBaoBao/control", "appbaobao"),
+                                    (MACHINE, "acme/control", "acme")):
+            with self.subTest(folder=folder):
+                self.assertEqual(scope.slug_at(DOCUMENTS / folder), slug)
+
+    def test_folders_outside_the_scope_give_no_slug(self) -> None:
+        for scope, folder in ((ACME, "other/web"), (ACME, "acme"), (ACME, "acme/web/sub"),
+                              (MACHINE, "control"), (MACHINE, "acme/web")):
+            with self.subTest(folder=folder):
+                self.assertIsNone(scope.slug_at(DOCUMENTS / folder))
+
+
+class SlugTest(unittest.TestCase):
+    """Folder names normalize to agent slugs; see docs/spec/control.md "Records"."""
+
+    def test_folder_names_lowercase_and_dash_other_characters(self) -> None:
+        for folder, slug in (("web", "web"), ("api-v2", "api-v2"),
+                             ("AppBaoBao.com", "appbaobao.com"), ("my_site", "my_site"),
+                             ("my site", "my-site"), ("a:b|c", "a-b-c"),
+                             ("-web", "-web")):
+            with self.subTest(folder=folder):
+                self.assertEqual(agents.slug_of(folder), slug)
 
 
 class FindAgentTest(unittest.TestCase):
     def test_the_one_tagged_pane_is_found(self) -> None:
         self.assertEqual(agents.find_agent(ACME, "web", PANES), WEB)
+        self.assertEqual(agents.find_agent(ACME, "api_v2", PANES),
+                         agents.Agent(ACME, "api_v2", "%9"))
         self.assertEqual(agents.find_agent(MACHINE, "acme", PANES),
-                         agents.Agent("acme", DOCUMENTS / "acme/control", "%3"))
+                         agents.Agent(MACHINE, "acme", "%3"))
 
     def test_untagged_agent_is_refused_with_the_tagging_command(self) -> None:
         with self.assertRaisesRegex(
@@ -62,12 +91,13 @@ class FindAgentTest(unittest.TestCase):
             agents.find_agent(ACME, "docs", PANES)
 
     def test_name_on_several_panes_is_refused_naming_them(self) -> None:
-        doubled = PANES + agents.parse_tagged("%12\tlz49:acme:web\n")
+        doubled = PANES + agents.parse_tagged(f"%12\t{DOCUMENTS}/acme/Web\t"
+                                              "lz49:acme:web\n")
         with self.assertRaisesRegex(ValueError, "^web: .*%7.*%12"):
             agents.find_agent(ACME, "web", doubled)
 
     def test_slugs_that_are_not_managed_agents_are_refused(self) -> None:
-        for slug in ("", "Web", "../web", "web:x", "-web", "control"):
+        for slug in ("", "Web", "../web", "web:x", "my site", ".", "..", "control"):
             with self.subTest(slug=slug):
                 with self.assertRaisesRegex(ValueError, "not a slug"):
                     agents.find_agent(ACME, slug, PANES)
@@ -77,7 +107,7 @@ class ListingTest(unittest.TestCase):
     def test_org_control_lists_its_tagged_projects(self) -> None:
         self.assertEqual(agents.listing(ACME, PANES),
                          f"web\t%7\t{DOCUMENTS}/acme/web\n"
-                         f"api-v2\t%9\t{DOCUMENTS}/acme/api-v2\n")
+                         f"api_v2\t%9\t{DOCUMENTS}/acme/API_v2\n")
 
     def test_machine_control_lists_its_tagged_org_controls(self) -> None:
         self.assertEqual(agents.listing(MACHINE, PANES),
@@ -87,9 +117,14 @@ class ListingTest(unittest.TestCase):
 class PaneTest(unittest.TestCase):
     def test_live_pane_in_the_agent_folder_returns_its_shell_pid(self) -> None:
         self.assertEqual(agents.check_pane(WEB, f"{DOCUMENTS}/acme/web\t0\t4100\n"), 4100)
+        self.assertEqual(agents.check_pane(agents.Agent(ACME, "appbaobao.com", "%7"),
+                                           f"{DOCUMENTS}/acme/AppBaoBao.com\t0\t4100\n"),
+                         4100)
 
     def test_mismatched_panes_are_refused(self) -> None:
-        for info in (f"{DOCUMENTS}/acme/web\t1\t4100", f"{DOCUMENTS}/acme/api\t0\t4100"):
+        for info in (f"{DOCUMENTS}/acme/web\t1\t4100", f"{DOCUMENTS}/acme/api\t0\t4100",
+                     f"{DOCUMENTS}/other/web\t0\t4100",
+                     f"{DOCUMENTS}/acme/web/sub\t0\t4100"):
             with self.subTest(info=info):
                 with self.assertRaises(ValueError):
                     agents.check_pane(WEB, info)
@@ -128,7 +163,8 @@ class DraftTest(unittest.TestCase):
 
 class SessionNameTest(unittest.TestCase):
     def test_only_agent_names_pass(self) -> None:
-        for name in ("lz49:control", "lz49:acme:control", "lz49:acme:web-v2"):
+        for name in ("lz49:control", "lz49:acme:control", "lz49:acme:web-v2",
+                     "lz49:appbaobao:appbaobao.com", "lz49:acme:my_site"):
             agents.check_session_name(name)
         for name in ("web", "lz49:acme:web:extra", "Lz49:control", "lz49:control\n/quit"):
             with self.subTest(name=name):
@@ -164,11 +200,12 @@ class InspectionTest(unittest.TestCase):
     SEEN = {"web": agents.Inspection("%7", 1762594200)}
 
     def test_inspections_round_trip_one_line_per_slug(self) -> None:
-        text = "api-v2\t%9\t1762594100\nweb\t%7\t1762594200\n"
+        text = "api-v2\t%9\t1762594100\nweb\t%7\t1762594200\nx.com\t%2\t1762594300\n"
         parsed = agents.parse_inspections(text)
 
         self.assertEqual(parsed, {"api-v2": agents.Inspection("%9", 1762594100),
-                                  "web": agents.Inspection("%7", 1762594200)})
+                                  "web": agents.Inspection("%7", 1762594200),
+                                  "x.com": agents.Inspection("%2", 1762594300)})
         self.assertEqual(agents.inspections_text(parsed), text)
 
     def test_malformed_inspection_lines_are_refused(self) -> None:
