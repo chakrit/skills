@@ -106,9 +106,10 @@ appears only as an example name, and no rule rests on what chakrit wants.
   is idle. A task that reaches a busy agent anyway waits for its current work, and the
   agent's own save carries it through the clear. An agent finishes a wake-up or
   initiation before taking any task.
-- Messages go through the harness's agent messaging first; `scripts/control-agents`
-  is the fallback, and the only way to send keystroke-only commands (`/clear`,
-  `/rename`, `/quit`).
+- Messages go through the harness's agent messaging whenever it reaches the receiver,
+  including right after a scripted clear or rename; `scripts/control-agents` is the
+  fallback, and the only way to send keystroke-only commands (`/clear`, `/rename`,
+  `/quit`).
 - Two message classes: rulings are the user's decisions and are applied as given; task
   asks may be misread in relay, so the receiver pushes back and the control resolves it
   with the user.

@@ -42,14 +42,22 @@ the command reports no session to resume.
 
 1. Identify the sender in the first line: `FROM: <agent-name> (<folder>)`. Never write
    as the user.
-2. Use the harness's own agent messaging when sender and receiver both have it.
-   Otherwise read the pane with `scripts/control-agents inspect <slug>`, then use
+2. Send through the harness's own agent messaging whenever it reaches the receiver.
+   It is the default channel for every message in these procedures, the wake message
+   and the task included: it delivers whole, with no pane to read first and no refusal
+   on new output. Some harnesses load agent-messaging tools only on demand, so search
+   your tools for one before concluding you have none; once its agent list shows the
+   receiver, use it without further checks.
+   Only when it does not reach the receiver, read the pane with
+   `scripts/control-agents inspect <slug>`, then use
    `scripts/control-agents send <slug>` with the message on stdin. It types only into
    the one pane tagged with the agent's name, in the agent's folder, while a program other than the pane's
    shell holds it, nobody is viewing it, its prompt holds no typed input, and it has
    printed nothing since your last `inspect`. When it refuses for new output, inspect
    again and retry. Never hand-type into a pane the script refused.
-3. Clear, rename and wind down an agent only through `scripts/control-agents`.
+3. Clear, rename and wind down an agent only through `scripts/control-agents`. These
+   are keystroke commands, not messages: the message you send right after one still
+   goes through step 2.
 4. Quote rulings verbatim with the user's name and the date:
    `chakrit, 2026-11-04: "<exact words>"`.
 
