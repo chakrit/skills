@@ -36,7 +36,7 @@ Use these names exactly, in every file and message.
 | Registry        | A file a control keeps to track shared things (ports, heavy-job slots, members).                                                              |
 | Ruling          | The user's decision on authority or policy, relayed by a control.                                                                             |
 | Task ask        | Work the user asked a control to hand to an agent.                                                                                            |
-| Standing grant  | The `## Control` section of an agent's instruction file: who it is, its parent, which messages it accepts and the rule entries it loads.      |
+| Standing grant  | The `## Control` section: who the agent is, its parent, messages it accepts, rule entries. Team repos keep it in engram (`control/grant`).    |
 | Wind-down       | Save, clear, exit the harness and its shell. The user's "stop" for an agent means this.                                                       |
 | Control page    | `control.html` in a control repo, rendered from `control.data.js`; see `rule/policy-org`.                                                     |
 | Wake-up         | Readying an agent before any task. Controls wake below; the user wakes a parent.                                                              |
@@ -77,9 +77,10 @@ A setup is done when:
 
 - every file the setup reference lists exists; for machine control, with no `{{`
   left: `grep -n '{{'` on the files this setup wrote prints nothing;
-- the agent's instruction file contains the standing grant and the rule-entry pointers:
-  machine setup writes them; for an org or project control, the initiation's
-  acknowledgment meets this item, or the report asks the parent to initiate it;
+- the agent's instruction file contains the standing grant and the rule-entry pointers,
+  or in a team repo the marker pointing to them in engram: machine setup writes them;
+  for an org or project control, the initiation's acknowledgment meets this item, or
+  the report asks the parent to initiate it;
 - the control's repo is onboarded ("Onboard into ACE" in `references/operations.md`),
   or the environment has no school;
 - for machine control, its `control.data.js` has an Agent Backlog row "Plan downstream

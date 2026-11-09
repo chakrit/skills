@@ -46,7 +46,15 @@ appears only as an example name, and no rule rests on what chakrit wants.
   carries the standing grant and pointers to the rule entries it loads.
 - Every instruction file states the session-start step itself (load the rule entries,
   then `mem_context`) instead of pointing to it: a pointer chain to the step was
-  skipped after restarts.
+  skipped after restarts. Team repos are the exception.
+- A team repo is a single-repo project's folder cloned from a remote. With engram,
+  its instruction file keeps only a marker `## Control` section, and the full section
+  lives in the agent's engram project under topic key `control/grant`; the agent writes
+  it at initiation and amends it with `mem_update`. The marker applies only inside a
+  control setup (the folder is `~/Documents/<org>/<project>` and the org control's
+  folder exists), so teammates' agents ignore it, and it repeats the setup's own terms
+  (standing grant, session start, after a clear or compaction) so an agent finds it.
+  Without engram the full section stays in the file.
 - Rules are five engram entries in a dedicated project, `<machine>-control-rules`:
   `rule/policy-machine`, `rule/policy-org`, `rule/policy-project` (governance only),
   `rule/memory` and `rule/handling-agents`. The dedicated project exists because a

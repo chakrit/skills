@@ -1,8 +1,10 @@
 # Initiate an agent
 
 Brings an existing agent under control: it gets the standing grant and the rule-entry
-pointers, so it works from its own instruction file without this skill. If its folder
-is not fully set up, the setup for its level runs first.
+pointers, so it works from its own instruction file without this skill. In a team repo
+(a single-repo project's folder cloned from a remote) with engram, the grant goes to
+engram and the instruction file keeps only a marker pointing to it. If its folder is
+not fully set up, the setup for its level runs first.
 
 The procedure is the section "Initiate an agent" in `templates/rules/handling-agents.md`,
 which machine setup seeds as engram entry `rule/handling-agents`, so controls run it

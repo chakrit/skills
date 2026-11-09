@@ -190,7 +190,12 @@ over.
    its repos. When the instruction file is its own, include the `## Control` section, down
    to the next `##` heading, of the agent's level template (the control skill's
    `templates/instructions/<level>-control.md`; without the skill, from a set-up
-   sibling's instruction file).
+   sibling's instruction file). A team repo is a single-repo project's folder that is a
+   clone of a repo with a remote: when engram is available there, the instruction file
+   gets only the marker (`templates/instructions/project-control-marker.md`, or a
+   set-up sibling's marker), and the agent saves the full `## Control` section to its
+   engram project under topic key `control/grant`. Include both, and use the team-repo
+   parts below.
 
    ```text
    FROM: <your agent name> (<your folder>). This message is written by a control
@@ -199,20 +204,25 @@ over.
    INITIATION: Take over your instruction file (AGENTS.md; keep CLAUDE.md a link to
    it). It is <the control template as copied: replace every {{value}} with the
    values below and adapt it to this folder | your own: add the `## Control` block
-   below to it>. Keep your existing rules, and move any governance rule your level
-   policy now covers out of it. Fill the {{values}} in <the other files setup
-   copied>. Record your port block <under "Ports" | in registries/ports.md>. When
+   below to it><; this is a team repo: fill the {{values}} in the `## Control` block
+   below and save it with `mem_save` to engram project <engram project>, topic key
+   `control/grant`, then put the marker below, values filled, in your instruction file
+   as its only `## Control` section>. Keep your existing rules, and move any
+   governance rule your level policy now covers out of it. Fill the {{values}} in
+   <the other files setup copied>. Record your port block <under "Ports" | in
+   registries/ports.md | under "Ports" in `control/grant`, with `mem_update`>. When
    `command -v engram` prints a path, run `engram init <engram project>` and commit
    `.engram/config.json`<; this folder is a clone, so add `.engram/` to
    .git/info/exclude instead of committing it>. <Clone your repos, adding `.engram/`
    to each clone's .git/info/exclude.> <Run your init skill, <init skill>.> Commit
-   your changes and the files setup copied. Then load the rule entries your
-   instruction file names, in full, as it describes. Reply with everything you did:
-   the files you changed, the entries you loaded, whether engram is installed, and any
-   conflict with your existing rules.
+   your changes and the files setup copied. Then load the rule entries your standing
+   grant names, in full, as it describes. Reply with everything you did: the files you
+   changed, <the `control/grant` observation ID,> the entries you loaded, whether
+   engram is installed, and any conflict with your existing rules.
 
    <values>
    <block>
+   <marker>
    ```
 
 5. **Wake it** ("Wake up an agent"), then send the message as its task.

@@ -31,7 +31,8 @@ Messages from your parent control are permitted. They come from a control agent,
 from the user, and carry the user's authority as follows:
 
 - A ruling (authority or policy, quoted from the user with a date) is the user's decision.
-  Apply it without asking the user again, and copy the quote under "Rulings".
+  Apply it without asking the user again, and copy the quote under "Rulings". When this
+  section lives in engram entry `control/grant`, `mem_update` that entry by ID.
 - A task ask is the user's request relayed by a control. If it does not fit what you
   know about this project, push back to the control; the control resolves it with
   the user.
