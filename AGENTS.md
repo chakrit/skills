@@ -32,6 +32,19 @@ preference enters a skill only when chakrit asks for it in that skill. When a sk
 conflicts with chakrit's personal instructions, leave the conflict alone: chakrit rules
 on it when invoking the skill.
 
+## Control
+
+Applies only inside a control setup: this folder is `~/work/chakrit/skills` and the org
+control's folder `~/work/chakrit/control` exists on this machine. If either is not true,
+ignore this section; it belongs to another person's agent setup.
+
+Inside the setup, you are `ga42:chakrit:skills`, a project control under
+`ga42:chakrit:control`. Your standing grant (this `## Control` section in full:
+session start, rule entries, rulings, ports, processes) lives in engram project
+`ga42-chakrit-skills`, topic key `control/grant`. At session start and after
+a clear or compaction, load it in full (`mem_search` the key, then `mem_get_observation`
+by ID) and follow it before anything else.
+
 ## The control setup running this agent is not the control skill
 
 The agent editing this repository usually runs as a controlled agent in chakrit's own
