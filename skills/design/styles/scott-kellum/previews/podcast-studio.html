@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shoal Creek Sound: podcasts made in East Austin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ground: #0e1d16;
+  --line: #1f3529;
+  --cream: #f2e6cf;
+  --dim: #a9b9a6;
+  --tape: #ff5a1f;
+  --butter: #f1d27a;
+  --butter-line: #d9b75c;
+  --ink: #12271d;
+  --serif: "Newsreader", Georgia, serif;
+  --display: "Bricolage Grotesque", "Arial Narrow", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --measure: min(76rem, 92vw);
+}
+* { box-sizing: border-box; }
+html { background: var(--ground); color: var(--cream); }
+body { margin: 0; font-family: var(--serif); font-optical-sizing: auto; }
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: .18em; }
+
+/* ---------- fluid roles: container width scrubs a paused animation ---------- */
+/* progress = (container px - 320) / 880; the timing function is the curve */
+.slot { container-type: inline-size; }
+.body, .slot p {
+  font-size: 1.0625rem; line-height: 1.45;
+  animation: body 1s cubic-bezier(.15, .75, .3, 1) paused both;
+  animation-delay: calc((tan(atan2(100cqi, 1px)) - 320) / 880 * -1s);
+}
+@keyframes body {
+  from { font-size: 1.0625rem; line-height: 1.45; }
+  to   { font-size: 1.25rem;   line-height: 1.6; }
+}
+.slot p.lede {
+  font-size: 1.45rem; line-height: 1.22; font-variation-settings: "opsz" 24;
+  animation: lede 1s cubic-bezier(.55, 0, .75, .7) paused both;
+  animation-delay: calc((tan(atan2(100cqi, 1px)) - 320) / 880 * -1s);
+}
+@keyframes lede {
+  from { font-size: 1.45rem; line-height: 1.22; font-variation-settings: "opsz" 24; font-weight: 380; }
+  to   { font-size: 3rem;    line-height: 1.16; font-variation-settings: "opsz" 72; font-weight: 330; }
+}
+.slot h2 {
+  font-size: 1.5rem; line-height: 1.15;
+  animation: section 1s cubic-bezier(.45, 0, .7, .7) paused both;
+  animation-delay: calc((tan(atan2(100cqi, 1px)) - 320) / 700 * -1s);
+}
+@keyframes section {
+  from { font-size: 1.5rem; line-height: 1.15; font-variation-settings: "opsz" 30; }
+  to   { font-size: 3.2rem; line-height: 1.04; font-variation-settings: "opsz" 72; }
+}
+.slot h3 {
+  font-size: 2rem; line-height: 1;
+  font-variation-settings: "wdth" 75, "wght" 800, "opsz" 48;
+  animation: show 1s cubic-bezier(.6, 0, .9, .4) paused both;
+  animation-delay: calc((tan(atan2(100cqi, 1px)) - 320) / 520 * -1s);
+}
+@keyframes show {
+  from { font-size: 2rem;   line-height: 1;  font-variation-settings: "wdth" 75, "wght" 800, "opsz" 48; }
+  to   { font-size: 4.6rem; line-height: .9; font-variation-settings: "wdth" 100, "wght" 700, "opsz" 96; }
+}
+
+/* ---------- the drawn grid ---------- */
+.frame { display: grid; grid-template-columns: 1fr var(--measure) 1fr; }
+.frame > * { grid-column: 2; }
+.cols { display: grid; grid-template-columns: 2fr 7fr 3fr; column-gap: 2rem; }
+.lines {
+  position: fixed; inset: 0; pointer-events: none; z-index: 3;
+  display: grid; grid-template-columns: 1fr var(--measure) 1fr;
+}
+.lines .cols { grid-column: 2; column-gap: 2rem; height: 100%; }
+.lines .cols span { border-left: 1px solid rgba(242, 230, 207, .075); }
+.lines .cols span:last-child { border-right: 1px solid rgba(242, 230, 207, .075); }
+section { border-top: 1px solid var(--line); }
+
+/* ---------- navigation pill and margin fact ---------- */
+.pill {
+  position: fixed; top: 1rem; left: 50%; translate: -50% 0; z-index: 5;
+  display: flex; align-items: center; gap: 1.1rem;
+  padding: .45rem 1.1rem .45rem .5rem; border-radius: 99rem;
+  background: rgba(14, 29, 22, .55); backdrop-filter: blur(14px);
+  font-family: var(--display); font-size: .95rem;
+  font-variation-settings: "wdth" 85, "wght" 600; white-space: nowrap;
+}
+.pill::before {
+  content: ""; position: absolute; inset: -.4rem 30% -.4rem -.6rem; z-index: -1;
+  border-radius: 50%; background: rgba(255, 90, 31, .28); filter: blur(16px);
+}
+.pill a { text-decoration: none; }
+.pill a:hover { color: var(--butter); }
+.mark { display: flex; align-items: center; gap: .5rem; font-variation-settings: "wdth" 75, "wght" 800; letter-spacing: .01em; }
+.mark svg { width: 2rem; height: 2rem; }
+.reel { transform-origin: 16px 16px; animation: spin 13s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.margin-fact {
+  position: fixed; left: 1.1rem; bottom: 1.5rem; z-index: 4;
+  writing-mode: vertical-rl; rotate: 180deg; white-space: nowrap;
+  font-family: var(--mono); font-size: .72rem; color: var(--dim); letter-spacing: .03em;
+}
+@media (max-width: 1100px) { .margin-fact { display: none; } }
+
+/* ---------- lede ---------- */
+.opening { min-height: 100svh; display: grid; align-content: center; padding: 7rem 0 4rem; border-top: 0; }
+.opening .slot { grid-column: 1 / -1; }
+.lede { margin: 0; max-width: 23em; text-wrap: pretty; }
+.lede a { text-decoration-color: var(--tape); }
+.opening .after {
+  margin-top: 2.6rem; font-family: var(--mono); font-size: .8rem; color: var(--dim); animation: none;
+  display: flex; flex-wrap: wrap; gap: .4rem 2rem;
+}
+
+/* ---------- shows ---------- */
+.shows { padding: 5rem 0 3rem; }
+h2 { font-family: var(--serif); font-weight: 400; margin: 0 0 3rem; max-width: 17em; text-wrap: balance; }
+.shows .head { grid-column: 2 / -1; }
+.show { padding: 2.2rem 0; border-top: 1px solid var(--line); align-items: start; }
+.show .art { grid-column: 1; }
+.show .art svg { display: block; width: 100%; aspect-ratio: 1; border-radius: .1px 3rem; }
+.show .text { grid-column: 2; }
+.show h3 {
+  font-family: var(--display); margin: 0 0 1rem; padding-bottom: .55rem;
+  border-bottom: 1px solid var(--dim); text-wrap: balance; color: var(--cream);
+}
+.show p { margin: 0; max-width: 34em; }
+.show .facts {
+  grid-column: 3; margin: 0; padding-top: .5rem;
+  font-family: var(--mono); font-size: .8rem; line-height: 1.7; color: var(--butter);
+}
+.show .facts dt { color: var(--dim); }
+.show .facts dd { margin: 0 0 .6rem; }
+
+/* ---------- the room ---------- */
+.room { padding: 5rem 0; }
+.room .slot { grid-column: 2; }
+.room .slot p { max-width: 32em; margin: 0 0 1.1em; }
+.room .label { grid-column: 3; align-self: start; padding-top: 1rem; }
+.label svg { width: 100%; max-width: 19rem; rotate: 3deg; filter: drop-shadow(0 .8rem 1.2rem rgba(0,0,0,.45)); }
+.needle { transform-origin: 150px 92px; animation: swing 7s ease-in-out infinite alternate, swing2 11s ease-in-out infinite alternate; }
+@keyframes swing { from { rotate: -34deg; } to { rotate: 8deg; } }
+@keyframes swing2 { from { translate: 0 0; } to { translate: .8px 0; } }
+
+/* ---------- rates: the track sheet, on a butter field ---------- */
+.rates { background: var(--butter); color: var(--ink); padding: 5rem 0 6rem; border-top: 0; position: relative; z-index: 4; }
+.rates .slot { grid-column: 2 / -1; }
+.rates > .cols { position: relative; z-index: 1; }
+.lines.local { position: absolute; z-index: 0; grid-column: 1 / -1; }
+.lines.local .cols span, .lines.local .cols span:last-child { border-color: var(--butter-line); }
+.sheet { width: 100%; border-collapse: collapse; }
+.sheet th {
+  text-align: left; font-family: var(--mono); font-weight: 500; font-size: .75rem;
+  padding: 0 1rem .6rem 0; border-bottom: 2px solid var(--ink);
+}
+.sheet td { padding: 1.1rem 1rem 1.1rem 0; border-bottom: 1px solid var(--butter-line); vertical-align: baseline; }
+.sheet td:first-child {
+  font-family: var(--display); font-size: 1.35rem; line-height: 1.05;
+  font-variation-settings: "wdth" 78, "wght" 750; width: 30%;
+}
+.sheet td.what { font-family: var(--serif); font-size: 1.05rem; line-height: 1.45; }
+.sheet td.price { font-family: var(--mono); font-size: 1rem; white-space: nowrap; text-align: right; padding-right: 0; }
+.sheet .band { height: .55rem; background: var(--tape); }
+.rates .note { margin: 2rem 0 0; max-width: 34em; }
+
+/* ---------- write ---------- */
+.write { padding: 6rem 0 4rem; }
+.write .slot { grid-column: 2 / -1; }
+.write p { max-width: 30em; margin: 0 0 1em; }
+.write .addr { animation: none; font-family: var(--mono); font-size: .85rem; color: var(--dim); margin-top: 3rem; line-height: 1.8; }
+.write .big { font-family: var(--display); font-variation-settings: "wdth" 75, "wght" 800; font-size: clamp(2rem, 9cqi, 6.5rem); line-height: 1; margin: 0 0 2rem; display: block; color: var(--butter); text-decoration: none; overflow-wrap: anywhere; animation: none; }
+.write .big:hover { color: var(--tape); }
+
+/* ---------- narrow layout (layout only, never type) ---------- */
+@media (max-width: 760px) {
+  .cols { grid-template-columns: 1fr; }
+  .lines .cols span:nth-child(2), .lines .cols span:nth-child(3) { display: none; }
+  .lines .cols span:first-child { border-right: 1px solid rgba(242, 230, 207, .075); }
+  .shows .head, .room .slot, .room .label, .rates .slot, .write .slot,
+  .show .art, .show .text, .show .facts { grid-column: 1; }
+  .show { row-gap: 1.2rem; }
+  .show .art { width: 9rem; }
+  .show .facts { display: grid; grid-template-columns: auto 1fr; gap: 0 1rem; padding: 0; }
+  .show .facts dd { margin: 0; }
+  .pill { font-size: .85rem; gap: .8rem; }
+  .pill .hide-narrow { display: none; }
+  .sheet thead { display: none; }
+  .sheet tr { display: grid; grid-template-columns: 1fr auto; }
+  .sheet td.what { grid-column: 1 / -1; padding-top: 0; }
+  .sheet td:first-child { width: auto; border: 0; }
+  .sheet td.price { border: 0; grid-column: 2; grid-row: 1; }
+  .label svg { max-width: 16rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reel, .needle { animation: none; }
+}
+
+@media print {
+  html, .rates { background: #fff; color: #000; }
+  .pill, .margin-fact, .lines, .label { display: none; }
+  .opening { min-height: 0; padding: 0 0 2rem; }
+  .slot p.lede { animation: none; font-size: 20pt; }
+  .slot p, .body { animation: none; font-size: 11pt; }
+  .slot h2 { animation: none; font-size: 18pt; }
+  .slot h3 { animation: none; font-size: 16pt; color: #000; }
+  .show .facts, .write .big { color: #000; }
+  section { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<div class="lines" aria-hidden="true"><div class="cols"><span></span><span></span><span></span></div></div>
+
+<nav class="pill" aria-label="Main">
+  <a class="mark" href="#top">
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+      <g class="reel">
+        <circle cx="16" cy="16" r="15" fill="#f2e6cf"/>
+        <circle cx="16" cy="16" r="2.2" fill="#0e1d16"/>
+        <circle cx="16" cy="8.2" r="3.6" fill="#0e1d16"/>
+        <circle cx="22.8" cy="19.9" r="3.6" fill="#0e1d16"/>
+        <circle cx="9.2" cy="19.9" r="3.6" fill="#0e1d16"/>
+      </g>
+    </svg>
+    Shoal Creek Sound
+  </a>
+  <a href="#shows">Shows</a>
+  <a href="#room" class="hide-narrow">The room</a>
+  <a href="#rates">Rates</a>
+  <a href="#write">Write</a>
+</nav>
+
+<p class="margin-fact" aria-hidden="true">2209 E Cesar Chavez St · open 9 to 7 weekdays · 1,412 episodes mixed since 2016</p>
+
+<main id="top">
+
+<section class="opening frame">
+  <div class="cols">
+    <div class="slot">
+      <p class="lede">Shoal Creek Sound makes podcasts in a converted tire shop on the east side of Austin. Three of us record, edit and mix about forty series a year, most of them for people with a story worth an hour of your attention and no settled idea of how an episode should run. We help decide that before anyone sits at a microphone, then spend most of our hours <a href="#shows">in the edit</a>, cutting until the tape keeps moving.</p>
+      <p class="after"><span>Narrative series</span><span>Interview shows</span><span>Mixing for other producers</span><span>Room A by the hour</span></p>
+    </div>
+  </div>
+</section>
+
+<section class="shows frame" id="shows">
+  <div class="cols">
+    <div class="slot head"><h2>Four series that left this building in the last two years</h2></div>
+  </div>
+
+  <article class="show cols">
+    <div class="art" aria-hidden="true">
+      <svg viewBox="0 0 200 200">
+        <rect width="200" height="200" fill="#f2e6cf"/>
+        <g style="mix-blend-mode:multiply">
+          <circle cx="78" cy="88" r="58" fill="#f7c817"/>
+          <ellipse cx="122" cy="110" rx="46" ry="62" fill="#e0218a" opacity=".85"/>
+          <rect x="18" y="138" width="170" height="16" fill="#00a2c7"/>
+          <rect x="18" y="162" width="120" height="16" fill="#00a2c7"/>
+          <path d="M122 48 C 106 80, 138 136, 122 172" stroke="#0e1d16" stroke-width="3" fill="none"/>
+        </g>
+      </svg>
+    </div>
+    <div class="text slot">
+      <h3>The Pecan Hours</h3>
+      <p>An oral history of the families who grow pecans along the Colorado and the San Saba, recorded on their porches over two harvests. We cut 140 hours of interviews into twelve episodes and kept the cicadas in.</p>
+    </div>
+    <dl class="facts">
+      <dt>For</dt><dd>Texas Orchard Heritage Trust</dd>
+      <dt>Run</dt><dd>12 episodes, 31 to 48 min</dd>
+      <dt>Released</dt><dd>Oct 2026</dd>
+    </dl>
+  </article>
+
+  <article class="show cols">
+    <div class="art" aria-hidden="true">
+      <svg viewBox="0 0 200 200">
+        <rect width="200" height="200" fill="#f2e6cf"/>
+        <g style="mix-blend-mode:multiply">
+          <circle cx="100" cy="46" r="40" fill="#f7c817"/>
+          <polygon points="100,40 136,200 64,200" fill="#00a2c7" opacity=".9"/>
+          <polygon points="100,40 120,200 80,200" fill="#e0218a" opacity=".8"/>
+          <circle cx="100" cy="46" r="14" fill="#ff5a1f"/>
+        </g>
+        <g stroke="#0e1d16" stroke-width="2">
+          <line x1="70" y1="120" x2="130" y2="120"/><line x1="76" y1="150" x2="124" y2="150"/><line x1="82" y1="180" x2="118" y2="180"/>
+        </g>
+      </svg>
+    </div>
+    <div class="text slot">
+      <h3>Tower Light</h3>
+      <p>A six-part series on the moonlight towers, the 165-foot iron lamps Austin put up in 1894 and never took down. The host climbed one with a city electrician; we recorded the wind in the guy wires and built the theme from it.</p>
+    </div>
+    <dl class="facts">
+      <dt>For</dt><dd>Friends of the Central Library</dd>
+      <dt>Run</dt><dd>6 episodes, 38 to 52 min</dd>
+      <dt>Released</dt><dd>Apr 2026</dd>
+    </dl>
+  </article>
+
+  <article class="show cols">
+    <div class="art" aria-hidden="true">
+      <svg viewBox="0 0 200 200">
+        <rect width="200" height="200" fill="#f2e6cf"/>
+        <g style="mix-blend-mode:multiply">
+          <path d="M0 70 Q 50 40 100 70 T 200 70 V 200 H 0 Z" fill="#00a2c7"/>
+          <path d="M0 104 Q 50 76 100 104 T 200 104 V 200 H 0 Z" fill="#e0218a" opacity=".75"/>
+          <path d="M0 140 Q 50 116 100 140 T 200 140 V 200 H 0 Z" fill="#f7c817"/>
+          <rect x="30" y="20" width="12" height="150" fill="#0e1d16"/>
+          <rect x="30" y="58" width="44" height="6" fill="#0e1d16"/>
+          <rect x="30" y="92" width="44" height="6" fill="#0e1d16"/>
+        </g>
+      </svg>
+    </div>
+    <div class="text slot">
+      <h3>Low Water Crossing</h3>
+      <p>A weekly conversation with the people who watch Texas rivers for a living: hydrologists, gauge readers, a county judge who closed 41 roads in one night. Each episode is recorded the same Tuesday it airs, so the edit window is about five hours.</p>
+    </div>
+    <dl class="facts">
+      <dt>For</dt><dd>Hill Country Flood Network</dd>
+      <dt>Run</dt><dd>58 episodes so far, 25 min</dd>
+      <dt>Released</dt><dd>Weekly since Jan 2025</dd>
+    </dl>
+  </article>
+
+  <article class="show cols">
+    <div class="art" aria-hidden="true">
+      <svg viewBox="0 0 200 200">
+        <rect width="200" height="200" fill="#f2e6cf"/>
+        <g style="mix-blend-mode:multiply">
+          <circle cx="84" cy="100" r="62" fill="#00a2c7"/>
+          <circle cx="116" cy="100" r="62" fill="#e0218a" opacity=".8"/>
+          <circle cx="150" cy="48" r="20" fill="#f7c817"/>
+          <rect x="0" y="176" width="200" height="8" fill="#ff5a1f"/>
+        </g>
+      </svg>
+    </div>
+    <div class="text slot">
+      <h3>Second Shift</h3>
+      <p>Nurses at two Austin hospitals kept recorders in their lockers for a year and talked into them between 11pm and 7am. The series is mostly their voices, with almost no narration and a score played on one upright piano.</p>
+    </div>
+    <dl class="facts">
+      <dt>For</dt><dd>Travis County Nurses Association</dd>
+      <dt>Run</dt><dd>9 episodes, 22 to 35 min</dd>
+      <dt>Released</dt><dd>Jan 2025</dd>
+    </dl>
+  </article>
+</section>
+
+<section class="room frame" id="room">
+  <div class="cols">
+    <div class="slot">
+      <h2>Room A is the old tire bay, lined and floated</h2>
+      <p>The booth is fourteen feet by eighteen, built as a room inside the room on rubber pucks, with a window onto the control desk. It seats four around a walnut table. Guests talk into Shure SM7Bs on short arms, and the desk records to two machines at once, so a crashed laptop has never cost anyone a take.</p>
+      <p>You can book it with an engineer by the hour or the day. Parking is in the gravel lot behind the building; the 2 bus stops at the corner. There is a kettle, real milk, and a dog called Ampex who stays out of the booth.</p>
+    </div>
+    <div class="label" aria-label="Tape box label from a Shoal Creek Sound session">
+      <svg viewBox="0 0 300 380" role="img">
+        <title>Tape box label: reel 3 of a Low Water Crossing session</title>
+        <rect width="300" height="380" fill="#f6ecd8"/>
+        <rect width="300" height="44" fill="#ff5a1f"/>
+        <text x="16" y="30" font-family="Bricolage Grotesque, sans-serif" font-size="22" font-weight="800" style="font-variation-settings:'wdth' 75" fill="#f6ecd8">SHOAL CREEK SOUND</text>
+        <g font-family="IBM Plex Mono, monospace" font-size="10" fill="#12271d">
+          <text x="16" y="66">REEL 3 / 4    15 IPS    1/4 IN</text>
+          <text x="16" y="200">TAKE</text><text x="66" y="200">TIME</text><text x="130" y="200">NOTES</text>
+          <text x="16" y="226">07</text><text x="66" y="226">04:12</text><text x="130" y="226">judge intro, keep</text>
+          <text x="16" y="252">08</text><text x="66" y="252">11:40</text><text x="130" y="252">gauge story, siren 6:02</text>
+          <text x="16" y="278">09</text><text x="66" y="278">02:55</text><text x="130" y="278">pickup, low water</text>
+          <text x="16" y="304">10</text><text x="66" y="304">09:31</text><text x="130" y="304">41 roads. use all</text>
+          <text x="16" y="356" fill="#5b6b5f">TUE 14 OCT 2026    ENG: R. ODOM</text>
+        </g>
+        <g stroke="#12271d" stroke-width=".8">
+          <line x1="16" y1="208" x2="284" y2="208" stroke-width="1.6"/>
+          <line x1="16" y1="234" x2="284" y2="234"/><line x1="16" y1="260" x2="284" y2="260"/>
+          <line x1="16" y1="286" x2="284" y2="286"/><line x1="16" y1="312" x2="284" y2="312"/>
+          <line x1="58" y1="186" x2="58" y2="312" stroke-dasharray="2 3"/>
+          <line x1="122" y1="186" x2="122" y2="312" stroke-dasharray="2 3"/>
+        </g>
+        <g>
+          <path d="M70 160 A 80 80 0 0 1 230 160" fill="none" stroke="#12271d" stroke-width="1"/>
+          <path d="M196 113 A 80 80 0 0 1 230 160" fill="none" stroke="#ff5a1f" stroke-width="5"/>
+          <g stroke="#12271d" stroke-width="1">
+            <line x1="82" y1="122" x2="88" y2="127"/><line x1="112" y1="98" x2="115" y2="105"/>
+            <line x1="150" y1="88" x2="150" y2="96"/><line x1="188" y1="98" x2="185" y2="105"/>
+          </g>
+          <text x="140" y="178" font-family="IBM Plex Mono, monospace" font-size="9" fill="#12271d">VU</text>
+          <line class="needle" x1="150" y1="168" x2="150" y2="92" stroke="#12271d" stroke-width="1.6" style="transform-origin:150px 168px"/>
+          <circle cx="150" cy="168" r="4" fill="#12271d"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="rates frame" id="rates">
+  <div class="lines local" aria-hidden="true"><div class="cols"><span></span><span></span><span></span></div></div>
+  <div class="cols">
+    <div class="slot">
+      <h2>Rates for 2027, by the hour or by the series</h2>
+      <table class="sheet">
+        <thead><tr><th>Item</th><th>What you get</th><th style="text-align:right">Price</th></tr></thead>
+        <tbody>
+          <tr><td>Room A, hour</td><td class="what">The booth, four microphones and an engineer at the desk. Raw files leave with you.</td><td class="price">$85</td></tr>
+          <tr><td>Room A, day</td><td class="what">Nine to six with an engineer and a lunch break you will want. Good for a batch of interviews.</td><td class="price">$640</td></tr>
+          <tr><td>Edit and mix</td><td class="what">We cut, clean and mix your recordings to broadcast loudness, two rounds of notes included. Priced per finished hour.</td><td class="price">$520</td></tr>
+          <tr><td>Weekly show</td><td class="what">Booking, recording, same-week edit and publishing for an interview show, billed monthly.</td><td class="price">from $2,400 / mo</td></tr>
+          <tr><td>Narrative series</td><td class="what">Six to ten episodes, from the first planning call to the final master. A producer, an editor and an original score.</td><td class="price">from $22,000</td></tr>
+        </tbody>
+      </table>
+      <p class="note body">Nonprofits and public libraries get a fifth off any of these. If a show is too small for a series budget, ask anyway; some of our favourite work started as a single afternoon in the booth.</p>
+    </div>
+  </div>
+</section>
+
+<section class="write frame" id="write">
+  <div class="cols">
+    <div class="slot">
+      <h2>Tell us what the show is about and who it is for</h2>
+      <a class="big" href="mailto:hello@shoalcreek.audio">hello@shoalcreek.audio</a>
+      <p>Marisol Treviño reads every message and answers within a working day. If you would rather talk, call (512) 555-0143 between ten and five. She will tell you plainly whether your idea needs a studio, a producer, or just a better microphone at home.</p>
+      <p class="addr">Shoal Creek Sound<br>2209 E Cesar Chavez St, Austin TX 78702<br>Room A open 9 to 7, Monday to Friday</p>
+    </div>
+  </div>
+</section>
+
+</main>
+</body>
+</html>
