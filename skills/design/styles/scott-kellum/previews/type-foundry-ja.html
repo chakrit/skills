@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>三ツ谷書体製作所 ― 小石川の書体工房</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=M+PLUS+1:wght@100..900&family=M+PLUS+1+Code:wght@300..600&family=Shippori+Mincho:wght@400;500;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Old+Mincho:wght@400;900&text=%E6%B0%B8%E3%81%82%E3%81%AE%E9%8B%B3&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #c9a72f;
+  --gold-line: #b39222;
+  --green: #0f1f15;
+  --green-line: #22382a;
+  --paper: #e6dfca;
+  --paper-dim: #a9a690;
+  --ink: #1a1a10;
+  --shu: #d0402a;
+  --serif: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --display: "Bricolage Grotesque", "M PLUS 1", "Hiragino Sans", sans-serif;
+  --mono: "M PLUS 1 Code", ui-monospace, monospace;
+  --measure: min(78rem, 92%);
+  --w: tan(atan2(100cqi, 1px));
+}
+* { box-sizing: border-box; }
+html { background: var(--green); color: var(--paper); }
+body {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 1rem;
+  line-height: 1.8;
+  font-feature-settings: "palt" 0;
+  -webkit-font-smoothing: antialiased;
+  line-break: strict;
+}
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: .25em; }
+main { container-type: inline-size; }
+
+/* ---------- bands and construction lines ---------- */
+.band {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr var(--measure) 1fr;
+  border-top: 1px solid var(--rule);
+  --rule: var(--green-line);
+  background:
+    linear-gradient(var(--rule), var(--rule)) calc(50% - var(--measure) / 2) 0 / 1px 100% no-repeat,
+    linear-gradient(var(--rule), var(--rule)) calc(50% + var(--measure) / 2) 0 / 1px 100% no-repeat;
+}
+.band > * { grid-column: 2; }
+.gold { background-color: var(--gold); color: var(--ink); --rule: var(--gold-line); }
+.gold.band { background-color: var(--gold); }
+
+/* ---------- navigation pill and margin line ---------- */
+.pill {
+  position: fixed; z-index: 10; top: .9rem; left: 50%; translate: -50% 0;
+  display: flex; align-items: center; gap: 1.15rem;
+  padding: .4rem 1.1rem .4rem .45rem;
+  border-radius: 99px;
+  background: rgb(34 56 42 / .86);
+  box-shadow: 0 0 0 1px rgb(230 223 202 / .12);
+  color: var(--paper);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  font-family: var(--display);
+  font-size: .84rem; font-weight: 600; letter-spacing: .06em;
+  white-space: nowrap;
+}
+.pill a { text-decoration: none; }
+.pill a:hover { color: var(--gold); }
+.pill .mark { display: flex; align-items: center; gap: .5rem; font-weight: 800; letter-spacing: .02em; }
+.pill svg { width: 1.75rem; height: 1.75rem; display: block; }
+@media (width < 30rem) { .pill .far { display: none; } }
+
+.margin-fact {
+  position: fixed; z-index: 2; right: .7rem; top: 50%; translate: 0 -50%;
+  writing-mode: vertical-rl;
+  font-family: var(--mono); font-size: .72rem; letter-spacing: .25em;
+  color: #6f6a3c;
+}
+@media (width < 62rem) { .margin-fact { display: none; } }
+
+/* ---------- the lede ---------- */
+.opening { min-height: 100svh; align-content: center; padding-block: 7rem 5rem; border-top: 0; }
+.slot { container-type: inline-size; }
+.lede {
+  margin: 0;
+  max-width: 21em;
+  text-wrap: pretty;
+  animation: lede 1s cubic-bezier(.15, .6, .35, 1) paused both;
+  animation-delay: calc((var(--w) - 320) / 920 * -1s);
+}
+@keyframes lede {
+  from { font-size: 1.35rem; line-height: 1.62; font-weight: 500; }
+  to   { font-size: 3rem;    line-height: 1.48; font-weight: 400; }
+}
+.lede a { text-decoration-color: var(--shu); text-decoration-thickness: .07em; }
+.opening .sort {
+  position: absolute; right: max(4%, calc(50% - var(--measure) / 2)); bottom: 2.4rem;
+  width: clamp(4.5rem, 11vw, 8.5rem);
+}
+
+/* ---------- specimen: one word off the edge ---------- */
+.specimen { padding-block: 3.5rem 3rem; overflow: hidden; }
+.specimen .word {
+  margin: 0;
+  font-family: var(--serif); font-weight: 800;
+  font-size: clamp(6rem, 22vw, 19rem);
+  line-height: 1;
+  white-space: nowrap;
+  letter-spacing: -.02em;
+  color: var(--paper);
+}
+.specimen .cap {
+  display: flex; gap: 2.5rem; flex-wrap: wrap;
+  margin-top: 1rem;
+  font-family: var(--mono); font-size: .78rem; letter-spacing: .3em;
+  color: var(--paper-dim);
+}
+
+/* ---------- section heads: one rule everywhere ---------- */
+.section-head {
+  margin: 0;
+  font-family: var(--display);
+  text-wrap: balance;
+  word-break: auto-phrase;
+  animation: section-head 1s cubic-bezier(.6, 0, .9, .45) paused both;
+  animation-delay: calc((var(--w) - 320) / 920 * -1s);
+}
+@keyframes section-head {
+  from { font-size: 1.7rem; line-height: 1.15; font-weight: 900; font-stretch: 75%;  letter-spacing: .04em; }
+  to   { font-size: 5.2rem; line-height: 1.02; font-weight: 400; font-stretch: 100%; letter-spacing: -.03em; }
+}
+
+/* ---------- body text ---------- */
+.body {
+  max-width: 34em;
+  animation: body 1s cubic-bezier(.1, .7, .3, 1) paused both;
+  animation-delay: calc((var(--w) - 320) / 500 * -1s);
+}
+@keyframes body {
+  from { font-size: 1.02rem; line-height: 1.8; }
+  to   { font-size: 1.15rem; line-height: 1.95; }
+}
+.body p { margin: 0 0 1.1em; }
+
+/* ---------- typefaces: one per row ---------- */
+.faces { padding-block: 6rem 5rem; }
+.faces .section-head { margin-bottom: 3.5rem; }
+.face-list { list-style: none; margin: 0; padding: 0; }
+.face {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 7fr);
+  gap: 1.2rem clamp(1rem, 4vw, 3.5rem);
+  padding-block: 2.6rem;
+  border-top: 1px solid var(--green-line);
+}
+.face:last-child { border-bottom: 1px solid var(--green-line); }
+.glyph {
+  aspect-ratio: 1;
+  border-radius: .1px 3.2rem;
+  background: var(--gold); color: var(--ink);
+  display: grid; place-items: center;
+  font-size: clamp(3rem, 11vw, 8.5rem); line-height: 1;
+  overflow: hidden;
+  align-self: start;
+}
+.face:nth-child(2) .glyph { background: var(--paper); }
+.face:nth-child(3) .glyph { background: var(--shu); color: var(--paper); }
+.face:nth-child(4) .glyph { background: #2d4a35; color: var(--gold); }
+.g-mincho { font-family: var(--serif); font-weight: 600; }
+.g-gothic { font-family: "M PLUS 1", sans-serif; font-weight: 300; }
+.g-kana { font-family: "Zen Old Mincho", serif; font-weight: 400; }
+.g-ikomi { font-family: "Dela Gothic One", sans-serif; }
+.face-text { container-type: inline-size; }
+.face-name {
+  margin: 0;
+  padding-bottom: .35rem;
+  border-bottom: 1px solid currentColor;
+  font-family: var(--display);
+  text-wrap: balance;
+  animation: face-name 1s cubic-bezier(.55, 0, .85, .5) paused both;
+  animation-delay: calc((var(--w) - 220) / 760 * -1s);
+}
+@keyframes face-name {
+  from { font-size: 1.5rem; line-height: 1.15; font-weight: 900; font-stretch: 75%;  letter-spacing: .04em; }
+  to   { font-size: 3.6rem; line-height: 1.0;  font-weight: 500; font-stretch: 100%; letter-spacing: -.02em; }
+}
+.face-text p { margin: .9rem 0 .6rem; max-width: 30em; font-size: 1.06rem; line-height: 1.85; }
+.facts {
+  margin: 0; display: flex; flex-wrap: wrap; gap: .2rem 1.6rem;
+  font-family: var(--mono); font-size: .82rem; letter-spacing: .05em; color: var(--paper-dim);
+}
+.facts b { font-weight: 500; color: var(--gold); }
+
+/* ---------- the type case ---------- */
+.case { padding-block: 6rem; }
+.case-grid {
+  display: grid; gap: 2.5rem clamp(1.5rem, 5vw, 5rem);
+  grid-template-columns: minmax(0, 1fr);
+}
+.case-grid > * { min-width: 0; container-type: inline-size; }
+@container (width > 52rem) {
+  .case-grid { grid-template-columns: minmax(0, 4fr) minmax(0, 5fr); align-items: start; }
+}
+.case-drawing { width: 100%; height: auto; display: block; }
+.case-drawing .s { animation: breathe 11s ease-in-out infinite; }
+.case-drawing .s:nth-of-type(3n) { animation-duration: 7s; }
+.case-drawing .s:nth-of-type(5n) { animation-duration: 13s; }
+@keyframes breathe { 50% { opacity: .35; } }
+.case .section-head { margin-bottom: 2rem; }
+.case figcaption {
+  margin-top: .8rem;
+  font-family: var(--mono); font-size: .76rem; letter-spacing: .12em; color: var(--ink);
+}
+
+/* ---------- licence prices ---------- */
+.prices { padding-block: 6rem 5rem; }
+.prices .section-head { margin-bottom: 2.5rem; }
+.ledger { width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: .9rem; }
+.ledger th, .ledger td { text-align: left; padding: .9rem .5rem .9rem 0; border-bottom: 1px solid var(--green-line); vertical-align: baseline; }
+.ledger th { font-weight: 400; color: var(--paper-dim); font-size: .78rem; letter-spacing: .12em; }
+.ledger td:first-child { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; }
+.ledger td.yen { text-align: right; color: var(--gold); white-space: nowrap; }
+.ledger th.yen { text-align: right; }
+.prices .note { margin-top: 1.6rem; font-size: 1rem; max-width: 36em; }
+@container (width < 34rem) {
+  .ledger .scope { font-size: .74rem; }
+}
+
+/* ---------- visit ---------- */
+.visit { padding-block: 6rem 4rem; }
+.visit .section-head { margin-bottom: 2rem; }
+.visit-cols { display: grid; gap: 2rem 4rem; grid-template-columns: minmax(0, 1fr); }
+@container (width > 50rem) { .visit-cols { grid-template-columns: minmax(0, 5fr) minmax(0, 3fr); } }
+.address {
+  font-family: var(--mono); font-size: .92rem; line-height: 2; letter-spacing: .04em;
+  border-top: 1px solid var(--ink); padding-top: 1rem;
+}
+.address a { text-decoration-color: var(--shu); }
+footer.band { padding-block: 2rem 2.5rem; font-family: var(--mono); font-size: .74rem; letter-spacing: .1em; color: var(--paper-dim); }
+
+@media (prefers-reduced-motion: reduce) {
+  .case-drawing .s { animation: none; }
+}
+@media print {
+  html, .gold, .gold.band { background: #fff !important; color: #000 !important; }
+  .band { background: none !important; border-color: #000; }
+  .pill, .margin-fact, .opening .sort { display: none; }
+  .lede, .section-head, .face-name, .body { animation: none; }
+  .lede { font-size: 18pt; }
+  .section-head { font-size: 24pt; }
+  .face-name { font-size: 16pt; }
+  .opening { min-height: 0; }
+  .specimen .word, .facts, .facts b, .ledger td.yen { color: #000; }
+}
+</style>
+</head>
+<body>
+
+<nav class="pill" aria-label="サイト内">
+  <a class="mark" href="#top" aria-label="三ツ谷書体製作所">
+    <svg viewBox="0 0 40 40" aria-hidden="true">
+      <rect x="3" y="3" width="34" height="34" rx="2" fill="#c9a72f"/>
+      <rect x="7" y="7" width="26" height="26" fill="none" stroke="#1a1a10" stroke-width="1.2"/>
+      <rect x="11" y="12" width="18" height="2.6" fill="#1a1a10"/>
+      <rect x="13" y="18.7" width="14" height="2.6" fill="#1a1a10"/>
+      <rect x="9" y="25.4" width="22" height="3" fill="#1a1a10"/>
+      <circle cx="20" cy="36.5" r="1.4" fill="#0f1f15"/>
+    </svg>
+    三ツ谷
+  </a>
+  <a href="#faces">書体</a>
+  <a class="far" href="#prices">使用許諾</a>
+  <a href="#visit">工房</a>
+</nav>
+
+<p class="margin-fact" aria-hidden="true">小石川二丁目　火曜から土曜　十時より十八時</p>
+
+<main id="top">
+
+<header class="band gold opening">
+  <div class="slot">
+    <p class="lede">三ツ谷書体製作所は、小石川の印刷所の二階で明朝体とゴシック体を描いている、三人の書体工房です。祖父の代までは鉛を溶かして活字を鋳ていました。いまは画面の上で線を引きますが、一字ずつ見て直す手順は鋳造所のころと同じです。本文に長く使える日本語の書体を、四つの書体ファミリーとして出しています。</p>
+  </div>
+  <svg class="sort" viewBox="0 0 120 160" aria-hidden="true">
+    <g fill="none" stroke="#1a1a10" stroke-width="1.4">
+      <path d="M20 40 L70 20 L110 40 L60 60 Z" fill="#b39222"/>
+      <path d="M20 40 L20 130 L60 150 L60 60 Z" fill="#e6dfca"/>
+      <path d="M60 60 L110 40 L110 120 L60 150 Z" fill="#c9a72f"/>
+      <path d="M78 104 L96 96" stroke-width="3"/>
+      <path d="M34 82 L48 89 M32 92 L50 101 M30 103 L52 114" stroke="#d0402a" stroke-width="2.4"/>
+    </g>
+  </svg>
+</header>
+
+<section class="band specimen" aria-label="見本">
+  <div>
+    <p class="word">いろはにほへとちりぬるを</p>
+    <p class="cap"><span>谷明朝 本文用 太字</span><span>四十八字のうち十二字</span></p>
+  </div>
+</section>
+
+<section class="band faces" id="faces">
+  <div class="slot">
+    <h2 class="section-head">いま出している四つの書体</h2>
+    <ol class="face-list">
+      <li class="face">
+        <div class="glyph g-mincho" aria-hidden="true">永</div>
+        <div class="face-text">
+          <h3 class="face-name">谷明朝</h3>
+          <p>工房の本文用明朝体です。小説の組版で九ポから十ポに組んだとき、仮名がやや大きく、行が詰まって見えないように描いています。見出し用と本文用で線の太さを分けた二つの光学サイズがあります。</p>
+          <p class="facts"><span>六ウエイト</span><span>JIS第一から第四水準</span><span>二〇二四年改訂</span><span><b>¥38,500 から</b></span></p>
+        </div>
+      </li>
+      <li class="face">
+        <div class="glyph g-gothic" aria-hidden="true">永</div>
+        <div class="face-text">
+          <h3 class="face-name">三ツ谷ゴシック</h3>
+          <p>駅の案内や家電の取扱説明書のような、小さく読まれる文字のためのゴシック体です。字面を少し小さめにとり、濁点を離しています。太さは細から極太まで連続して変えられます。</p>
+          <p class="facts"><span>可変ウエイト 100–900</span><span>JIS第一・第二水準</span><span><b>¥27,500 から</b></span></p>
+        </div>
+      </li>
+      <li class="face">
+        <div class="glyph g-kana" aria-hidden="true">あ</div>
+        <div class="face-text">
+          <h3 class="face-name">小石川かな</h3>
+          <p>仮名だけの書体です。お手持ちの明朝体の漢字と組み合わせると、文章の調子が少し古風になります。昭和三十年代の文庫本の仮名を参考に、筆の入りを残しました。</p>
+          <p class="facts"><span>二ウエイト</span><span>仮名と約物</span><span><b>¥11,000</b></span></p>
+        </div>
+      </li>
+      <li class="face">
+        <div class="glyph g-ikomi" aria-hidden="true">鋳</div>
+        <div class="face-text">
+          <h3 class="face-name">鋳込</h3>
+          <p>創業の年に鋳た見出し用活字の見本帳から起こした、太い見出し書体です。鉛のにじみで丸くなった角を、そのまま描き写しています。ポスターや看板の大きさで使ってください。</p>
+          <p class="facts"><span>一ウエイト</span><span>常用漢字と人名用漢字</span><span><b>¥16,500</b></span></p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="band gold case" id="case">
+  <div class="slot">
+    <div class="case-grid">
+      <div>
+        <h2 class="section-head">活字ケースのころ</h2>
+        <div class="body">
+          <p>昭和二十二年、初代の三ツ谷 益三は焼け残った鋳造機一台で活字を鋳はじめました。近所の印刷所に、よく使う字から順に納めていました。</p>
+          <p>印刷所の職人は、原稿を片手に棚の前を歩き、活字ケースから一字ずつ拾います。よく出る字は手前の低い段に、めったに出ない字は奥の高い段に入っていました。どの字がどれだけ使われるかを、私たちは棚の並びで覚えました。</p>
+          <p>いまでも新しい書体は、使われる回数の多い字から描きはじめます。「の」「に」「は」が決まるまで、漢字には手をつけません。</p>
+        </div>
+      </div>
+      <figure style="margin:0">
+        <svg class="case-drawing" viewBox="0 0 480 360" role="img" aria-label="活字ケースの図。よく使う仮名が手前の段に並ぶ">
+          <rect x="0.5" y="0.5" width="479" height="359" fill="#e6dfca" stroke="#1a1a10"/>
+          <g stroke="#1a1a10" stroke-width=".8">
+            <path d="M0 60H480M0 120H480M0 180H480M0 240H480M0 300H480"/>
+            <path d="M60 0V360M120 0V360M180 0V360M240 0V360M300 0V360M360 0V360M420 0V360"/>
+          </g>
+          <g stroke="#1a1a10" stroke-width=".5" stroke-dasharray="3 3" opacity=".5">
+            <path d="M30 0V360M90 0V360M150 0V360M210 0V360M270 0V360M330 0V360M390 0V360M450 0V360"/>
+          </g>
+          <g fill="#d0402a" opacity=".85" style="mix-blend-mode:multiply">
+            <rect x="0" y="240" width="240" height="120"/>
+          </g>
+          <g fill="#c9a72f" opacity=".9" style="mix-blend-mode:multiply">
+            <rect x="180" y="180" width="180" height="180"/>
+          </g>
+          <g font-family="Shippori Mincho, serif" font-size="30" font-weight="600" fill="#1a1a10" text-anchor="middle">
+            <text class="s" x="30" y="341">の</text><text class="s" x="90" y="341">に</text>
+            <text class="s" x="150" y="341">は</text><text class="s" x="210" y="341">を</text>
+            <text class="s" x="270" y="341">た</text><text class="s" x="330" y="341">て</text>
+            <text class="s" x="390" y="341">し</text><text class="s" x="450" y="341">が</text>
+            <text class="s" x="30" y="281">と</text><text class="s" x="90" y="281">い</text>
+            <text class="s" x="150" y="281">る</text><text class="s" x="210" y="281">で</text>
+            <text class="s" x="270" y="281">な</text><text class="s" x="330" y="281">か</text>
+            <text class="s" x="390" y="281">も</text><text class="s" x="450" y="281">う</text>
+            <text class="s" x="30" y="221">日</text><text class="s" x="90" y="221">人</text>
+            <text class="s" x="150" y="221">一</text><text class="s" x="210" y="221">大</text>
+            <text class="s" x="270" y="221">年</text><text class="s" x="330" y="221">出</text>
+            <text class="s" x="390" y="221">中</text><text class="s" x="450" y="221">事</text>
+          </g>
+          <g font-family="Shippori Mincho, serif" font-size="18" fill="#1a1a10" opacity=".55" text-anchor="middle">
+            <text x="30" y="156">鬱</text><text x="150" y="156">麒</text><text x="270" y="156">鼈</text><text x="390" y="156">驪</text>
+            <text x="90" y="96">饕</text><text x="330" y="96">龜</text><text x="210" y="36">鑿</text>
+          </g>
+        </svg>
+        <figcaption>上の段ほど出番の少ない字、下の二段は毎日拾う仮名</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="band prices" id="prices">
+  <div class="slot">
+    <h2 class="section-head">使用許諾と価格</h2>
+    <table class="ledger">
+      <thead><tr><th>書体</th><th class="scope">範囲</th><th class="yen">税込</th></tr></thead>
+      <tbody>
+        <tr><td>谷明朝</td><td class="scope">デスクトップ三台、印刷物と画像</td><td class="yen">¥38,500</td></tr>
+        <tr><td>谷明朝</td><td class="scope">ウェブ、月十万ページビューまで</td><td class="yen">¥22,000 / 年</td></tr>
+        <tr><td>三ツ谷ゴシック</td><td class="scope">デスクトップ三台、印刷物と画像</td><td class="yen">¥27,500</td></tr>
+        <tr><td>小石川かな</td><td class="scope">デスクトップ三台、ウェブ込み</td><td class="yen">¥11,000</td></tr>
+        <tr><td>鋳込</td><td class="scope">デスクトップ三台、ウェブ込み</td><td class="yen">¥16,500</td></tr>
+        <tr><td>書籍一冊ごと</td><td class="scope">電子書籍への埋め込み、部数無制限</td><td class="yen">¥33,000</td></tr>
+      </tbody>
+    </table>
+    <p class="note">出版社や自治体でまとめてお使いになる場合、学生の卒業制作に使う場合は、ご相談ください。卒業制作は無償です。</p>
+  </div>
+</section>
+
+<section class="band gold visit" id="visit">
+  <div class="slot">
+    <h2 class="section-head">工房へのお越し</h2>
+    <div class="visit-cols">
+      <div class="body">
+        <p>見本帳と試し刷りは工房に置いてあります。紙に刷った書体を見てから決めたい方は、来る前にお電話かメールで知らせてください。土曜の午後は、鋳造機の残りの部品と古い活字ケースもお見せできます。</p>
+        <p>カスタム書体のご相談は、使う場面と字数、時期を書いて送ってください。三人でやっていますので、同時に受けられる仕事は一年に二件までです。</p>
+      </div>
+      <p class="address">
+        〒112-0002<br>
+        東京都文京区小石川二丁目十一番八号<br>
+        田村印刷 二階<br>
+        火曜から土曜　十時から十八時<br>
+        03-3811-2247<br>
+        <a href="mailto:shotai@mitsuya-type.jp">shotai@mitsuya-type.jp</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer class="band">
+  <div>三ツ谷書体製作所　昭和二十二年より</div>
+</footer>
+
+</main>
+</body>
+</html>
