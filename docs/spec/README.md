@@ -21,12 +21,11 @@ Keep one row per spec file. Update this table in the same change when adding, re
 retiring a file. Read it before adding a spec; amend the existing file when its subject
 already has a row.
 
-| File               | Covers                                                           | Status      |
-|--------------------|------------------------------------------------------------------|-------------|
-| `<slug>.md`        | one line on what this file governs                               | implemented |
-| `art-direction.md` | the `art-direction` skill's design, for agents editing the skill | implemented |
-| `control.md`       | the `control` skill's design, for agents editing the skill       | implemented |
-| `fact-check.md`    | the `fact-check` skill's design, for agents editing the skill    | implemented |
+| File            | Covers                                                        | Status      |
+|-----------------|---------------------------------------------------------------|-------------|
+| `<slug>.md`     | one line on what this file governs                            | implemented |
+| `control.md`    | the `control` skill's design, for agents editing the skill    | implemented |
+| `fact-check.md` | the `fact-check` skill's design, for agents editing the skill | implemented |
 
 ## Format
 

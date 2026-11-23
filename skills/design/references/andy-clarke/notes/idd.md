@@ -5,14 +5,14 @@ screenshots or their CSS; **[reported]** someone else says it (usually a designe
 quotes). Detail for every claim below is in the five group digests, which hold the
 per-issue analysis, the grid values and the screenshot index:
 
-- `../digests/idd-digest-A.md`: Avaunt, Pressing Matters, Ernest Journal,
+- `references/andy-clarke/digests/idd-digest-A.md`: Avaunt, Pressing Matters, Ernest Journal,
   Brodovitch, demos 4 and 21
-- `../digests/idd-digest-B.md`: Storch, Feitler, Brody, Lubalin, demos 1, 2, 3,
+- `references/andy-clarke/digests/idd-digest-B.md`: Storch, Feitler, Brody, Lubalin, demos 1, 2, 3,
   9, 15, 20
-- `../digests/idd-digest-C.md`: Huber, Pintori, McBain, Thompson, demos 5, 7, 11,
+- `references/andy-clarke/digests/idd-digest-C.md`: Huber, Pintori, McBain, Thompson, demos 5, 7, 11,
   14, 16, 17, 18, 19, 22
-- `../digests/idd-digest-D.md`: demos 6, 8, 10, 12, 13, 23, 24, 25, 26, 32
-- `../digests/idd-digest-E.md`: demos 27-31, 33-40
+- `references/andy-clarke/digests/idd-digest-D.md`: demos 6, 8, 10, 12, 13, 23, 24, 25, 26, 32
+- `references/andy-clarke/digests/idd-digest-E.md`: demos 27-31, 33-40
 
 Screenshots: `tmp/andy-clarke/shots/idd/demoNN-1400.png` and `demoNN-390.png` for all 40
 demos, plus realistic first-screen shots (`demoNN-1400v`, `demoNNv-1400`, `-390h`,

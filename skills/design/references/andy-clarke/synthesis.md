@@ -1,7 +1,7 @@
 # Andy Clarke design model: working synthesis
 
-Turns the stream notes into a design model for AppBaoBao; the general model drawn from
-it is this skill's `SKILL.md`. Each point cites the stream note it rests on (`talks`,
+Turns the stream notes into a design model for AppBaoBao; the model itself is
+`docs/spec/art-direction.md`. Each point cites the stream note it rests on (`talks`,
 `accounts`, `idd`, `own`, `clients`, all in `notes/` beside this file), so detail can be
 recovered from there.
 
@@ -81,13 +81,13 @@ encode most carefully.
 From 26 client sites (clients §0, 1.1–1.5), the concept always comes from one of five
 mines. All are available for a Thai small business in a single intake conversation.
 
-| Mine                                                             | Question to ask                                                   | His examples (clients §0)                                                                                                      |
-|------------------------------------------------------------------|-------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------|
-| A. What the client already owns                                  | What logo, card, cover, sign, name, place do you have?            | Lockrose triangle → all art; village names → hero tower; business card → orange column; dentist surname → toothpaste-tube logo |
-| B. The detail the owner keeps returning to                       | What do you love, read, collect, keep mentioning?                 | tape machines → audio players; Asimov → SF paperbacks; Saul Bass → poster pages; "it's an art" → QR paintings                  |
-| C. What the customer really buys                                 | What do people buy from you, one level above the product?         | trust not property (no buildings shown); belonging not videos; "building confidence" in every heading; movement not planning   |
-| D. The trade's own mechanics, taken literally                    | What does your product physically do? Say your tagline literally. | printers print codes → paintings from QR; "sound of your world" → world that plays sounds; a duck → duck machines              |
-| E. A field outside the sector that already made people feel this | Who else made people feel what you need them to feel?             | protest and gig posters for youth politics; Graphis covers; Cubism/De Stijl for balance; '90s cartoons                         |
+| Mine                                   | Question to ask                                      | His examples (clients §0)                                    |
+|----------------------------------------|------------------------------------------------------|--------------------------------------------------------------|
+| A. What the client already owns        | What logo, card, cover, sign, name, place do you have? | Lockrose triangle → all art; village names → hero tower; business card → orange column; dentist surname → toothpaste-tube logo |
+| B. The detail the owner keeps returning to | What do you love, read, collect, keep mentioning?  | tape machines → audio players; Asimov → SF paperbacks; Saul Bass → poster pages; "it's an art" → QR paintings |
+| C. What the customer really buys       | What do people buy from you, one level above the product? | trust not property (no buildings shown); belonging not videos; "building confidence" in every heading; movement not planning |
+| D. The trade's own mechanics, taken literally | What does your product physically do? Say your tagline literally. | printers print codes → paintings from QR; "sound of your world" → world that plays sounds; a duck → duck machines |
+| E. A field outside the sector that already made people feel this | Who else made people feel what you need them to feel? | protest and gig posters for youth politics; Graphis covers; Cubism/De Stijl for balance; '90s cartoons |
 
 Working rules he states or shows:
 
@@ -196,45 +196,45 @@ Looked at directly, to check the streams' claims and draw my own conclusions:
 
 Each is the replacement for a specific default. All need an idea behind them.
 
-| Move                                                                                      | Replaces                                   | Source       |
-|-------------------------------------------------------------------------------------------|--------------------------------------------|--------------|
-| Compound grid (e.g. 6 over 4 → `3fr 1fr 2fr 2fr 1fr 3fr`)                                 | one equal 12-col grid                      | talks 1.1    |
-| Skinny column kept mostly empty                                                           | symmetric layout, full-width bands         | talks 1.2    |
-| Column widths from ratios (golden, √2, Fibonacci); odd column counts                      | guessed 8/4 splits                         | talks 1.3    |
-| Modular grid fixes image formats, captions as composed elements                           | grey caption under photo                   | talks 1.4    |
-| Each section its own composition, chosen for its story beat                               | every band the same layout                 | talks 1.6    |
-| Panel size = dwell time; borderless and edge-bleed = emphasis                             | size by content amount; boxes for emphasis | talks 1.7    |
-| Headline as a composed object (stacked, off-edge, placed after a prologue)                | headline on top, centred                   | talks 1.8    |
-| Standfirst, pull quote, drop cap as layout tools                                          | default typographic hierarchy              | talks 1.9    |
-| Text shaped by the picture: V, Z, diagonal, staggered margins, rotated composition        | text block beside image                    | talks 1.10   |
-| Overlap and depth in one grid cell, blend modes                                           | flat side-by-side cells                    | talks 1.11   |
-| Elements breaking out of the grid                                                         | everything inside its row                  | accounts 1.3 |
-| Even grid, deliberate large holes (a whole column or a quarter left empty)                | every track filled, centred                | idd G3       |
-| One odd track: skinny column, `6rem` headline column, margin tracks in the grid           | blocks on 1–4 of 12 equal columns          | idd G1       |
-| Staircase starts: headline, standfirst, body each on a different line                     | one flush left edge                        | idd G4       |
-| Offset gutters: images on halves, text on thirds                                          | image and text sharing gutters (card look) | idd G5       |
-| Modular grid with unequal zones and visible rules; pacing by module size                  | uniform card grid; the three-card row      | idd G6       |
-| Visual order ≠ document order; header/footer anywhere                                     | header top, footer bottom                  | idd G7       |
-| Text takes the picture's outline                                                          | image box beside rectangular text          | idd C1       |
-| One big structural shape instead of a hero (slab, beam, giant mark, letter mask, horizon) | photo hero, centred headline, button       | idd C2       |
-| Rotate a whole group, never singles; diagonals from empty modules                         | everything orthogonal                      | idd C3       |
-| Bleed and crop until abstract; whole view elsewhere                                       | whole product centred with padding         | idd C4       |
-| Scale contrast, always relative (giant against tiny)                                      | gentle type scale, medium images           | idd C5       |
-| Mirror or invert two halves across a seam                                                 | zig-zag image-left/right rows              | idd C6       |
-| Overprint flat hues so overlaps make a third colour                                       | drop shadows, glassy cards                 | idd C7       |
-| Captions beside images, rules, thick asymmetric frames                                    | caption under image, shadowed cards        | idd C9       |
+| Move                                   | Replaces                                  | Source          |
+|----------------------------------------|-------------------------------------------|-----------------|
+| Compound grid (e.g. 6 over 4 → `3fr 1fr 2fr 2fr 1fr 3fr`) | one equal 12-col grid      | talks 1.1       |
+| Skinny column kept mostly empty        | symmetric layout, full-width bands        | talks 1.2       |
+| Column widths from ratios (golden, √2, Fibonacci); odd column counts | guessed 8/4 splits | talks 1.3 |
+| Modular grid fixes image formats, captions as composed elements | grey caption under photo | talks 1.4 |
+| Each section its own composition, chosen for its story beat | every band the same layout | talks 1.6 |
+| Panel size = dwell time; borderless and edge-bleed = emphasis | size by content amount; boxes for emphasis | talks 1.7 |
+| Headline as a composed object (stacked, off-edge, placed after a prologue) | headline on top, centred | talks 1.8 |
+| Standfirst, pull quote, drop cap as layout tools | default typographic hierarchy | talks 1.9 |
+| Text shaped by the picture: V, Z, diagonal, staggered margins, rotated composition | text block beside image | talks 1.10 |
+| Overlap and depth in one grid cell, blend modes | flat side-by-side cells | talks 1.11 |
+| Elements breaking out of the grid       | everything inside its row                 | accounts 1.3    |
+| Even grid, deliberate large holes (a whole column or a quarter left empty) | every track filled, centred | idd G3 |
+| One odd track: skinny column, `6rem` headline column, margin tracks in the grid | blocks on 1–4 of 12 equal columns | idd G1 |
+| Staircase starts: headline, standfirst, body each on a different line | one flush left edge | idd G4 |
+| Offset gutters: images on halves, text on thirds | image and text sharing gutters (card look) | idd G5 |
+| Modular grid with unequal zones and visible rules; pacing by module size | uniform card grid; the three-card row | idd G6 |
+| Visual order ≠ document order; header/footer anywhere | header top, footer bottom | idd G7 |
+| Text takes the picture's outline       | image box beside rectangular text         | idd C1          |
+| One big structural shape instead of a hero (slab, beam, giant mark, letter mask, horizon) | photo hero, centred headline, button | idd C2 |
+| Rotate a whole group, never singles; diagonals from empty modules | everything orthogonal | idd C3 |
+| Bleed and crop until abstract; whole view elsewhere | whole product centred with padding | idd C4 |
+| Scale contrast, always relative (giant against tiny) | gentle type scale, medium images | idd C5 |
+| Mirror or invert two halves across a seam | zig-zag image-left/right rows          | idd C6          |
+| Overprint flat hues so overlaps make a third colour | drop shadows, glassy cards     | idd C7          |
+| Captions beside images, rules, thick asymmetric frames | caption under image, shadowed cards | idd C9 |
 
 Additional moves from `own`:
 
-| Move                                                                                                                                   | Replaces                                            | Source |
-|----------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------|--------|
-| Dethrone the hero banner: put the key message or proof in that space, narrow the image, or fuse image and message into one composition | full-width banner as filler ("an invasive species") | own 6  |
-| The page becomes a printed object from the client's world (magazine cover, teen magazine, pulp cover, title card, tabloid)             | a neutral page that could be anyone's               | own 7  |
-| Numerals and data as display type, with brand pictograms instead of charts                                                             | the four-tile stats strip                           | own 9  |
-| Extreme crops (to the eyes), growing image sequences, cut-outs standing in front of type                                               | medium photo in a card                              | own 10 |
-| One personality thread, many looks: each page its own layout, stitched by palette, type, grid, mascot                                  | one template repeated                               | own 11 |
-| Varied lockups for parallel items (badge numeral, script phrase, condensed stack)                                                      | four identical icon-title-text cards                | own 8  |
-| Designed panels in each item's own colours instead of screenshots                                                                      | screenshot gallery                                  | own 16 |
+| Move                                   | Replaces                                  | Source          |
+|----------------------------------------|-------------------------------------------|-----------------|
+| Dethrone the hero banner: put the key message or proof in that space, narrow the image, or fuse image and message into one composition | full-width banner as filler ("an invasive species") | own 6 |
+| The page becomes a printed object from the client's world (magazine cover, teen magazine, pulp cover, title card, tabloid) | a neutral page that could be anyone's | own 7 |
+| Numerals and data as display type, with brand pictograms instead of charts | the four-tile stats strip | own 9 |
+| Extreme crops (to the eyes), growing image sequences, cut-outs standing in front of type | medium photo in a card | own 10 |
+| One personality thread, many looks: each page its own layout, stitched by palette, type, grid, mascot | one template repeated | own 11 |
+| Varied lockups for parallel items (badge numeral, script phrase, condensed stack) | four identical icon-title-text cards | own 8 |
+| Designed panels in each item's own colours instead of screenshots | screenshot gallery | own 16 |
 
 His house grid is the 4+6 compound `2fr 1fr 1fr 2fr 2fr 1fr 1fr 2fr` (idd G2). But the
 40 weekly demos show the cheaper truth: nearly all use a plain `repeat(6|8|12, 1fr)` and
