@@ -29,7 +29,7 @@ The `design` skill (`skills/design/`): its rules, and how to add a designer's st
   agent) can open one file in a browser for a quick view. The skill asks the user to
   preview the styles there.
 - Previews are self-contained HTML files in `styles/<style>/previews/`: inline CSS and
-  SVG, no raster images, Google Fonts links allowed. They follow the style and every
+  SVG, no raster images, Google Fonts links allowed, inline JavaScript allowed. They follow the style and every
   ban, and their businesses are fictional.
 
 ## Adding a designer
