@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>喫茶カサワスレ · 金沢 主計町</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #f3ecdc;
+  --orange: #e8572a;
+  --navy: #1f2b45;
+  --mustard: #d9a93a;
+  --ink: #3d2f26;
+  --muted: #8a7a68;
+  --rule: #dccfb8;
+  --striker: #7a4a2e;
+}
+* { box-sizing: border-box; }
+html { background: var(--cream); }
+body {
+  margin: 0;
+  color: var(--ink);
+  font: 400 18px/1.85 "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "palt" 0;
+}
+a { color: var(--orange); text-decoration-thickness: 1px; text-underline-offset: 4px;
+    transition: color .25s ease; }
+a:hover, a:focus { color: var(--navy); }
+
+/* Edge border: rain over a matchbox striker strip */
+.edge { position: relative; height: 34px; }
+.edge::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 22px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='22'%3E%3Cpath d='M6 2 L2 12 M20 8 L16 18' stroke='%231f2b45' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+.edge::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 10px;
+  background-color: var(--striker);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Ccircle cx='1.5' cy='2' r='.9' fill='%23000' fill-opacity='.35'/%3E%3Ccircle cx='5.5' cy='5' r='1' fill='%23fff' fill-opacity='.18'/%3E%3Ccircle cx='3' cy='7' r='.7' fill='%23000' fill-opacity='.3'/%3E%3C/svg%3E");
+}
+.edge.foot::before { top: auto; bottom: 0; }
+.edge.foot::after { top: 0; bottom: auto; }
+
+.wrap { max-width: 34em; margin: 0 auto; padding: 0 1.25rem; }
+
+/* Masthead */
+.masthead { display: flex; align-items: center; gap: 1.4rem; padding: 2.2rem 0 1.6rem; }
+.badge { width: 132px; height: 132px; flex: none; display: block; }
+.badge svg { width: 100%; height: 100%; display: block; transition: transform .25s ease; }
+.badge:hover svg, .badge:focus svg { transform: rotate(-9deg); }
+h1 {
+  font-family: "Dela Gothic One", sans-serif; font-weight: 400;
+  font-size: 2.5rem; line-height: 1.1; letter-spacing: .02em;
+  color: var(--navy); margin: 0; filter: url(#inky);
+}
+.mast-sub { margin: .45rem 0 0; font-size: 14px; color: var(--muted); letter-spacing: .08em; }
+
+/* Label + nav */
+.label {
+  font-size: 12px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
+}
+nav ul {
+  list-style: none; margin: 0; padding: .85rem 0;
+  display: flex; gap: 1.8rem; flex-wrap: wrap;
+  border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+}
+nav a { text-decoration: none; display: block; line-height: 1.4; }
+nav .label { color: var(--navy); opacity: .4; transition: opacity .25s, color .25s; }
+nav a:hover .label, nav a:focus .label { opacity: 1; color: var(--orange); }
+nav [aria-current] .label { color: var(--orange); opacity: 1; }
+nav [aria-current] .label::before { content: "{ "; }
+nav [aria-current] .label::after { content: " }"; }
+nav small { display: block; font-size: 13px; color: var(--muted); }
+
+.intro { margin: 2rem 0 0; }
+.intro p { margin: 0 0 1.1em; }
+.end::after {
+  content: ""; display: inline-block; width: .7em; height: .7em; margin-left: .3em;
+  background: var(--orange); vertical-align: -.02em;
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+
+/* Still life */
+.still { margin: 2.2rem 0 0; }
+.still svg { display: block; width: 100%; height: auto; }
+.still figcaption { font-size: 13px; color: var(--muted); margin-top: .4rem; }
+
+/* Specimen band: words off the matchbox, cropped by the page */
+.specimen {
+  overflow: hidden; margin: 2.8rem 0 0; padding: 1.3rem 0 1.1rem;
+  border-top: 3px double var(--navy); border-bottom: 3px double var(--navy);
+  font-family: "Dela Gothic One", sans-serif; line-height: 1.12;
+  filter: url(#inky);
+}
+.specimen p { margin: 0; white-space: nowrap; }
+.specimen .s1 { font-size: 4.6rem; color: var(--navy); margin-left: -.9em; }
+.specimen .s2 { font-size: 1.9rem; color: var(--orange); letter-spacing: .04em; margin-left: .6em; }
+.specimen .s3 { font-size: 3rem; color: var(--mustard); margin-left: -2.2em; }
+.specimen .s4 { font-family: "Zen Kaku Gothic New", sans-serif; font-weight: 700;
+  font-size: 1.05rem; letter-spacing: .3em; color: var(--navy); margin: .3rem 0 .2rem 1.2em; }
+.specimen .s5 { font-size: 3.6rem; color: var(--orange); margin-left: -.4em; }
+.specimen .s6 { font-size: 1.5rem; color: var(--navy); margin-left: -3.5em; letter-spacing: .06em; }
+
+/* Index heading */
+h2 {
+  font-size: 13px; font-weight: 700; letter-spacing: .2em;
+  color: var(--navy); margin: 3.2rem 0 .4rem;
+}
+h2 .arrow { color: var(--orange); margin-left: .4em; }
+h2.big {
+  font-family: "Dela Gothic One", sans-serif; font-weight: 400;
+  font-size: 1.9rem; letter-spacing: .02em; line-height: 1.2; filter: url(#inky);
+}
+
+/* Slat */
+.slats { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--navy); }
+.slat {
+  display: grid; grid-template-columns: 26px 1fr auto; column-gap: .8rem;
+  padding: .9rem 0; border-bottom: 1px solid var(--rule); align-items: baseline;
+}
+.slat .glyph { width: 20px; height: 20px; align-self: start; margin-top: .35rem; }
+.slat h3 { margin: 0; font-size: 1.05rem; font-weight: 700; color: var(--navy); line-height: 1.5; }
+.slat p { margin: .15rem 0 0; font-size: 15.5px; line-height: 1.75; color: var(--ink); }
+.slat .price { font-weight: 700; color: var(--orange); font-variant-numeric: tabular-nums;
+  white-space: nowrap; font-size: 1rem; }
+
+.note { font-size: 15px; color: var(--muted); margin: .8rem 0 0; }
+
+/* Umbrella ledger */
+.ledger { list-style: none; margin: .6rem 0 0; padding: 0; border-top: 2px solid var(--navy); }
+.ledger li {
+  display: flex; justify-content: space-between; gap: 1rem;
+  padding: .45rem 0; border-bottom: 1px dotted var(--muted); font-size: 16px;
+}
+.ledger b { color: var(--navy); font-variant-numeric: tabular-nums; }
+.ledger .total { border-bottom: 2px solid var(--navy); font-weight: 700; }
+.ledger .total b { color: var(--orange); }
+
+/* Fact line */
+.facts { list-style: none; margin: .4rem 0 0; padding: 0;
+  display: grid; grid-template-columns: 1fr 1fr; column-gap: 1.6rem; }
+.fact { display: flex; gap: .6rem; align-items: baseline; padding: .4rem 0;
+  border-bottom: 1px solid var(--rule); font-size: 16px; }
+.fact.wide { grid-column: 1 / -1; }
+.fact svg { width: 16px; height: 16px; flex: none; position: relative; top: .15rem; }
+.fact .k { color: var(--muted); font-size: 13px; letter-spacing: .1em; min-width: 3em; }
+
+footer { margin-top: 3.6rem; padding-bottom: 1.6rem; text-align: center; }
+footer .mini { width: 74px; height: 74px; margin: 0 auto .6rem; display: block; }
+footer p { margin: 0; font-size: 13px; color: var(--muted); }
+footer .amp { font-family: Georgia, serif; font-style: italic; color: var(--orange);
+  font-size: 1.3em; }
+
+@media (max-width: 560px) {
+  body { font-size: 17px; }
+  .masthead { gap: 1rem; padding-top: 1.6rem; }
+  .badge { width: 96px; height: 96px; }
+  h1 { font-size: 1.9rem; }
+  nav ul { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem 1rem; }
+  .specimen .s1 { font-size: 3.2rem; }
+  .specimen .s3 { font-size: 2.2rem; }
+  .specimen .s5 { font-size: 2.6rem; }
+  .slat { grid-template-columns: 22px 1fr auto; column-gap: .6rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="inky">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="1.6" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+  <defs>
+    <symbol id="g-cup" viewBox="0 0 20 20"><path d="M3 7h11v5a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5z M14 9h1.5a2 2 0 0 1 0 4H14" fill="none" stroke="#e8572a" stroke-width="1.8" stroke-linejoin="round"/><path d="M7 2.5c-.8 1 .8 2 0 3M10.5 2.5c-.8 1 .8 2 0 3" fill="none" stroke="#e8572a" stroke-width="1.5" stroke-linecap="round"/></symbol>
+    <symbol id="g-bolt" viewBox="0 0 20 20"><path d="M11.5 1.5 4 11h5l-1.5 7.5L16 8.5h-5z" fill="#d9a93a" stroke="#1f2b45" stroke-width="1.2" stroke-linejoin="round"/></symbol>
+    <symbol id="g-star" viewBox="0 0 20 20"><path d="M10 1.8l2.4 5.3 5.8.6-4.3 3.9 1.2 5.7L10 14.4l-5.1 2.9 1.2-5.7L1.8 7.7l5.8-.6z" fill="#e8572a"/></symbol>
+    <symbol id="g-drop" viewBox="0 0 20 20"><path d="M10 2c3 4.2 5 7 5 9.8A5 5 0 0 1 5 11.8C5 9 7 6.2 10 2z" fill="#1f2b45"/></symbol>
+    <symbol id="g-umb" viewBox="0 0 20 20"><path d="M2 10a8 7 0 0 1 16 0c-1.3-1-2.7-1-4 0-1.3-1-2.7-1-4 0-1.3-1-2.7-1-4 0-1.3-1-2.7-1-4 0z" fill="#e8572a"/><path d="M10 10v6a1.8 1.8 0 0 1-3.6 0" fill="none" stroke="#1f2b45" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="g-bean" viewBox="0 0 20 20"><ellipse cx="10" cy="10" rx="6" ry="8.2" transform="rotate(30 10 10)" fill="#7a4a2e"/><path d="M7 4.5c3 3-1 7 2.5 11" fill="none" stroke="#f3ecdc" stroke-width="1.4" stroke-linecap="round"/></symbol>
+    <symbol id="g-pin" viewBox="0 0 20 20"><path d="M10 18s6-6 6-10a6 6 0 0 0-12 0c0 4 6 10 6 10z" fill="#e8572a"/><circle cx="10" cy="8" r="2.2" fill="#f3ecdc"/></symbol>
+    <symbol id="g-clock" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7.5" fill="none" stroke="#1f2b45" stroke-width="1.6"/><path d="M10 5.5V10l3 2" fill="none" stroke="#e8572a" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="g-phone" viewBox="0 0 20 20"><path d="M5 2.5h3l1.2 4-2 1.3a9 9 0 0 0 5 5l1.3-2 4 1.2v3a2 2 0 0 1-2 2A14 14 0 0 1 3 4.5a2 2 0 0 1 2-2z" fill="#1f2b45"/></symbol>
+  </defs>
+</svg>
+
+<div class="edge" aria-hidden="true"></div>
+
+<div class="wrap">
+
+<header class="masthead">
+  <a class="badge" href="#top" aria-label="喫茶カサワスレ トップへ">
+    <svg viewBox="0 0 200 200" role="img" aria-label="傘忘れても珈琲忘れるな のバッジ">
+      <defs>
+        <path id="rim" d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0"/>
+      </defs>
+      <g filter="url(#inky)">
+        <circle cx="100" cy="100" r="96" fill="#e8572a"/>
+        <circle cx="100" cy="100" r="88" fill="none" stroke="#f3ecdc" stroke-width="2"/>
+        <circle cx="100" cy="100" r="60" fill="#f3ecdc"/>
+        <circle cx="100" cy="100" r="55" fill="none" stroke="#1f2b45" stroke-width="1.5"/>
+        <text font-family="Dela Gothic One, sans-serif" font-size="15.5" fill="#f3ecdc" letter-spacing="1.5">
+          <textPath href="#rim" startOffset="0">傘忘れても珈琲忘れるな ★ 金沢主計町 ★ 一九七九 ★</textPath>
+        </text>
+        <path d="M70 92a30 24 0 0 1 60 0c-5-4-10-4-15 0-5-4-10-4-15 0-5-4-10-4-15 0-5-4-10-4-15 0z" fill="#e8572a"/>
+        <path d="M100 92v22a6 6 0 0 1-12 0" fill="none" stroke="#1f2b45" stroke-width="4.5" stroke-linecap="round"/>
+        <text x="100" y="146" text-anchor="middle" font-family="Dela Gothic One, sans-serif" font-size="17" fill="#1f2b45">カサワスレ</text>
+      </g>
+    </svg>
+  </a>
+  <div>
+    <h1 id="top">喫茶カサワスレ</h1>
+    <p class="mast-sub">金沢・主計町　浅野川のほとりの喫茶店</p>
+  </div>
+</header>
+
+<nav aria-label="サイト内">
+  <ul>
+    <li><a href="#menu" aria-current="page"><span class="label">品書き</span><small>今日の一杯</small></a></li>
+    <li><a href="#kasa"><span class="label">傘</span><small>貸し出し中</small></a></li>
+    <li><a href="#access"><span class="label">地図</span><small>橋のたもと</small></a></li>
+    <li><a href="#tayori"><span class="label">便り</span><small>たまに書きます</small></a></li>
+  </ul>
+</nav>
+
+<main>
+
+<section class="intro">
+  <p>1979年から、浅野川大橋のたもとでネルドリップの珈琲を淹れています。カウンター八席、テーブル二つ。BGMはラジオです。</p>
+  <p>金沢はよく降ります。お客さんもよく傘を忘れます。入口の傘立てには、そうやって残った傘がいま四十二本。雨に降られたら、どれでも好きなのを差していってください。返すのは次に来たときで構いません。</p>
+  <p class="end">二代目の店主は、開店の年に自分の傘を忘れていった客です。</p>
+</section>
+
+<figure class="still">
+  <svg viewBox="0 0 640 300" role="img" aria-label="店のものを並べたところ。マッチ箱、ネルのカップ、紺の傘、豆の袋、伝票。">
+    <g filter="url(#inky)">
+      <!-- matchbox -->
+      <g transform="translate(40 60) rotate(-6)">
+        <rect width="150" height="100" rx="3" fill="#1f2b45"/>
+        <rect x="0" y="0" width="150" height="12" fill="#7a4a2e"/>
+        <rect x="8" y="20" width="134" height="72" fill="none" stroke="#f3ecdc" stroke-width="1.5"/>
+        <rect x="12" y="24" width="126" height="64" fill="none" stroke="#f3ecdc" stroke-width=".8"/>
+        <text x="75" y="58" text-anchor="middle" font-family="Dela Gothic One, sans-serif" font-size="21" fill="#e8572a">カサワスレ</text>
+        <text x="75" y="78" text-anchor="middle" font-family="Zen Kaku Gothic New, sans-serif" font-weight="700" font-size="9" letter-spacing="2" fill="#d9a93a">TEL 076-221-7176</text>
+      </g>
+      <!-- cup and saucer -->
+      <g transform="translate(250 120)">
+        <ellipse cx="70" cy="92" rx="72" ry="14" fill="#d9a93a"/>
+        <ellipse cx="70" cy="88" rx="50" ry="9" fill="#c4922a"/>
+        <path d="M22 20h96l-8 58a12 12 0 0 1-12 10H42a12 12 0 0 1-12-10z" fill="#f3ecdc" stroke="#1f2b45" stroke-width="3"/>
+        <path d="M118 34c22 0 22 30-4 32" fill="none" stroke="#1f2b45" stroke-width="3"/>
+        <ellipse cx="70" cy="20" rx="48" ry="8" fill="#3d2f26" stroke="#1f2b45" stroke-width="3"/>
+        <path d="M30 50h80" stroke="#e8572a" stroke-width="5"/>
+        <path d="M58 -18c-6 8 6 14 0 22M80 -22c-6 8 6 14 0 22" fill="none" stroke="#8a7a68" stroke-width="2.5" stroke-linecap="round"/>
+      </g>
+      <!-- folded umbrella -->
+      <g transform="translate(430 30) rotate(28)">
+        <path d="M20 0 L36 170 L4 170 Z" fill="#1f2b45"/>
+        <path d="M20 0 L28 170 M20 0 L12 170" stroke="#f3ecdc" stroke-width="1" opacity=".35"/>
+        <rect x="8" y="110" width="24" height="8" rx="2" fill="#e8572a"/>
+        <path d="M20 170v34a14 14 0 0 1-28 0" fill="none" stroke="#7a4a2e" stroke-width="6" stroke-linecap="round"/>
+        <path d="M20 0v-14" stroke="#1f2b45" stroke-width="4" stroke-linecap="round"/>
+      </g>
+      <!-- bean bag -->
+      <g transform="translate(520 150) rotate(4)">
+        <path d="M0 14 L8 0 H82 L90 14 V120 H0 Z" fill="#d9a93a"/>
+        <path d="M0 14 H90" stroke="#7a4a2e" stroke-width="2"/>
+        <rect x="12" y="36" width="66" height="54" fill="#f3ecdc"/>
+        <text x="45" y="58" text-anchor="middle" font-family="Dela Gothic One, sans-serif" font-size="13" fill="#1f2b45">ブレンド</text>
+        <text x="45" y="78" text-anchor="middle" font-family="Zen Kaku Gothic New, sans-serif" font-weight="700" font-size="11" fill="#e8572a">80g ¥800</text>
+      </g>
+      <!-- order slip -->
+      <g transform="translate(90 200) rotate(5)">
+        <rect width="120" height="70" fill="#fbf7ee" stroke="#dccfb8"/>
+        <path d="M10 22h100M10 38h100M10 54h100" stroke="#dccfb8" stroke-width="1"/>
+        <text x="12" y="18" font-family="Zen Kaku Gothic New, sans-serif" font-weight="700" font-size="10" fill="#e8572a">御伝票 No.0042</text>
+        <text x="14" y="34" font-family="Zen Kaku Gothic New, sans-serif" font-size="10" fill="#3d2f26">ブレンド　600</text>
+        <text x="14" y="50" font-family="Zen Kaku Gothic New, sans-serif" font-size="10" fill="#3d2f26">プリン　　450</text>
+        <text x="14" y="66" font-family="Zen Kaku Gothic New, sans-serif" font-size="10" fill="#3d2f26">傘　　　　0</text>
+      </g>
+    </g>
+  </svg>
+  <figcaption>マッチは今も配っています。吸う人はもうほとんどいません。</figcaption>
+</figure>
+
+<div class="specimen" aria-hidden="true">
+  <p class="s1">ネルドリップ深煎り</p>
+  <p class="s2">ブレンド ¥600 ★ 棒茶ラテ ¥650 ★ 豆 80g ¥800</p>
+  <p class="s3">弁当忘れても傘忘れるな　弁当忘れても</p>
+  <p class="s4">AM 7:00 開店　水曜定休　主計町　ネル　深煎り　御伝票</p>
+  <p class="s5">傘 四十二本 在庫アリ 貸出無料</p>
+  <p class="s6">浅野川 ★ 茶屋街 ★ 雨 ★ 雨 ★ 雨 ★ 雪 ★ 雨 ★ 雨 ★ 晴 ★ 雨 ★ 雨</p>
+</div>
+
+<section id="menu">
+  <h2>きょうの品書き<span class="arrow">→</span></h2>
+  <ul class="slats">
+    <li class="slat"><svg class="glyph"><use href="#g-cup"/></svg>
+      <div><h3>カサワスレ・ブレンド</h3><p>深煎り。ネルで一杯ずつ淹れます。開店から配合を三回変えましたが、三回とも常連さんには気づかれませんでした。</p></div>
+      <span class="price">¥600</span></li>
+    <li class="slat"><svg class="glyph"><use href="#g-drop"/></svg>
+      <div><h3>浅野川（浅煎り）</h3><p>エチオピアの豆を軽く。川の名前をつけたら、川の水で淹れていると思われています。水道水です。</p></div>
+      <span class="price">¥680</span></li>
+    <li class="slat"><svg class="glyph"><use href="#g-bolt"/></svg>
+      <div><h3>加賀棒茶ラテ</h3><p>珈琲屋なのに、いちばん出るのはこれです。</p></div>
+      <span class="price">¥650</span></li>
+    <li class="slat"><svg class="glyph"><use href="#g-star"/></svg>
+      <div><h3>金箔ウインナー</h3><p>金沢なので、一応。味は普通のウインナー珈琲と同じです。</p></div>
+      <span class="price">¥900</span></li>
+    <li class="slat"><svg class="glyph"><use href="#g-cup"/></svg>
+      <div><h3>厚切りバタートースト</h3><p>朝七時から十一時まで。四センチあります。</p></div>
+      <span class="price">¥400</span></li>
+    <li class="slat"><svg class="glyph"><use href="#g-star"/></svg>
+      <div><h3>固めのプリン</h3><p>スプーンを立てても倒れません。たまに倒れます。</p></div>
+      <span class="price">¥450</span></li>
+    <li class="slat"><svg class="glyph"><use href="#g-bean"/></svg>
+      <div><h3>豆の量り売り</h3><p>ブレンドと浅野川。80gから。挽き方はお好みで言ってください。</p></div>
+      <span class="price">¥800〜</span></li>
+  </ul>
+  <p class="note">お会計は現金かPayPayで。傘の貸し出しはいつでも無料です。</p>
+</section>
+
+<section id="kasa">
+  <h2 class="big">傘の貸し出し</h2>
+  <p>決まりはひとつだけです。持っていった傘は、いつか返してください。別の傘で返してくれる人もいて、それで数が合っています。</p>
+  <ul class="ledger" aria-label="本日の傘立て">
+    <li><span>ビニール傘</span><b>31本</b></li>
+    <li><span>紺の長傘</span><b>7本</b></li>
+    <li><span>折りたたみ（骨が一本折れ）</span><b>2本</b></li>
+    <li><span>子ども用、黄色</span><b>1本</b></li>
+    <li><span>番傘（持ち主さん、お待ちしています）</span><b>1本</b></li>
+    <li class="total"><span>本日の在庫</span><b>42本</b></li>
+  </ul>
+</section>
+
+<section id="access">
+  <h2>営業と場所<span class="arrow">→</span></h2>
+  <ul class="facts">
+    <li class="fact"><svg><use href="#g-clock"/></svg><span class="k">平日</span>7:00–18:00</li>
+    <li class="fact"><svg><use href="#g-clock"/></svg><span class="k">土日</span>8:00–18:00</li>
+    <li class="fact"><svg><use href="#g-umb"/></svg><span class="k">定休</span>水曜</li>
+    <li class="fact"><svg><use href="#g-cup"/></svg><span class="k">席</span>カウンター8・卓2</li>
+    <li class="fact wide"><svg><use href="#g-pin"/></svg><span class="k">住所</span>金沢市主計町3-8　浅野川大橋から歩いて二分</li>
+    <li class="fact wide"><svg><use href="#g-phone"/></svg><span class="k">電話</span><a href="tel:0762217176">076-221-7176</a></li>
+  </ul>
+</section>
+
+<section id="tayori">
+  <h2>店の便り<span class="arrow">→</span></h2>
+  <ul class="slats">
+    <li class="slat"><svg class="glyph"><use href="#g-drop"/></svg>
+      <div><h3><a href="#tayori">十一月、晴れた日は三日でした</a></h3><p>傘は九本出て、十一本戻りました。</p></div>
+      <span class="price">11.21</span></li>
+    <li class="slat"><svg class="glyph"><use href="#g-bolt"/></svg>
+      <div><h3><a href="#tayori">焙煎機を直しました</a></h3><p>直したのは近所の自転車屋さんです。</p></div>
+      <span class="price">10.30</span></li>
+    <li class="slat"><svg class="glyph"><use href="#g-umb"/></svg>
+      <div><h3><a href="#tayori">番傘の持ち主を探しています</a></h3><p>九月の雷の日に置いていかれた方。柄に「ひがし」と彫ってあります。</p></div>
+      <span class="price">09.14</span></li>
+  </ul>
+</section>
+
+</main>
+
+<footer>
+  <svg class="mini" viewBox="0 0 20 20" aria-hidden="true"><use href="#g-umb"/></svg>
+  <p>喫茶カサワスレ <span class="amp">&amp;</span> 忘れ物の傘　1979–2026</p>
+  <p>完璧ではありませんが、毎朝七時に開けています。</p>
+</footer>
+
+</div>
+
+<div class="edge foot" aria-hidden="true"></div>
+
+</body>
+</html>
