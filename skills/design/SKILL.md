@@ -61,15 +61,19 @@ small change.
    reading decide what the style leaves open. Check each choice against
    `references/bans.md` as you make it.
 5. **Critique.** Render the design at desktop and phone widths and take screenshots.
-   Give the screenshots and `design-brief.md`, and nothing else from this session, to
-   a reviewer in fresh context: a subagent when the harness has one, otherwise
-   yourself after re-reading only those files. The reviewer looks in two hats:
-   - the style's designer: does the design follow the brief's style facts and the
-     style's own review questions, if it has any?
-   - a senior art director: does it break any ban in `references/bans.md`, and could
-     it belong to a different business in the same trade?
-   Fix every finding, then critique again. When no screenshot can be taken, review the
-   source as written, and tell the user the design was not checked visually.
+   Give a reviewer in fresh context the screenshots, `design-brief.md`, the style's
+   folder (`style.md`, `synthesis.md`, `notes/`) and `references/bans.md`, and nothing
+   else from this session. The reviewer is a subagent when the harness has one,
+   otherwise yourself after re-reading only those files. The reviewer answers one
+   question: would this design pass as designed by the style's designer? It first
+   names what gives the design away as not theirs, if anything (a banned pattern is a
+   giveaway), comparing it with the designer's real work as the notes describe it.
+   Then it gives its verdict, yes or no.
+   - **No:** rework the design as a whole toward what the reviewer named, then
+     critique again with a new reviewer.
+   - **Yes:** the critique is done.
+   When no screenshot can be taken, the reviewer judges the source, and tell the user
+   the design was not checked visually.
 
 ## Show the styles
 
@@ -82,6 +86,6 @@ A design is done when:
 
 - `design-brief.md` exists with the seed string and its reading, the style facts and
   the style's decisions;
-- the last critique found no ban broken and no contradiction with the brief;
+- the last critique's verdict was yes;
 - the user has the brief's path and the design's location, and knows whether the
   critique was visual or source-only.

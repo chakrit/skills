@@ -7,8 +7,11 @@ The `design` skill (`skills/design/`): its rules, and how to add a designer's st
 ## Rules
 
 - Before designing anything, the skill runs this process: generate a random number,
-  pick a style, write down a few facts about the style, design, then critique in the
-  hat of a professional.
+  pick a style, write down a few facts about the style, design, then critique.
+- The critique is a fresh reviewer who has read the style's research and answers one
+  question: would this design pass as designed by the style's designer? It names what
+  gives the design away before its verdict. On no, the design is reworked and critiqued
+  again; on yes, it is done. No rule-by-rule review.
 - Inspiration comes from forced randomness: the agent runs `openssl rand -hex 24` and
   reads the string freely as design direction. No curated lists of directions, palettes
   or references to index into; those would need a source of their own. The result will
