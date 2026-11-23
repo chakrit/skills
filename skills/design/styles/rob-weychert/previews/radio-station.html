@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bedminster Wireless 98.2 FM: this week</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@100..900&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&display=swap" rel="stylesheet">
+<style>
+/* The system. Interval 1.5. Hue from the date: 300 - 11*30 - 23 = -53 = 307. */
+:root {
+  --interval: 1.5;
+  --hue: 307;
+  --tri: calc(var(--hue) - 240);   /* triad, +120 */
+  --comp: calc(var(--hue) - 180);  /* complement, for neutrals */
+
+  --scale-1: 0.75rem;              /* 1.0625/1.5 = 0.708, raised by eye */
+  --scale0: 1.0625rem;
+  --scale1: calc(var(--scale0) * 1.5);
+  --scale2: calc(var(--scale0) * 2.25);
+  --scale3: calc(var(--scale0) * 3.375);
+  --scale4: calc(var(--scale0) * 5.0625);
+
+  --w-1: 600;   /* 400 * 1.5 */
+  --w0: 400;
+  --w1: 267;    /* 400 / 1.5 */
+  --w2: 178;
+  --w3: 119;
+  --thick: 780; /* the thick pen: name and the one key figure */
+
+  --rule: 0.0625rem;               /* the stem */
+
+  /* margin : column : gutter : padding = 3 : 4 : 2 : 1 */
+  --u: calc(min(100vw, 84rem) / 76);
+  --margin: calc(var(--u) * 3);
+  --gutter: calc(var(--u) * 2);
+  --pad: var(--u);
+  --cols: 12;
+
+  /* colour roles */
+  --text: oklch(0.22 0.015 var(--comp));
+  --grey: oklch(0.56 0.012 var(--comp));
+  --faint: oklch(0.86 0.01 var(--comp));
+  --bg: oklch(0.985 0.005 var(--comp));
+  --bg-alt: oklch(0.86 0.065 var(--hue));
+  --accent1: oklch(0.5 0.1 var(--tri));     /* metadata: times, dates */
+  --accent2: oklch(0.47 0.17 var(--hue));   /* links, the hour on air */
+  --inverse: oklch(0.985 0.005 var(--comp));
+
+  --hr: var(--scale2); /* one broadcast hour = scale2 */
+}
+
+@media (max-width: 64rem) { :root { --u: calc(100vw / 52); --cols: 8; } }
+@media (max-width: 40rem) { :root { --u: calc(100vw / 28); --cols: 4; --scale4: var(--scale3); } }
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 100%; background: var(--bg); color: var(--text); }
+body {
+  font-family: Commissioner, sans-serif;
+  font-size: var(--scale0);
+  font-weight: var(--w0);
+  line-height: 1.5;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+a { color: var(--accent2); text-decoration-thickness: var(--rule); text-underline-offset: 0.18em; }
+ol, ul { list-style: none; }
+
+.page {
+  max-width: 84rem;
+  margin: 0 auto;
+  padding: 0 var(--margin);
+  display: grid;
+  grid-template-columns: repeat(var(--cols), 1fr);
+  column-gap: var(--gutter);
+}
+.page > * { grid-column: 1 / -1; }
+
+/* ---------- masthead ---------- */
+.mast { padding-top: calc(var(--u) * 3); display: grid; grid-template-columns: subgrid; align-items: end; }
+.mast h1 {
+  grid-column: 1 / span 9;
+  font-size: var(--scale4);
+  font-weight: var(--thick);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+}
+.mast .freq { grid-column: 10 / -1; padding-bottom: 0.5rem; }
+.freq b { display: block; font-size: var(--scale2); font-weight: var(--w2); line-height: 1; }
+.freq span { font-size: var(--scale-1); font-weight: var(--w-1); color: var(--grey); }
+
+.dateline {
+  margin-top: calc(var(--u) * 2);
+  padding: 0.5rem 0;
+  border-top: var(--rule) solid var(--text);
+  border-bottom: var(--rule) solid var(--text);
+  display: grid; grid-template-columns: subgrid;
+  font-size: var(--scale-1); font-weight: var(--w-1);
+}
+.dateline .when { grid-column: 1 / span 3; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent1); }
+.dateline .onair { grid-column: 4 / -1; }
+
+.purpose {
+  grid-column: 4 / -1;
+  margin: calc(var(--u) * 3) 0 calc(var(--u) * 4);
+  font-size: var(--scale2);
+  font-weight: var(--w2);
+  line-height: 1.2;
+  max-width: 24em;
+}
+
+/* ---------- sections: name in the left column ---------- */
+.part {
+  display: grid; grid-template-columns: subgrid;
+  border-top: var(--rule) solid var(--text);
+  padding: 0.75rem 0 calc(var(--u) * 4);
+}
+.part > h2 {
+  grid-column: 1 / span 3;
+  font-size: var(--scale1);
+  font-weight: var(--w1);
+  line-height: 1.2;
+}
+.part > .body { grid-column: 4 / -1; }
+
+/* ---------- the count ---------- */
+.count { display: flex; gap: var(--gutter); align-items: baseline; }
+.count .n {
+  font-size: var(--scale4); font-weight: var(--thick);
+  line-height: 0.8; letter-spacing: -0.03em;
+}
+.count p { font-size: var(--scale1); font-weight: var(--w1); line-height: 1.3; max-width: 22em; }
+.key { margin-top: 1.5rem; font-size: var(--scale-1); font-weight: var(--w-1); color: var(--grey); display: flex; gap: 1.5rem; flex-wrap: wrap; }
+.key i { display: inline-block; width: 0.75rem; height: 0.75rem; vertical-align: -0.1em; margin-right: 0.4em; }
+.key .k-show i { background: var(--bg-alt); }
+.key .k-open i { outline: var(--rule) solid var(--grey); outline-offset: calc(var(--rule) * -1); }
+.key .k-now i { background: var(--accent2); }
+
+/* ---------- the week: all 168 hours ---------- */
+.week {
+  grid-column: 1 / -1;
+  margin-top: calc(var(--u) * 2);
+  display: grid;
+  grid-template-columns: 2.5rem repeat(7, 1fr);
+  border-bottom: var(--rule) solid var(--text);
+}
+.hours { padding-top: 2.5rem; }
+.hours li {
+  height: var(--hr);
+  font-size: var(--scale-1); font-weight: var(--w-1); color: var(--accent1);
+  border-top: var(--rule) solid var(--faint);
+  line-height: 1.6;
+}
+.day { border-left: var(--rule) solid var(--text); min-width: 0; }
+.day h3 {
+  height: 2.5rem;
+  padding: 0.6rem var(--pad) 0;
+  font-size: var(--scale0); font-weight: var(--w0);
+  border-bottom: var(--rule) solid var(--text);
+}
+.day h3 .full { display: none; }
+.day h3 .date { color: var(--accent1); font-size: var(--scale-1); font-weight: var(--w-1); }
+.day ol { display: grid; grid-template-rows: repeat(24, var(--hr)); position: relative; }
+.day ol::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: repeating-linear-gradient(to bottom,
+    oklch(0.2 0.02 var(--comp) / 0.16) 0 var(--rule), transparent var(--rule) var(--hr));
+}
+.day li { grid-row: var(--s) / span var(--n, 1); min-width: 0; }
+.day li.runlabel { display: none; }
+.day li.open .run { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.day li.show {
+  background: var(--bg-alt);
+  padding: 0.2rem var(--pad) 0;
+  line-height: 1.2;
+  overflow: hidden;
+}
+.day li.show time { display: none; }
+.day li.show b { display: block; font-weight: var(--w0); }
+.day li.show span { display: block; font-size: var(--scale-1); font-weight: var(--w-1); color: oklch(0.32 0.05 var(--hue)); }
+.day li.one span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.day li.one b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.day li.now { background: var(--accent2); color: var(--inverse); }
+.day li.now span { color: var(--inverse); }
+.day li.open.now { background: none; outline: calc(var(--rule) * 3) solid var(--accent2); outline-offset: calc(var(--rule) * -3); }
+.dayopen { display: none; }
+
+/* ---------- prose: the station speaking ---------- */
+.prose {
+  font-family: Newsreader, serif;
+  font-size: calc(var(--scale0) * 1.125);
+  font-variation-settings: "opsz" 14;
+  font-weight: 400;
+  font-variant-numeric: oldstyle-nums proportional-nums;
+  line-height: 1.55;
+  max-width: 33em;
+}
+.prose p + p { text-indent: 1.5em; }
+
+/* ---------- listings: listen, find us ---------- */
+.spec { max-width: 46rem; }
+.spec div {
+  display: grid; grid-template-columns: 9rem 1fr;
+  column-gap: var(--gutter);
+  padding: 0.6rem 0;
+  border-top: var(--rule) solid var(--faint);
+}
+.spec div:first-child { border-top: 0; padding-top: 0.2rem; }
+.spec dt { font-size: var(--scale-1); font-weight: var(--w-1); color: var(--accent1); letter-spacing: 0.06em; text-transform: uppercase; padding-top: 0.2rem; }
+.spec dd small { display: block; font-size: var(--scale-1); font-weight: var(--w-1); color: var(--grey); }
+
+footer {
+  border-top: var(--rule) solid var(--text);
+  padding: 0.75rem 0 calc(var(--u) * 4);
+  display: grid; grid-template-columns: subgrid;
+  font-size: var(--scale-1); font-weight: var(--w-1); color: var(--grey);
+}
+footer p { grid-column: 4 / span 6; max-width: 40em; }
+footer p.small { grid-column: 1 / span 3; }
+
+/* ---------- tablet ---------- */
+@media (max-width: 64rem) {
+  .mast h1 { grid-column: 1 / -1; }
+  .mast .freq { grid-column: 1 / -1; padding-top: 1rem; }
+  .dateline .when { grid-column: 1 / span 3; }
+  .dateline .onair { grid-column: 4 / -1; }
+  .purpose { grid-column: 1 / -1; }
+  .part > h2 { grid-column: 1 / span 2; }
+  .part > .body { grid-column: 3 / -1; }
+  footer p, footer p.small { grid-column: 1 / -1; }
+}
+
+/* ---------- phone: the same list, absence as hollow squares ---------- */
+@media (max-width: 40rem) {
+  .dateline .when, .dateline .onair { grid-column: 1 / -1; }
+  .dateline .onair { margin-top: 0.25rem; }
+  .part > h2, .part > .body { grid-column: 1 / -1; }
+  .part > h2 { margin-bottom: 1rem; }
+  .count { display: block; }
+  .count .n { display: block; margin-bottom: 0.75rem; }
+  .week { display: block; border-bottom: 0; }
+  .hours { display: none; }
+  .day { border-left: 0; border-top: var(--rule) solid var(--text); padding: 0.5rem 0 1rem; }
+  .day h3 { height: auto; padding: 0 0 0.5rem; border: 0; font-size: var(--scale1); font-weight: var(--w1); }
+  .day h3 .dn { display: none; }
+  .day h3 .full { display: inline; }
+  .day ol { display: flex; flex-wrap: wrap; gap: 0.25rem; align-items: center; }
+  .day li.open {
+    width: 0.875rem; height: 0.875rem; border: 0;
+    outline: var(--rule) solid var(--grey); outline-offset: calc(var(--rule) * -1);
+  }
+  .day li.show, .day li.one {
+    flex: 0 0 100%;
+    display: grid; grid-template-columns: 3.5rem 1fr; column-gap: 0.75rem;
+    white-space: normal;
+    background: none; border-top: var(--rule) solid var(--faint);
+    padding: 0.4rem 0; margin: 0.15rem 0;
+    font-size: var(--scale0);
+  }
+  .day li.show time { display: block; grid-row: 1 / span 2; font-size: var(--scale-1); font-weight: var(--w-1); color: var(--accent1); padding-top: 0.2rem; }
+  .day li.show b { font-weight: var(--w0); }
+  .day li.show span, .day li.one span { display: block; font-size: var(--scale-1); font-weight: var(--w-1); grid-column: 2; white-space: normal; }
+  .day li.show { background: none; }
+  .day li.now { background: none; color: var(--accent2); }
+  .day li.now b { font-weight: var(--w-1); }
+  .day li.now span { color: var(--accent2); }
+  .day li.now time { color: var(--accent2); }
+  .day ol::after { display: none; }
+  .day li.runlabel { display: block; width: 4rem; font-size: var(--scale-1); font-weight: var(--w-1); color: var(--grey); }
+  .dayopen { display: block; margin-top: 0.5rem; font-size: var(--scale-1); font-weight: var(--w-1); color: var(--grey); }
+  .spec div { grid-template-columns: 1fr; }
+  footer p, footer p.small { grid-column: 1 / -1; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="mast">
+  <h1>Bedminster Wireless</h1>
+  <p class="freq"><b>98.2 FM</b><span>South Bristol, and online anywhere</span></p>
+</header>
+
+<p class="dateline">
+  <span class="when">Week of 23 November 2026</span>
+  <span class="onair" id="onair">On air now: Afternoon Shift with Mags Tierney, until 16:00</span>
+</p>
+
+<p class="purpose">A community station run by volunteers from a former chapel on North
+Street. Read <a href="#week">this week&rsquo;s schedule</a>, find out how to
+<a href="#present">present a show</a>, or how to <a href="#listen">listen</a>.</p>
+
+<section class="part" id="week" aria-labelledby="h-week">
+  <h2 id="h-week">This week</h2>
+  <div class="body">
+    <div class="count">
+      <span class="n">59</span>
+      <p>hours this week have nobody in the studio. Volunteers present the other
+      109. In the blank hours below a playlist runs on its own until somebody
+      turns up to talk over it.</p>
+    </div>
+    <p class="key">
+      <span class="k-show"><i></i>A volunteer on air</span>
+      <span class="k-open"><i></i>An hour with nobody in</span>
+      <span class="k-now"><i></i>Now</span>
+      <span>UK time</span>
+    </p>
+  </div>
+  <div class="week">
+    <ol class="hours" aria-hidden="true"><li>00</li><li>01</li><li>02</li><li>03</li><li>04</li><li>05</li><li>06</li><li>07</li><li>08</li><li>09</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li></ol>
+<section class="day" aria-labelledby="d0"><h3 id="d0"><span class="dn">Mon</span><span class="full">Monday</span> <span class="date">23</span></h3><ol><li class="show one" style="--s:1;--n:1" data-d="0" data-s="0" data-n="1"><time>00&ndash;01</time> <b>Night Bus</b> <span>Kofi Mensah</span></li><li class="runlabel" aria-hidden="true">01&ndash;07</li><li class="open" style="--s:2" data-d="0" data-s="1" data-n="1"><span class="run">01&ndash;07, 6 hours with nobody in</span></li><li class="open" style="--s:3" data-d="0" data-s="2" data-n="1"></li><li class="open" style="--s:4" data-d="0" data-s="3" data-n="1"></li><li class="open" style="--s:5" data-d="0" data-s="4" data-n="1"></li><li class="open" style="--s:6" data-d="0" data-s="5" data-n="1"></li><li class="open" style="--s:7" data-d="0" data-s="6" data-n="1"></li><li class="show" style="--s:8;--n:3" data-d="0" data-s="7" data-n="3"><time>07&ndash;10</time> <b>Breakfast on the Feeder</b> <span>Jas Rahman &amp; Pete Lyle</span></li><li class="show" style="--s:11;--n:2" data-d="0" data-s="10" data-n="2"><time>10&ndash;12</time> <b>Second Cup</b> <span>June Okafor</span></li><li class="show one" style="--s:13;--n:1" data-d="0" data-s="12" data-n="1"><time>12&ndash;13</time> <b>Lunchtime Ska</b> <span>Dell</span></li><li class="show" style="--s:14;--n:3" data-d="0" data-s="13" data-n="3"><time>13&ndash;16</time> <b>Afternoon Shift</b> <span>Mags Tierney</span></li><li class="show" style="--s:17;--n:2" data-d="0" data-s="16" data-n="2"><time>16&ndash;18</time> <b>Homework Club</b> <span>Year 10, Ashton Park School</span></li><li class="show one" style="--s:19;--n:1" data-d="0" data-s="18" data-n="1"><time>18&ndash;19</time> <b>BS3 News Hour</b> <span>the newsroom volunteers</span></li><li class="show" style="--s:20;--n:2" data-d="0" data-s="19" data-n="2"><time>19&ndash;21</time> <b>Folk Off</b> <span>Ruth &amp; Ade</span></li><li class="show" style="--s:22;--n:2" data-d="0" data-s="21" data-n="2"><time>21&ndash;23</time> <b>Dub Sermon</b> <span>Selector Wesley</span></li><li class="show one" style="--s:24;--n:1" data-d="0" data-s="23" data-n="1"><time>23&ndash;00</time> <b>Night Bus</b> <span>Kofi Mensah</span></li></ol><p class="dayopen">6 open</p></section>
+<section class="day" aria-labelledby="d1"><h3 id="d1"><span class="dn">Tue</span><span class="full">Tuesday</span> <span class="date">24</span></h3><ol><li class="runlabel" aria-hidden="true">00&ndash;07</li><li class="open" style="--s:1" data-d="1" data-s="0" data-n="1"><span class="run">00&ndash;07, 7 hours with nobody in</span></li><li class="open" style="--s:2" data-d="1" data-s="1" data-n="1"></li><li class="open" style="--s:3" data-d="1" data-s="2" data-n="1"></li><li class="open" style="--s:4" data-d="1" data-s="3" data-n="1"></li><li class="open" style="--s:5" data-d="1" data-s="4" data-n="1"></li><li class="open" style="--s:6" data-d="1" data-s="5" data-n="1"></li><li class="open" style="--s:7" data-d="1" data-s="6" data-n="1"></li><li class="show" style="--s:8;--n:3" data-d="1" data-s="7" data-n="3"><time>07&ndash;10</time> <b>Breakfast on the Feeder</b> <span>Jas Rahman &amp; Pete Lyle</span></li><li class="show" style="--s:11;--n:2" data-d="1" data-s="10" data-n="2"><time>10&ndash;12</time> <b>Allotment Hour</b> <span>Bev &amp; Colin</span></li><li class="runlabel" aria-hidden="true">12&ndash;14</li><li class="open" style="--s:13" data-d="1" data-s="12" data-n="1"><span class="run">12&ndash;14, 2 hours with nobody in</span></li><li class="open" style="--s:14" data-d="1" data-s="13" data-n="1"></li><li class="show" style="--s:15;--n:2" data-d="1" data-s="14" data-n="2"><time>14&ndash;16</time> <b>Somali Voices</b> <span>Hodan Abdi</span></li><li class="show" style="--s:17;--n:2" data-d="1" data-s="16" data-n="2"><time>16&ndash;18</time> <b>Homework Club</b> <span>Year 10, Ashton Park School</span></li><li class="show one" style="--s:19;--n:1" data-d="1" data-s="18" data-n="1"><time>18&ndash;19</time> <b>BS3 News Hour</b> <span>the newsroom volunteers</span></li><li class="show" style="--s:20;--n:2" data-d="1" data-s="19" data-n="2"><time>19&ndash;21</time> <b>Jungle Is Massive</b> <span>DJ Tanisha</span></li><li class="show" style="--s:22;--n:3" data-d="1" data-s="21" data-n="3"><time>21&ndash;00</time> <b>Late Jazz Fug</b> <span>Graham Pugh</span></li></ol><p class="dayopen">9 open</p></section>
+<section class="day" aria-labelledby="d2"><h3 id="d2"><span class="dn">Wed</span><span class="full">Wednesday</span> <span class="date">25</span></h3><ol><li class="runlabel" aria-hidden="true">00&ndash;07</li><li class="open" style="--s:1" data-d="2" data-s="0" data-n="1"><span class="run">00&ndash;07, 7 hours with nobody in</span></li><li class="open" style="--s:2" data-d="2" data-s="1" data-n="1"></li><li class="open" style="--s:3" data-d="2" data-s="2" data-n="1"></li><li class="open" style="--s:4" data-d="2" data-s="3" data-n="1"></li><li class="open" style="--s:5" data-d="2" data-s="4" data-n="1"></li><li class="open" style="--s:6" data-d="2" data-s="5" data-n="1"></li><li class="open" style="--s:7" data-d="2" data-s="6" data-n="1"></li><li class="show" style="--s:8;--n:3" data-d="2" data-s="7" data-n="3"><time>07&ndash;10</time> <b>Breakfast on the Feeder</b> <span>Jas Rahman &amp; Pete Lyle</span></li><li class="show" style="--s:11;--n:2" data-d="2" data-s="10" data-n="2"><time>10&ndash;12</time> <b>Second Cup</b> <span>June Okafor</span></li><li class="show one" style="--s:13;--n:1" data-d="2" data-s="12" data-n="1"><time>12&ndash;13</time> <b>Lunchtime Ska</b> <span>Dell</span></li><li class="runlabel" aria-hidden="true">13&ndash;16</li><li class="open" style="--s:14" data-d="2" data-s="13" data-n="1"><span class="run">13&ndash;16, 3 hours with nobody in</span></li><li class="open" style="--s:15" data-d="2" data-s="14" data-n="1"></li><li class="open" style="--s:16" data-d="2" data-s="15" data-n="1"></li><li class="show" style="--s:17;--n:2" data-d="2" data-s="16" data-n="2"><time>16&ndash;18</time> <b>Homework Club</b> <span>Year 10, Ashton Park School</span></li><li class="show one" style="--s:19;--n:1" data-d="2" data-s="18" data-n="1"><time>18&ndash;19</time> <b>BS3 News Hour</b> <span>the newsroom volunteers</span></li><li class="show one" style="--s:20;--n:1" data-d="2" data-s="19" data-n="1"><time>19&ndash;20</time> <b>Council Watch</b> <span>Priya Natt</span></li><li class="show" style="--s:21;--n:2" data-d="2" data-s="20" data-n="2"><time>20&ndash;22</time> <b>Radio Kasia</b> <span>Kasia Nowak</span></li><li class="show" style="--s:23;--n:2" data-d="2" data-s="22" data-n="2"><time>22&ndash;00</time> <b>Grime Archive</b> <span>Mez</span></li></ol><p class="dayopen">10 open</p></section>
+<section class="day" aria-labelledby="d3"><h3 id="d3"><span class="dn">Thu</span><span class="full">Thursday</span> <span class="date">26</span></h3><ol><li class="runlabel" aria-hidden="true">00&ndash;07</li><li class="open" style="--s:1" data-d="3" data-s="0" data-n="1"><span class="run">00&ndash;07, 7 hours with nobody in</span></li><li class="open" style="--s:2" data-d="3" data-s="1" data-n="1"></li><li class="open" style="--s:3" data-d="3" data-s="2" data-n="1"></li><li class="open" style="--s:4" data-d="3" data-s="3" data-n="1"></li><li class="open" style="--s:5" data-d="3" data-s="4" data-n="1"></li><li class="open" style="--s:6" data-d="3" data-s="5" data-n="1"></li><li class="open" style="--s:7" data-d="3" data-s="6" data-n="1"></li><li class="show" style="--s:8;--n:3" data-d="3" data-s="7" data-n="3"><time>07&ndash;10</time> <b>Breakfast on the Feeder</b> <span>Jas Rahman &amp; Pete Lyle</span></li><li class="show" style="--s:11;--n:2" data-d="3" data-s="10" data-n="2"><time>10&ndash;12</time> <b>The Walking Bus</b> <span>pensioners of Windmill Hill</span></li><li class="show" style="--s:13;--n:2" data-d="3" data-s="12" data-n="2"><time>12&ndash;14</time> <b>Cumbia Cumbia</b> <span>Lucho</span></li><li class="runlabel" aria-hidden="true">14&ndash;16</li><li class="open" style="--s:15" data-d="3" data-s="14" data-n="1"><span class="run">14&ndash;16, 2 hours with nobody in</span></li><li class="open" style="--s:16" data-d="3" data-s="15" data-n="1"></li><li class="show" style="--s:17;--n:2" data-d="3" data-s="16" data-n="2"><time>16&ndash;18</time> <b>Homework Club</b> <span>Year 10, Ashton Park School</span></li><li class="show one" style="--s:19;--n:1" data-d="3" data-s="18" data-n="1"><time>18&ndash;19</time> <b>BS3 News Hour</b> <span>the newsroom volunteers</span></li><li class="show" style="--s:20;--n:2" data-d="3" data-s="19" data-n="2"><time>19&ndash;21</time> <b>Northern Soul Society</b> <span>Trev</span></li><li class="show" style="--s:22;--n:2" data-d="3" data-s="21" data-n="2"><time>21&ndash;23</time> <b>Bass Weight</b> <span>Kay-Dee</span></li><li class="show one" style="--s:24;--n:1" data-d="3" data-s="23" data-n="1"><time>23&ndash;00</time> <b>Night Bus</b> <span>Kofi Mensah</span></li></ol><p class="dayopen">9 open</p></section>
+<section class="day" aria-labelledby="d4"><h3 id="d4"><span class="dn">Fri</span><span class="full">Friday</span> <span class="date">27</span></h3><ol><li class="show one" style="--s:1;--n:1" data-d="4" data-s="0" data-n="1"><time>00&ndash;01</time> <b>Night Bus</b> <span>Kofi Mensah</span></li><li class="runlabel" aria-hidden="true">01&ndash;07</li><li class="open" style="--s:2" data-d="4" data-s="1" data-n="1"><span class="run">01&ndash;07, 6 hours with nobody in</span></li><li class="open" style="--s:3" data-d="4" data-s="2" data-n="1"></li><li class="open" style="--s:4" data-d="4" data-s="3" data-n="1"></li><li class="open" style="--s:5" data-d="4" data-s="4" data-n="1"></li><li class="open" style="--s:6" data-d="4" data-s="5" data-n="1"></li><li class="open" style="--s:7" data-d="4" data-s="6" data-n="1"></li><li class="show" style="--s:8;--n:3" data-d="4" data-s="7" data-n="3"><time>07&ndash;10</time> <b>Breakfast on the Feeder</b> <span>Jas Rahman &amp; Pete Lyle</span></li><li class="show" style="--s:11;--n:3" data-d="4" data-s="10" data-n="3"><time>10&ndash;13</time> <b>Friday Requests</b> <span>June Okafor</span></li><li class="show" style="--s:14;--n:3" data-d="4" data-s="13" data-n="3"><time>13&ndash;16</time> <b>Trinidad to Totterdown</b> <span>Carlton Joseph</span></li><li class="show" style="--s:17;--n:2" data-d="4" data-s="16" data-n="2"><time>16&ndash;18</time> <b>Homework Club</b> <span>Year 10, Ashton Park School</span></li><li class="show one" style="--s:19;--n:1" data-d="4" data-s="18" data-n="1"><time>18&ndash;19</time> <b>BS3 News Hour</b> <span>the newsroom volunteers</span></li><li class="show" style="--s:20;--n:3" data-d="4" data-s="19" data-n="3"><time>19&ndash;22</time> <b>Friday Mix</b> <span>whoever turns up</span></li><li class="show" style="--s:23;--n:2" data-d="4" data-s="22" data-n="2"><time>22&ndash;00</time> <b>Basement Tapes</b> <span>Ollie &amp; Fran</span></li></ol><p class="dayopen">6 open</p></section>
+<section class="day" aria-labelledby="d5"><h3 id="d5"><span class="dn">Sat</span><span class="full">Saturday</span> <span class="date">28</span></h3><ol><li class="show" style="--s:1;--n:2" data-d="5" data-s="0" data-n="2"><time>00&ndash;02</time> <b>Afters</b> <span>Ollie &amp; Fran</span></li><li class="runlabel" aria-hidden="true">02&ndash;08</li><li class="open" style="--s:3" data-d="5" data-s="2" data-n="1"><span class="run">02&ndash;08, 6 hours with nobody in</span></li><li class="open" style="--s:4" data-d="5" data-s="3" data-n="1"></li><li class="open" style="--s:5" data-d="5" data-s="4" data-n="1"></li><li class="open" style="--s:6" data-d="5" data-s="5" data-n="1"></li><li class="open" style="--s:7" data-d="5" data-s="6" data-n="1"></li><li class="open" style="--s:8" data-d="5" data-s="7" data-n="1"></li><li class="show" style="--s:9;--n:2" data-d="5" data-s="8" data-n="2"><time>08&ndash;10</time> <b>Saturday Kitchen</b> <span>Nadia Haddad</span></li><li class="show" style="--s:11;--n:2" data-d="5" data-s="10" data-n="2"><time>10&ndash;12</time> <b>Gas &amp; Robins</b> <span>phone-in for both clubs</span></li><li class="show" style="--s:13;--n:3" data-d="5" data-s="12" data-n="3"><time>12&ndash;15</time> <b>Matchday</b> <span>volunteer commentators</span></li><li class="show" style="--s:16;--n:2" data-d="5" data-s="15" data-n="2"><time>15&ndash;17</time> <b>Reggae Roots</b> <span>Junior B</span></li><li class="runlabel" aria-hidden="true">17&ndash;19</li><li class="open" style="--s:18" data-d="5" data-s="17" data-n="1"><span class="run">17&ndash;19, 2 hours with nobody in</span></li><li class="open" style="--s:19" data-d="5" data-s="18" data-n="1"></li><li class="show" style="--s:20;--n:3" data-d="5" data-s="19" data-n="3"><time>19&ndash;22</time> <b>Saturday Session</b> <span>live bands in the chapel</span></li><li class="show" style="--s:23;--n:2" data-d="5" data-s="22" data-n="2"><time>22&ndash;00</time> <b>Sound System Culture</b> <span>Wesley &amp; Junior B</span></li></ol><p class="dayopen">8 open</p></section>
+<section class="day" aria-labelledby="d6"><h3 id="d6"><span class="dn">Sun</span><span class="full">Sunday</span> <span class="date">29</span></h3><ol><li class="runlabel" aria-hidden="true">00&ndash;09</li><li class="open" style="--s:1" data-d="6" data-s="0" data-n="1"><span class="run">00&ndash;09, 9 hours with nobody in</span></li><li class="open" style="--s:2" data-d="6" data-s="1" data-n="1"></li><li class="open" style="--s:3" data-d="6" data-s="2" data-n="1"></li><li class="open" style="--s:4" data-d="6" data-s="3" data-n="1"></li><li class="open" style="--s:5" data-d="6" data-s="4" data-n="1"></li><li class="open" style="--s:6" data-d="6" data-s="5" data-n="1"></li><li class="open" style="--s:7" data-d="6" data-s="6" data-n="1"></li><li class="open" style="--s:8" data-d="6" data-s="7" data-n="1"></li><li class="open" style="--s:9" data-d="6" data-s="8" data-n="1"></li><li class="show" style="--s:10;--n:2" data-d="6" data-s="9" data-n="2"><time>09&ndash;11</time> <b>Hymns &amp; Hollers</b> <span>Rev. Ann Coombs</span></li><li class="show" style="--s:12;--n:2" data-d="6" data-s="11" data-n="2"><time>11&ndash;13</time> <b>Sunday Papers</b> <span>Mags Tierney</span></li><li class="show" style="--s:14;--n:2" data-d="6" data-s="13" data-n="2"><time>13&ndash;15</time> <b>Kids Make Radio</b> <span>Southville Primary</span></li><li class="runlabel" aria-hidden="true">15&ndash;17</li><li class="open" style="--s:16" data-d="6" data-s="15" data-n="1"><span class="run">15&ndash;17, 2 hours with nobody in</span></li><li class="open" style="--s:17" data-d="6" data-s="16" data-n="1"></li><li class="show" style="--s:18;--n:2" data-d="6" data-s="17" data-n="2"><time>17&ndash;19</time> <b>Bollywood Gold</b> <span>Raj &amp; Sunita</span></li><li class="show" style="--s:20;--n:2" data-d="6" data-s="19" data-n="2"><time>19&ndash;21</time> <b>Classical, Mostly</b> <span>Dr Hugh Pell</span></li><li class="show" style="--s:22;--n:2" data-d="6" data-s="21" data-n="2"><time>21&ndash;23</time> <b>Quiet Storm</b> <span>Abi</span></li><li class="show one" style="--s:24;--n:1" data-d="6" data-s="23" data-n="1"><time>23&ndash;00</time> <b>Night Bus</b> <span>Kofi Mensah</span></li></ol><p class="dayopen">11 open</p></section>
+  </div>
+</section>
+
+<section class="part" id="present" aria-labelledby="h-present">
+  <h2 id="h-present">Present a show</h2>
+  <div class="body prose">
+    <p>Presenting takes two free hours a week and four Tuesday
+    evenings in the chapel, where Mags Tierney teaches the desk, the law (mostly about
+    swearing before nine) and how to talk to one person instead of a crowd.</p>
+    <p>After that, pick a blank hour. Overnight is the easiest slot to get and the
+    hardest to keep: three people have tried 3am since July, and one of them now does
+    breakfast. Wednesday afternoon has been empty since Colin&rsquo;s hip.</p>
+    <p>The next open evening is Tuesday 1 December at 7pm, 212 North Street. Or write to
+    <a href="mailto:volunteer@bedminsterwireless.org.uk">volunteer@bedminsterwireless.org.uk</a>
+    with the hour you want and what you&rsquo;d do with it.</p>
+  </div>
+</section>
+
+<section class="part" id="listen" aria-labelledby="h-listen">
+  <h2 id="h-listen">Listen</h2>
+  <dl class="body spec">
+    <div><dt>FM</dt><dd>98.2 MHz<small>BS3, BS4, BS13 and most of BS1 on a dry day</small></dd></div>
+    <div><dt>Online</dt><dd><a href="#listen">bedminsterwireless.org.uk/listen</a><small>128k stream, and the last four weeks of shows to download</small></dd></div>
+    <div><dt>DAB</dt><dd>Bristol small-scale multiplex<small>from spring 2027, if the grant comes through</small></dd></div>
+    <div><dt>Studio line</dt><dd><a href="tel:+441174960982">0117 496 0982</a><small>for requests and phone-ins while a show is on air</small></dd></div>
+  </dl>
+</section>
+
+<section class="part" id="find" aria-labelledby="h-find">
+  <h2 id="h-find">Find us</h2>
+  <dl class="body spec">
+    <div><dt>Studio</dt><dd>The Old Chapel, 212 North Street<small>Bedminster, Bristol BS3 1JF. Step-free from the side door on Dean Lane.</small></dd></div>
+    <div><dt>Office</dt><dd>Tuesday to Thursday, 10:00&ndash;16:00<small>office@bedminsterwireless.org.uk</small></dd></div>
+  </dl>
+</section>
+
+<footer>
+  <p class="small">Bedminster Wireless CIC<br>Ofcom community licence</p>
+  <p>Our transmitter is bolted to a block of flats in Windmill Hill and is older than
+  most of our presenters, and it stops working when it rains.</p>
+</footer>
+
+</div>
+<script>
+(function () {
+  var parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Europe/London", weekday: "short", hour: "2-digit", hourCycle: "h23"
+  }).formatToParts(new Date());
+  var wd = "", hr = 0;
+  parts.forEach(function (p) {
+    if (p.type === "weekday") wd = p.value;
+    if (p.type === "hour") hr = parseInt(p.value, 10);
+  });
+  var day = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].indexOf(wd);
+  if (day < 0) return;
+  var cells = document.querySelectorAll('.day li[data-d="' + day + '"]');
+  var now = null, next = null;
+  cells.forEach(function (li) {
+    var s = +li.dataset.s, n = +li.dataset.n;
+    if (hr >= s && hr < s + n) now = li;
+    if (!next && li.classList.contains("show") && s > hr) next = li;
+  });
+  if (!now) return;
+  now.classList.add("now");
+  var line = document.getElementById("onair");
+  function pad(h) { return (h % 24 < 10 ? "0" : "") + (h % 24) + ":00"; }
+  if (now.classList.contains("show")) {
+    line.textContent = "On air now: " + now.querySelector("b").textContent +
+      " with " + now.querySelector("span").textContent +
+      ", until " + pad(+now.dataset.s + +now.dataset.n);
+  } else {
+    line.textContent = "Nobody in the studio. The playlist runs" +
+      (next ? " until " + next.querySelector("b").textContent + " at " + pad(+next.dataset.s) : " until morning");
+  }
+})();
+</script>
+</body>
+</html>
