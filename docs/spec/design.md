@@ -38,7 +38,8 @@ The `design` skill (`skills/design/`): its rules, and how to add a designer's st
   of the style, so the page no longer shows what the style looks like, and the critique
   ends up judging the rule.
 - Previews are self-contained HTML files in `styles/<style>/previews/`: inline CSS and
-  SVG, no raster images, Google Fonts links allowed, inline JavaScript allowed. They follow the style and every
+  SVG, Google Fonts links allowed, inline JavaScript allowed. The only raster images are
+  ones made with light use of Magnific, embedded in the file. They follow the style and every
   ban, and their businesses are fictional.
 
 ## Adding a designer
