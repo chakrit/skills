@@ -17,108 +17,108 @@ Blog posts are at `https://stuffandnonsense.co.uk/blog/<slug>/`.
 
 ### Layout, grids, and his method (2018 to 2026)
 
-| Date       | Slug / source                                                          | One line                                                                      |
-|------------|------------------------------------------------------------------------|-------------------------------------------------------------------------------|
-| 2026-10-27 | i-wrote-another-book-its-called-standout-designs-for-the-web           | Why websites look alike; new book announcement; Wheelman beyond editorial     |
-| 2026 (PDF) | Standout Designs for the Web free 28-page sample (shop page link)      | Before/after Wheelman, modular and compound grid spreads, type as shape       |
-| 2026-11-02 | standout-designs-for-the-web-behind-the-scenes-designing-the-pages     | Six-column text grid plus modular image grid for the book                     |
-| 2026-11-09 | standout-designs-for-the-web-behind-the-scenes-cover-artwork           | Pulp detective covers, a continuing story across book covers                  |
-| 2026-10-05 | when-layouts-affect-book-editing                                       | Spreads make words redundant; a separate edit per medium                      |
-| 2026-03-27 | a-bold-new-website-for-the-academy-of-scoring-arts                     | A 12-column site made distinctive through type and modular sections           |
-| 2025-05-05 | retro-reboot-what-90s-web-design-can-teach-us-today                    | 90s sites (Cheestrings, Goosebumps, Cartoon Network) versus today's blandness |
-| 2025-08-05 | comic-book-layouts-as-web-design-inspiration                           | Pointer to his Envato article (not on his site; not read here)                |
-| 2024-11-18 | rspca-rebranded-but-does-its-website-make-the-best-use-of-its-new-look | Unsolicited RSPCA stories redesign: modular grid, teen-magazine energy        |
-| 2024-12-04 | crisis-aims-to-be-bold-and-impactful                                   | Unsolicited Crisis redesign: numerals, pictograms, donation journey           |
-| 2024-05-31 | election-2024-diving-into-party-website-designs                        | UK party sites are interchangeable; symmetry versus asymmetry as meaning      |
-| 2024-06-04 | election-2024-imagining-labour                                         | Labour redesign under self-imposed constraints                                |
-| 2024-06-21 | election-2024-imagining-what-id-make-if-the-greens-came-calling        | Greens redesign: one green, Barlow Condensed, super-sized numerals            |
-| 2024-06-04 | election-2024-imagining-what-id-make-if-count-binface-came-calling     | Count Binface: 1930s sci-fi serial, comic lettering                           |
-| 2024-06-16 | designing-for-count-binface                                            | The imagined design became the real site, on Squarespace, in a week           |
-| 2024-06-22 | election-2024-recapping-my-political-party-website-transformations     | Side-by-side before/after of all four                                         |
-| 2022-06-27 | designing-zombie-hunt-part-one-colour (and parts two to five)          | Full client process: colour, themes, grid, small screens, code                |
-| 2021-02-25 | his-name-is-fast-eddie                                                 | 2021 redesign: 4+5 compound grid, Dharma Gothic, SVG text, gorilla            |
-| 2021-03-07 | using-a-4-5-compound-grid                                              | The 6\|1\|4\|3\|3\|4\|1\|6 grid and how the whole site uses it                |
-| 2021-04-19 | how-a-3-4-compound-grid-can-improve-on-12-columns                      | 3\|1\|2\|2\|1\|3 rhythm; narrow columns as offsets and whitespace             |
-| 2021-04-28 | modular-grids-for-visually-appealing-layouts                           | Modules, spatial zones, empty modules, pace                                   |
-| 2021-05-11 | take-the-guesswork-out-of-layout-by-using-ratios                       | von Wersin's orthogons as column ratios                                       |
-| 2021-05-07 | layout-love-how-and-why-i-built-it                                     | Layout Love grid sets; why he never used frameworks                           |
-| 2021-07-06 | design-systems-dont-kill-creativity-but-that-wasnt-the-question        | The gap is visual-design education, not systems                               |
-| 2019-05-13 | a-memo-to-product-and-website-designers                                | Five print techniques the web can now do                                      |
-| 2019-03-22 | the-story-behind-art-direction-for-the-web                             | Book structure; Wheelman origin; compound grid for the book itself            |
-| 2019-02-21 | book-review-o-design-de-bea-feitler                                    | Why he studies magazine art directors                                         |
-| 2018-09-07 | art-direction-for-the-web-designing-standfirst-paragraphs              | Fifteen standfirst treatments                                                 |
-| 2018-09-11 | art-direction-for-the-web-taking-the-lede                              | Lede types and how a lede is designed                                         |
-| 2018-03-04 | make-a-creative-brief-a-platform-for-creativity                        | Briefs, "sites we like", talking to clients                                   |
-| 2018-01-19 | errol-me-and-the-new-stuff-and-nonsense                                | 2018 redesign: 4/6 compound grid, editorial feel, Errol the gorilla           |
-| 2016-09-13 | art-directing-the-web                                                  | His definition of art direction                                               |
-| 2016-12-13 | designing-imaginative-style-guides-for-this-years-24-ways              | Style guides "designed by someone who enjoys configuring a router"            |
-| 2020       | 52-weeks-of-inspired-design-decisions (intro, #3, #13, #35, #38)       | Weekly designs after 20th-century art directors (pages are stubs)             |
-| 2021-08-29 | 10-books-you-should-add-to-your-web-design-inspiration-collection      | His reference shelf                                                           |
+| Date       | Slug / source                                                     | One line                                                                  |
+|------------|-------------------------------------------------------------------|---------------------------------------------------------------------------|
+| 2026-10-27 | i-wrote-another-book-its-called-standout-designs-for-the-web      | Why websites look alike; new book announcement; Wheelman beyond editorial |
+| 2026 (PDF) | Standout Designs for the Web free 28-page sample (shop page link) | Before/after Wheelman, modular and compound grid spreads, type as shape   |
+| 2026-11-02 | standout-designs-for-the-web-behind-the-scenes-designing-the-pages | Six-column text grid plus modular image grid for the book                |
+| 2026-11-09 | standout-designs-for-the-web-behind-the-scenes-cover-artwork      | Pulp detective covers, a continuing story across book covers             |
+| 2026-10-05 | when-layouts-affect-book-editing                                  | Spreads make words redundant; a separate edit per medium                  |
+| 2026-03-27 | a-bold-new-website-for-the-academy-of-scoring-arts                | A 12-column site made distinctive through type and modular sections       |
+| 2025-05-05 | retro-reboot-what-90s-web-design-can-teach-us-today               | 90s sites (Cheestrings, Goosebumps, Cartoon Network) versus today's blandness |
+| 2025-08-05 | comic-book-layouts-as-web-design-inspiration                      | Pointer to his Envato article (not on his site; not read here)            |
+| 2024-11-18 | rspca-rebranded-but-does-its-website-make-the-best-use-of-its-new-look | Unsolicited RSPCA stories redesign: modular grid, teen-magazine energy |
+| 2024-12-04 | crisis-aims-to-be-bold-and-impactful                              | Unsolicited Crisis redesign: numerals, pictograms, donation journey      |
+| 2024-05-31 | election-2024-diving-into-party-website-designs                   | UK party sites are interchangeable; symmetry versus asymmetry as meaning |
+| 2024-06-04 | election-2024-imagining-labour                                    | Labour redesign under self-imposed constraints                            |
+| 2024-06-21 | election-2024-imagining-what-id-make-if-the-greens-came-calling   | Greens redesign: one green, Barlow Condensed, super-sized numerals        |
+| 2024-06-04 | election-2024-imagining-what-id-make-if-count-binface-came-calling | Count Binface: 1930s sci-fi serial, comic lettering                      |
+| 2024-06-16 | designing-for-count-binface                                       | The imagined design became the real site, on Squarespace, in a week      |
+| 2024-06-22 | election-2024-recapping-my-political-party-website-transformations | Side-by-side before/after of all four                                    |
+| 2022-06-27 | designing-zombie-hunt-part-one-colour (and parts two to five)     | Full client process: colour, themes, grid, small screens, code            |
+| 2021-02-25 | his-name-is-fast-eddie                                            | 2021 redesign: 4+5 compound grid, Dharma Gothic, SVG text, gorilla       |
+| 2021-03-07 | using-a-4-5-compound-grid                                         | The 6\|1\|4\|3\|3\|4\|1\|6 grid and how the whole site uses it           |
+| 2021-04-19 | how-a-3-4-compound-grid-can-improve-on-12-columns                 | 3\|1\|2\|2\|1\|3 rhythm; narrow columns as offsets and whitespace        |
+| 2021-04-28 | modular-grids-for-visually-appealing-layouts                      | Modules, spatial zones, empty modules, pace                               |
+| 2021-05-11 | take-the-guesswork-out-of-layout-by-using-ratios                  | von Wersin's orthogons as column ratios                                   |
+| 2021-05-07 | layout-love-how-and-why-i-built-it                                | Layout Love grid sets; why he never used frameworks                      |
+| 2021-07-06 | design-systems-dont-kill-creativity-but-that-wasnt-the-question   | The gap is visual-design education, not systems                           |
+| 2019-05-13 | a-memo-to-product-and-website-designers                           | Five print techniques the web can now do                                  |
+| 2019-03-22 | the-story-behind-art-direction-for-the-web                        | Book structure; Wheelman origin; compound grid for the book itself       |
+| 2019-02-21 | book-review-o-design-de-bea-feitler                               | Why he studies magazine art directors                                     |
+| 2018-09-07 | art-direction-for-the-web-designing-standfirst-paragraphs         | Fifteen standfirst treatments                                             |
+| 2018-09-11 | art-direction-for-the-web-taking-the-lede                         | Lede types and how a lede is designed                                     |
+| 2018-03-04 | make-a-creative-brief-a-platform-for-creativity                   | Briefs, "sites we like", talking to clients                               |
+| 2018-01-19 | errol-me-and-the-new-stuff-and-nonsense                           | 2018 redesign: 4/6 compound grid, editorial feel, Errol the gorilla      |
+| 2016-09-13 | art-directing-the-web                                             | His definition of art direction                                           |
+| 2016-12-13 | designing-imaginative-style-guides-for-this-years-24-ways         | Style guides "designed by someone who enjoys configuring a router"       |
+| 2020       | 52-weeks-of-inspired-design-decisions (intro, #3, #13, #35, #38)  | Weekly designs after 20th-century art directors (pages are stubs)        |
+| 2021-08-29 | 10-books-you-should-add-to-your-web-design-inspiration-collection | His reference shelf                                                       |
 
 ### Earlier writing (2004 to 2016)
 
-| Date         | Slug                                                                                        | One line                                                                  |
-|--------------|---------------------------------------------------------------------------------------------|---------------------------------------------------------------------------|
-| 2004-05-16   | creating-colour-palettes                                                                    | Tints from one brand colour over black and white                          |
-| 2004-05-20   | web-imitates-art                                                                            | Palettes from 1960s Pop Art                                               |
-| 2004-11-02   | web-design-depth-of-field                                                                   | Contrast as photographic focus to lead the eye                            |
-| 2004-11-26   | three-designs                                                                               | Hotel, property, science sites; "highlight escapes the photo"             |
-| 2005-01-03   | design-like-its                                                                             | Design a site "as if" it were 1985                                        |
-| 2005-01-08   | fighting-off-design-stalinism                                                               | House style versus team taste                                             |
-| 2005-03-03   | design-mood-boards                                                                          | Mood boards borrowed from TV interior design                              |
-| 2007-01-28   | creating-inspired-design-part-1-i-am-the-walrus                                             | "Solve a different problem"; look to other fields                         |
-| 2008-09-22   | time-to-stop-showing-clients-static-design-visuals                                          | Show designs in the browser, not as images                                |
-| 2009-08-27   | method-in-my-modness-designing-stuff-and-nonsense-2009                                      | Art-directed portfolio panels instead of screenshots                      |
-| 2011-02-17   | i-dont-care-about-responsive-web-design                                                     | Responsive is just web design                                             |
-| 2011-03-27   | dig-the-new-breed                                                                           | Stop drawing fixed rectangles per device                                  |
-| 2011-10-31   | expect-wonkiness                                                                            | One-week redesign; two typefaces, one colour, screen tones                |
-| 2011-12-05   | designing-for-iso / 2012-06-27 say-hello-to-the-new-iso                                     | Grid from logo proportions; design in browser with the client in the room |
-| 2012-04-09   | paying-attention-to-content-hierarchy-across-screen-sizes                                   | Squeezed banners invert hierarchy on phones                               |
-| 2012-09-04   | we-are-the-mods-... and 2012-09-05 about-those-long-line-lengths                            | Mod-themed redesign; refuses max-width on text                            |
-| 2013-04-02   | one-step-beyond                                                                             | Madness dance header; content breakpoints per character                   |
-| 2013-06-12   | an-extract-from-designing-atoms-and-elements                                                | "Atmosphere" (colour, type, texture) is separable from layout             |
-| 2014-01-07   | its-2014-web-design-isnt-dead                                                               | "Making it pretty" is a skill                                             |
-| 2014-03-10   | what-were-left-with-is-just-called-web-design                                               | Same theme                                                                |
-| 2014-04-25   | i-wrote-a-different-letter-to-a-junior-designer                                             | Defends "the idea" against Cennydd Bowles's letter                        |
-| 2014-08-22   | creating-a-colour-palette-inspired-by-martin-scorseses-film-hugo                            | Client palette sampled from a film's colour grade                         |
-| 2021-11 / 12 | design-another-day, design-of-the-dead, design-vs-godzilla, where-no-design-has-gone-before | Apple TV artwork sets built from original posters                         |
-| 2023-02-07   | my-new-personal-website                                                                     | Business site as client filter; personal site for the rest                |
-| 2023-03-31   | designing-for-the-cheeky-condiment-company                                                  | Ketchup-bottle modal, Block Berthold after Richard Hollis                 |
-| 2024-08-09   | the-curious-case-of-the-cloning-of-my-website                                               | Someone cloned his site wholesale (not design-relevant)                   |
+| Date       | Slug                                                              | One line                                                                  |
+|------------|-------------------------------------------------------------------|---------------------------------------------------------------------------|
+| 2004-05-16 | creating-colour-palettes                                          | Tints from one brand colour over black and white                          |
+| 2004-05-20 | web-imitates-art                                                  | Palettes from 1960s Pop Art                                               |
+| 2004-11-02 | web-design-depth-of-field                                         | Contrast as photographic focus to lead the eye                            |
+| 2004-11-26 | three-designs                                                     | Hotel, property, science sites; "highlight escapes the photo"            |
+| 2005-01-03 | design-like-its                                                   | Design a site "as if" it were 1985                                        |
+| 2005-01-08 | fighting-off-design-stalinism                                     | House style versus team taste                                             |
+| 2005-03-03 | design-mood-boards                                                | Mood boards borrowed from TV interior design                              |
+| 2007-01-28 | creating-inspired-design-part-1-i-am-the-walrus                   | "Solve a different problem"; look to other fields                         |
+| 2008-09-22 | time-to-stop-showing-clients-static-design-visuals                | Show designs in the browser, not as images                                |
+| 2009-08-27 | method-in-my-modness-designing-stuff-and-nonsense-2009            | Art-directed portfolio panels instead of screenshots                      |
+| 2011-02-17 | i-dont-care-about-responsive-web-design                           | Responsive is just web design                                             |
+| 2011-03-27 | dig-the-new-breed                                                 | Stop drawing fixed rectangles per device                                  |
+| 2011-10-31 | expect-wonkiness                                                  | One-week redesign; two typefaces, one colour, screen tones               |
+| 2011-12-05 | designing-for-iso / 2012-06-27 say-hello-to-the-new-iso           | Grid from logo proportions; design in browser with the client in the room |
+| 2012-04-09 | paying-attention-to-content-hierarchy-across-screen-sizes         | Squeezed banners invert hierarchy on phones                               |
+| 2012-09-04 | we-are-the-mods-... and 2012-09-05 about-those-long-line-lengths  | Mod-themed redesign; refuses max-width on text                            |
+| 2013-04-02 | one-step-beyond                                                   | Madness dance header; content breakpoints per character                  |
+| 2013-06-12 | an-extract-from-designing-atoms-and-elements                      | "Atmosphere" (colour, type, texture) is separable from layout             |
+| 2014-01-07 | its-2014-web-design-isnt-dead                                     | "Making it pretty" is a skill                                             |
+| 2014-03-10 | what-were-left-with-is-just-called-web-design                     | Same theme                                                                |
+| 2014-04-25 | i-wrote-a-different-letter-to-a-junior-designer                   | Defends "the idea" against Cennydd Bowles's letter                       |
+| 2014-08-22 | creating-a-colour-palette-inspired-by-martin-scorseses-film-hugo  | Client palette sampled from a film's colour grade                         |
+| 2021-11 / 12 | design-another-day, design-of-the-dead, design-vs-godzilla, where-no-design-has-gone-before | Apple TV artwork sets built from original posters |
+| 2023-02-07 | my-new-personal-website                                           | Business site as client filter; personal site for the rest               |
+| 2023-03-31 | designing-for-the-cheeky-condiment-company                        | Ketchup-bottle modal, Block Berthold after Richard Hollis                |
+| 2024-08-09 | the-curious-case-of-the-cloning-of-my-website                     | Someone cloned his site wholesale (not design-relevant)                  |
 
 ### Site pages and free resources (fetched 2026-11-09)
 
-| Page                                    | One line                                                                     |
-|-----------------------------------------|------------------------------------------------------------------------------|
+| Page                                    | One line                                                                      |
+|-----------------------------------------|-------------------------------------------------------------------------------|
 | `/` (live home, 1400 and 390 shots)     | Western cartoon posse hero, script plus condensed-caps service lockups       |
 | `/about/`, `/what-i-do/`                | "Every client has a story"; asks awkward questions; works directly           |
 | `/portfolio-moonwalk-audio/`            | Explorable illustrated toy world with sound; client supplied the objects     |
 | `/portfolio-lockrose/`                  | Energy landscape illustration; process shown as a sketch becoming artwork    |
-| `/portfolio-mountainduck/`              | Software site given a character; "nothing inherited from a framework"        |
-| `/toon-titles/`                         | 35 Yogi Bear title cards rebuilt in CSS/SVG, gallery framed as TV sets       |
+| `/portfolio-mountainduck/`              | Software site given a character; "nothing inherited from a framework"       |
+| `/toon-titles/`                         | 35 Yogi Bear title cards rebuilt in CSS/SVG, gallery framed as TV sets      |
 | `/toon-text/`                           | Free generator of cartoon text effects (stroke, shadow, split, rotate, path) |
 | `/layoutlove/`                          | Free compound grid generator (forked from Michelle Barker); paid templates   |
 | `/shop/standout-designs-for-the-web/`   | Free 28-page PDF sample (read in full)                                       |
-| Wayback home page captures 2004 to 2026 | One per year (`wb-<year>-1400.png`; 2024 missing); 390 px for 2013 and 2022  |
+| Wayback home page captures 2004 to 2026 | One per year (`wb-<year>-1400.png`; 2024 missing); 390 px for 2013 and 2022 |
 
 ## The site's own design across redesigns
 
 He says he redesigns roughly every three years **[said, errol-me 2018]**. Observed
 eras **[seen, Wayback shots `wb-<year>-1400.png`]**:
 
-| Era                | What the site looked like                                                                                                                                                                                                                                                                                                                                                                                        |
-|--------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 2004               | An aged, yellowed magazine page (printed folio and "June 1970" in the margins), cut-out 1960s photos of mods on a scooter, a "currently wearing" badge collection. Three equal columns underneath.                                                                                                                                                                                                               |
-| 2006 to 2007       | "And All That Malarkey": 2-Tone checkerboard bands, RAF roundel bullets, nav words each rotated at a different angle, red and blue arrow shapes. Blog framed as a magazine: "In this issue", "Editor's choice", "Advertorials", numbered entries.                                                                                                                                                                |
-| 2008 to 2011       | Kevin Cornell's watercolour mod on a Lambretta with a forest of mirrors, set centrally between two text columns; car-badge logo; Zeldman quote as a speech bubble.                                                                                                                                                                                                                                               |
-| 2012               | Deliberately "deconstructed" interim site with a banner saying so.                                                                                                                                                                                                                                                                                                                                               |
-| 2013               | Full-width illustrated scene (Josh Cleland): Andy as a mod on a scooter in a Liverpool terraced street, Union Jack flag; header later swapped for a Madness "nutty boys" dance line-up.                                                                                                                                                                                                                          |
-| 2014 to 2015       | Planet of the Apes ape soldiers (Josh Cleland) filling the top of the page, wavy bottom edge.                                                                                                                                                                                                                                                                                                                    |
-| 2016 to 2017       | PG Tips chimps piano-moving scene, a parody of the British TV advert, with the headline "It's the taste", the advert's own slogan.                                                                                                                                                                                                                                                                               |
-| 2018 to early 2021 | Errol (Vic Bell): a pale line-drawn gorilla in a suit sits dead centre, and the two columns of intro copy wrap around his silhouette on both sides (CSS Shapes), with a red drop cap. Plain sans headline, three service columns below. "Editorial feel" on a 4/6 compound grid **[said]**.                                                                                                                      |
-| 2021 to 2023       | Fast Eddie (Markus Freise): a grumpy gorilla carrying a "primate" box steps in front of a huge stacked red condensed "OUR DESIGNS DELIVER", hiding parts of the letters; a red circle sits behind a narrow black condensed column "25 YEARS' WEB DESIGN EXPERIENCE. NO JOKE"; serif body with drop cap; portfolio panels each titled in the client's own lettering. 4+5 compound grid governs even the hero art. |
-| 2025               | A line-up of caricatures (Marx, Lennon, Dalí, an ape general, Andy, and others) doing the Madness "nutty boys" dance in a terraced street, the 2013 list of characters finally drawn; service tiles each set as a different typographic lockup (badge numeral "25 YEARS", script "design native", "TECHNO SAVVY" with a robot icon, a tall condensed stack with a paint roller).                                 |
-| 2026               | Seven cartoon cowboys (a Magnificent Seven reference) in a desert; the January capture shows the same posse in snow, and the live hero has play, snow, and flower buttons, so the scene changes with the season. Dark navy; script-plus-condensed-caps service lockups.                                                                                                                                          |
+| Era         | What the site looked like                                                                                         |
+|-------------|-------------------------------------------------------------------------------------------------------------------|
+| 2004        | An aged, yellowed magazine page (printed folio and "June 1970" in the margins), cut-out 1960s photos of mods on a scooter, a "currently wearing" badge collection. Three equal columns underneath. |
+| 2006 to 2007 | "And All That Malarkey": 2-Tone checkerboard bands, RAF roundel bullets, nav words each rotated at a different angle, red and blue arrow shapes. Blog framed as a magazine: "In this issue", "Editor's choice", "Advertorials", numbered entries. |
+| 2008 to 2011 | Kevin Cornell's watercolour mod on a Lambretta with a forest of mirrors, set centrally between two text columns; car-badge logo; Zeldman quote as a speech bubble. |
+| 2012        | Deliberately "deconstructed" interim site with a banner saying so. |
+| 2013        | Full-width illustrated scene (Josh Cleland): Andy as a mod on a scooter in a Liverpool terraced street, Union Jack flag; header later swapped for a Madness "nutty boys" dance line-up. |
+| 2014 to 2015 | Planet of the Apes ape soldiers (Josh Cleland) filling the top of the page, wavy bottom edge. |
+| 2016 to 2017 | PG Tips chimps piano-moving scene, a parody of the British TV advert, with the headline "It's the taste", the advert's own slogan. |
+| 2018 to early 2021 | Errol (Vic Bell): a pale line-drawn gorilla in a suit sits dead centre, and the two columns of intro copy wrap around his silhouette on both sides (CSS Shapes), with a red drop cap. Plain sans headline, three service columns below. "Editorial feel" on a 4/6 compound grid **[said]**. |
+| 2021 to 2023 | Fast Eddie (Markus Freise): a grumpy gorilla carrying a "primate" box steps in front of a huge stacked red condensed "OUR DESIGNS DELIVER", hiding parts of the letters; a red circle sits behind a narrow black condensed column "25 YEARS' WEB DESIGN EXPERIENCE. NO JOKE"; serif body with drop cap; portfolio panels each titled in the client's own lettering. 4+5 compound grid governs even the hero art. |
+| 2025        | A line-up of caricatures (Marx, Lennon, Dalí, an ape general, Andy, and others) doing the Madness "nutty boys" dance in a terraced street, the 2013 list of characters finally drawn; service tiles each set as a different typographic lockup (badge numeral "25 YEARS", script "design native", "TECHNO SAVVY" with a robot icon, a tall condensed stack with a paint roller). |
+| 2026        | Seven cartoon cowboys (a Magnificent Seven reference) in a desert; the January capture shows the same posse in snow, and the live hero has play, snow, and flower buttons, so the scene changes with the season. Dark navy; script-plus-condensed-caps service lockups. |
 
 The thread through every era: a **personal cast of characters drawn from British pop
 culture** (mod subculture, the Jam, Madness, PG Tips adverts, Planet of the Apes,

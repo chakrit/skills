@@ -14,7 +14,6 @@ ordinary skill directories.
 | `control`       | Set up control-agent hierarchy   | Yes             |
 | `study`         | Visual decision studies          | Yes             |
 | `de-slop`       | Strip AI tells from design, copy | Yes             |
-| `art-direction` | Concept-led web art direction    | Yes             |
 | `gh-admin`      | GitHub org admin via OpenTofu    | Yes             |
 | `lowfat-pantry` | Command-output filter pantry     | Imported        |
 | `kien-thai`     | Natural Thai writing             | Imported        |
@@ -47,8 +46,7 @@ mutation against PROD9 or change `ace.toml` to select this collection.
 
 [AGENTS.md](AGENTS.md) defines the editing boundaries, command-target checks, and
 feedback destinations. Feedback for fact-check, learn, note-taker, safety-audit,
-1-by-1, wrap-up, control, study, de-slop, art-direction, and gh-admin belongs in
-`chakrit/skills`. Feedback for the Thai skills
+1-by-1, wrap-up, control, study, de-slop, and gh-admin belongs in `chakrit/skills`. Feedback for the Thai skills
 belongs in `chakrit/kien-thai`; lowfat-pantry feedback belongs in
 `chakrit/lowfat-pantry`; smoke feedback belongs in `chakrit/smoke`, beside the
 SMOKE CLI it documents.
@@ -87,10 +85,6 @@ The direct ingestions started from these revisions:
   `f804ec5a07868ca42a0ffdef137943751ff5a7f9`, renamed, with the secret files committed
   encrypted with git-crypt (`terraform.tfstate` always, `terraform.tfvars` when the repo
   commits it).
-- `art-direction`: the Andy Clarke research in `references/andy-clarke/` and the
-  general parts of `docs/spec/art-direction.md` in `appbaobao/appbaobao.com` at
-  `23773f8a19bb88efc277e820a9a8ac0816c97454`, without the research's one-off fetch
-  scripts.
 
 These skills are maintained here after ingestion and are not refreshed by
 `ace school pull`.

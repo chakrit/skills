@@ -2,9 +2,8 @@
 
 Source: six transcripts of Andy Clarke's podcast, which he recorded while writing his
 "hardboiled" book on art direction (later *Art Direction for the Web*). Clarke is the
-host; the transcripts label him "AK" or "AC". The researcher's local text copies
-(`ub-UBPS3E*.txt`) are not published; the PDFs are at
-stuffandnonsense.co.uk/content/transcripts/ (full URLs in `../notes/talks.md`).
+host; the transcripts label him "AK" or "AC". Files are in this folder (`ub-UBPS3E*.txt`);
+each one's URL is on its first line (stuffandnonsense.co.uk/content/transcripts/...).
 
 How to read this digest:
 

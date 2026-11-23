@@ -504,18 +504,18 @@ from those files' URL lines.)
 
 ## 5. Screenshots taken (all in `shots/idd/`)
 
-| File               | Shows                                                                 |
-|--------------------|-----------------------------------------------------------------------|
-| `demo04-1400.png`  | D4 at 1400x4000; stretched by the tall viewport (vh artefact)         |
-| `demo04-390.png`   | D4 phone view in an 8000 px iframe; same stack as 04b                 |
-| `demo04b-1400.png` | D4 at 1400x1000: rotated tile grid over the overlapping scooter panel |
-| `demo04b-390.png`  | D4 phone: 2-up cropped tiles, text, horizontal scooters, no rotation  |
-| `demo04c-900.png`  | D4 at 900: tilt kept, panel stacked below                             |
-| `demo21-1400.png`  | D21 at 1400x4000; stretched by the tall viewport                      |
-| `demo21-390.png`   | D21 phone, tall iframe                                                |
-| `demo21b-1400.png` | D21 at 1400x1000: black block lower-left, rear view top-right         |
-| `demo21b-390.png`  | D21 phone: plain stack                                                |
-| `demo21c-900.png`  | D21 at 900: full-width stack                                          |
+| File                | Shows                                                                   |
+|---------------------|-------------------------------------------------------------------------|
+| `demo04-1400.png`   | D4 at 1400x4000; stretched by the tall viewport (vh artefact)          |
+| `demo04-390.png`    | D4 phone view in an 8000 px iframe; same stack as 04b                  |
+| `demo04b-1400.png`  | D4 at 1400x1000: rotated tile grid over the overlapping scooter panel  |
+| `demo04b-390.png`   | D4 phone: 2-up cropped tiles, text, horizontal scooters, no rotation  |
+| `demo04c-900.png`   | D4 at 900: tilt kept, panel stacked below                               |
+| `demo21-1400.png`   | D21 at 1400x4000; stretched by the tall viewport                       |
+| `demo21-390.png`    | D21 phone, tall iframe                                                  |
+| `demo21b-1400.png`  | D21 at 1400x1000: black block lower-left, rear view top-right          |
+| `demo21b-390.png`   | D21 phone: plain stack                                                 |
+| `demo21c-900.png`   | D21 at 900: full-width stack                                            |
 
 Supporting downloads: `raw/idd/img/demo04-preview.png`, `demo21-preview.png`,
 `demo04-inspiration.jpg`, `demo21-inspiration.png`; demo CSS in
