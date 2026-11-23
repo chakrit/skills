@@ -38,11 +38,12 @@ just the replacement element.
   section, a note-line under it if needed.
 
 - **Italic-serif keyword emphasis in headings** [5]. One word per heading wrapped in
-  italic + accent color, applied mechanically to *every* heading. Fix: drop the italic;
-  emphasize via weight or a hand-drawn ink/highlighter underline swipe (bespoke SVG), on
-  ~⅓ of headings. Avoid: leaving it italic "but smaller"; and note the
-  oversized-italic-serif hero (Instrument Serif) is now itself a tell — swapping to the
-  fashionable serif re-slops.
+  italic + accent color, applied mechanically to *every* heading. Fix: remove the
+  emphasis; a headline carries no word-level emphasis, and its contrast comes from size,
+  placement and the lines around it. Avoid: leaving it italic "but smaller"; swapping to
+  weight, color, a hand-drawn or slanted underline, or a highlighter swipe on the word;
+  and note the oversized-italic-serif hero (Instrument Serif) is now itself a tell —
+  swapping to the fashionable serif re-slops.
 
 - **Inter / Roboto / Geist / Space Grotesk as the whole type system** [4]. One of these as
   body *and* display, no pairing, no display face with character — "the safest answer when
@@ -52,8 +53,7 @@ just the replacement element.
 
 - **Gradient text on the entire H1** [4]. `background-clip:text` gradient across the whole
   headline — the v0/Bolt hero default, unreadable and unmistakably generated. Fix: solid
-  headline; if any accent, one word only (and check against the italic-serif-accent tell
-  above).
+  headline with no accent word (see the italic-serif-accent tell above).
 
 - **Native-language brand with an English display hero** [4]. All-caps English headline at
   display size fronting a brand whose actual voice is another language. Fix: lead the hero

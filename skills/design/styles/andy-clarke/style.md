@@ -1,27 +1,18 @@
-# Art direction
+# Andy Clarke: concept-led art direction
 
-Status: draft
+Design a site so that it belongs to one business and could not be mistaken for another.
+Distilled from Andy Clarke's (Stuff & Nonsense) freely published work: his blog,
+articles, talks, interviews, the free sample of *Standout Designs for the Web*, his
+published client work, and other people's accounts of working with him. Written in our
+own words; no material from his paid books.
 
-How AppBaoBao designs a site so that it belongs to one business and could not be mistaken
-for another. It applies to every site we build: customer sites and appbaobao.com. The
-method is distilled from Andy Clarke's publicly available work: his blog, articles,
-talks, interviews, the free sample of *Standout Designs for the Web*, his published client
-work, and other people's accounts of it. It is written in our own words and is meant to
-become a published skill. The research behind it is in `references/andy-clarke/`.
-
-## Sources and scope
-
-- The model applies to customer sites and appbaobao.com, written as generic
-  instructions usable everywhere.
-- It lives here as a spec for now and becomes a skill later; no school skill edit yet.
-- It will be published: it uses no material from Andy Clarke's paid books. Book content
-  chakrit supplies later goes to an unpublished place.
-- Book ideas may enter when other people mention or blog about them, or when he covers
-  them in his own blogs or interviews.
-- Without his books, learn from accounts of people who worked with him, his reference
-  sites, and the sites clients hired him for.
-- Analyse his design layout, how he structures his thinking, and his taste; his code
-  patterns matter little.
+- **Feels like:** a magazine page, a poster or a shop sign made for this one business.
+  Bold display type, few colours in unequal amounts, asymmetric grids with deliberate
+  empty space, bespoke illustration instead of stock.
+- **Fits:** small businesses, personal sites, campaigns, editorial pages: anything with
+  a story or an owner with a personality.
+- **Fits poorly:** dense app interfaces and dashboards, where familiar mechanics are the
+  whole job.
 
 ## The default to beat
 
@@ -62,8 +53,8 @@ Look in these five places, in one intake conversation with the owner:
 ### Pinning the concept down
 
 1. **One line.** List true things about the business, keep the single one that is
-   theirs alone and hard to argue with, and state it in one line. Production copy still
-   follows `frontend-coding · user-provided-copy`; the line is a design tool first.
+   theirs alone and hard to argue with, and state it in one line. The line is a design
+   tool first; production copy still comes from the owner.
 2. **Three or four single words** for how the site should feel (for example bold, warm,
    precise, cheeky). Each word must turn into concrete choices: a colour temperature, a
    type weight, a motion speed.
@@ -85,9 +76,8 @@ Look in these five places, in one intake conversation with the owner:
   palette, an image habit) and translate each into one web move.
 - Translate qualities, not surfaces: take a source's confidence, economy or noise, not its
   exact shapes. Never reproduce a source's artwork.
-- For Thai businesses, look first at things the customers already know: Thai film and
-  concert posters, market and shop signage, temple-fair posters, packaging, comics, the
-  shop's own printed menu.
+- Look first at things the customers already know: local film and concert posters,
+  market and shop signage, fair posters, packaging, comics, the shop's own printed menu.
 - The page can become an object from the customer's world: a menu card, a ticket, a
   magazine cover, a shop sign, a label.
 
@@ -97,8 +87,8 @@ Look in these five places, in one intake conversation with the owner:
    visitor discovers, in what order.
 2. Concept, line, feeling words, test question, reference.
 3. Type first: shortlist faces for how they feel, test them with the business's name,
-   numerals and Thai and Latin text, then choose. Avoid faces chosen only because they
-   are everywhere.
+   numerals and every language the site uses, then choose. Avoid faces chosen only
+   because they are everywhere.
 4. Palette with roles: one dominant, one supporting, one accent, plus a dark that is not
    pure black and a light that is not pure white. Use them in clearly unequal amounts.
    Sample colours from the business's own things (sign, product, packaging, place).
@@ -106,8 +96,7 @@ Look in these five places, in one intake conversation with the owner:
    Every agent design passes through this composition step before code: designing
    directly in code drifts to boxes.
 6. Make the concept assets (see below), shown early and rough so the owner can react.
-7. Build, then judge the result fresh the next day and by feeling ("does this feel like
-   us?").
+7. Build, then judge the result fresh and by feeling ("does this feel like us?").
 
 ## Where the art direction goes
 
@@ -178,6 +167,9 @@ Each move replaces a default. Use one only when it serves the concept.
 | Captions beside the image, aligned to its bottom, or as a composed block; rules above and below | grey caption under the photo    |
 | Magazine anatomy: running head, standfirst, lede, pull quote, drop cap                          | hero, features, CTA slots only  |
 
+Mixed weights in a stacked lockup work line by line. A headline still carries no
+emphasis on single words inside it (see `../../references/bans.md`).
+
 ### Colour, image and motion
 
 | Move                                                                                                 | Replaces                      |
@@ -191,8 +183,8 @@ Each move replaces a default. Use one only when it serves the concept.
 
 ## Phones
 
-Most of our visitors see the site on a phone, so the phone version is designed, not
-derived.
+Most visitors to a small business's site see it on a phone, so the phone version is
+designed, not derived.
 
 - Decide which signature element must survive on a phone and build it in a phone-native
   form. Letting it disappear at a breakpoint is the failure case.
@@ -225,14 +217,6 @@ people rely on.
 - Choose display faces that have enough Thai weights for the type moves the concept
   needs.
 
-## appbaobao.com
-
-The method applies to appbaobao.com inside `abb-brand`. The brand's palette, single
-typeface and weights, rounded forms, centred container and pup rules win wherever they
-conflict with a move above. The concept, the one-thread consistency, concentration,
-practical facts as display type, scale contrast, empty space within the container, and
-the phone rules still apply.
-
 ## Review questions
 
 Before a design is accepted, answer each in one line:
@@ -244,3 +228,17 @@ Before a design is accepted, answer each in one line:
 - Which signature element survives on a phone, and in what form?
 - Which assets are bespoke, and are they saved for reuse?
 - Does every familiar mechanic still behave as people expect?
+
+## Deeper reference
+
+Read these only when a move above needs more detail:
+
+- `synthesis.md`: the full design model, each point citing its research note.
+- `notes/clients.md` §0: 26 client sites, each with its trade, concept source and what
+  the concept became.
+- `notes/idd.md`, `notes/own.md`, `notes/talks.md`, `notes/accounts.md`: one research
+  stream each, with source URLs.
+- `digests/`: per-issue and per-demo detail behind `notes/idd.md`.
+
+The research was written for one studio's sites; where it names that studio, read it as
+any small business.
