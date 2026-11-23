@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pull, noodle bar, 41 Oldham Street, Manchester</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@200;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ground: #f3f2ee;
+    --ink: #1d1d1b;
+    --grey: #8b8a85;
+    --rule: #dcdad3;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--ground); color: var(--ink); }
+  body {
+    font-family: "Inter Tight", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  a:hover, a:focus-visible { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+
+  .page {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    min-height: 100vh;
+  }
+
+  /* plain layer */
+  .list {
+    padding: 36px 0 40px 36px;
+    color: var(--grey);
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  .list h1 {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--ink);
+    letter-spacing: 0.04em;
+  }
+  .list p, .list li { list-style: none; }
+  .list ul { margin-top: 22px; }
+  .list .gap { margin-top: 22px; }
+  .status { color: var(--ink); }
+  .menu li {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    column-gap: 14px;
+    padding: 2px 0;
+    cursor: default;
+  }
+  .menu li span.price { font-variant-numeric: tabular-nums; }
+  .menu li .what {
+    grid-column: 1 / -1;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 13px;
+    display: none;
+  }
+  .menu li.on { color: var(--ink); }
+  .menu li.on .what { display: block; color: var(--grey); }
+  .hours li {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    font-variant-numeric: tabular-nums;
+  }
+  .hours li.today { color: var(--ink); }
+  .folds { font-variant-numeric: tabular-nums; }
+  .folds i {
+    font-style: normal;
+    display: inline-block;
+    width: 22px;
+  }
+  .folds i.done { color: var(--ink); }
+
+  /* expressive layer */
+  .piece {
+    position: relative;
+    height: 100vh;
+    min-height: 560px;
+  }
+  canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    touch-action: none;
+    cursor: grab;
+  }
+  canvas.lifting { cursor: grabbing; }
+  .caption {
+    position: absolute;
+    left: 36px;
+    bottom: 34px;
+    max-width: 520px;
+    color: var(--grey);
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    pointer-events: none;
+  }
+  .count {
+    position: absolute;
+    right: 36px;
+    bottom: 34px;
+    color: var(--grey);
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
+    pointer-events: none;
+    text-align: right;
+  }
+
+  @media (max-width: 760px) {
+    .page { display: flex; flex-direction: column; }
+    .head { order: 0; } .piece { order: 1; } .list { order: 2; }
+    .head { padding: 20px 20px 0; }
+    .piece { height: auto; min-height: 0; }
+    canvas { height: 62vh; min-height: 360px; }
+    .caption { position: static; padding: 0 20px; max-width: none; }
+    .count { position: static; padding: 6px 20px 0; text-align: left; }
+    .list { position: static; height: auto; padding: 28px 20px 48px; }
+    .list .name-block { display: none; }
+  }
+  @media (min-width: 761px) {
+    .head { display: none; }
+  }
+  .head h1 { font-size: 13px; font-weight: 400; letter-spacing: 0.04em; text-transform: uppercase; }
+  .head p { color: var(--grey); font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="head">
+    <h1>Pull noodle bar</h1>
+    <p>41 Oldham Street, Manchester · <span class="status-m"></span></p>
+  </header>
+
+  <aside class="list">
+    <div class="name-block">
+      <h1>Pull noodle bar</h1>
+      <p>Hand-pulled noodles</p>
+      <p>41 Oldham Street, Northern Quarter</p>
+      <p>Manchester M1 1JG</p>
+      <p class="gap status"></p>
+    </div>
+
+    <ul class="menu" aria-label="Menu">
+      <li data-c="#e3b23c" data-n="Wheat"><span>Biang biang</span><span class="price">£11.50</span><span class="what">Belt noodles, chilli oil poured hot, garlic, black vinegar.</span></li>
+      <li data-c="#e3b23c" data-n="Wheat"><span>Beef noodle soup</span><span class="price">£13.00</span><span class="what">Round noodles in shin broth simmered since seven this morning.</span></li>
+      <li data-c="#d2402a" data-n="Chilli"><span>Dan dan</span><span class="price">£12.00</span><span class="what">Thin noodles, minced pork, peanut, Sichuan pepper.</span></li>
+      <li data-c="#8a6a4f" data-n="Buckwheat"><span>Cold soba</span><span class="price">£10.50</span><span class="what">Buckwheat, cut by hand, with a dashi dip.</span></li>
+      <li data-c="#6f8f3f" data-n="Green tea"><span>Cha soba</span><span class="price">£11.00</span><span class="what">Green tea buckwheat, sesame, spring onion.</span></li>
+      <li data-c="#e3b23c" data-n="Wheat"><span>Smacked cucumber</span><span class="price">£5.00</span><span class="what">With garlic and sesame. No noodles in this one.</span></li>
+    </ul>
+
+    <ul class="hours" aria-label="Opening hours">
+      <li data-d="1"><span>Mon</span><span>Closed</span></li>
+      <li data-d="2"><span>Tue</span><span>12:00–22:00</span></li>
+      <li data-d="3"><span>Wed</span><span>12:00–22:00</span></li>
+      <li data-d="4"><span>Thu</span><span>12:00–22:00</span></li>
+      <li data-d="5"><span>Fri</span><span>12:00–23:00</span></li>
+      <li data-d="6"><span>Sat</span><span>12:00–23:00</span></li>
+      <li data-d="0"><span>Sun</span><span>12:00–21:00</span></li>
+    </ul>
+
+    <ul>
+      <li>Walk in. No bookings.</li>
+      <li>Takeaway at the counter</li>
+      <li><a href="tel:+441618342290">0161 834 2290</a></li>
+      <li><a href="https://www.openstreetmap.org/search?query=41%20Oldham%20Street%20Manchester">Map</a></li>
+      <li><a href="https://www.instagram.com/">Instagram</a></li>
+    </ul>
+
+    <p class="gap folds" aria-label="Folds this hour"></p>
+  </aside>
+
+  <main class="piece">
+    <canvas id="c" aria-label="The time in Manchester, drawn in noodle strands"></canvas>
+    <p class="caption">The time in Manchester, pulled. Every twelve minutes the dough is folded and the strands double. Drag to lift.</p>
+    <p class="count"></p>
+  </main>
+
+</div>
+
+<script>
+(() => {
+  const canvas = document.getElementById("c");
+  const ctx = canvas.getContext("2d");
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // ---- time in Manchester ----
+  const fmt = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Europe/London", hour: "2-digit", minute: "2-digit", second: "2-digit",
+    weekday: "short", hour12: false
+  });
+  const days = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+  function london() {
+    const p = {};
+    for (const x of fmt.formatToParts(new Date())) p[x.type] = x.value;
+    const ms = Date.now() % 1000;
+    return { d: days[p.weekday], h: +p.hour % 24, m: +p.minute, s: +p.second + ms / 1000 };
+  }
+
+  // ---- digit skeletons on a 6 x 10 grid, one stroke each ----
+  const flip = (pts) => pts.map(([x, y]) => [6 - x, 10 - y]);
+  const SIX = [[5.2,0.6],[3.2,0],[1.2,1.2],[0.3,4.6],[0.4,8],[2.2,9.9],[4.4,9.6],[5.6,7.6],[5,5.4],[3.1,4.6],[1.1,5.3],[0.35,6.6]];
+  const ring = [];
+  for (let i = 0; i <= 28; i++) {
+    const a = -Math.PI / 2 + (i / 28) * Math.PI * 2;
+    ring.push([3 + 2.75 * Math.cos(a), 5 + 5 * Math.sin(a)]);
+  }
+  const GLYPHS = {
+    "0": ring,
+    "1": [[1.4,2.2],[3.6,0],[3.6,10]],
+    "2": [[0.5,2.4],[1.6,0.5],[3.1,0],[4.6,0.5],[5.5,2.4],[4.9,4.6],[0.4,10],[5.8,10]],
+    "3": [[0.4,1.1],[2.5,0],[4.6,0.5],[5.2,2.5],[4,4.4],[2,4.8],[4.1,5.1],[5.6,7.1],[4.9,9.3],[2.6,10],[0.3,9]],
+    "4": [[4.6,10],[4.6,0],[0.1,7],[5.9,7]],
+    "5": [[5.5,0],[1.1,0],[0.6,4.7],[3,4],[5,4.9],[5.7,7.2],[4.7,9.4],[2.6,10],[0.3,9.2]],
+    "6": SIX,
+    "7": [[0,0],[6,0],[2.1,10]],
+    "8": [[3,4.7],[1,3.8],[0.6,2],[1.5,0.4],[3,0],[4.5,0.4],[5.4,2],[5,3.8],[3,4.7],[0.9,6],[0.3,8.2],[1.5,9.7],[3,10],[4.5,9.7],[5.7,8.2],[5.1,6],[3,4.7]],
+    "9": flip(SIX)
+  };
+  const SHARP = {};
+
+  // Catmull-Rom through the points, keeping listed corners sharp.
+  function smooth(pts, sharp) {
+    const out = [];
+    const sh = new Set(sharp || []);
+    for (let i = 0; i < pts.length - 1; i++) {
+      const p0 = sh.has(i) ? pts[i] : pts[Math.max(0, i - 1)];
+      const p1 = pts[i], p2 = pts[i + 1];
+      const p3 = sh.has(i + 1) ? pts[i + 1] : pts[Math.min(pts.length - 1, i + 2)];
+      for (let t = 0; t < 1; t += 0.1) {
+        const t2 = t * t, t3 = t2 * t;
+        const f = (a, b, c, d) => 0.5 * (2 * b + (-a + c) * t + (2 * a - 5 * b + 4 * c - d) * t2 + (-a + 3 * b - 3 * c + d) * t3);
+        out.push([f(p0[0], p1[0], p2[0], p3[0]), f(p0[1], p1[1], p2[1], p3[1])]);
+      }
+    }
+    out.push(pts[pts.length - 1]);
+    return out;
+  }
+
+  // resample a polyline (in px) to fixed spacing, with normals
+  function resample(poly, step) {
+    const pts = [];
+    let carry = 0;
+    pts.push(poly[0]);
+    for (let i = 1; i < poly.length; i++) {
+      let [ax, ay] = poly[i - 1];
+      const [bx, by] = poly[i];
+      let seg = Math.hypot(bx - ax, by - ay);
+      let pos = step - carry;
+      while (pos <= seg) {
+        const t = pos / seg;
+        pts.push([ax + (bx - ax) * t, ay + (by - ay) * t]);
+        pos += step;
+      }
+      carry = seg - (pos - step);
+    }
+    pts.push(poly[poly.length - 1]);
+    return pts.map((p, i) => {
+      const a = pts[Math.max(0, i - 3)], b = pts[Math.min(pts.length - 1, i + 3)];
+      const dx = b[0] - a[0], dy = b[1] - a[1], l = Math.hypot(dx, dy) || 1;
+      return { x: p[0], y: p[1], nx: -dy / l, ny: dx / l, dx: 0, dy: 0, vx: 0, vy: 0 };
+    });
+  }
+
+  // ---- layout ----
+  let W = 0, H = 0, dpr = 1, scale = 1, thick = 30;
+  let slots = [];          // 4 digit slots + colon
+  let colour = "#e3b23c";
+  let strands = 1, splitT = 1, fromStrands = 1;
+  const seeds = Array.from({ length: 256 }, (_, k) => ({
+    ph: Math.random() * Math.PI * 2, fr: 0.025 + Math.random() * 0.02, lift: 0.75 + Math.random() * 0.5
+  }));
+
+  function makeDigit(ch, ox, oy) {
+    const poly = smooth(GLYPHS[ch], SHARP[ch]).map(([x, y]) => [ox + x * scale, oy + y * scale]);
+    return { ch, pts: resample(poly, 7), born: performance.now(), falling: null };
+  }
+
+  function layout() {
+    const r = canvas.getBoundingClientRect();
+    dpr = Math.min(2, window.devicePixelRatio || 1);
+    W = r.width; H = r.height;
+    canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    // four digits 6 wide + gaps, colon 2 wide
+    const units = 6 * 4 + 2.4 * 3 + 2;
+    scale = Math.min((W * 0.86) / units, (H * 0.56) / 10);
+    thick = scale * 1.6;
+    const total = units * scale;
+    const x0 = (W - total) / 2;
+    const y0 = H * 0.44 - 5 * scale;
+    const t = london();
+    const hh = String(t.h).padStart(2, "0"), mm = String(t.m).padStart(2, "0");
+    const xs = [0, 8.4, 8.4 * 2 + 2 + 0.4, 8.4 * 3 + 2 + 0.4].map((u) => x0 + u * scale);
+    const colonX = x0 + (8.4 + 6 + 1.2) * scale;
+    slots = [hh[0], hh[1], mm[0], mm[1]].map((ch, i) => ({ x: xs[i], y: y0, d: makeDigit(ch, xs[i], y0), old: [] }));
+    slots.colon = { x: colonX, y: y0 };
+  }
+
+  // ---- folds: one every twelve minutes; 1, 2, 4, 8, 16 strands ----
+  function foldsNow(t) { return Math.floor(t.m / 12); }
+
+  // ---- pointer: chopsticks ----
+  const hand = { on: false, x: 0, y: 0 };
+  function at(e) {
+    const r = canvas.getBoundingClientRect();
+    hand.x = e.clientX - r.left; hand.y = e.clientY - r.top;
+  }
+  canvas.addEventListener("pointerdown", (e) => { hand.on = true; at(e); canvas.setPointerCapture(e.pointerId); canvas.classList.add("lifting"); });
+  canvas.addEventListener("pointermove", at);
+  const drop = () => { hand.on = false; canvas.classList.remove("lifting"); };
+  canvas.addEventListener("pointerup", drop);
+  canvas.addEventListener("pointercancel", drop);
+
+  // ---- menu recolours the strands ----
+  const items = [...document.querySelectorAll(".menu li")];
+  function pick(li) {
+    items.forEach((x) => x.classList.toggle("on", x === li));
+    colour = li ? li.dataset.c : "#e3b23c";
+  }
+  items.forEach((li) => {
+    li.addEventListener("mouseenter", () => pick(li));
+    li.addEventListener("click", () => pick(li.classList.contains("on") ? null : li));
+  });
+  document.querySelector(".menu").addEventListener("mouseleave", () => pick(null));
+
+  // ---- plain layer text ----
+  const HOURS = { 0: [12, 21], 1: null, 2: [12, 22], 3: [12, 22], 4: [12, 22], 5: [12, 23], 6: [12, 23] };
+  const NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  function statusText(t) {
+    const today = HOURS[t.d];
+    const now = t.h + t.m / 60;
+    if (today && now >= today[0] && now < today[1]) return "Open now, until " + today[1] + ":00";
+    if (today && now < today[0]) return "Closed, opens today at " + today[0] + ":00";
+    for (let i = 1; i <= 7; i++) {
+      const d = (t.d + i) % 7;
+      if (HOURS[d]) return "Closed, opens " + (i === 1 ? "tomorrow" : NAMES[d]) + " at " + HOURS[d][0] + ":00";
+    }
+    return "";
+  }
+  const statusEl = document.querySelector(".list .status");
+  const statusM = document.querySelector(".status-m");
+  const foldsEl = document.querySelector(".folds");
+  const countEl = document.querySelector(".count");
+  function plain(t, f) {
+    const s = statusText(t);
+    statusEl.textContent = s; statusM.textContent = s;
+    document.querySelectorAll(".hours li").forEach((li) => li.classList.toggle("today", +li.dataset.d === t.d));
+    let html = "Folds this hour<br>";
+    for (let i = 1; i < 5; i++) html += '<i class="' + (i <= f ? "done" : "") + '">' + (i <= f ? "×2" : "·") + "</i>";
+    foldsEl.innerHTML = html;
+    const n = 1 << f;
+    countEl.innerHTML = n + (n === 1 ? " strand" : " strands") + "<br>" + (f < 4 ? "next fold at :" + String((f + 1) * 12).padStart(2, "0") : "a new lump of dough at :00");
+  }
+
+  // ---- drawing ----
+  function strandOffsets(n, frac) {
+    // n strands spread across the stroke; while splitting, each pair grows out of one
+    const offs = [];
+    for (let k = 0; k < n; k++) {
+      const target = ((k + 0.5) / n - 0.5) * thick;
+      if (frac < 1 && n > 1) {
+        const parent = Math.floor(k / 2);
+        const from = ((parent + 0.5) / (n / 2) - 0.5) * thick;
+        offs.push(from + (target - from) * frac);
+      } else offs.push(target);
+    }
+    return offs;
+  }
+
+  function drawDigit(d, n, frac, now, fall) {
+    const pts = d.pts;
+    const offs = strandOffsets(n, frac);
+    const lw = n === 1 ? thick : Math.max(0.7, (thick / n) * 0.5);
+    const grow = fall ? 1 : Math.min(1, (now - d.born) / 650);
+    const last = Math.max(2, Math.floor(pts.length * grow));
+    ctx.lineWidth = lw;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.strokeStyle = colour;
+    for (let k = 0; k < n; k++) {
+      const sd = seeds[k];
+      const wav = n === 1 ? 0 : (thick / n) * 0.22;
+      ctx.beginPath();
+      for (let i = 0; i < last; i++) {
+        const p = pts[i];
+        const o = offs[k] + Math.sin(i * sd.fr * 7 + sd.ph) * wav;
+        let x = p.x + p.nx * o + p.dx * sd.lift;
+        let y = p.y + p.ny * o + p.dy * sd.lift;
+        if (fall) { x += fall.vx * (k % 3 - 1); y += fall.y + Math.sin(i * 0.2 + sd.ph) * fall.y * 0.05; }
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    }
+  }
+
+  function drawColon(n, frac, sec) {
+    const c = slots.colon;
+    const on = still || Math.floor(sec) % 2 === 0;
+    ctx.strokeStyle = colour;
+    ctx.lineCap = "round";
+    const offs = strandOffsets(n, frac);
+    const lw = n === 1 ? thick : Math.max(0.7, (thick / n) * 0.5);
+    ctx.lineWidth = lw;
+    ctx.globalAlpha = on ? 1 : 0.25;
+    for (const cy of [3.2, 6.8]) {
+      for (let k = 0; k < n; k++) {
+        ctx.beginPath();
+        ctx.moveTo(c.x + scale * 1 + offs[k], c.y + (cy - 0.35) * scale);
+        ctx.lineTo(c.x + scale * 1 + offs[k], c.y + (cy + 0.35) * scale);
+        ctx.stroke();
+      }
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  function physics(d, dt) {
+    const R = scale * 3.2;
+    for (const p of d.pts) {
+      let tx = 0, ty = 0;
+      if (hand.on) {
+        const ddx = hand.x - p.x, ddy = hand.y - p.y;
+        const dist = Math.hypot(ddx, ddy);
+        if (dist < R) {
+          const f = Math.pow(1 - dist / R, 2);
+          tx = ddx * f * 0.9;
+          ty = ddy * f * 0.9 - f * scale * 1.6;
+        }
+      }
+      p.vx += ((tx - p.dx) * 60 - p.vx * 9) * dt;
+      p.vy += ((ty - p.dy) * 60 - p.vy * 9) * dt;
+      p.dx += p.vx * dt;
+      p.dy += p.vy * dt;
+    }
+  }
+
+  let lastF = -1, lastMin = "", prev = performance.now();
+  function frame(now) {
+    const dt = Math.min(0.033, (now - prev) / 1000);
+    prev = now;
+    const t = london();
+    const f = foldsNow(t);
+    if (f !== lastF) {
+      // land on the fold: the split starts exactly on the twelve-minute mark
+      fromStrands = lastF < 0 ? 1 << f : strands;
+      strands = 1 << f;
+      splitT = lastF < 0 || still || strands < fromStrands ? 1 : 0;
+      lastF = f;
+      plain(t, f);
+    }
+    if (splitT < 1) splitT = Math.min(1, splitT + dt / 0.9);
+
+    const hh = String(t.h).padStart(2, "0"), mm = String(t.m).padStart(2, "0");
+    const key = hh + mm;
+    if (key !== lastMin) {
+      if (lastMin) {
+        slots.forEach((s, i) => {
+          if (s.d.ch !== key[i]) {
+            if (!still) s.old.push({ d: s.d, y: 0, vy: 0, vx: (Math.random() - 0.5) * 2 });
+            s.d = makeDigit(key[i], s.x, s.y);
+            if (still) s.d.born = -1e9;
+          }
+        });
+        plain(t, f);
+      }
+      lastMin = key;
+    }
+
+    ctx.clearRect(0, 0, W, H);
+    const ease = splitT * splitT * (3 - 2 * splitT);
+    for (const s of slots) {
+      for (const o of s.old) {
+        o.vy += 2400 * dt; o.y += o.vy * dt; o.vx *= 1.02;
+        drawDigit(o.d, strands, 1, now, o);
+      }
+      s.old = s.old.filter((o) => o.y < H + 40);
+      if (!still) physics(s.d, dt);
+      drawDigit(s.d, strands, ease, now, null);
+    }
+    drawColon(strands, ease, t.s);
+    if (!still || hand.on) requestAnimationFrame(frame);
+  }
+
+  function start() {
+    layout();
+    if (still) slots.forEach((s) => (s.d.born = -1e9));
+    requestAnimationFrame(frame);
+  }
+  window.addEventListener("resize", () => { layout(); if (still) requestAnimationFrame(frame); });
+  if (still) setInterval(() => requestAnimationFrame(frame), 1000);
+  start();
+})();
+</script>
+</body>
+</html>
