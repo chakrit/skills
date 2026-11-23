@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design styles</title>
+<style>
+  :root { color-scheme: light; --ink: #1d1b18; --paper: #f4f1ea; --rule: #c9c2b4; }
+  body { margin: 0; background: var(--paper); color: var(--ink);
+         font: 1rem/1.5 Georgia, "Times New Roman", serif; }
+  main { max-width: 84rem; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+  h1 { font-size: 2.25rem; margin: 0 0 0.25rem; }
+  .how { margin: 0 0 2.5rem; max-width: 40rem; }
+  section { border-top: 1px solid var(--rule); padding-top: 1.5rem; margin-top: 2rem; }
+  h2 { font-size: 1.6rem; margin: 0; }
+  section > p { margin: 0.25rem 0 1.25rem; max-width: 40rem; }
+  ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 1.5rem; }
+  li a { color: inherit; display: block; }
+  .frame { display: block; width: 22rem; height: 16.5rem; overflow: hidden; border: 1px solid var(--rule);
+           background: #fff; }
+  .frame iframe { width: 1280px; height: 960px; border: 0; transform: scale(0.275);
+                  transform-origin: 0 0; pointer-events: none; }
+  .name { display: block; margin-top: 0.4rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Design styles</h1>
+  <p class="how">Each style below has a few preview pages, each a different fictional
+  business. Click a preview to open it full size, then tell the agent which style you
+  want.</p>
+
+  <section id="andy-clarke">
+    <h2>Andy Clarke</h2>
+    <p>Concept-led art direction: one idea per business, poster and magazine layouts,
+    bold display type, few colours in unequal amounts.</p>
+    <ul>
+      <li><a href="andy-clarke/previews/bike-shop.html">
+        <span class="frame"><iframe src="andy-clarke/previews/bike-shop.html" title="Bike shop preview" loading="lazy" tabindex="-1"></iframe></span>
+        <span class="name">Bike repair shop</span></a></li>
+      <li><a href="andy-clarke/previews/dental-practice.html">
+        <span class="frame"><iframe src="andy-clarke/previews/dental-practice.html" title="Dental practice preview" loading="lazy" tabindex="-1"></iframe></span>
+        <span class="name">Family dental practice</span></a></li>
+      <li><a href="andy-clarke/previews/record-shop.html">
+        <span class="frame"><iframe src="andy-clarke/previews/record-shop.html" title="Record shop preview" loading="lazy" tabindex="-1"></iframe></span>
+        <span class="name">Record shop listening night</span></a></li>
+    </ul>
+  </section>
+</main>
+</body>
+</html>

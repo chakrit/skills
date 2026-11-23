@@ -22,6 +22,8 @@ Paths below are relative to this skill's directory. Give the user absolute paths
 ## Files
 
 - `styles/README.md`: the style registry, one row per style.
+- `styles/index.html`: one page showing every style's previews side by side, for the
+  user to browse and pick from.
 - `styles/<style>/style.md`: that style's instructions. Each style is written in its
   own shape; read it whole and follow it as written.
 - `styles/<style>/previews/*.html`: self-contained pages showing the style.
@@ -37,9 +39,10 @@ small change.
    the user to run the command and paste the output, and wait.
 2. **Pick a style.**
    - The user named a style in the registry: use it.
-   - Otherwise list the registry's styles with one line each and the absolute paths of
-     their preview files, and ask the user to open the previews and pick one. Wait for
-     the answer.
+   - Otherwise list the registry's styles with one line each, give the absolute path of
+     `styles/index.html`, and ask the user to open it in a browser, look at the previews
+     and pick a style. When you run on the user's own machine, you may open it for them
+     (`open <path>` on macOS, `xdg-open <path>` on Linux). Wait for the answer.
    - The user says "you pick", or the work runs unattended: read the seed string and
      let it choose among the registered styles.
 3. **Write the brief.** Read the chosen `style.md` and `references/bans.md` in full.
@@ -70,8 +73,8 @@ small change.
 
 ## Show the styles
 
-Read `styles/README.md`. List each style with its one-line description and the absolute
-paths of its preview files. Tell the user to open the files in a browser.
+Read `styles/README.md`. List each style with its one-line description, give the absolute
+path of `styles/index.html`, and ask the user to open it in a browser to preview them.
 
 ## Done
 

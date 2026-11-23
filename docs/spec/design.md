@@ -23,6 +23,9 @@ The `design` skill (`skills/design/`): its rules, and how to add a designer's st
 - Each designer's style is its own set of instructions in `styles/<style>/style.md`.
   Do not impose a common structure on it; that would lose the designer's signal.
 - The registry is `styles/README.md`, one row per style with its previews.
+- `styles/index.html` shows every style's previews on one page, so the user (or an
+  agent) can open one file in a browser for a quick view. The skill asks the user to
+  preview the styles there.
 - Previews are self-contained HTML files in `styles/<style>/previews/`: inline CSS and
   SVG, no raster images, Google Fonts links allowed. They follow the style and every
   ban, and their businesses are fictional.
@@ -61,6 +64,7 @@ chakrit names a designer. Work through these steps in this repository.
    their way of working suggests. Point to the synthesis and notes for detail.
 7. **Previews.** Build two or three previews by running the skill's own process with
    this style, each for a different fictional business that suits it.
-8. **Register.** Add the style's row to `styles/README.md`.
+8. **Register.** Add the style's row to `styles/README.md` and its section to
+   `styles/index.html`.
 
 All of it goes in `skills/design/styles/<designer>/`.
