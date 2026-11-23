@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Off Register Print Co., Depot Street, Asheville: Dan Cederholm style preview</title>
+<meta name="description" content="Off Register Print Co. is a fictional hand-pulled screen-print shop in Asheville, built as a preview of the Dan Cederholm style.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<style>
+:root {
+  --cream: #f1ead8;
+  --orange: #e5532b;
+  --navy: #22304a;
+  --mustard: #d8a22a;
+  --teal: #2e7a74;
+  --ink: #3b2f27;
+  --muted: #8a7a6a;
+  --rule: #d6cbb2;
+
+  --display: "Alfa Slab One", "Rockwell", Georgia, serif;
+  --text: "Source Sans 3", "Helvetica Neue", Arial, sans-serif;
+
+  --edge: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='28'%3E%3Cg fill='none' stroke='%2322304a' stroke-width='1.6'%3E%3Ccircle cx='14' cy='14' r='6'/%3E%3Cpath d='M14 3v22M3 14h22'/%3E%3C/g%3E%3Cg fill='%23e5532b'%3E%3Ccircle cx='34' cy='9' r='2.6'/%3E%3Ccircle cx='42' cy='9' r='2'/%3E%3Ccircle cx='50' cy='9' r='1.3'/%3E%3Ccircle cx='34' cy='19' r='2'/%3E%3Ccircle cx='42' cy='19' r='1.3'/%3E%3Ccircle cx='50' cy='19' r='.7'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+* { box-sizing: border-box; }
+
+html { background: var(--cream); }
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font: 400 1.1875rem/1.55 var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Edge border: registration marks and a halftone ramp, top and foot only. */
+.edge {
+  height: 28px;
+  background: var(--edge) repeat-x left center;
+  border-bottom: 3px solid var(--navy);
+}
+.edge.foot { border-bottom: 0; border-top: 3px solid var(--navy); }
+
+a { color: var(--orange); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+
+.column {
+  max-width: 34em;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+/* Display caps: the ink-tin lid, printed twice and nudged off register. */
+.caps {
+  font-family: var(--display);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: .01em;
+  line-height: .98;
+  color: var(--navy);
+  text-shadow: -3px 2px 0 var(--orange);
+  filter: url(#rough);
+}
+
+/* Label: tiny tracked caps with an optional lowercase second line. */
+.label {
+  font: 700 .72rem/1.2 var(--text);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+/* ---------- Masthead ---------- */
+.masthead {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 2.75rem 0 1.5rem;
+}
+.badge { width: 150px; height: 150px; display: block; transition: transform .25s ease; }
+.badge:hover { transform: rotate(-8deg); }
+.masthead h1 { font-size: clamp(2.6rem, 7vw, 3.6rem); margin: 0 0 .5rem; }
+.masthead p { margin: 0; font-size: 1.05rem; color: var(--ink); }
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: .9rem 0;
+  border-top: 2px solid var(--navy);
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem 2rem;
+}
+nav a { text-decoration: none; color: var(--navy); display: block; transition: color .2s ease; }
+nav a span { display: block; font: 400 .85rem/1.3 var(--text); letter-spacing: 0; text-transform: none; color: var(--muted); }
+nav a:hover, nav a:focus-visible { color: var(--orange); }
+nav a[aria-current] { color: var(--orange); }
+
+/* ---------- Still life ---------- */
+.still-life { margin: 2rem 0 1.25rem; }
+.still-life svg { width: 100%; height: auto; display: block; }
+.still-life figcaption { font-size: .9rem; color: var(--muted); margin-top: .4rem; }
+
+/* ---------- Reading column ---------- */
+.intro p:first-child::first-letter {
+  float: left;
+  font: 400 3.6em/.82 var(--display);
+  color: var(--orange);
+  padding: .08em .1em 0 0;
+}
+h2.caps { font-size: 2.1rem; margin: 3rem 0 1rem; }
+
+/* Index heading: tracked caps with an orange arrow. */
+.index-heading {
+  font: 700 .8rem/1 var(--text);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--navy);
+  margin: 3.25rem 0 .25rem;
+}
+.index-heading::after { content: " \2192"; color: var(--orange); letter-spacing: 0; }
+
+/* Slat: glyph, title, one line, ticket number; a ruled row. */
+.slats { list-style: none; margin: 0; padding: 0; }
+.slat {
+  display: grid;
+  grid-template-columns: 2rem 1fr auto;
+  gap: 0 .9rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+.slat svg { width: 1.5rem; height: 1.5rem; margin-top: .2rem; }
+.slat a { font-weight: 700; color: var(--navy); text-decoration: none; transition: color .2s ease; }
+.slat a:hover, .slat a:focus-visible { color: var(--orange); }
+.slat p { margin: .1rem 0 0; font-size: 1rem; color: var(--ink); }
+.slat .ticket { color: var(--muted); white-space: nowrap; padding-top: .3rem; }
+
+/* Price sheet: a ruled spec sheet. */
+.prices { width: 100%; border-collapse: collapse; font-size: 1.02rem; }
+.prices th { text-align: left; padding: .5rem 0; border-bottom: 2px solid var(--navy); color: var(--navy); }
+.prices th:not(:first-child), .prices td:not(:first-child) { text-align: right; }
+.prices td { padding: .55rem 0; border-bottom: 1px solid var(--rule); font-variant-numeric: tabular-nums; }
+.small { font-size: .95rem; color: var(--muted); }
+
+/* Fact line: a small glyph before an hour, an address, a price. */
+.facts { list-style: none; padding: 0; margin: 1rem 0; }
+.facts li { display: flex; gap: .7rem; align-items: baseline; padding: .3rem 0; }
+.facts svg { width: 1rem; height: 1rem; flex: none; position: relative; top: .15rem; }
+
+.hours { display: grid; grid-template-columns: max-content 1fr; gap: .2rem 1.5rem; margin: 1rem 0; }
+.hours dt { font-weight: 700; color: var(--navy); }
+.hours dd { margin: 0; }
+
+.button {
+  display: inline-block;
+  margin-top: .5rem;
+  padding: .7rem 1.2rem;
+  background: var(--orange);
+  color: var(--cream);
+  font: 700 .8rem/1 var(--text);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 4px;
+  box-shadow: 0 2px 0 var(--navy);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.button:hover, .button:focus-visible { transform: translateY(-2px) rotate(-1deg); box-shadow: 0 4px 0 var(--navy); }
+
+/* End mark */
+.end::after {
+  content: "";
+  display: inline-block;
+  width: .7em; height: .7em;
+  margin-left: .35em;
+  background: var(--orange);
+  clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+/* ---------- Specimen band ---------- */
+.specimen {
+  margin: 3.5rem 0 0;
+  padding: 1.6rem 0;
+  border-top: 3px solid var(--navy);
+  border-bottom: 3px solid var(--navy);
+  overflow: hidden;
+  white-space: nowrap;
+}
+.specimen p { margin: 0; }
+.specimen .s1 { font: 400 3.4rem/1.05 var(--display); color: var(--navy); text-transform: uppercase; margin-left: -2.2em; filter: url(#rough); }
+.specimen .s2 { font: italic 400 1.6rem/1.5 var(--text); color: var(--orange); margin-left: -.6em; }
+.specimen .s3 { font: 700 1.1rem/1.9 var(--text); letter-spacing: .22em; text-transform: uppercase; color: var(--teal); margin-left: -1.4em; }
+.specimen .s4 { font: 400 2.2rem/1.15 var(--display); color: var(--mustard); text-transform: uppercase; margin-left: -.9em; filter: url(#rough); }
+.specimen .s5 { font: 600 1.35rem/1.6 var(--text); color: var(--navy); margin-left: -3em; }
+.specimen .s6 { font: 400 4.6rem/1 var(--display); color: var(--orange); text-transform: uppercase; margin-left: -1.6em; filter: url(#rough); }
+.specimen svg { width: .7em; height: .7em; vertical-align: .02em; margin: 0 .25em; }
+
+/* Ampersand ornament */
+.amp {
+  text-align: center;
+  font: italic 400 7rem/1 Georgia, "Times New Roman", serif;
+  color: var(--orange);
+  margin: 2.5rem 0 0;
+}
+
+footer { padding: 2.5rem 0 3rem; font-size: .95rem; color: var(--muted); }
+footer .label { color: var(--navy); }
+
+@media (max-width: 40em) {
+  body { font-size: 1.0625rem; }
+  .masthead { grid-template-columns: 1fr; gap: 1rem; padding-top: 2rem; }
+  .badge { width: 120px; height: 120px; }
+  nav ul { display: grid; grid-template-columns: 1fr 1fr; }
+  .slat { grid-template-columns: 1.7rem 1fr; }
+  .slat .ticket { grid-column: 2; padding-top: .25rem; }
+  .specimen .s1 { font-size: 2.4rem; }
+  .specimen .s6 { font-size: 3.2rem; }
+  h2.caps { font-size: 1.8rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+  .badge:hover, .button:hover { transform: none; }
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <filter id="rough" x="-5%" y="-10%" width="110%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="55" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <symbol id="bolt" viewBox="0 0 24 24"><path d="M14 2 4 14h7l-2 8 10-12h-7z" fill="currentColor"/></symbol>
+    <symbol id="star" viewBox="0 0 24 24"><path d="m12 2 2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 21l1.6-7L2 9.2l7.1-.6z" fill="currentColor"/></symbol>
+    <symbol id="hand" viewBox="0 0 24 24"><path d="M2 10h11a2 2 0 0 1 0 4h-1v1a2 2 0 0 1-2 2v1a2 2 0 0 1-2 2H5a3 3 0 0 1-3-3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="reg" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="6"/><path d="M12 1v22M1 12h22"/></g></symbol>
+    <symbol id="cube" viewBox="0 0 24 24"><path d="m12 2 9 5v10l-9 5-9-5V7zM3 7l9 5 9-5M12 12v10" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  </defs>
+</svg>
+
+<div class="edge" aria-hidden="true"></div>
+
+<div class="column">
+
+<header class="masthead">
+  <a href="#top" aria-label="Off Register Print Co., home" id="top">
+    <svg class="badge" viewBox="0 0 200 200" role="img" aria-label="Badge: Off Register Print Co., slightly off since 2009">
+      <defs><path id="rim" d="M100 100m-74 0a74 74 0 1 1 148 0a74 74 0 1 1-148 0"/></defs>
+      <circle cx="100" cy="100" r="96" fill="#22304a"/>
+      <circle cx="100" cy="100" r="88" fill="none" stroke="#f1ead8" stroke-width="1.5"/>
+      <circle cx="100" cy="100" r="60" fill="#f1ead8"/>
+      <circle cx="103" cy="98" r="60" fill="none" stroke="#e5532b" stroke-width="3"/>
+      <text font-family="Source Sans 3, Arial, sans-serif" font-weight="700" font-size="13" letter-spacing="3.2" fill="#f1ead8">
+        <textPath href="#rim">SLIGHTLY OFF SINCE 2009 &#9733; DEPOT ST. ASHEVILLE N.C. &#9733;</textPath>
+      </text>
+      <g font-family="Alfa Slab One, Georgia, serif" text-anchor="middle" filter="url(#rough)">
+        <text x="97" y="96" font-size="30" fill="#e5532b">OFF</text>
+        <text x="100" y="94" font-size="30" fill="#22304a">OFF</text>
+        <text x="97" y="124" font-size="16" fill="#e5532b">REGISTER</text>
+        <text x="100" y="122" font-size="16" fill="#22304a">REGISTER</text>
+      </g>
+      <path d="M100 132v14M93 139h14" stroke="#22304a" stroke-width="2"/>
+    </svg>
+  </a>
+  <div>
+    <h1 class="caps">Off Register Print&nbsp;Co.</h1>
+    <p>Hand-pulled screen printing on Depot Street, Asheville. Band shirts, gig posters, tote bags and the odd wedding invitation.</p>
+  </div>
+</header>
+
+<nav aria-label="Main">
+  <ul>
+    <li><a class="label" href="#prints" aria-current="page">Prints<span>on the drying rack</span></a></li>
+    <li><a class="label" href="#jobs">Jobs<span>what we print for you</span></a></li>
+    <li><a class="label" href="#class">Class<span>Tuesday nights</span></a></li>
+    <li><a class="label" href="#visit">Visit<span>hours, directions</span></a></li>
+  </ul>
+</nav>
+
+<figure class="still-life">
+  <svg viewBox="0 0 680 300" role="img" aria-label="On the shop table: a wooden squeegee, an open tin of orange ink, a folded navy shirt printed with the badge, a gig poster and an aluminum screen frame.">
+    <!-- screen frame -->
+    <g transform="rotate(-4 150 150)">
+      <rect x="30" y="40" width="220" height="200" rx="3" fill="#b9b2a0"/>
+      <rect x="44" y="54" width="192" height="172" fill="#d9a62a" opacity=".55"/>
+      <rect x="44" y="54" width="192" height="172" fill="none" stroke="#22304a" stroke-width="1" opacity=".4"/>
+      <g fill="#22304a" opacity=".85">
+        <rect x="74" y="92" width="132" height="14"/>
+        <rect x="74" y="114" width="96" height="14"/>
+        <circle cx="160" cy="175" r="26"/>
+      </g>
+      <g stroke="#3b2f27" stroke-width="1.5" fill="none"><circle cx="58" cy="68" r="5"/><path d="M58 60v16M50 68h16"/></g>
+    </g>
+    <!-- poster -->
+    <g transform="rotate(5 380 130)">
+      <rect x="300" y="20" width="150" height="205" fill="#fbf6ea" stroke="#d6cbb2"/>
+      <rect x="314" y="34" width="122" height="96" fill="#2e7a74"/>
+      <path d="M314 130 350 82l26 30 20-22 40 40z" fill="#22304a"/>
+      <circle cx="402" cy="62" r="14" fill="#e5532b"/>
+      <circle cx="405" cy="60" r="14" fill="none" stroke="#d8a22a" stroke-width="2"/>
+      <rect x="314" y="146" width="122" height="12" fill="#e5532b"/>
+      <rect x="314" y="166" width="90" height="7" fill="#22304a"/>
+      <rect x="314" y="180" width="70" height="7" fill="#22304a"/>
+      <rect x="314" y="204" width="40" height="5" fill="#8a7a6a"/>
+    </g>
+    <!-- folded shirt -->
+    <g>
+      <path d="M462 176l52-14q31 22 62 0l52 14 4 106H458z" fill="#22304a"/>
+      <path d="M514 162q31 26 62 0" fill="none" stroke="#3a4b6b" stroke-width="5"/>
+      <path d="M470 196v80M620 196v80" stroke="#1a2539" stroke-width="2"/>
+      <circle cx="545" cy="228" r="26" fill="#f1ead8"/>
+      <circle cx="548" cy="226" r="26" fill="none" stroke="#e5532b" stroke-width="3"/>
+      <circle cx="545" cy="228" r="9" fill="#22304a"/>
+    </g>
+    <!-- ink tin -->
+    <g>
+      <ellipse cx="300" cy="262" rx="52" ry="16" fill="#8a7a6a"/>
+      <rect x="248" y="232" width="104" height="30" fill="#b9b2a0"/>
+      <ellipse cx="300" cy="232" rx="52" ry="16" fill="#cfc8b4"/>
+      <ellipse cx="300" cy="232" rx="44" ry="12" fill="#e5532b"/>
+      <rect x="262" y="240" width="76" height="16" fill="#d8a22a"/>
+      <text x="300" y="252" text-anchor="middle" font-family="Alfa Slab One, Georgia, serif" font-size="10" fill="#22304a">ORANGE 165</text>
+    </g>
+    <!-- squeegee -->
+    <g transform="rotate(-14 160 270)">
+      <rect x="40" y="252" width="250" height="18" rx="4" fill="#b8865a"/>
+      <rect x="40" y="270" width="250" height="12" fill="#2e7a74"/>
+      <rect x="40" y="252" width="250" height="5" fill="#cf9d6e"/>
+    </g>
+    <!-- lightning bolt sticker -->
+    <g transform="translate(620 40) rotate(12)">
+      <circle r="26" fill="#d8a22a"/>
+      <path d="M4-18-12 4h10l-4 16L12-4H2z" fill="#22304a"/>
+    </g>
+  </svg>
+  <figcaption>The table this morning. The tin is Orange 165, which we go through by the gallon.</figcaption>
+</figure>
+
+<div class="intro">
+  <p>Off Register is two presses, a drying rack, a darkroom the size of a coat closet and three people who mostly agree about ink. We have printed in the River Arts District since 2009, in what used to be a tire shop. You can still smell the tires on a hot day.</p>
+  <p>The name comes from our first paying job. The red slid two millimeters to the left on all 140 shirts, the band liked it, and we have been explaining it at parties ever since. We have since bought a better hinge clamp.</p>
+</div>
+
+<h2 class="index-heading" id="prints">Latest prints</h2>
+<ul class="slats">
+  <li class="slat">
+    <svg style="color:#e5532b" aria-hidden="true"><use href="#star"/></svg>
+    <div><a href="#prints">Bear in the compost bin</a><p>Three colors on French Paper, 18 × 24. Edition of 55. $30.</p></div>
+    <span class="ticket label">No. 623</span>
+  </li>
+  <li class="slat">
+    <svg style="color:#2e7a74" aria-hidden="true"><use href="#reg"/></svg>
+    <div><a href="#prints">Blue Ridge Parkway, closed again</a><p>Two colors, 12 × 18, for everyone who drove up to see the leaves in October. $22.</p></div>
+    <span class="ticket label">No. 627</span>
+  </li>
+  <li class="slat">
+    <svg style="color:#d8a22a" aria-hidden="true"><use href="#bolt"/></svg>
+    <div><a href="#prints">Thursday string band at the Low Gap</a><p>Gig poster, four colors, split fountain sky. Twenty left after the show. $25.</p></div>
+    <span class="ticket label">No. 631</span>
+  </li>
+  <li class="slat">
+    <svg style="color:#22304a" aria-hidden="true"><use href="#cube"/></svg>
+    <div><a href="#prints">Starter, fed daily</a><p>Tea towel for a West Asheville bakery, one color on flour-sack cotton. $14.</p></div>
+    <span class="ticket label">No. 634</span>
+  </li>
+  <li class="slat">
+    <svg style="color:#e5532b" aria-hidden="true"><use href="#hand"/></svg>
+    <div><a href="#prints">The misprint bin</a><p>Everything that went wrong this month, sorted by how wrong. $5 a sheet, cash, by the door.</p></div>
+    <span class="ticket label">No. 640</span>
+  </li>
+</ul>
+
+<h2 class="caps" id="jobs">Printing for you</h2>
+<p>Send us the art, the shirt color and how many. We burn the screens, mix the ink to your swatch and print it in about ten working days. Twenty-four pieces is the smallest run worth the cleanup.</p>
+<table class="prices">
+  <caption class="small" style="caption-side:bottom;text-align:left;padding-top:.6rem">Per shirt, ink included. Screens are $20 a color, once. Water-based ink at no extra charge.</caption>
+  <thead><tr><th scope="col">Shirts</th><th scope="col">1 color</th><th scope="col">2 colors</th><th scope="col">3 colors</th></tr></thead>
+  <tbody>
+    <tr><td>24 to 47</td><td>$11.00</td><td>$12.25</td><td>$13.50</td></tr>
+    <tr><td>48 to 143</td><td>$8.50</td><td>$9.75</td><td>$11.00</td></tr>
+    <tr><td>144 and up</td><td>$6.00</td><td>$7.25</td><td>$8.50</td></tr>
+    <tr><td>Posters, 18 × 24</td><td>$3.40</td><td>$4.60</td><td>$5.80</td></tr>
+  </tbody>
+</table>
+<a class="button" href="mailto:jobs@offregister.example">Send us your art</a>
+
+</div>
+
+<section class="specimen" aria-label="Words from the shop floor">
+  <p class="s1">Plastisol <svg style="color:#e5532b"><use href="#star"/></svg> water-based <svg style="color:#e5532b"><use href="#star"/></svg> discharge <svg style="color:#e5532b"><use href="#star"/></svg> 110 mesh <svg style="color:#e5532b"><use href="#star"/></svg> 156 mesh</p>
+  <p class="s2">flash at 320°F, cure at 330°F for a full minute, then let it cool before you fold it</p>
+  <p class="s3">squeegee 70 duro &nbsp;/&nbsp; diazo emulsion &nbsp;/&nbsp; Pantone 165 &nbsp;/&nbsp; trap 1pt &nbsp;/&nbsp; halftone 45 lpi &nbsp;/&nbsp; split fountain</p>
+  <p class="s4">Gig posters <svg style="color:#22304a"><use href="#bolt"/></svg> tea towels <svg style="color:#22304a"><use href="#bolt"/></svg> aprons <svg style="color:#22304a"><use href="#bolt"/></svg> tote bags <svg style="color:#22304a"><use href="#bolt"/></svg> patches</p>
+  <p class="s5">$6 a shirt at 144 &middot; $30 a poster &middot; $5 a misprint &middot; $240 for four Tuesdays &middot; (828) 555-0159</p>
+  <p class="s6">Slightly off since 2009 <svg style="color:#22304a"><use href="#reg"/></svg> Depot St.</p>
+</section>
+
+<div class="column">
+
+<h2 class="caps" id="class">Tuesday night class</h2>
+<p>Four Tuesdays, six to nine. You will burn a screen, pull a clean print, print a second color on top of the first and clean up after yourself, which takes the longest. Six seats, all ink included, and you go home with two shirts and a stack of posters.</p>
+<ul class="facts">
+  <li><svg style="color:#e5532b" aria-hidden="true"><use href="#bolt"/></svg><span>Next round starts January 12. $240.</span></li>
+  <li><svg style="color:#e5532b" aria-hidden="true"><use href="#hand"/></svg><span>Wear something you don't mind ruining. Orange 165 does not wash out.</span></li>
+</ul>
+<a class="button" href="mailto:class@offregister.example">Save a seat</a>
+
+<h2 class="caps" id="visit">Come by the shop</h2>
+<ul class="facts">
+  <li><svg style="color:#e5532b" aria-hidden="true"><use href="#reg"/></svg><span>220 Depot Street, Asheville, NC 28801. Green door, round the back, past the kiln people.</span></li>
+  <li><svg style="color:#e5532b" aria-hidden="true"><use href="#star"/></svg><span>(828) 555-0159 &middot; <a href="mailto:hello@offregister.example">hello@offregister.example</a></span></li>
+</ul>
+<dl class="hours">
+  <dt>Wed to Sat</dt><dd>10 to 6</dd>
+  <dt>Sunday</dt><dd>12 to 4</dd>
+  <dt>Mon, Tue</dt><dd>Printing with the door locked. Knock if it's a pickup.</dd>
+</dl>
+<p class="end">Park on Depot or in the gravel lot by the tracks. If the train is through, give it ten minutes.</p>
+
+<p class="amp" aria-hidden="true">&amp;</p>
+
+<footer>
+  <p><span class="label">Off Register Print Co.</span><br>Ink and mesh in the River Arts District. Everything on this page was printed at least twice.</p>
+</footer>
+
+</div>
+
+<div class="edge foot" aria-hidden="true"></div>
+
+</body>
+</html>
