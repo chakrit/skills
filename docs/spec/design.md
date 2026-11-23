@@ -31,6 +31,11 @@ The `design` skill (`skills/design/`): its rules, and how to add a designer's st
 - `styles/index.html` shows every style's previews on one page, so the user (or an
   agent) can open one file in a browser for a quick view. The skill asks the user to
   preview the styles there.
+- A preview comes from one run of the skill by one agent. Its brief asks only for what a
+  user would ask (the style, the language, a fictional business, the file path) plus
+  the environment's limits. It adds no requirements of its own: no fonts, copy rules,
+  review rules or checklists. A bad preview is a finding about the skill, fixed in the
+  skill.
 - Previews are self-contained HTML files in `styles/<style>/previews/`: inline CSS and
   SVG, no raster images, Google Fonts links allowed, inline JavaScript allowed. They follow the style and every
   ban, and their businesses are fictional.
