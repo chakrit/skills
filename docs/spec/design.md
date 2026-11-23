@@ -34,8 +34,10 @@ The `design` skill (`skills/design/`): its rules, and how to add a designer's st
 - Start each preview with one agent running the skill once. Brief it the way a user
   would ask: the style, the language, a fictional business, the file path, plus the
   environment's limits. Add nothing else: no fonts, copy rules, review rules or
-  checklists. The agent follows the brief over the skill, so anything added steers the
-  preview away from the style.
+  checklists. A preview exists to show what the skill and the style produce on their
+  own. The agent treats every line of its brief as a requirement and puts its effort
+  there, so an added rule shows up in the page in place of the style: a copy rule turns
+  the page into a writing job and its critique into proofreading.
 - Previews are self-contained HTML files in `styles/<style>/previews/`: inline CSS and
   SVG, no raster images, Google Fonts links allowed, inline JavaScript allowed. They follow the style and every
   ban, and their businesses are fictional.
