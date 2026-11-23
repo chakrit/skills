@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Holbeck Shavings Club: woodworking in a railway arch, Leeds</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ultra&family=Libre+Franklin:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#f3eedf; --ink:#3a2a1f; --muted:#7d6a59; --orange:#e2531f;
+  --blue:#23406b; --pine:#d9a23a; --oak:#8a5a32; --rule:#d8ccb4;
+}
+*{box-sizing:border-box}
+html{background:var(--cream)}
+body{margin:0;color:var(--ink);font:400 19px/1.5 "Libre Franklin",system-ui,sans-serif;
+  background:var(--cream)}
+a{color:var(--orange);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover,a:focus{color:var(--blue)}
+img,svg{max-width:100%}
+
+/* Edge border: herringbone boards along top and foot */
+.edge{height:26px;background-color:var(--oak);
+  background-image:
+   repeating-linear-gradient(45deg, transparent 0 13px, rgba(0,0,0,.18) 13px 14px, transparent 14px 26px),
+   repeating-linear-gradient(-45deg, rgba(217,162,58,.55) 0 13px, transparent 13px 26px);
+  background-size:52px 26px;border-bottom:3px solid var(--ink)}
+.edge.foot{border-bottom:0;border-top:3px solid var(--ink)}
+
+.wrap{max-width:52em;margin:0 auto;padding:0 1.25em}
+
+/* Masthead */
+.mast{display:flex;align-items:center;gap:1.4em;padding:2.2em 0 1.6em;
+  border-bottom:2px solid var(--ink)}
+.badge{flex:none;width:118px;transition:transform .25s ease}
+.badge:hover{transform:rotate(-4deg)}
+.name{font-family:Ultra,Georgia,serif;font-size:2.05em;line-height:1;margin:0;
+  letter-spacing:.01em;text-transform:uppercase;color:var(--blue);
+  filter:url(#ink)}
+.name small{display:block;font-size:.42em;color:var(--orange);margin-top:.35em;letter-spacing:.06em}
+nav ul{list-style:none;margin:0 0 0 auto;padding:0;display:flex;gap:1.6em}
+nav a{display:block;text-decoration:none;font-size:11px;font-weight:700;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink);opacity:.45;line-height:1.3;transition:opacity .2s,color .2s}
+nav a span{display:block;font-weight:400;letter-spacing:0;text-transform:none;font-size:13px;color:var(--muted)}
+nav a:hover,nav a:focus,nav a[aria-current]{opacity:1;color:var(--orange)}
+
+/* Layout: main column + narrow aside */
+.grid{display:grid;grid-template-columns:minmax(0,34em) 13em;gap:3.5em;padding:2.4em 0 1em}
+h1{font-family:Ultra,Georgia,serif;font-weight:400;font-size:2.9em;line-height:1.02;text-transform:uppercase;letter-spacing:.01em;
+  margin:0 0 .5em;color:var(--ink);filter:url(#ink)}
+p{margin:0 0 1em}
+.lede{font-size:1.08em}
+
+/* Fact line */
+.facts{list-style:none;padding:0;margin:0 0 2em;font-size:.86em}
+.facts li{display:flex;gap:.6em;align-items:baseline;padding:.35em 0;border-bottom:1px solid var(--rule)}
+.facts svg{flex:none;width:14px;height:14px;position:relative;top:2px}
+.label{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+
+/* Still life */
+.still{margin:1.5em 0 2.5em}
+.still figcaption{font-size:.74em;color:var(--muted);margin-top:.4em}
+
+/* Index heading */
+h2.index{font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  margin:2.6em 0 .4em;color:var(--ink)}
+h2.index::after{content:" \2192";color:var(--orange)}
+
+/* Slat */
+.slats{list-style:none;margin:0;padding:0;border-top:2px solid var(--ink)}
+.slat{border-bottom:1px solid var(--rule)}
+.slat a{display:grid;grid-template-columns:22px 1fr auto;gap:.9em;align-items:baseline;
+  padding:.85em 0;color:var(--ink);text-decoration:none;transition:color .2s}
+.slat a:hover,.slat a:focus{color:var(--orange)}
+.slat svg{width:18px;height:18px;position:relative;top:3px}
+.slat h3{font-size:1em;font-weight:700;margin:0}
+.slat p{margin:.1em 0 0;font-size:.86em;color:var(--muted)}
+.slat time{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--blue);white-space:nowrap}
+
+/* Spec sheet (tools) */
+.spec{columns:2;column-gap:2em;list-style:none;padding:0;margin:0;font-size:.86em;
+  border-top:2px solid var(--ink)}
+.spec li{break-inside:avoid;display:flex;justify-content:space-between;gap:1em;
+  padding:.4em 0;border-bottom:1px solid var(--rule)}
+.spec b{font-weight:600}
+.spec span{color:var(--muted)}
+
+/* Specimen band */
+.specimen{background:var(--blue);color:var(--cream);overflow:hidden;white-space:nowrap;
+  padding:1.6em 0;margin:2.5em 0 0;border-top:3px solid var(--ink);border-bottom:3px solid var(--ink)}
+.specimen p{margin:0;line-height:1.05;text-transform:uppercase}
+.s1{font-family:Ultra,serif;font-size:3.4em;color:var(--pine);margin-left:-.6em!important;filter:url(#ink)}
+.s2{font-weight:700;font-size:1.15em;letter-spacing:.22em;color:var(--cream);margin:.5em 0 .4em -2em!important}
+.s3{font-family:Ultra,serif;font-size:2.3em;color:var(--orange);margin-left:-3.2em!important;filter:url(#ink)}
+.s4{font-weight:400;font-size:1em;letter-spacing:.3em;color:#9fb0c8;margin:.5em 0 .3em -.4em!important}
+.s5{font-family:Ultra,serif;font-size:4.2em;color:var(--cream);margin-left:-1.4em!important;filter:url(#ink)}
+.specimen svg{width:.7em;height:.7em;vertical-align:middle;margin:0 .35em}
+
+/* Aside */
+aside{font-size:.84em;padding-top:.4em}
+aside h2{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink);margin:0 0 .5em;padding-bottom:.4em;border-bottom:2px solid var(--ink)}
+aside section{margin-bottom:2.2em}
+aside dl{margin:0}
+aside dt{font-weight:700}
+aside dd{margin:0 0 .6em;color:var(--muted)}
+.button{display:inline-block;background:var(--orange);color:var(--cream);text-decoration:none;
+  font-weight:700;font-size:13px;letter-spacing:.12em;text-transform:uppercase;padding:.75em 1.1em;
+  border-radius:5px;box-shadow:0 2px 0 var(--ink);transition:transform .2s,background .2s}
+.button:hover,.button:focus{color:var(--cream);background:var(--blue);transform:translateY(-2px)}
+
+/* Join */
+.prices{list-style:none;padding:0;margin:0 0 1.4em;border-top:2px solid var(--ink)}
+.prices li{display:flex;justify-content:space-between;gap:1em;padding:.55em 0;border-bottom:1px solid var(--rule)}
+.prices b{font-family:Ultra,serif;font-weight:400;color:var(--blue)}
+.end::after{content:"";display:inline-block;width:.6em;height:.6em;margin-left:.35em;
+  background:var(--orange);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+
+footer{padding:2em 0 2.5em;font-size:.78em;color:var(--muted);display:flex;
+  justify-content:space-between;gap:1.5em;flex-wrap:wrap}
+
+@media (max-width:760px){
+  body{font-size:18px}
+  .mast{flex-wrap:wrap;gap:1em}
+  .badge{width:92px}
+  .name{font-size:1.6em}
+  nav{flex-basis:100%}
+  nav ul{margin:0;display:grid;grid-template-columns:1fr 1fr;gap:.8em 1.2em}
+  .grid{grid-template-columns:1fr;gap:1em}
+  h1{font-size:2.1em}
+  .spec{columns:1}
+  .specimen{font-size:.72em}
+  aside section{margin-bottom:1.6em}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="ink"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="77" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6"/></filter>
+  <symbol id="bolt" viewBox="0 0 16 16"><path d="M9.5 1 3 9h4.2L6 15l7-8.5H8.6z" fill="currentColor"/></symbol>
+  <symbol id="pin" viewBox="0 0 16 16"><path d="M8 1a5 5 0 0 0-5 5c0 3.6 5 9 5 9s5-5.4 5-9a5 5 0 0 0-5-5zm0 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4z" fill="currentColor"/></symbol>
+  <symbol id="clock" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 4.2V8l2.6 1.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="pound" viewBox="0 0 16 16"><path d="M11.5 3.6A3 3 0 0 0 6 5.3V13M3.8 8.4h5.6M3.5 13.2h9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="square" viewBox="0 0 16 16"><path d="M3 2v11h11v-3H6V2z" fill="currentColor"/></symbol>
+  <symbol id="saw" viewBox="0 0 16 16"><path d="M1 10 13 4l2 2-2 1v3z" fill="currentColor"/><path d="M1 10l1 2 1-1.4 1 1.4 1-1.4 1 1.4 1-1.4 1 1.4 1-1.4 1 1.4 1-1.4 1 1.4L13 10z" fill="currentColor"/></symbol>
+  <symbol id="star" viewBox="0 0 16 16"><path d="m8 1 2 4.6 5 .5-3.8 3.3 1.1 4.9L8 11.8l-4.3 2.5 1.1-4.9L1 6.1l5-.5z" fill="currentColor"/></symbol>
+  <symbol id="cup" viewBox="0 0 16 16"><path d="M2 5h9v5a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3zM11 6.5h1.4a1.8 1.8 0 0 1 0 3.6H11" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+</svg>
+
+<div class="edge" aria-hidden="true"></div>
+
+<div class="wrap">
+<header class="mast">
+  <a href="#" class="badge" aria-label="Holbeck Shavings Club, home">
+    <svg viewBox="0 0 120 150" role="img" aria-label="Badge: Shavings No 77, mostly square since 1977">
+      <defs><path id="rim" d="M22 66 A38 38 0 0 1 98 66"/></defs>
+      <path d="M60 4c30 0 54 20 54 50 0 16-7 25-14 33-5 6-7 12-7 20v26c0 6-4 10-10 10H37c-6 0-10-4-10-10v-26c0-8-2-14-7-20C13 79 6 70 6 54 6 24 30 4 60 4z" fill="#23406b"/>
+      <path d="M60 11c26 0 47 17 47 43 0 14-6 22-12 29-6 7-9 14-9 24v25c0 3-2 5-5 5H41c-3 0-5-2-5-5v-25c0-10-3-17-9-24-6-7-12-15-12-29 0-26 21-43 45-43z" fill="none" stroke="#f3eedf" stroke-width="1.6"/>
+      <text font-family="Libre Franklin,sans-serif" font-size="6.6" font-weight="700" letter-spacing="1" fill="#f3eedf"><textPath href="#rim" startOffset="50%" text-anchor="middle">MOSTLY SQUARE SINCE 1977</textPath></text>
+      <ellipse cx="60" cy="40" rx="11" ry="6.5" fill="#f3eedf"/>
+      <text x="60" y="80" text-anchor="middle" font-family="Ultra,serif" font-size="11.5" fill="#e2531f" filter="url(#ink)">SHAVINGS</text>
+      <text x="60" y="112" text-anchor="middle" font-family="Ultra,serif" font-size="25" fill="#d9a23a" filter="url(#ink)">77</text>
+      <text x="60" y="126" text-anchor="middle" font-family="Libre Franklin,sans-serif" font-size="7" font-weight="700" letter-spacing="2" fill="#f3eedf">No.</text>
+    </svg>
+  </a>
+  <p class="name">Holbeck Shavings Club<small>Arch 14, Water Lane, Leeds</small></p>
+  <nav aria-label="Main">
+    <ul>
+      <li><a href="#term" aria-current="page">Sessions<span>this term</span></a></li>
+      <li><a href="#arch">The arch<span>what's on the wall</span></a></li>
+      <li><a href="#join">Join<span>£8 a month</span></a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="grid">
+<main>
+  <h1>Woodwork under the arches</h1>
+  <p class="lede">The Holbeck Shavings Club has met on Thursday nights since 1977, in a railway arch off Water Lane with eleven benches and more clamps than anyone has counted. About forty of us are members. Some build chairs; one has been building the same bookcase since 2019. Beginners are welcome, and if you have a rusty plane from a car boot sale, bring it in and we'll see if it can be saved.</p>
+
+  <ul class="facts">
+    <li><svg style="color:var(--orange)"><use href="#clock"/></svg><span><span class="label">Thursdays</span> 6.30 to 9.30pm, and Saturday mornings in term</span></li>
+    <li><svg style="color:var(--orange)"><use href="#pin"/></svg><span><span class="label">Where</span> Arch 14, Water Lane, LS11. Ten minutes from Leeds station. Knock loudly; the extractor is on.</span></li>
+    <li><svg style="color:var(--orange)"><use href="#pound"/></svg><span><span class="label">Cost</span> First visit free, then £8 a month or £3 a night</span></li>
+  </ul>
+
+  <figure class="still">
+    <svg viewBox="0 0 680 300" role="img" aria-label="A bench plane, a marking gauge, a pencil, a dovetailed offcut and a few curled shavings laid out on the bench">
+      <!-- shavings -->
+      <g fill="none" stroke="#d9a23a" stroke-width="7" stroke-linecap="round">
+        <path d="M470 236c20-20 52-14 50 8-2 18-28 18-30 4"/>
+        <path d="M548 210c26-6 44 12 32 30-10 14-30 6-24-6"/>
+        <path d="M600 260c10-24 44-24 46-2"/>
+      </g>
+      <!-- plane -->
+      <g transform="translate(40 70)">
+        <rect x="0" y="92" width="330" height="40" rx="5" fill="#23406b"/>
+        <rect x="0" y="126" width="330" height="8" fill="#16294a"/>
+        <path d="M40 92c0-22 14-34 30-34s26 12 26 34z" fill="#8a5a32"/>
+        <path d="M150 92 196 22h22l-30 70z" fill="#c9c3b5"/>
+        <path d="M196 22c4-12 14-16 22-12l-6 14z" fill="#8a8578"/>
+        <path d="M172 92 204 40c6-8 18-6 20 4l-14 48z" fill="#e7e2d6" stroke="#3a2a1f" stroke-width="1.5"/>
+        <ellipse cx="206" cy="58" rx="5" ry="3" fill="#3a2a1f"/>
+        <text x="200" y="80" font-family="Ultra,serif" font-size="9" fill="#e2531f" transform="rotate(-58 200 80)">No 77</text>
+        <path d="M250 92c0-40 14-72 36-72 16 0 22 14 14 26-10 14-8 30-4 46z" fill="#8a5a32"/>
+        <circle cx="120" cy="112" r="4" fill="#f3eedf" opacity=".5"/>
+      </g>
+      <!-- marking gauge -->
+      <g transform="translate(400 40) rotate(8)">
+        <rect x="0" y="22" width="220" height="16" rx="3" fill="#b77c45"/>
+        <rect x="40" y="0" width="34" height="60" rx="4" fill="#8a5a32"/>
+        <circle cx="57" cy="30" r="5" fill="#d9a23a"/>
+        <path d="M206 38v8" stroke="#3a2a1f" stroke-width="2.5"/>
+      </g>
+      <!-- pencil -->
+      <g transform="translate(410 150) rotate(-12)">
+        <rect x="0" y="0" width="170" height="14" fill="#e2531f"/>
+        <path d="M170 0l26 7-26 7z" fill="#e8c99b"/>
+        <path d="M188 5l8 2-8 2z" fill="#3a2a1f"/>
+        <rect x="-10" y="0" width="10" height="14" fill="#3a2a1f"/>
+      </g>
+      <!-- dovetail offcut -->
+      <g transform="translate(120 228)">
+        <path d="M0 0h70v52H0z" fill="#d9a23a"/>
+        <path d="M70 0h80v52H70z" fill="#b77c45"/>
+        <path d="M70 4l-18 6v10l18 4zM70 28l-18 4v10l18 6z" fill="#d9a23a"/>
+        <path d="M10 12h50M10 26h46M10 40h52" stroke="#b77c45" stroke-width="1.5"/>
+      </g>
+    </svg>
+    <figcaption>Tonight's bench, more or less. The plane is a 1950s No. 4 that came out of a skip in Armley.</figcaption>
+  </figure>
+
+  <h2 class="index" id="term">This term</h2>
+  <ul class="slats">
+    <li class="slat"><a href="#"><svg style="color:var(--orange)"><use href="#square"/></svg><div><h3>Sharpening night</h3><p>Waterstones, a honing guide and Bernard. Bring a chisel.</p></div><time datetime="2026-11-26">Thu 26 Nov</time></a></li>
+    <li class="slat"><a href="#"><svg style="color:var(--orange)"><use href="#saw"/></svg><div><h3>Your first dovetail</h3><p>Four Thursdays, pine and then oak. Six places, £40 including timber.</p></div><time datetime="2026-12-03">From 3 Dec</time></a></li>
+    <li class="slat"><a href="#"><svg style="color:var(--orange)"><use href="#star"/></svg><div><h3>Christmas spoon swap</h3><p>Bring a spoon you carved and go home with someone else's.</p></div><time datetime="2026-12-17">Thu 17 Dec</time></a></li>
+    <li class="slat"><a href="#"><svg style="color:var(--orange)"><use href="#bolt"/></svg><div><h3>Bandsaw induction</h3><p>Twenty minutes with Priya. You need it before you use the bandsaw.</p></div><time datetime="2027-01-09">Sat 9 Jan</time></a></li>
+    <li class="slat"><a href="#"><svg style="color:var(--orange)"><use href="#cup"/></svg><div><h3>Rescue a plane</h3><p>Taking the rust off and flattening the sole of an old bench plane.</p></div><time datetime="2027-01-14">Thu 14 Jan</time></a></li>
+  </ul>
+
+  <h2 class="index" id="arch">On the wall in the arch</h2>
+  <p>Everything here is shared. Most of it was donated. The sash cramps turned up in 1984 and nobody knows who brought them.</p>
+  <ul class="spec">
+    <li><b>Workbenches</b><span>11, beech tops</span></li>
+    <li><b>Bench planes</b><span>No. 3 to No. 7</span></li>
+    <li><b>Tenon &amp; dovetail saws</b><span>9</span></li>
+    <li><b>Chisels</b><span>3mm to 38mm</span></li>
+    <li><b>Sash cramps</b><span>14, mostly straight</span></li>
+    <li><b>Bandsaw</b><span>14 inch, induction first</span></li>
+    <li><b>Pillar drill</b><span>1</span></li>
+    <li><b>Lathe</b><span>1, Saturdays</span></li>
+    <li><b>Offcut bin</b><span>free, help yourself</span></li>
+    <li><b>Kettle</b><span>always on</span></li>
+  </ul>
+</main>
+
+<aside>
+  <section>
+    <h2>Come along</h2>
+    <p>Turn up any Thursday at half six. Someone will show you round and find you a bench.</p>
+    <a class="button" href="#join">First night's free</a>
+  </section>
+  <section>
+    <h2>Who's about</h2>
+    <dl>
+      <dt>Bernard, chairman</dt><dd>Member since 1979. Makes Windsor chairs.</dd>
+      <dt>Priya, tools</dt><dd>Looks after the machines and runs the inductions.</dd>
+      <dt>Tom, tea</dt><dd>Treasurer and kettle.</dd>
+    </dl>
+  </section>
+  <section>
+    <h2>Also</h2>
+    <p>Kids' Saturday once a month, with a grown-up. Wheelchair access through the side gate.</p>
+  </section>
+</aside>
+</div>
+</div>
+
+<div class="specimen" aria-label="Words from the workshop">
+  <p class="s1">Dovetail 1:6<svg><use href="#star"/></svg>Riven oak<svg><use href="#star"/></svg>Sash cramp<svg><use href="#star"/></svg>Mortise</p>
+  <p class="s2">Thursdays 6.30pm · Arch 14 · Water Lane · £8 a month · LS11 · tea, two sugars · since 1977</p>
+  <p class="s3">Through tenon<svg><use href="#bolt"/></svg>Winding sticks<svg><use href="#bolt"/></svg>Spokeshave<svg><use href="#bolt"/></svg>Ash</p>
+  <p class="s4">Shooting board · cabinet scraper · No. 4 smoother · boiled linseed · 3mm to 38mm · end grain</p>
+  <p class="s5">Mostly square<svg><use href="#square"/></svg>Shavings</p>
+</div>
+
+<div class="wrap">
+  <div class="grid">
+  <main>
+  <h2 class="index" id="join">Joining</h2>
+  <ul class="prices">
+    <li><span>First visit</span><b>Free</b></li>
+    <li><span>A single night</span><b>£3</b></li>
+    <li><span>Monthly membership</span><b>£8</b></li>
+    <li><span>Students and the skint</span><b>Pay what you can</b></li>
+  </ul>
+  <p>Members get a bench at any session and a shelf in the arch for work in progress. There's a vote at the AGM too, which takes eleven minutes and is mostly about the kettle. You buy your own timber.</p>
+  <p class="end">Sweep your bench before you go home.</p>
+  <p><a class="button" href="mailto:hello@holbeckshavings.club">Email Priya to join</a></p>
+  </main>
+  <aside>
+    <section>
+      <h2>Find us</h2>
+      <p>Arch 14, Water Lane, Holbeck, Leeds LS11. Under the line to Bradford, between the tyre place and the climbing wall.</p>
+    </section>
+  </aside>
+  </div>
+  <footer>
+    <span>Holbeck Shavings Club, est. 1977. Run by members, for the price of the electricity.</span>
+    <span>hello@holbeckshavings.club</span>
+  </footer>
+</div>
+
+<div class="edge foot" aria-hidden="true"></div>
+</body>
+</html>
