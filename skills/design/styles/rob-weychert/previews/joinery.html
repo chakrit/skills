@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The three-bay cabinet, in all 27 arrangements — Wren Lane Joinery — Rob Weychert style preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@100..900&family=Red+Hat+Mono:wght@300..700&display=swap">
+<style>
+  /* Interval 4:3. Sizes multiply by it and weights divide by it, so the large title is
+     drawn with the same thin pen as the cabinet drawings. */
+  :root {
+    --s-1: 0.8rem;
+    --s0: 1.0625rem;
+    --s1: 1.417rem;
+    --s2: 1.889rem;
+    --s5: 4.48rem;
+    --w-1: 587;
+    --w0: 440;
+    --w1: 330;
+    --w2: 248;
+    --w5: 105;
+    --w-thick: 760;
+
+    --pen-thin: 0.0625rem;
+    --pen-thick: 0.1875rem;
+
+    /* Two inks on paper: ultramarine (the base hue, 268) and ochre (its complement,
+       +180 = 88). The paper leans toward the ochre. Change --hue and every colour follows. */
+    --hue: 268;
+    --paper: oklch(0.965 0.014 calc(var(--hue) + 180));
+    --blue: oklch(0.36 0.17 var(--hue));
+    --blue-text: oklch(0.29 0.12 var(--hue));
+    --blue-soft: oklch(0.46 0.08 var(--hue));
+    --rule: oklch(0.8 0.03 var(--hue));
+    --ochre: oklch(0.78 0.13 calc(var(--hue) + 180));
+
+    --sans: "Albert Sans", "Helvetica Neue", Arial, sans-serif;
+    --mono: "Red Hat Mono", ui-monospace, monospace;
+
+    /* Grid ratios margin : column : gutter : padding = 3 : 3 : 2 : 1 in units of --u.
+       Twelve columns take 3·2 + 3·12 + 2·11 = 64 units. */
+    --cols: 12;
+    --u: calc(min(100vw, 82rem) / 64);
+  }
+  @media (max-width: 60em) {
+    :root { --cols: 9; --u: calc(100vw / 49); }
+  }
+  @media (max-width: 34em) {
+    /* Phone: the title drops two steps, to 2.52rem at weight 186. */
+    :root { --cols: 4; --u: calc(100vw / 24); --s5: 2.52rem; --w5: 186; }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    font-size: 100%;
+    background: var(--paper);
+    color: var(--blue-text);
+    font-family: var(--sans);
+    font-synthesis: none;
+    -webkit-text-size-adjust: 100%;
+  }
+  body { margin: 0; font-size: var(--s0); font-weight: var(--w0); line-height: 1.5; }
+
+  h1, h2, p, figure, ol, ul, dl, dd { margin: 0; padding: 0; }
+  ol, ul { list-style: none; }
+
+  a { color: var(--blue); text-decoration-thickness: var(--pen-thin); text-underline-offset: 0.18em; }
+  a:hover { text-decoration-thickness: var(--pen-thick); }
+  a:focus-visible { outline: var(--pen-thick) solid var(--blue); outline-offset: 0.15em; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+    column-gap: calc(2 * var(--u));
+    max-width: 82rem;
+    margin-inline: auto;
+    padding-inline: max(calc(3 * var(--u)), env(safe-area-inset-left)) max(calc(3 * var(--u)), env(safe-area-inset-right));
+  }
+
+  .mono { font-family: var(--mono); }
+
+  /* The drawings: stroke only, at the stem width, never filled. */
+  .pen { fill: none; stroke: var(--blue); stroke-width: 1; stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+  .pen * { vector-effect: non-scaling-stroke; }
+  .ochre { fill: var(--ochre); mix-blend-mode: multiply; }
+
+  /* ---------- Top ---------- */
+  .top { padding-block: calc(2 * var(--u)); align-items: baseline; }
+  .shop {
+    grid-column: 1 / span 5;
+    font-size: var(--s1);
+    font-weight: var(--w-thick);
+    line-height: 1;
+    letter-spacing: -0.01em;
+    color: var(--blue);
+    text-decoration: none;
+  }
+  .nav { grid-column: 6 / -1; justify-self: end; }
+  .nav ul { display: flex; flex-wrap: wrap; gap: 0.2rem calc(3 * var(--u)); }
+  .nav a { color: var(--blue-text); text-decoration: none; font-weight: var(--w-1); font-size: var(--s-1); }
+  .nav a:hover { color: var(--blue); text-decoration: underline; }
+
+  /* ---------- Opening ---------- */
+  .opening {
+    padding-block: calc(5 * var(--u)) calc(4 * var(--u));
+    box-shadow: inset 0 var(--pen-thin) 0 var(--rule);
+    row-gap: calc(3 * var(--u));
+  }
+  .opening h1 {
+    grid-column: 1 / span 6;
+    grid-row: 1;
+    font-size: var(--s5);
+    font-weight: var(--w5);
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+    color: var(--blue);
+    text-wrap: balance;
+  }
+  .lead {
+    grid-column: 1 / span 5;
+    grid-row: 2;
+    font-size: var(--s1);
+    font-weight: var(--w1);
+    line-height: 1.35;
+  }
+  .lead p + p, .order p + p { text-indent: 2.1em; }
+  .lead, .sheet-head p, .order p { font-variant-numeric: oldstyle-nums; }
+  .hero {
+    grid-column: 7 / -1;
+    grid-row: 1 / span 2;
+    align-self: center;
+  }
+  .hero-cab { display: block; width: 100%; height: auto; }
+  .hero-note {
+    margin-top: calc(1.5 * var(--u));
+    font-size: var(--s-1);
+    font-weight: var(--w-1);
+    color: var(--blue-soft);
+  }
+
+  /* ---------- The three fronts ---------- */
+  .fronts {
+    padding-block: calc(2 * var(--u)) calc(4 * var(--u));
+  }
+  .fronts h2, .sheet-head h2, .spec h2 {
+    font-size: var(--s2);
+    font-weight: var(--w2);
+    line-height: 1.1;
+    color: var(--blue);
+  }
+  .fronts h2 { grid-column: 1 / span 3; padding-top: calc(1.5 * var(--u)); }
+  .fronts ul {
+    grid-column: 4 / -1;
+    display: grid;
+    grid-template-columns: subgrid;
+    box-shadow: inset 0 var(--pen-thin) 0 var(--blue);
+  }
+  .fronts li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: calc(1.5 * var(--u));
+    align-items: baseline;
+    padding-block: calc(1.5 * var(--u));
+  }
+  .fronts li:nth-child(1) { grid-column: 1 / span 3; }
+  .fronts li:nth-child(2) { grid-column: 4 / span 3; }
+  .fronts li:nth-child(3) { grid-column: 7 / span 3; }
+  .bay { grid-row: 1 / span 3; width: 3.6rem; height: auto; align-self: start; }
+  .front-name { font-weight: var(--w0); }
+  .front-code { font-family: var(--mono); font-size: var(--s-1); font-weight: var(--w-1); color: var(--blue-soft); }
+  .front-price { font-size: var(--s-1); font-weight: var(--w-1); font-variant-numeric: lining-nums; }
+
+  /* ---------- All 27 ---------- */
+  .sheet { padding-bottom: calc(5 * var(--u)); }
+  .sheet-head { padding-top: calc(3 * var(--u)); box-shadow: inset 0 var(--pen-thin) 0 var(--blue); }
+  .sheet-head h2 { grid-column: 1 / span 4; padding-top: calc(1.5 * var(--u)); }
+  .sheet-head p { grid-column: 5 / span 6; padding-top: calc(2 * var(--u)); max-width: 36em; }
+  .cabinets {
+    grid-column: 1 / -1;
+    margin-top: calc(4 * var(--u));
+    display: grid;
+    grid-template-columns: repeat(9, minmax(0, 1fr));
+    column-gap: calc(2 * var(--u));
+    row-gap: calc(4 * var(--u));
+  }
+  .cabinets li { padding-top: calc(1 * var(--u)); }
+  .cab { display: block; width: 100%; height: auto; }
+  .code {
+    margin-top: 0.4rem;
+    font-family: var(--mono);
+    font-size: var(--s-1);
+    font-weight: var(--w-1);
+    font-variant-numeric: tabular-nums;
+  }
+  .code .no { display: block; color: var(--blue-soft); }
+  .price { font-size: var(--s-1); font-weight: var(--w-1); font-variant-numeric: lining-nums tabular-nums; }
+  .cabinets li:target .code { box-shadow: inset 0 calc(-1 * var(--pen-thick)) 0 var(--ochre); }
+
+  /* ---------- Spec and ordering ---------- */
+  .spec { padding-block: calc(3 * var(--u)) calc(5 * var(--u)); box-shadow: inset 0 var(--pen-thin) 0 var(--rule); }
+  .spec > h2 { grid-column: 1 / span 4; padding-top: calc(1.5 * var(--u)); }
+  .spec dl {
+    grid-column: 5 / span 5;
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    column-gap: calc(3 * var(--u));
+  }
+  .spec dt, .spec dd { padding-block: 0.6rem; box-shadow: inset 0 var(--pen-thin) 0 var(--rule); }
+  .spec dt { font-size: var(--s-1); font-weight: var(--w-1); padding-top: 0.75rem; }
+  .spec dd { font-variant-numeric: lining-nums; }
+  .order { grid-column: 5 / span 5; margin-top: calc(4 * var(--u)); max-width: 34em; }
+  .order h2 { margin-bottom: 0.5em; }
+
+  /* ---------- Footer ---------- */
+  .foot {
+    padding-block: calc(3 * var(--u)) calc(4 * var(--u));
+    box-shadow: inset 0 var(--pen-thin) 0 var(--blue);
+  }
+  .foot .shop { grid-column: 1 / span 4; padding-top: calc(2 * var(--u)); font-size: var(--s0); }
+  .foot-text {
+    grid-column: 5 / span 6;
+    padding-top: calc(2 * var(--u));
+    font-size: var(--s-1);
+    font-weight: var(--w-1);
+    line-height: 1.55;
+    color: var(--blue-soft);
+    max-width: 34em;
+  }
+  .foot-text p + p { margin-top: 0.8em; }
+
+  /* ---------- Nine columns ---------- */
+  @media (max-width: 60em) {
+    .shop { grid-column: 1 / span 4; }
+    .nav { grid-column: 5 / -1; }
+    .opening h1 { grid-column: 1 / -1; grid-row: auto; }
+    .lead { grid-column: 1 / span 5; grid-row: auto; }
+    .hero { grid-column: 6 / -1; grid-row: auto; }
+    .fronts h2, .sheet-head h2, .spec > h2 { grid-column: 1 / -1; }
+    .fronts ul { grid-column: 1 / -1; margin-top: calc(2 * var(--u)); }
+    .sheet-head p { grid-column: 1 / span 7; }
+    .spec dl, .order { grid-column: 1 / span 7; }
+    .spec dl { margin-top: calc(2 * var(--u)); }
+    .foot .shop, .foot-text { grid-column: 1 / -1; }
+  }
+
+  /* ---------- Phones: four columns ---------- */
+  @media (max-width: 34em) {
+    .shop, .nav { grid-column: 1 / -1; }
+    .nav { justify-self: start; margin-top: 0.8rem; }
+    .lead, .hero, .sheet-head p, .spec dl, .order { grid-column: 1 / -1; }
+    .fronts li:nth-child(n) { grid-column: 1 / -1; }
+    .cabinets { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: calc(2 * var(--u)); row-gap: calc(3 * var(--u)); }
+  }
+</style>
+</head>
+<body>
+
+<header class="top grid">
+  <a class="shop" href="#">Wren Lane Joinery</a>
+  <nav class="nav" aria-label="Main">
+    <ul>
+      <li><a href="#fronts">The fronts</a></li>
+      <li><a href="#all">All 27</a></li>
+      <li><a href="#spec">Size and timber</a></li>
+      <li><a href="#order">Ordering</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <section class="opening grid" aria-labelledby="title">
+    <h1 id="title">The three-bay cabinet, in all 27 arrangements</h1>
+    <div class="lead">
+      <p>One oak wall cabinet with three bays. Each bay takes an open shelf, two drawers or a door, so there are 27 cabinets to choose from.</p>
+      <p>We have drawn them all below, each with a code and a price. To order one, send us its code.</p>
+    </div>
+    <figure class="hero">
+      <svg class="hero-cab" viewBox="-0.770 -1.120 3.488 3.115" role="img" aria-label="The cabinet WL-ODP: open shelf, two drawers, door"><g class="pen"><polygon points="0.000,-1.000 2.598,0.500 1.949,0.875 -0.650,-0.625"/><polygon points="-0.650,0.375 1.949,1.875 1.949,0.875 -0.650,-0.625"/><polygon points="2.598,1.500 1.949,1.875 1.949,0.875 2.598,0.500"/><polygon points="-0.611,0.353 0.204,0.822 0.204,-0.088 -0.611,-0.557"/><line x1="-0.611" y1="-0.080" x2="0.204" y2="0.390"/><line x1="-0.611" y1="-0.125" x2="0.204" y2="0.345"/><line x1="-0.611" y1="0.353" x2="-0.236" y2="0.136"/><line x1="-0.611" y1="-0.125" x2="-0.236" y2="-0.341"/><polygon points="0.242,0.370 1.057,0.840 1.057,0.405 0.242,-0.065"/><polygon points="0.242,0.845 1.057,1.315 1.057,0.880 0.242,0.410"/><line x1="0.546" y1="0.337" x2="0.753" y2="0.458"/><line x1="0.546" y1="0.792" x2="0.753" y2="0.913"/><polygon points="1.096,1.338 1.910,1.808 1.910,0.898 1.096,0.428"/><polygon points="1.182,1.288 1.823,1.657 1.823,0.948 1.182,0.578"/><circle cx="1.858" cy="1.323" r="0.03"/></g><polygon class="ochre" points="0.000,-1.000 2.598,0.500 2.598,1.500 1.949,1.875 -0.650,0.375 -0.650,-0.625" transform="translate(0.09 0.07)"/></svg>
+      <figcaption class="hero-note"><span class="mono">WL-ODP</span>, the one on our own kitchen wall.</figcaption>
+    </figure>
+  </section>
+
+  <section class="fronts grid" id="fronts" aria-labelledby="fronts-title">
+    <h2 id="fronts-title">Three fronts</h2>
+    <ul>
+        <li><svg class="bay" viewBox="-0.72 -0.72 1.2 1.66" aria-hidden="true"><g class="pen"><polygon points="-0.650,0.375 0.242,0.890 0.242,-0.110 -0.650,-0.625"/><polygon points="-0.611,0.353 0.204,0.822 0.204,-0.088 -0.611,-0.557"/><line x1="-0.611" y1="-0.080" x2="0.204" y2="0.390"/><line x1="-0.611" y1="-0.125" x2="0.204" y2="0.345"/><line x1="-0.611" y1="0.353" x2="-0.236" y2="0.136"/><line x1="-0.611" y1="-0.125" x2="-0.236" y2="-0.341"/></g></svg><span class="front-name">Open shelf</span><span class="front-code">O</span><span class="front-price">no charge</span></li>
+        <li><svg class="bay" viewBox="-0.72 -0.72 1.2 1.66" aria-hidden="true"><g class="pen"><polygon points="-0.650,0.375 0.242,0.890 0.242,-0.110 -0.650,-0.625"/><polygon points="-0.611,-0.122 0.204,0.347 0.204,-0.088 -0.611,-0.557"/><polygon points="-0.611,0.353 0.204,0.822 0.204,0.387 -0.611,-0.082"/><line x1="-0.307" y1="-0.155" x2="-0.100" y2="-0.035"/><line x1="-0.307" y1="0.300" x2="-0.100" y2="0.420"/></g></svg><span class="front-name">Two drawers</span><span class="front-code">D</span><span class="front-price">+£95</span></li>
+        <li><svg class="bay" viewBox="-0.72 -0.72 1.2 1.66" aria-hidden="true"><g class="pen"><polygon points="-0.650,0.375 0.242,0.890 0.242,-0.110 -0.650,-0.625"/><polygon points="-0.611,0.353 0.204,0.822 0.204,-0.088 -0.611,-0.557"/><polygon points="-0.524,0.302 0.117,0.672 0.117,-0.037 -0.524,-0.407"/><circle cx="0.152" cy="0.338" r="0.03"/></g></svg><span class="front-name">Door</span><span class="front-code">P</span><span class="front-price">+£65</span></li>
+    </ul>
+  </section>
+
+  <section class="sheet" id="all" aria-labelledby="all-title">
+    <div class="sheet-head grid">
+      <h2 id="all-title">All 27</h2>
+      <p>Counted the way an odometer counts: the right-hand bay changes first, the left-hand bay last. Every cabinet starts at £360 for the oak carcass; drawers add £95 a bay and a door £65.</p>
+    </div>
+    <div class="grid">
+      <ol class="cabinets">
+        <li id="wl-ooo"><svg class="cab" viewBox="-0.770 -1.120 3.488 3.115" role="img" aria-label="Cabinet OOO: open shelf, open shelf, open shelf"><g class="pen"><polygon points="0.000,-1.000 2.598,0.500 1.949,0.875 -0.650,-0.625"/><polygon points="-0.650,0.375 1.949,1.875 1.949,0.875 -0.650,-0.625"/><polygon points="2.598,1.500 1.949,1.875 1.949,0.875 2.598,0.500"/><polygon points="-0.611,0.353 0.204,0.822 0.204,-0.088 -0.611,-0.557"/><line x1="-0.611" y1="-0.080" x2="0.204" y2="0.390"/><line x1="-0.611" y1="-0.125" x2="0.204" y2="0.345"/><line x1="-0.611" y1="0.353" x2="-0.236" y2="0.136"/><line x1="-0.611" y1="-0.125" x2="-0.236" y2="-0.341"/><polygon points="0.242,0.845 1.057,1.315 1.057,0.405 0.242,-0.065"/><line x1="0.242" y1="0.413" x2="1.057" y2="0.882"/><line x1="0.242" y1="0.368" x2="1.057" y2="0.837"/><line x1="0.242" y1="0.845" x2="0.617" y2="0.629"/><line x1="0.242" y1="0.368" x2="0.617" y2="0.151"/><polygon points="1.096,1.338 1.910,1.808 1.910,0.898 1.096,0.428"/><line x1="1.096" y1="0.905" x2="1.910" y2="1.375"/><line x1="1.096" y1="0.860" x2="1.910" y2="1.330"/><line x1="1.096" y1="1.338" x2="1.470" y2="1.121"/><line x1="1.096" y1="0.860" x2="1.470" y2="0.644"/></g></svg><p class="code"><span class="no">01</span> WL-OOO</p><p class="price">£360</p></li>
+        <li id="wl-ood"><svg class="cab" viewBox="-0.770 -1.120 3.488 3.115" role="img" aria-label="Cabinet OOD: open shelf, open shelf, two drawers"><g class="pen"><polygon points="0.000,-1.000 2.598,0.500 1.949,0.875 -0.650,-0.625"/><polygon points="-0.650,0.375 1.949,1.875 1.949,0.875 -0.650,-0.625"/><polygon points="2.598,1.500 1.949,1.875 1.949,0.875 2.598,0.500"/><polygon points="-0.611,0.353 0.204,0.822 0.204,-0.088 -0.611,-0.557"/><line x1="-0.611" y1="-0.080" x2="0.204" y2="0.390"/><line x1="-0.611" y1="-0.125" x2="0.204" y2="0.345"/><line x1="-0.611" y1="0.353" x2="-0.236" y2="0.136"/><line x1="-0.611" y1="-0.125" x2="-0.236" y2="-0.341"/><polygon points="0.242,0.845 1.057,1.315 1.057,0.405 0.242,-0.065"/><line x1="0.242" y1="0.413" x2="1.057" y2="0.882"/><line x1="0.242" y1="0.368" x2="1.057" y2="0.837"/><line x1="0.242" y1="0.845" x2="0.617" y2="0.629"/><line x1="0.242" y1="0.368" x2="0.617" y2="0.151"/><polygon points="1.096,0.863 1.910,1.333 1.910,0.898 1.096,0.428"/><polygon points="1.096,1.338 1.910,1.808 1.910,1.373 1.096,0.903"/><line x1="1.399" y1="0.830" x2="1.606" y2="0.950"/><line x1="1.399" y1="1.285" x2="1.606" y2="1.405"/></g></svg><p class="code"><span class="no">02</span> WL-OOD</p><p class="price">£455</p></li>
+        <li id="wl-oop"><svg class="cab" viewBox="-0.770 -1.120 3.488 3.115" role="img" aria-label="Cabinet OOP: open shelf, open shelf, door"><g class="pen"><polygon points="0.000,-1.000 2.598,0.500 1.949,0.875 -0.650,-0.625"/><polygon points="-0.650,0.375 1.949,1.875 1.949,0.875 -0.650,-0.625"/><polygon points="2.598,1.500 1.949,1.875 1.949,0.875 2.598,0.500"/><polygon points="-0.611,0.353 0.204,0.822 0.204,-0.088 -0.611,-0.557"/><line x1="-0.611" y1="-0.080" x2="0.204" y2="0.390"/><line x1="-0.611" y1="-0.125" x2="0.204" y2="0.345"/><line x1="-0.611" y1="0.353" x2="-0.236" y2="0.136"/><line x1="-0.611" y1="-0.125" x2="-0.236" y2="-0.341"/><polygon points="0.242,0.845 1.057,1.315 1.057,0.405 0.242,-0.065"/><line x1="0.242" y1="0.413" x2="1.057" y2="0.882"/><line x1="0.242" y1="0.368" x2="1.057" y2="0.837"/><line x1="0.242" y1="0.845" x2="0.617" y2="0.629"/><line x1="0.242" y1="0.368" x2="0.617" y2="0.151"/><polygon points="1.096,1.338 1.910,1.808 1.910,0.898 1.096,0.428"/><polygon points="1.182,1.288 1.823,1.657 1.823,0.948 1.182,0.578"/><circle cx="1.858" cy="1.323" r="0.03"/></g></svg><p class="code"><span class="no">03</span> WL-OOP</p><p class="price">£425</p></li>
+        <li id="wl-odo"><svg class="cab" viewBox="-0.770 -1.120 3.488 3.115" role="img" aria-label="Cabinet ODO: open shelf, two drawers, open shelf"><g class="pen"><polygon points="0.000,-1.000 2.598,0.500 1.949,0.875 -0.650,-0.625"/><polygon points="-0.650,0.375 1.949,1.875 1.949,0.875 -0.650,-0.625"/><polygon points="2.598,1.500 1.949,1.875 1.949,0.875 2.598,0.500"/><polygon points="-0.611,0.353 0.204,0.822 0.204,-0.088 -0.611,-0.557"/><line x1="-0.611" y1="-0.080" x2="0.204" y2="0.390"/><line x1="-0.611" y1="-0.125" x2="0.204" y2="0.345"/><line x1="-0.611" y1="0.353" x2="-0.236" y2="0.136"/><line x1="-0.611" y1="-0.125" x2="-0.236" y2="-0.341"/><polygon points="0.242,0.370 1.057,0.840 1.057,0.405 0.242,-0.065"/><polygon points="0.242,0.845 1.057,1.315 1.057,0.880 0.242,0.410"/><line x1="0.546" y1="0.337" x2="0.753" y2="0.458"/><line x1="0.546" y1="0.792" x2="0.753" y2="0.913"/><polygon points="1.096,1.338 1.910,1.808 1.910,0.898 1.096,0.428"/><line x1="1.096" y1="0.905" x2="1.910" y2="1.375"/><line x1="1.096" y1="0.860" x2="1.910" y2="1.330"/><line x1="1.096" y1="1.338" x2="1.470" y2="1.121"/><line x1="1.096" y1="0.860" x2="1.470" y2="0.644"/></g></svg><p class="code"><span class="no">04</span> WL-ODO</p><p class="price">£455</p></li>
+        <li id="wl-odd"><svg class="cab" viewBox="-0.770 -1.120 3.488 3.115" role="img" aria-label="Cabinet ODD: open shelf, two drawers, two drawers"><g class="pen"><polygon points="0.000,-1.000 2.598,0.500 1.949,0.875 -0.650,-0.625"/><polygon points="-0.650,0.375 1.949,1.875 1.949,0.875 -0.650,-0.625"/><polygon points="2.598,1.500 1.949,1.875 1.949,0.875 2.598,0.500"/><polygon points="-0.611,0.353 0.204,0.822 0.204,-0.088 -0.611,-0.557"/><line x1="-0.611" y1="-0.080" x2="0.204" y2="0.390"/><line x1="-0.611" y1="-0.125" x2="0.204" y2="0.345"/><line x1="-0.611" y1="0.353" x2="-0.236" y2="0.136"/><line x1="-0.611" y1="-0.125" x2="-0.236" y2="-0.341"/><polygon points="0.242,0.370 1.057,0.840 1.057,0.405 0.242,-0.065"/><polygon points="0.242,0.845 1.057,1.315 1.057,0.880 0.242,0.410"/><line x1="0.546" y1="0.337" x2="0.753" y2="0.458"/><line x1="0.546" y1="0.792" x2="0.753" y2="0.913"/><polygon points="1.096,0.863 1.910,1.333 1.910,0.898 1.096,0.428"/><polygon points="1.096,1.338 1.910,1.808 1.910,1.373 1.096,0.903"/><line x1="1.399" y1="0.830" x2="1.606" y2="0.950"/><line x1="1.399" y1="1.285" x2="1.606" y2="1.405"/></g></svg><p class="code"><span class="no">05</span> WL-ODD</p><p class="price">£550</p></li>
+        <li id="wl-odp"><svg class="cab" viewBox="-0.770 -1.120 3.488 3.115" role="img" aria-label="Cabinet ODP: open shelf, two drawers, door"><g class="pen"><polygon points="0.000,-1.000 2.598,0.500 1.949,0.875 -0.650,-0.625"/><polygon points="-0.650,0.375 1.949,1.875 1.949,0.875 -0.650,-0.625"/><polygon points="2.598,1.500 1.949,1.875 1.949,0.875 2.598,0.500"/><polygon points="-0.611,0.353 0.204,0.822 0.204,-0.088 -0.611,-0.557"/><line x1="-0.611" y1="-0.080" x2="0.204" y2="0.390"/><line x1="-0.611" y1="-0.125" x2="0.204" y2="0.345"/><line x1="-0.611" y1="0.353" x2="-0.236" y2="0.136"/><line x1="-0.611" y1="-0.125" x2="-0.236" y2="-0.341"/><polygon points="0.242,0.370 1.057,0.840 1.057,0.405 0.242,-0.065"/><polygon points="0.242,0.845 1.057,1.315 1.057,0.880 0.242,0.410"/><line x1="0.546" y1="0.337" x2="0.753" y2="0.458"/><line x1="0.546" y1="0.792" x2="0.753" y2="0.913"/><polygon points="1.096,1.338 1.910,1.808 1.910,0.898 1.096,0.428"/><polygon points="1.182,1.288 1.823,1.657 1.823,0.948 1.182,0.578"/><circle cx="1.858" cy="1.323" r="0.03"/></g></svg><p class="code"><span class="no">06</span> WL-ODP</p><p class="price">£520</p></li>
+        <li id="wl-opo"><svg class="cab" viewBox="-0.770 -1.120 3.488 3.115" role="img" aria-label="Cabinet OPO: open shelf, door, open shelf"><g class="pen"><polygon points="0.000,-1.000 2.598,0.500 1.949,0.875 -0.650,-0.625"/><polygon points="-0.650,0.375 1.949,1.875 1.949,0.875 -0.650,-0.625"/><polygon points="2.598,1.500 1.949,1.875 1.949,0.875 2.598,0.500"/><polygon points="-0.611,0.353 0.204,0.822 0.204,-0.088 -0.611,-0.557"/><line x1="-0.611" y1="-0.080" x2="0.204" y2="0.390"/><line x1="-0.611" y1="-0.125" x2="0.204" y2="0.345"/><line x1="-0.611" y1="0.353" x2="-0.236" y2="0.136"/><line x1="-0.611" y1="-0.125" x2="-0.236" y2="-0.341"/><polygon points="0.242,0.845 1.057,1.315 1.057,0.405 0.242,-0.065"/><polygon points="0.329,0.795 0.970,1.165 0.970,0.455 0.329,0.085"/><circle cx="1.005" cy="0.830" r="0.03"/><polygon points="1.096,1.338 1.910,1.808 1.910,0.898 1.096,0.428"/><line x1="1.096" y1="0.905" x2="1.910" y2="1.375"/><line x1="1.096" y1="0.860" x2="1.910" y2="1.330"/><line x1="1.096" y1="1.338" x2="1.470" y2="1.121"/><line x1="1.096" y1="0.860" x2="1.470" y2="0.644"/></g></svg><p class="code"><span class="no">07</span> WL-OPO</p><p class="price">£425</p></li>
+        <li id="wl-opd"><svg class="cab" viewBox="-0.770 -1.120 3.488 3.115" role="img" aria-label="Cabinet OPD: open shelf, door, two drawers"><g class="pen"><polygon points="0.000,-1.000 2.598,0.500 1.949,0.875 -0.650,-0.625"/><polygon points="-0.650,0.375 1.949,1.875 1.949,0.875 -0.650,-0.625"/><polygon points="2.598,1.500 1.949,1.875 1.949,0.875 2.598,0.500"/><polygon points="-0.611,0.353 0.204,0.822 0.204,-0.088 -0.611,-0.557"/><line x1="-0.611" y1="-0.080" x2="0.204" y2="0.390"/><line x1="-0.611" y1="-0.125" x2="0.204" y2="0.345"/><line x1="-0.611" y1="0.353" x2="-0.236" y2="0.136"/><line x1="-0.611" y1="-0.125" x2="-0.236" y2="-0.341"/><polygon points="0.242,0.845 1.057,1.315 1.057,0.405 0.242,-0.065"/><polygon points="0.329,0.795 0.970,1.165 0.970,0.455 0.329,0.085"/><circle cx="1.005" cy="0.830" r="0.03"/><polygon points="1.096,0.863 1.910,1.333 1.910,0.898 1.096,0.428"/><polygon points="1.096,1.338 1.910,1.808 1.910,1.373 1.096,0.903"/><line x1="1.399" y1="0.830" x2="1.606" y2="0.950"/><line x1="1.399" y1="1.285" x2="1.606" y2="1.405"/></g></svg><p class="code"><span class="no">08</span> WL-OPD</p><p class="price">£520</p></li>
+        <li id="wl-opp"><svg class="cab" viewBox="-0.770 -1.120 3.488 3.115" role="img" aria-label="Cabinet OPP: open shelf, door, door"><g class="pen"><polygon points="0.000,-1.000 2.598,0.500 1.949,0.875 -0.650,-0.625"/><polygon points="-0.650,0.375 1.949,1.875 1.949,0.875 -0.650,-0.625"/><polygon points="2.598,1.500 1.949,1.875 1.949,0.875 2.598,0.500"/><polygon points="-0.611,0.353 0.204,0.822 0.204,-0.088 -0.611,-0.557"/><line x1="-0.611" y1="-0.080" x2="0.204" y2="0.390"/><line x1="-0.611" y1="-0.125" x2="0.204" y2="0.345"/><line x1="-0.611" y1="0.353" x2="-0.236" y2="0.136"/><line x1="-0.611" y1="-0.125" x2="-0.236" y2="-0.341"/><polygon points="0.242,0.845 1.057,1.315 1.057,0.405 0.242,-0.065"/><polygon points="0.329,0.795 0.970,1.165 0.970,0.455 0.329,0.085"/><circle cx="1.005" cy="0.830" r="0.03"/><polygon points="1.096,1.338 1.910,1.808 1.910,0.898 1.096,0.428"/><polygon points="1.182,1.288 1.823,1.657 1.823,0.948 1.182,0.578"/><circle cx="1.858" cy="1.323" r="0.03"/></g></svg><p class="code"><span class="no">09</span> WL-OPP</p><p class="price">£490</p></li>
+        <li id="wl-doo"><svg class="cab" viewBox="-0.770 -1.120 3.488 3.115" role="img" aria-label="Cabinet DOO: two drawers, open shelf, open shelf"><g class="pen"><polygon points="0.000,-1.000 2.598,0.500 1.949,0.875 -0.650,-0.625"/><polygon points="-0.650,0.375 1.949,1.875 1.949,0.875 -0.650,-0.625"/><polygon points="2.598,1.500 1.949,1.875 1.949,0.875 2.598,0.500"/><polygon points="-0.611,-0.122 0.204,0.347 0.204,-0.088 -0.611,-0.557"/><polygon points="-0.611,0.353 0.204,0.822 0.204,0.387 -0.611,-0.082"/><line x1="-0.307" y1="-0.155" x2="-0.100" y2="-0.035"/><line x1="-0.307" y1="0.300" x2="-0.100" y2="0.420"/><polygon points="0.242,0.845 1.057,1.315 1.057,0.405 0.242,-0.065"/><line x1="0.242" y1="0.413" x2="1.057" y2="0.882"/><line x1="0.242" y1="0.368" x2="1.057" y2="0.837"/><line x1="0.242" y1="0.845" x2="0.617" y2="0.629"/><line x1="0.242" y1="0.368" x2="0.617" y2="0.151"/><polygon points="1.096,1.338 1.910,1.808 1.910,0.898 1.096,0.428"/><line x1="1.096" y1="0.905" x2="1.910" y2="1.375"/><line x1="1.096" y1="0.860" x2="1.910" y2="1.330"/><line x1="1.096" y1="1.338" x2="1.470" y2="1.121"/><line x1="1.096" y1="0.860" x2="1.470" y2="0.644"/></g></svg><p class="code"><span class="no">10</span> WL-DOO</p><p class="price">£455</p></li>
+        <li id="wl-dod"><svg class="cab" viewBox="-0.770 -1.120 3.488 3.115" role="img" aria-label="Cabinet DOD: two drawers, open shelf, two drawers"><g class="pen"><polygon points="0.000,-1.000 2.598,0.500 1.949,0.875 -0.650,-0.625"/><polygon points="-0.650,0.375 1.949,1.875 1.949,0.875 -0.650,-0.625"/><polygon points="2.598,1.500 1.949,1.875 1.949,0.875 2.598,0.500"/><polygon points="-0.611,-0.122 0.204,0.347 0.204,-0.088 -0.611,-0.557"/><polygon points="-0.611,0.353 0.204,0.822 0.204,0.387 -0.611,-0.082"/><line x1="-0.307" y1="-0.155" x2="-0.100" y2="-0.035"/><line x1="-0.307" y1="0.300" x2="-0.100" y2="0.420"/><polygon points="0.242,0.845 1.057,1.315 1.057,0.405 0.242,-0.065"/><line x1="0.242" y1="0.413" x2="1.057" y2="0.882"/><line x1="0.242" y1="0.368" x2="1.057" y2="0.837"/><line x1="0.242" y1="0.845" x2="0.617" y2="0.629"/><line x1="0.242" y1="0.368" x2="0.617" y2="0.151"/><polygon points="1.096,0.863 1.910,1.333 1.910,0.898 1.096,0.428"/><polygon points="1.096,1.338 1.910,1.808 1.910,1.373 1.096,0.903"/><line x1="1.399" y1="0.830" x2="1.606" y2="0.950"/><line x1="1.399" y1="1.285" x2="1.606" y2="1.405"/></g></svg><p class="code"><span class="no">11</span> WL-DOD</p><p class="price">£550</p></li>
+        <li id="wl-dop"><svg class="cab" viewBox="-0.770 -1.120 3.488 3.115" role="img" aria-label="Cabinet DOP: two drawers, open shelf, door"><g class="pen"><polygon points="0.000,-1.000 2.598,0.500 1.949,0.875 -0.650,-0.625"/><polygon points="-0.650,0.375 1.949,1.875 1.949,0.875 -0.650,-0.625"/><polygon points="2.598,1.500 1.949,1.875 1.949,0.875 2.598,0.500"/><polygon points="-0.611,-0.122 0.204,0.347 0.204,-0.088 -0.611,-0.557"/><polygon points="-0.611,0.353 0.204,0.822 0.204,0.387 -0.611,-0.082"/><line x1="-0.307" y1="-0.155" x2="-0.100" y2="-0.035"/><line x1="-0.307" y1="0.300" x2="-0.100" y2="0.420"/><polygon points="0.242,0.845 1.057,1.315 1.057,0.405 0.242,-0.065"/><line x1="0.242" y1="0.413" x2="1.057" y2="0.882"/><line x1="0.242" y1="0.368" x2="1.057" y2="0.837"/><line x1="0.242" y1="0.845" x2="0.617" y2="0.629"/><line x1="0.242" y1="0.368" x2="0.617" y2="0.151"/><polygon points="1.096,1.338 1.910,1.808 1.910,0.898 1.096,0.428"/><polygon points="1.182,1.288 1.823,1.657 1.823,0.948 1.182,0.578"/><circle cx="1.858" cy="1.323" r="0.03"/></g></svg><p class="code"><span class="no">12</span> WL-DOP</p><p class="price">£520</p></li>
+        <li id="wl-ddo"><svg class="cab" viewBox="-0.770 -1.120 3.488 3.115" role="img" aria-label="Cabinet DDO: two drawers, two drawers, open shelf"><g class="pen"><polygon points="0.000,-1.000 2.598,0.500 1.949,0.875 -0.650,-0.625"/><polygon points="-0.650,0.375 1.949,1.875 1.949,0.875 -0.650,-0.625"/><polygon points="2.598,1.500 1.949,1.875 1.949,0.875 2.598,0.500"/><polygon points="-0.611,-0.122 0.204,0.347 0.204,-0.088 -0.611,-0.557"/><polygon points="-0.611,0.353 0.204,0.822 0.204,0.387 -0.611,-0.082"/><line x1="-0.307" y1="-0.155" x2="-0.100" y2="-0.035"/><line x1="-0.307" y1="0.300" x2="-0.100" y2="0.420"/><polygon points="0.242,0.370 1.057,0.840 1.057,0.405 0.242,-0.065"/><polygon points="0.242,0.845 1.057,1.315 1.057,0.880 0.242,0.410"/><line x1="0.546" y1="0.337" x2="0.753" y2="0.458"/><line x1="0.546" y1="0.792" x2="0.753" y2="0.913"/><polygon points="1.096,1.338 1.910,1.808 1.910,0.898 1.096,0.428"/><line x1="1.096" y1="0.905" x2="1.910" y2="1.375"/><line x1="1.096" y1="0.860" x2="1.910" y2="1.330"/><line x1="1.096" y1="1.338" x2="1.470" y2="1.121"/><line x1="1.096" y1="0.860" x2="1.470" y2="0.644"/></g></svg><p class="code"><span class="no">13</span> WL-DDO</p><p class="price">£550</p></li>
+        <li id="wl-ddd"><svg class="cab" viewBox="-0.770 -1.120 3.488 3.115" role="img" aria-label="Cabinet DDD: two drawers, two drawers, two drawers"><g class="pen"><polygon points="0.000,-1.000 2.598,0.500 1.949,0.875 -0.650,-0.625"/><polygon points="-0.650,0.375 1.949,1.875 1.949,0.875 -0.650,-0.625"/><polygon points="2.598,1.500 1.949,1.875 1.949,0.875 2.598,0.500"/><polygon points="-0.611,-0.122 0.204,0.347 0.204,-0.088 -0.611,-0.557"/><polygon points="-0.611,0.353 0.204,0.822 0.204,0.387 -0.611,-0.082"/><line x1="-0.307" y1="-0.155" x2="-0.100" y2="-0.035"/><line x1="-0.307" y1="0.300" x2="-0.100" y2="0.420"/><polygon points="0.242,0.370 1.057,0.840 1.057,0.405 0.242,-0.065"/><polygon points="0.242,0.845 1.057,1.315 1.057,0.880 0.242,0.410"/><line x1="0.546" y1="0.337" x2="0.753" y2="0.458"/><line x1="0.546" y1="0.792" x2="0.753" y2="0.913"/><polygon points="1.096,0.863 1.910,1.333 1.910,0.898 1.096,0.428"/><polygon points="1.096,1.338 1.910,1.808 1.910,1.373 1.096,0.903"/><line x1="1.399" y1="0.830" x2="1.606" y2="0.950"/><line x1="1.399" y1="1.285" x2="1.606" y2="1.405"/></g></svg><p class="code"><span class="no">14</span> WL-DDD</p><p class="price">£645</p></li>
+        <li id="wl-ddp"><svg class="cab" viewBox="-0.770 -1.120 3.488 3.115" role="img" aria-label="Cabinet DDP: two drawers, two drawers, door"><g class="pen"><polygon points="0.000,-1.000 2.598,0.500 1.949,0.875 -0.650,-0.625"/><polygon points="-0.650,0.375 1.949,1.875 1.949,0.875 -0.650,-0.625"/><polygon points="2.598,1.500 1.949,1.875 1.949,0.875 2.598,0.500"/><polygon points="-0.611,-0.122 0.204,0.347 0.204,-0.088 -0.611,-0.557"/><polygon points="-0.611,0.353 0.204,0.822 0.204,0.387 -0.611,-0.082"/><line x1="-0.307" y1="-0.155" x2="-0.100" y2="-0.035"/><line x1="-0.307" y1="0.300" x2="-0.100" y2="0.420"/><polygon points="0.242,0.370 1.057,0.840 1.057,0.405 0.242,-0.065"/><polygon points="0.242,0.845 1.057,1.315 1.057,0.880 0.242,0.410"/><line x1="0.546" y1="0.337" x2="0.753" y2="0.458"/><line x1="0.546" y1="0.792" x2="0.753" y2="0.913"/><polygon points="1.096,1.338 1.910,1.808 1.910,0.898 1.096,0.428"/><polygon points="1.182,1.288 1.823,1.657 1.823,0.948 1.182,0.578"/><circle cx="1.858" cy="1.323" r="0.03"/></g></svg><p class="code"><span class="no">15</span> WL-DDP</p><p class="price">£615</p></li>
+        <li id="wl-dpo"><svg class="cab" viewBox="-0.770 -1.120 3.488 3.115" role="img" aria-label="Cabinet DPO: two drawers, door, open shelf"><g class="pen"><polygon points="0.000,-1.000 2.598,0.500 1.949,0.875 -0.650,-0.625"/><polygon points="-0.650,0.375 1.949,1.875 1.949,0.875 -0.650,-0.625"/><polygon points="2.598,1.500 1.949,1.875 1.949,0.875 2.598,0.500"/><polygon points="-0.611,-0.122 0.204,0.347 0.204,-0.088 -0.611,-0.557"/><polygon points="-0.611,0.353 0.204,0.822 0.204,0.387 -0.611,-0.082"/><line x1="-0.307" y1="-0.155" x2="-0.100" y2="-0.035"/><line x1="-0.307" y1="0.300" x2="-0.100" y2="0.420"/><polygon points="0.242,0.845 1.057,1.315 1.057,0.405 0.242,-0.065"/><polygon points="0.329,0.795 0.970,1.165 0.970,0.455 0.329,0.085"/><circle cx="1.005" cy="0.830" r="0.03"/><polygon points="1.096,1.338 1.910,1.808 1.910,0.898 1.096,0.428"/><line x1="1.096" y1="0.905" x2="1.910" y2="1.375"/><line x1="1.096" y1="0.860" x2="1.910" y2="1.330"/><line x1="1.096" y1="1.338" x2="1.470" y2="1.121"/><line x1="1.096" y1="0.860" x2="1.470" y2="0.644"/></g></svg><p class="code"><span class="no">16</span> WL-DPO</p><p class="price">£520</p></li>
+        <li id="wl-dpd"><svg class="cab" viewBox="-0.770 -1.120 3.488 3.115" role="img" aria-label="Cabinet DPD: two drawers, door, two drawers"><g class="pen"><polygon points="0.000,-1.000 2.598,0.500 1.949,0.875 -0.650,-0.625"/><polygon points="-0.650,0.375 1.949,1.875 1.949,0.875 -0.650,-0.625"/><polygon points="2.598,1.500 1.949,1.875 1.949,0.875 2.598,0.500"/><polygon points="-0.611,-0.122 0.204,0.347 0.204,-0.088 -0.611,-0.557"/><polygon points="-0.611,0.353 0.204,0.822 0.204,0.387 -0.611,-0.082"/><line x1="-0.307" y1="-0.155" x2="-0.100" y2="-0.035"/><line x1="-0.307" y1="0.300" x2="-0.100" y2="0.420"/><polygon points="0.242,0.845 1.057,1.315 1.057,0.405 0.242,-0.065"/><polygon points="0.329,0.795 0.970,1.165 0.970,0.455 0.329,0.085"/><circle cx="1.005" cy="0.830" r="0.03"/><polygon points="1.096,0.863 1.910,1.333 1.910,0.898 1.096,0.428"/><polygon points="1.096,1.338 1.910,1.808 1.910,1.373 1.096,0.903"/><line x1="1.399" y1="0.830" x2="1.606" y2="0.950"/><line x1="1.399" y1="1.285" x2="1.606" y2="1.405"/></g></svg><p class="code"><span class="no">17</span> WL-DPD</p><p class="price">£615</p></li>
+        <li id="wl-dpp"><svg class="cab" viewBox="-0.770 -1.120 3.488 3.115" role="img" aria-label="Cabinet DPP: two drawers, door, door"><g class="pen"><polygon points="0.000,-1.000 2.598,0.500 1.949,0.875 -0.650,-0.625"/><polygon points="-0.650,0.375 1.949,1.875 1.949,0.875 -0.650,-0.625"/><polygon points="2.598,1.500 1.949,1.875 1.949,0.875 2.598,0.500"/><polygon points="-0.611,-0.122 0.204,0.347 0.204,-0.088 -0.611,-0.557"/><polygon points="-0.611,0.353 0.204,0.822 0.204,0.387 -0.611,-0.082"/><line x1="-0.307" y1="-0.155" x2="-0.100" y2="-0.035"/><line x1="-0.307" y1="0.300" x2="-0.100" y2="0.420"/><polygon points="0.242,0.845 1.057,1.315 1.057,0.405 0.242,-0.065"/><polygon points="0.329,0.795 0.970,1.165 0.970,0.455 0.329,0.085"/><circle cx="1.005" cy="0.830" r="0.03"/><polygon points="1.096,1.338 1.910,1.808 1.910,0.898 1.096,0.428"/><polygon points="1.182,1.288 1.823,1.657 1.823,0.948 1.182,0.578"/><circle cx="1.858" cy="1.323" r="0.03"/></g></svg><p class="code"><span class="no">18</span> WL-DPP</p><p class="price">£585</p></li>
+        <li id="wl-poo"><svg class="cab" viewBox="-0.770 -1.120 3.488 3.115" role="img" aria-label="Cabinet POO: door, open shelf, open shelf"><g class="pen"><polygon points="0.000,-1.000 2.598,0.500 1.949,0.875 -0.650,-0.625"/><polygon points="-0.650,0.375 1.949,1.875 1.949,0.875 -0.650,-0.625"/><polygon points="2.598,1.500 1.949,1.875 1.949,0.875 2.598,0.500"/><polygon points="-0.611,0.353 0.204,0.822 0.204,-0.088 -0.611,-0.557"/><polygon points="-0.524,0.302 0.117,0.672 0.117,-0.037 -0.524,-0.407"/><circle cx="0.152" cy="0.338" r="0.03"/><polygon points="0.242,0.845 1.057,1.315 1.057,0.405 0.242,-0.065"/><line x1="0.242" y1="0.413" x2="1.057" y2="0.882"/><line x1="0.242" y1="0.368" x2="1.057" y2="0.837"/><line x1="0.242" y1="0.845" x2="0.617" y2="0.629"/><line x1="0.242" y1="0.368" x2="0.617" y2="0.151"/><polygon points="1.096,1.338 1.910,1.808 1.910,0.898 1.096,0.428"/><line x1="1.096" y1="0.905" x2="1.910" y2="1.375"/><line x1="1.096" y1="0.860" x2="1.910" y2="1.330"/><line x1="1.096" y1="1.338" x2="1.470" y2="1.121"/><line x1="1.096" y1="0.860" x2="1.470" y2="0.644"/></g></svg><p class="code"><span class="no">19</span> WL-POO</p><p class="price">£425</p></li>
+        <li id="wl-pod"><svg class="cab" viewBox="-0.770 -1.120 3.488 3.115" role="img" aria-label="Cabinet POD: door, open shelf, two drawers"><g class="pen"><polygon points="0.000,-1.000 2.598,0.500 1.949,0.875 -0.650,-0.625"/><polygon points="-0.650,0.375 1.949,1.875 1.949,0.875 -0.650,-0.625"/><polygon points="2.598,1.500 1.949,1.875 1.949,0.875 2.598,0.500"/><polygon points="-0.611,0.353 0.204,0.822 0.204,-0.088 -0.611,-0.557"/><polygon points="-0.524,0.302 0.117,0.672 0.117,-0.037 -0.524,-0.407"/><circle cx="0.152" cy="0.338" r="0.03"/><polygon points="0.242,0.845 1.057,1.315 1.057,0.405 0.242,-0.065"/><line x1="0.242" y1="0.413" x2="1.057" y2="0.882"/><line x1="0.242" y1="0.368" x2="1.057" y2="0.837"/><line x1="0.242" y1="0.845" x2="0.617" y2="0.629"/><line x1="0.242" y1="0.368" x2="0.617" y2="0.151"/><polygon points="1.096,0.863 1.910,1.333 1.910,0.898 1.096,0.428"/><polygon points="1.096,1.338 1.910,1.808 1.910,1.373 1.096,0.903"/><line x1="1.399" y1="0.830" x2="1.606" y2="0.950"/><line x1="1.399" y1="1.285" x2="1.606" y2="1.405"/></g></svg><p class="code"><span class="no">20</span> WL-POD</p><p class="price">£520</p></li>
+        <li id="wl-pop"><svg class="cab" viewBox="-0.770 -1.120 3.488 3.115" role="img" aria-label="Cabinet POP: door, open shelf, door"><g class="pen"><polygon points="0.000,-1.000 2.598,0.500 1.949,0.875 -0.650,-0.625"/><polygon points="-0.650,0.375 1.949,1.875 1.949,0.875 -0.650,-0.625"/><polygon points="2.598,1.500 1.949,1.875 1.949,0.875 2.598,0.500"/><polygon points="-0.611,0.353 0.204,0.822 0.204,-0.088 -0.611,-0.557"/><polygon points="-0.524,0.302 0.117,0.672 0.117,-0.037 -0.524,-0.407"/><circle cx="0.152" cy="0.338" r="0.03"/><polygon points="0.242,0.845 1.057,1.315 1.057,0.405 0.242,-0.065"/><line x1="0.242" y1="0.413" x2="1.057" y2="0.882"/><line x1="0.242" y1="0.368" x2="1.057" y2="0.837"/><line x1="0.242" y1="0.845" x2="0.617" y2="0.629"/><line x1="0.242" y1="0.368" x2="0.617" y2="0.151"/><polygon points="1.096,1.338 1.910,1.808 1.910,0.898 1.096,0.428"/><polygon points="1.182,1.288 1.823,1.657 1.823,0.948 1.182,0.578"/><circle cx="1.858" cy="1.323" r="0.03"/></g></svg><p class="code"><span class="no">21</span> WL-POP</p><p class="price">£490</p></li>
+        <li id="wl-pdo"><svg class="cab" viewBox="-0.770 -1.120 3.488 3.115" role="img" aria-label="Cabinet PDO: door, two drawers, open shelf"><g class="pen"><polygon points="0.000,-1.000 2.598,0.500 1.949,0.875 -0.650,-0.625"/><polygon points="-0.650,0.375 1.949,1.875 1.949,0.875 -0.650,-0.625"/><polygon points="2.598,1.500 1.949,1.875 1.949,0.875 2.598,0.500"/><polygon points="-0.611,0.353 0.204,0.822 0.204,-0.088 -0.611,-0.557"/><polygon points="-0.524,0.302 0.117,0.672 0.117,-0.037 -0.524,-0.407"/><circle cx="0.152" cy="0.338" r="0.03"/><polygon points="0.242,0.370 1.057,0.840 1.057,0.405 0.242,-0.065"/><polygon points="0.242,0.845 1.057,1.315 1.057,0.880 0.242,0.410"/><line x1="0.546" y1="0.337" x2="0.753" y2="0.458"/><line x1="0.546" y1="0.792" x2="0.753" y2="0.913"/><polygon points="1.096,1.338 1.910,1.808 1.910,0.898 1.096,0.428"/><line x1="1.096" y1="0.905" x2="1.910" y2="1.375"/><line x1="1.096" y1="0.860" x2="1.910" y2="1.330"/><line x1="1.096" y1="1.338" x2="1.470" y2="1.121"/><line x1="1.096" y1="0.860" x2="1.470" y2="0.644"/></g></svg><p class="code"><span class="no">22</span> WL-PDO</p><p class="price">£520</p></li>
+        <li id="wl-pdd"><svg class="cab" viewBox="-0.770 -1.120 3.488 3.115" role="img" aria-label="Cabinet PDD: door, two drawers, two drawers"><g class="pen"><polygon points="0.000,-1.000 2.598,0.500 1.949,0.875 -0.650,-0.625"/><polygon points="-0.650,0.375 1.949,1.875 1.949,0.875 -0.650,-0.625"/><polygon points="2.598,1.500 1.949,1.875 1.949,0.875 2.598,0.500"/><polygon points="-0.611,0.353 0.204,0.822 0.204,-0.088 -0.611,-0.557"/><polygon points="-0.524,0.302 0.117,0.672 0.117,-0.037 -0.524,-0.407"/><circle cx="0.152" cy="0.338" r="0.03"/><polygon points="0.242,0.370 1.057,0.840 1.057,0.405 0.242,-0.065"/><polygon points="0.242,0.845 1.057,1.315 1.057,0.880 0.242,0.410"/><line x1="0.546" y1="0.337" x2="0.753" y2="0.458"/><line x1="0.546" y1="0.792" x2="0.753" y2="0.913"/><polygon points="1.096,0.863 1.910,1.333 1.910,0.898 1.096,0.428"/><polygon points="1.096,1.338 1.910,1.808 1.910,1.373 1.096,0.903"/><line x1="1.399" y1="0.830" x2="1.606" y2="0.950"/><line x1="1.399" y1="1.285" x2="1.606" y2="1.405"/></g></svg><p class="code"><span class="no">23</span> WL-PDD</p><p class="price">£615</p></li>
+        <li id="wl-pdp"><svg class="cab" viewBox="-0.770 -1.120 3.488 3.115" role="img" aria-label="Cabinet PDP: door, two drawers, door"><g class="pen"><polygon points="0.000,-1.000 2.598,0.500 1.949,0.875 -0.650,-0.625"/><polygon points="-0.650,0.375 1.949,1.875 1.949,0.875 -0.650,-0.625"/><polygon points="2.598,1.500 1.949,1.875 1.949,0.875 2.598,0.500"/><polygon points="-0.611,0.353 0.204,0.822 0.204,-0.088 -0.611,-0.557"/><polygon points="-0.524,0.302 0.117,0.672 0.117,-0.037 -0.524,-0.407"/><circle cx="0.152" cy="0.338" r="0.03"/><polygon points="0.242,0.370 1.057,0.840 1.057,0.405 0.242,-0.065"/><polygon points="0.242,0.845 1.057,1.315 1.057,0.880 0.242,0.410"/><line x1="0.546" y1="0.337" x2="0.753" y2="0.458"/><line x1="0.546" y1="0.792" x2="0.753" y2="0.913"/><polygon points="1.096,1.338 1.910,1.808 1.910,0.898 1.096,0.428"/><polygon points="1.182,1.288 1.823,1.657 1.823,0.948 1.182,0.578"/><circle cx="1.858" cy="1.323" r="0.03"/></g></svg><p class="code"><span class="no">24</span> WL-PDP</p><p class="price">£585</p></li>
+        <li id="wl-ppo"><svg class="cab" viewBox="-0.770 -1.120 3.488 3.115" role="img" aria-label="Cabinet PPO: door, door, open shelf"><g class="pen"><polygon points="0.000,-1.000 2.598,0.500 1.949,0.875 -0.650,-0.625"/><polygon points="-0.650,0.375 1.949,1.875 1.949,0.875 -0.650,-0.625"/><polygon points="2.598,1.500 1.949,1.875 1.949,0.875 2.598,0.500"/><polygon points="-0.611,0.353 0.204,0.822 0.204,-0.088 -0.611,-0.557"/><polygon points="-0.524,0.302 0.117,0.672 0.117,-0.037 -0.524,-0.407"/><circle cx="0.152" cy="0.338" r="0.03"/><polygon points="0.242,0.845 1.057,1.315 1.057,0.405 0.242,-0.065"/><polygon points="0.329,0.795 0.970,1.165 0.970,0.455 0.329,0.085"/><circle cx="1.005" cy="0.830" r="0.03"/><polygon points="1.096,1.338 1.910,1.808 1.910,0.898 1.096,0.428"/><line x1="1.096" y1="0.905" x2="1.910" y2="1.375"/><line x1="1.096" y1="0.860" x2="1.910" y2="1.330"/><line x1="1.096" y1="1.338" x2="1.470" y2="1.121"/><line x1="1.096" y1="0.860" x2="1.470" y2="0.644"/></g></svg><p class="code"><span class="no">25</span> WL-PPO</p><p class="price">£490</p></li>
+        <li id="wl-ppd"><svg class="cab" viewBox="-0.770 -1.120 3.488 3.115" role="img" aria-label="Cabinet PPD: door, door, two drawers"><g class="pen"><polygon points="0.000,-1.000 2.598,0.500 1.949,0.875 -0.650,-0.625"/><polygon points="-0.650,0.375 1.949,1.875 1.949,0.875 -0.650,-0.625"/><polygon points="2.598,1.500 1.949,1.875 1.949,0.875 2.598,0.500"/><polygon points="-0.611,0.353 0.204,0.822 0.204,-0.088 -0.611,-0.557"/><polygon points="-0.524,0.302 0.117,0.672 0.117,-0.037 -0.524,-0.407"/><circle cx="0.152" cy="0.338" r="0.03"/><polygon points="0.242,0.845 1.057,1.315 1.057,0.405 0.242,-0.065"/><polygon points="0.329,0.795 0.970,1.165 0.970,0.455 0.329,0.085"/><circle cx="1.005" cy="0.830" r="0.03"/><polygon points="1.096,0.863 1.910,1.333 1.910,0.898 1.096,0.428"/><polygon points="1.096,1.338 1.910,1.808 1.910,1.373 1.096,0.903"/><line x1="1.399" y1="0.830" x2="1.606" y2="0.950"/><line x1="1.399" y1="1.285" x2="1.606" y2="1.405"/></g></svg><p class="code"><span class="no">26</span> WL-PPD</p><p class="price">£585</p></li>
+        <li id="wl-ppp"><svg class="cab" viewBox="-0.770 -1.120 3.488 3.115" role="img" aria-label="Cabinet PPP: door, door, door"><g class="pen"><polygon points="0.000,-1.000 2.598,0.500 1.949,0.875 -0.650,-0.625"/><polygon points="-0.650,0.375 1.949,1.875 1.949,0.875 -0.650,-0.625"/><polygon points="2.598,1.500 1.949,1.875 1.949,0.875 2.598,0.500"/><polygon points="-0.611,0.353 0.204,0.822 0.204,-0.088 -0.611,-0.557"/><polygon points="-0.524,0.302 0.117,0.672 0.117,-0.037 -0.524,-0.407"/><circle cx="0.152" cy="0.338" r="0.03"/><polygon points="0.242,0.845 1.057,1.315 1.057,0.405 0.242,-0.065"/><polygon points="0.329,0.795 0.970,1.165 0.970,0.455 0.329,0.085"/><circle cx="1.005" cy="0.830" r="0.03"/><polygon points="1.096,1.338 1.910,1.808 1.910,0.898 1.096,0.428"/><polygon points="1.182,1.288 1.823,1.657 1.823,0.948 1.182,0.578"/><circle cx="1.858" cy="1.323" r="0.03"/></g></svg><p class="code"><span class="no">27</span> WL-PPP</p><p class="price">£555</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="spec grid" id="spec" aria-labelledby="spec-title">
+    <h2 id="spec-title">Size and timber</h2>
+    <dl>
+      <dt>Size</dt><dd>1200 mm wide, 400 mm high, 300 mm deep</dd>
+      <dt>Each bay</dt><dd>376 mm wide inside, between 18 mm oak boards</dd>
+      <dt>Timber</dt><dd>English oak from Gaukroger&#8217;s yard in Mytholmroyd</dd>
+      <dt>Finish</dt><dd>Hard wax oil, one coat inside, two outside</dd>
+      <dt>Weight</dt><dd>19 kg open to 26 kg with three drawer bays</dd>
+      <dt>Hanging</dt><dd>On an oak French cleat, which comes with it</dd>
+      <dt>Making</dt><dd>Seven weeks from your order</dd>
+    </dl>
+    <div class="order" id="order">
+      <h2>Ordering</h2>
+      <p>Email the code and your address to <a href="mailto:orders@wrenlane.example">orders@wrenlane.example</a>. We reply with a date and ask for half the price; the other half is due when the cabinet is on your wall.</p>
+      <p>We deliver and hang it ourselves within sixty miles of Hebden Bridge. Further than that, it goes by carrier with the cleat and a paper template for the screw holes.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="foot grid">
+  <a class="shop" href="#">Wren Lane Joinery</a>
+  <div class="foot-text">
+    <p>Unit 3, Wren Lane, Hebden Bridge HX7. Two of us, Ada Pickles and Joe Sowden, and one bandsaw older than both of us.</p>
+    <p>Set in Albert Sans, with codes in Red Hat Mono. The drawings are isometric, in ultramarine line; the one at the top is printed, as it were, over a second ink, ochre.</p>
+    <p>Wren Lane Joinery, its people and its cabinet are fictional. This page is a Rob Weychert style preview.</p>
+  </div>
+</footer>
+
+</body>
+</html>

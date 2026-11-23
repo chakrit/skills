@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pruitt Hardware, 14 Mill Street, Ashby Falls: Dan Cederholm style preview</title>
+<meta name="description" content="Pruitt Hardware is a fictional family hardware store, built as a preview of the Dan Cederholm style.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ultra&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,400;0,600;0,800;1,400&display=swap">
+<style>
+:root {
+  --paper: #f3efe2;
+  --manila: #e3c98f;
+  --orange: #c84a24;
+  /* The signature darkened for small text, so it passes AA on the cream. */
+  --orange-text: #a63b1b;
+  --green: #24382a;
+  --ink: #2b2520;
+  --muted: #6d6257;
+  --rule: #cfc5ae;
+
+  --display: "Ultra", "Rockwell Extra Bold", "Rockwell", Georgia, serif;
+  --text: "Libre Franklin", "Franklin Gothic Book", "Helvetica Neue", Arial, sans-serif;
+
+  --margin: clamp(1.25rem, 4vw, 3rem);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 1.1875rem/1.55 var(--text);
+}
+
+h1, h2, h3, p, ul, ol, dl, dd, figure { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+
+a {
+  color: var(--orange-text);
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.2em;
+  transition: color 0.25s ease;
+}
+a:hover, a:focus-visible { color: var(--green); }
+:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
+
+/* The edge border: a tape measure along the top and foot of the page.
+   Short ticks every half inch, long ones every four. */
+.tape {
+  height: 1.75rem;
+  background:
+    linear-gradient(90deg, var(--ink) 1px, transparent 1px) 0 0 / 0.5rem 30% repeat-x,
+    linear-gradient(90deg, var(--ink) 2px, transparent 2px) 0 0 / 4rem 60% repeat-x,
+    var(--manila);
+  box-shadow: inset 0 -2px 0 var(--ink);
+}
+.tape--foot { transform: scaleY(-1); }
+
+.page {
+  max-width: 68rem;
+  margin: 0 auto;
+  padding-inline: var(--margin);
+}
+
+/* ---------- Header: badge, name, labelled nav ---------- */
+
+.masthead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem 2rem;
+  padding-block: 1.75rem 1.5rem;
+  box-shadow: inset 0 -1px 0 var(--rule);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--green);
+  text-decoration: none;
+  margin-right: auto;
+}
+.brand svg { width: 4rem; height: 4.8rem; flex: none; transition: transform 0.25s ease; }
+.brand:hover svg, .brand:focus-visible svg { transform: rotate(-8deg); }
+.brand-name {
+  font: 400 1.5rem/1 var(--display);
+  text-shadow: 0.06em 0.06em 0 var(--manila);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.nav { display: flex; flex-wrap: wrap; gap: 0.75rem 1.75rem; }
+.nav a {
+  display: block;
+  text-decoration: none;
+  color: var(--muted);
+  font: 800 0.72rem/1.3 var(--text);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.nav a small {
+  display: block;
+  font-weight: 400;
+  font-size: 0.8rem;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--muted);
+}
+.nav a[aria-current] { color: var(--orange-text); }
+.nav a:hover, .nav a:focus-visible { color: var(--orange-text); }
+
+/* ---------- Specimen: the store's own words, cropped at the edges ---------- */
+
+.specimen {
+  overflow: hidden;
+  padding-block: 2.25rem 2rem;
+  box-shadow: inset 0 -1px 0 var(--rule);
+  white-space: nowrap;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+.ink { filter: url(#ink); }
+
+.s1 { font: 400 clamp(3rem, 9.5vw, 7.5rem)/0.95 var(--display); color: var(--green); margin-left: -0.08em; }
+.s2 { font: 800 clamp(1rem, 2.2vw, 1.6rem)/1.6 var(--text); letter-spacing: 0.24em; color: var(--muted); margin-left: -1.5em; }
+.s3 { font: 400 clamp(2.25rem, 7vw, 5.6rem)/1 var(--display); color: var(--orange); margin-left: -0.6em; text-shadow: 0.06em 0.06em 0 var(--green); }
+.s4 { font: 600 clamp(1.4rem, 3.4vw, 2.5rem)/1.3 var(--text); color: var(--ink); letter-spacing: 0.04em; margin-left: -0.6em; }
+.s5 { font: 400 clamp(2.6rem, 8.2vw, 6.4rem)/1 var(--display); color: var(--ink); margin-left: -1.1em; }
+.s6 { font: 800 clamp(0.95rem, 2vw, 1.4rem)/1.8 var(--text); letter-spacing: 0.3em; color: var(--orange-text); margin-left: -2em; }
+
+.specimen .glyph {
+  display: inline-block;
+  width: 0.8em;
+  height: 0.8em;
+  vertical-align: -0.05em;
+  margin-inline: 0.2em;
+}
+
+/* ---------- Two columns: the counter and the side ---------- */
+
+.columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 17rem;
+  gap: 3rem 4rem;
+  padding-block: 3rem 4rem;
+}
+
+.lede {
+  font: 400 clamp(1.7rem, 3.2vw, 2.5rem)/1.12 var(--display);
+  text-transform: uppercase;
+  color: var(--green);
+  max-width: 17em;
+}
+
+.intro {
+  margin-top: 1.25rem;
+  max-width: 34em;
+  color: var(--ink);
+}
+
+/* Still life: the counter's objects laid flat on the paper. */
+.still-life { margin-block: 2.5rem 3rem; }
+.still-life svg { display: block; width: 100%; height: auto; }
+.still-life figcaption {
+  margin-top: 0.6rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.counter h2, .side h2:not(.index-head) {
+  font: 400 1.75rem/1.1 var(--display);
+  color: var(--green);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+/* Slats: glyph, title, one line, price. A ruled row, never a box. */
+.slats { margin-top: 1rem; }
+.slat {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr) auto;
+  gap: 0 1rem;
+  align-items: start;
+  padding-block: 1.1rem;
+  box-shadow: inset 0 -1px 0 var(--rule);
+}
+.slat:first-child { box-shadow: inset 0 1px 0 var(--ink), inset 0 -1px 0 var(--rule); }
+.slat svg { width: 2.25rem; height: 2.25rem; color: var(--orange); margin-top: 0.15rem; }
+.slat h3 { font: 800 1.1rem/1.3 var(--text); }
+.slat p { font-size: 1rem; color: var(--muted); }
+.slat .price {
+  font: 400 1.3rem/1.2 var(--display);
+  text-transform: uppercase;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.story { margin-top: 3rem; max-width: 34em; }
+.story h2 { margin-bottom: 0.75rem; }
+.story p + p { margin-top: 1em; }
+.end-mark { display: inline-block; width: 0.85em; height: 0.85em; vertical-align: -0.08em; margin-left: 0.3em; color: var(--orange); }
+
+/* ---------- Side column ---------- */
+
+.side { display: grid; gap: 2.5rem; align-content: start; }
+
+/* The hours on the store's own parts tag: clipped corners, reinforced hole. */
+.tag {
+  position: relative;
+  background: var(--manila);
+  color: var(--ink);
+  padding: 3.25rem 1.5rem 1.5rem;
+  clip-path: polygon(1.75rem 0, calc(100% - 1.75rem) 0, 100% 1.75rem, 100% 100%, 0 100%, 0 1.75rem);
+  transform: rotate(1.5deg);
+}
+.tag::before {
+  content: "";
+  position: absolute;
+  top: 1rem;
+  left: calc(50% - 0.55rem);
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 50%;
+  background: var(--paper);
+  box-shadow: 0 0 0 0.35rem #c9ab68;
+}
+.tag h2 { color: var(--ink); }
+.tag .bin {
+  float: right;
+  font: 400 2.5rem/0.8 var(--display);
+  color: var(--orange-text);
+  margin-top: -0.1rem;
+}
+.hours {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.3rem 1rem;
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+}
+.hours dt { font-weight: 800; }
+.hours dd { text-align: right; }
+
+/* Index heading: small tracked caps with an orange arrow; the section's only heading. */
+.index-head {
+  font: 800 0.78rem/1.3 var(--text);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.index-head span { color: var(--orange-text); }
+
+.specials { margin-top: 0.75rem; }
+.specials li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 0.55rem;
+  box-shadow: inset 0 -1px 0 var(--rule);
+  font-size: 1rem;
+}
+.specials li:first-child { box-shadow: inset 0 1px 0 var(--ink), inset 0 -1px 0 var(--rule); }
+.specials b { font-weight: 400; font-family: var(--display); color: var(--orange-text); white-space: nowrap; text-transform: uppercase; }
+
+.facts { display: grid; gap: 0.6rem; margin-top: 0.9rem; font-size: 1rem; }
+.facts li { display: grid; grid-template-columns: 1.4rem 1fr; gap: 0.5rem; }
+.facts svg { width: 1.1rem; height: 1.1rem; color: var(--orange); margin-top: 0.25rem; }
+
+/* ---------- Footer ---------- */
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 2rem;
+  padding-block: 2rem 2.5rem;
+  box-shadow: inset 0 1px 0 var(--rule);
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+.footer svg { width: 3rem; height: 3.6rem; color: var(--green); flex: none; }
+.footer p { max-width: 36em; }
+
+/* One breakpoint, where the side column stops fitting beside the counter. */
+@media (max-width: 760px) {
+  body { font-size: 1.0625rem; }
+  .columns { grid-template-columns: minmax(0, 1fr); gap: 3rem; padding-block: 2.25rem 3rem; }
+  .nav { width: 100%; display: grid; grid-template-columns: 1fr 1fr; }
+  .slat { grid-template-columns: 2rem minmax(0, 1fr); }
+  .slat svg { width: 1.75rem; height: 1.75rem; }
+  .slat .price { grid-column: 2; margin-top: 0.35rem; }
+  .facts { grid-template-columns: 1fr 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <!-- Ink spread: roughens the edges of the biggest display lines, like a worn window sign. -->
+  <filter id="ink" x="-2%" y="-10%" width="104%" height="120%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="27"/>
+    <feDisplacementMap in="SourceGraphic" scale="2.2"/>
+  </filter>
+  <symbol id="bolt" viewBox="0 0 24 24"><path fill="currentColor" d="M13.5 1 4 14h6.5L9 23l11-13.5h-6.8z"/></symbol>
+  <symbol id="key" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><circle cx="7" cy="12" r="4.5"/><path d="M11.5 12H22m-3 0v3.5m-3-3.5v2.5"/></g></symbol>
+  <symbol id="blade" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 15 15 3l3 3L8 18z"/><path d="m8 18 2 2-3 3-3-3 3-3"/></g></symbol>
+  <symbol id="can" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5.5" rx="7" ry="2.5"/><path d="M5 5.5V19c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5V5.5"/><path d="M5 11c2 1.3 12 1.3 14 0"/></g></symbol>
+  <symbol id="screen" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18" stroke-width="1"/></g></symbol>
+  <symbol id="sander" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 18h13l2-4H8z"/><path d="M10 14 15 4h4"/><circle cx="7" cy="20" r="1.6"/><circle cx="16" cy="20" r="1.6"/></g></symbol>
+  <symbol id="nut" viewBox="0 0 24 24"><path fill="currentColor" d="M12 1.5 21 6.75v10.5L12 22.5 3 17.25V6.75zM12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z" fill-rule="evenodd"/></symbol>
+  <symbol id="pin" viewBox="0 0 24 24"><path fill="currentColor" d="M12 1a8 8 0 0 0-8 8c0 6 8 14 8 14s8-8 8-14a8 8 0 0 0-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></symbol>
+  <symbol id="phone" viewBox="0 0 24 24"><path fill="currentColor" d="M6.6 2 9.5 6.5 7.6 8.6c1 2.6 3.2 4.8 5.8 5.8l2.1-1.9L20 15.4 18.4 20C9.6 20 4 14.4 4 5.6z"/></symbol>
+  <symbol id="hand" viewBox="0 0 24 24"><path fill="currentColor" d="M1 10h12V7.5a1.5 1.5 0 0 1 3 0V10h4a3 3 0 0 1 3 3v5a3 3 0 0 1-3 3h-7a3 3 0 0 1-3-3v-5H1z"/></symbol>
+  <!-- The store badge: the counter's parts tag, clipped corners and reinforced hole. -->
+  <symbol id="badge" viewBox="0 0 100 120">
+    <path d="M18 0h64l18 18v102H0V18z" fill="#c84a24"/>
+    <path d="M20 5h60l15 15v95H5V20z" fill="none" stroke="#f3efe2" stroke-width="1.5"/>
+    <circle cx="50" cy="22" r="7" fill="#f3efe2" stroke="#e3c98f" stroke-width="4"/>
+    <text x="50" y="62" font-family="Ultra, Rockwell, serif" font-size="19" fill="#f3efe2" text-anchor="middle">PRUITT</text>
+    <text x="50" y="80" font-family="Libre Franklin, Arial, sans-serif" font-weight="800" font-size="10.5" fill="#f3efe2" text-anchor="middle" letter-spacing="1.5">HARDWARE</text>
+    <text x="50" y="106" font-family="Ultra, Rockwell, serif" font-size="13" fill="#f3efe2" text-anchor="middle">1927</text>
+  </symbol>
+</svg>
+
+<div class="tape" aria-hidden="true"></div>
+
+<div class="page" id="top">
+
+  <header class="masthead">
+    <a class="brand" href="#top" aria-label="Pruitt Hardware, home">
+      <svg aria-hidden="true" width="40" height="48"><use href="#badge"/></svg>
+      <span class="brand-name">Pruitt<br>Hardware</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#counter" aria-current="page">Counter<small>keys and sharpening</small></a>
+      <a href="#specials">Bin specials<small>this week only</small></a>
+      <a href="#rent">Rent<small>the sander and friends</small></a>
+      <a href="#find">Find us<small>14 Mill Street</small></a>
+    </nav>
+  </header>
+
+  <div class="specimen" aria-hidden="true">
+    <p class="s1 ink">16d common nails $2.89 lb<svg class="glyph" width="24" height="24"><use href="#nut"/></svg>8d box</p>
+    <p class="s2">Mill St<svg class="glyph" width="24" height="24"><use href="#bolt"/></svg>Ashby Falls<svg class="glyph" width="24" height="24"><use href="#bolt"/></svg>since 1927<svg class="glyph" width="24" height="24"><use href="#bolt"/></svg>store no. 2704<svg class="glyph" width="24" height="24"><use href="#bolt"/></svg>open since the Coolidge years<svg class="glyph" width="24" height="24"><use href="#bolt"/></svg>river side parking</p>
+    <p class="s3 ink">Hinges &middot; #10 wood screws &middot; 3/4&Prime; washers &middot; cotter pins</p>
+    <p class="s4">Keys cut while u wait<svg class="glyph" width="24" height="24"><use href="#key"/></svg>Paint mixed to match<svg class="glyph" width="24" height="24"><use href="#can"/></svg>Glass cut to size<svg class="glyph" width="24" height="24"><use href="#screen"/></svg>Screens rescreened</p>
+    <p class="s5 ink">Stove bolts &middot; chain by the foot</p>
+    <p class="s6">Open six days<svg class="glyph" width="24" height="24"><use href="#hand"/></svg>est. 1927<svg class="glyph" width="24" height="24"><use href="#hand"/></svg>propane exchange round back<svg class="glyph" width="24" height="24"><use href="#hand"/></svg>delivery in town</p>
+  </div>
+
+  <main class="columns">
+    <div class="counter">
+      <h1 class="lede">Nails by the pound and keys while you wait, on Mill Street since 1927.</h1>
+      <p class="intro">Pruitt Hardware is one long room of bins with a counter at the back. Bring the broken part. Someone behind the counter has probably fixed that exact one, and we will find you the screw that fits.</p>
+
+      <figure class="still-life">
+        <svg viewBox="0 0 720 200" role="img" aria-labelledby="still-title">
+          <title id="still-title">On the counter: a key blank, a paint stirrer, a box of 16d nails and a parts tag marked bin 27.</title>
+          <!-- key blank -->
+          <g transform="translate(30 70) rotate(-12)">
+            <circle cx="36" cy="36" r="34" fill="#e3c98f" stroke="#c9ab68" stroke-width="3"/>
+            <circle cx="36" cy="36" r="11" fill="#f3efe2"/>
+            <path d="M66 26h104v10l-8 6 8 6-8 6h-96z" fill="#e3c98f"/>
+            <path d="M70 34h96" stroke="#c9ab68" stroke-width="3"/>
+          </g>
+          <!-- paint stirrer -->
+          <g transform="translate(225 20) rotate(8)">
+            <path d="M0 10a10 10 0 0 1 20 0v160H0z" fill="#e3c98f"/>
+            <rect x="0" y="118" width="20" height="52" fill="#c84a24"/>
+            <text x="10" y="70" font-family="Libre Franklin, Arial" font-weight="800" font-size="8" fill="#24382a" text-anchor="middle" transform="rotate(-90 10 70)" letter-spacing="1">PRUITT</text>
+          </g>
+          <!-- box of nails -->
+          <g transform="translate(300 52)">
+            <path d="M0 30 30 0h170l-30 30z" fill="#2b2520"/>
+            <rect x="0" y="30" width="170" height="110" fill="#24382a"/>
+            <path d="M170 30 200 0v110l-30 30z" fill="#2b2520"/>
+            <text x="85" y="78" font-family="Ultra, Rockwell, serif" font-size="30" fill="#f3efe2" text-anchor="middle">16d</text>
+            <text x="85" y="102" font-family="Libre Franklin, Arial" font-weight="800" font-size="10" fill="#e3c98f" text-anchor="middle" letter-spacing="2">COMMON NAILS</text>
+            <text x="85" y="120" font-family="Libre Franklin, Arial" font-size="9" fill="#f3efe2" text-anchor="middle" letter-spacing="1">1 LB NET</text>
+          </g>
+          <!-- loose nails -->
+          <g stroke="#6d6257" stroke-width="3" stroke-linecap="round">
+            <path d="M520 168 590 150"/><path d="M516 162l3 12" stroke-width="5"/>
+            <path d="M540 182 612 186"/><path d="M538 176v12" stroke-width="5"/>
+          </g>
+          <!-- parts tag -->
+          <g transform="translate(615 30) rotate(10)">
+            <path d="M14 0h44l14 14v120H0V14z" fill="#e3c98f"/>
+            <circle cx="36" cy="18" r="7" fill="#f3efe2" stroke="#c9ab68" stroke-width="4"/>
+            <text x="36" y="72" font-family="Ultra, Rockwell, serif" font-size="30" fill="#a63b1b" text-anchor="middle">27</text>
+            <text x="36" y="94" font-family="Libre Franklin, Arial" font-weight="800" font-size="8" fill="#2b2520" text-anchor="middle" letter-spacing="1.5">BIN</text>
+            <path d="M36 11C30-10 0-20-20-12" fill="none" stroke="#6d6257" stroke-width="1.5"/>
+          </g>
+        </svg>
+        <figcaption>Most of what we sell fits in a paper bag. The tag tells you which bin to go back to.</figcaption>
+      </figure>
+
+      <section id="counter" aria-labelledby="counter-head">
+        <h2 id="counter-head">At the counter</h2>
+        <ul class="slats">
+          <li class="slat">
+            <svg aria-hidden="true" width="24" height="24"><use href="#key"/></svg>
+            <div><h3>Keys cut</h3><p>House and padlock keys, most brands. About four minutes each.</p></div>
+            <span class="price">$3</span>
+          </li>
+          <li class="slat">
+            <svg aria-hidden="true" width="24" height="24"><use href="#blade"/></svg>
+            <div><h3>Blades sharpened</h3><p>Mower blades and kitchen knives. Leave them Monday, collect them Wednesday.</p></div>
+            <span class="price">from $6</span>
+          </li>
+          <li class="slat">
+            <svg aria-hidden="true" width="24" height="24"><use href="#can"/></svg>
+            <div><h3>Paint mixed to match</h3><p>A chip of the old wall the size of a quarter is enough to match it on the shaker.</p></div>
+            <span class="price">$34 gal</span>
+          </li>
+          <li class="slat">
+            <svg aria-hidden="true" width="24" height="24"><use href="#screen"/></svg>
+            <div><h3>Window screens rescreened</h3><p>Aluminum or fiberglass mesh, new spline, back in two days.</p></div>
+            <span class="price">from $18</span>
+          </li>
+          <li class="slat" id="rent">
+            <svg aria-hidden="true" width="24" height="24"><use href="#sander"/></svg>
+            <div><h3>Floor sander, by the day</h3><p>The same drum sander since 1994. Sandpaper is sold by the sheet, and unused sheets come back for a refund.</p></div>
+            <span class="price">$45 day</span>
+          </li>
+        </ul>
+      </section>
+
+      <div class="story">
+        <h2>Four generations</h2>
+        <p>Walter Pruitt opened the store in 1927 with a keg of nails and a scale from the feed mill. His great-granddaughter June runs it now. The scale is still on the counter, and it is still how we sell nails.</p>
+        <p>If you need one hinge, June will sell you one hinge and show you which way round it goes.<svg class="end-mark" aria-hidden="true" width="16" height="16"><use href="#nut"/></svg></p>
+      </div>
+    </div>
+
+    <aside class="side" aria-label="Hours, specials and directions">
+      <section class="tag" aria-labelledby="hours-head">
+        <span class="bin" aria-hidden="true">27</span>
+        <h2 id="hours-head">Hours</h2>
+        <dl class="hours">
+          <dt>Mon&ndash;Fri</dt><dd>7:00 &ndash; 6:00</dd>
+          <dt>Saturday</dt><dd>7:00 &ndash; 4:00</dd>
+          <dt>Sunday</dt><dd>closed</dd>
+        </dl>
+      </section>
+
+      <section id="specials" aria-labelledby="specials-head">
+        <h2 class="index-head" id="specials-head">Bin specials <span aria-hidden="true">&rarr;</span></h2>
+        <ul class="specials">
+          <li>Galvanized deck screws, 2&frac12;&Prime; <b>$4.10 lb</b></li>
+          <li>Brass cup hooks, dozen <b>$2.25</b></li>
+          <li>Sash cord, per foot <b>$0.40</b></li>
+          <li>Painter&rsquo;s tape, 1&frac12;&Prime; <b>$5.75</b></li>
+        </ul>
+      </section>
+
+      <section id="find" aria-labelledby="find-head">
+        <h2 id="find-head">Find us</h2>
+        <ul class="facts">
+          <li><svg aria-hidden="true" width="24" height="24"><use href="#pin"/></svg><span>14 Mill Street, Ashby Falls. Park on the river side.</span></li>
+          <li><svg aria-hidden="true" width="24" height="24"><use href="#phone"/></svg><span><a href="tel:+15550142704">(555) 014-2704</a></span></li>
+          <li><svg aria-hidden="true" width="24" height="24"><use href="#bolt"/></svg><span>Propane exchange round the back.</span></li>
+          <li><svg aria-hidden="true" width="24" height="24"><use href="#hand"/></svg><span>Delivery in town over $50.</span></li>
+        </ul>
+      </section>
+    </aside>
+  </main>
+
+  <footer class="footer">
+    <svg aria-hidden="true" width="40" height="48"><use href="#badge"/></svg>
+    <p>Pruitt Hardware, 14 Mill Street, Ashby Falls. Family owned since 1927. Closed Sundays so June can fish.</p>
+  </footer>
+
+</div>
+
+<div class="tape tape--foot" aria-hidden="true"></div>
+
+</body>
+</html>

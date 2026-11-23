@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kettő · Hungarian and English literary translation · Frank Chimero style preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,500;1,400&family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..500&display=swap">
+<style>
+  /* Fallbacks scaled to the web fonts' widths, so the hand-set lines hold if the fonts never load. */
+  @font-face {
+    font-family: "Newsreader fallback";
+    src: local("Georgia");
+    size-adjust: 90%;
+  }
+
+  @font-face {
+    font-family: "Hanken Grotesk fallback";
+    src: local("Arial"), local("Helvetica Neue");
+    size-adjust: 98%;
+  }
+
+  :root {
+    --voice: "Newsreader", "Newsreader fallback", Georgia, serif;
+    --furniture: "Hanken Grotesk", "Hanken Grotesk fallback", Arial, sans-serif;
+
+    --field: #1d3527;
+    --on-field: #f2ecdc;
+    --on-field-quiet: #b9bfae;
+    --paper: #f1efe9;
+    --ink: #262b27;
+    --ink-quiet: #5f635d;
+    --hairline: #d3d0c6;
+    --accent: #ee590c;
+
+    --gutter: clamp(1.25rem, 5vw, 4.5rem);
+    --small: 0.9375rem;
+    --body: 1.25rem;
+    --display: clamp(2.1rem, 1.2rem + 3.2vw, 4rem);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--furniture);
+    font-size: var(--small);
+    line-height: 1.5;
+    font-variant-numeric: oldstyle-nums;
+    font-synthesis: none;
+  }
+
+  a {
+    color: inherit;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+
+  a:hover, a:focus-visible { text-decoration-thickness: 2px; }
+
+  /* The field: the studio's sentence is the whole first screen. */
+
+  .field {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: min(100svh, 56rem);
+    padding: clamp(1.25rem, 3vw, 2.25rem) var(--gutter) clamp(2rem, 5vw, 3.5rem);
+    background: var(--field);
+    color: var(--on-field);
+  }
+
+  .top {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1.25rem 3rem;
+  }
+
+  .label { margin: 0; }
+  .label b { display: block; font-weight: 500; }
+  .label span { display: block; color: var(--on-field-quiet); }
+
+  .top nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem clamp(1.5rem, 4vw, 3.5rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .top nav a { display: block; text-decoration: none; }
+
+  .top nav a:hover b, .top nav a:focus-visible b {
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-underline-offset: 0.2em;
+  }
+
+  .sentence {
+    align-self: center;
+    max-width: 17em;
+    margin: clamp(3rem, 10vw, 6rem) 0;
+    font-family: var(--voice);
+    font-weight: 300;
+    font-size: var(--display);
+    font-optical-sizing: auto;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    text-wrap: pretty;
+  }
+
+  .status {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem 2.5rem;
+    margin: 0;
+  }
+
+  .status .open::before {
+    content: "";
+    display: inline-block;
+    width: 0.6em;
+    height: 0.6em;
+    margin-right: 0.6em;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .status .names { color: var(--on-field-quiet); }
+
+  /* Paper: the books, then one line seen four times. */
+
+  .paper {
+    padding: clamp(3rem, 8vw, 6rem) var(--gutter);
+  }
+
+  .paper > * {
+    max-width: 62rem;
+    margin-inline: auto;
+  }
+
+  h2 {
+    margin: 0 auto 1.5rem;
+    font-size: var(--small);
+    font-weight: 500;
+  }
+
+  .books {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0;
+    list-style: none;
+    box-shadow: inset 0 1px 0 var(--hairline);
+  }
+
+  .books li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: 0.25rem 2rem;
+    padding: 1.1rem 0 1.2rem;
+    box-shadow: inset 0 -1px 0 var(--hairline);
+  }
+
+  .books .title {
+    font-family: var(--voice);
+    font-weight: 300;
+    font-size: var(--display);
+    font-optical-sizing: auto;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+  }
+
+  .books .gloss {
+    grid-column: 1;
+    color: var(--ink-quiet);
+  }
+
+  .books time {
+    grid-column: 2;
+    grid-row: 1;
+    font-variant-numeric: lining-nums tabular-nums;
+    color: var(--ink-quiet);
+  }
+
+  .drafts-intro {
+    margin-top: clamp(4.5rem, 12vw, 8rem);
+  }
+
+  .drafts-intro p {
+    max-width: 34em;
+    margin: 0 0 2.5rem;
+    font-family: var(--voice);
+    font-size: var(--body);
+    line-height: 1.45;
+  }
+
+  .drafts {
+    display: grid;
+    grid-template-columns: 1fr;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .drafts li {
+    padding: 1.25rem 0 1.5rem;
+    box-shadow: inset 0 1px 0 var(--hairline);
+  }
+
+  .drafts .who {
+    display: block;
+    margin-bottom: 0.6rem;
+    color: var(--ink-quiet);
+  }
+
+  .drafts .who b {
+    font-weight: 500;
+    color: var(--ink);
+    font-variant-numeric: lining-nums;
+  }
+
+  .drafts q {
+    display: block;
+    quotes: none;
+    font-family: var(--voice);
+    font-size: var(--body);
+    line-height: 1.45;
+    hanging-punctuation: first;
+  }
+
+  .rule {
+    width: 10rem;
+    height: 1px;
+    margin: clamp(3.5rem, 9vw, 6rem) auto 0;
+    border: 0;
+    background: var(--accent);
+  }
+
+  footer {
+    padding: 2rem var(--gutter) 2.5rem;
+    background: var(--field);
+    color: var(--on-field-quiet);
+  }
+
+  footer p {
+    max-width: 62rem;
+    margin: 0 auto;
+  }
+
+  footer a { color: var(--on-field); }
+
+  @media (min-width: 52rem) {
+    /* Line breaks chosen by hand once the sentence is set at full size. */
+    .sentence span { display: block; }
+
+    .drafts {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .drafts li {
+      padding: 0.25rem 1.5rem 0.5rem;
+      box-shadow: inset 1px 0 0 var(--hairline);
+    }
+
+    .drafts li:first-child {
+      padding-left: 0;
+      box-shadow: none;
+    }
+
+    .drafts li:last-child { padding-right: 0; }
+  }
+</style>
+</head>
+<body>
+
+<header class="field">
+  <div class="top">
+    <p class="label"><b>Kettő</b><span>Literary translation, Hungarian and English</span></p>
+    <nav aria-label="Sections">
+      <ul>
+        <li><a class="label" href="#books"><b>Books</b><span>Eight, 2009–2026</span></a></li>
+        <li><a class="label" href="#drafts"><b>Drafts</b><span>One line, four times</span></a></li>
+        <li><a class="label" href="mailto:desk@ketto.example"><b>Write</b><span>desk@ketto.example</span></a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <h1 class="sentence"><span>Two of us translate Hungarian</span> <span>novels and poems into English,</span> <span>reading every line aloud in both</span> <span>languages before it leaves the desk.</span></h1>
+
+  <p class="status">
+    <span class="open">Taking one novel for spring 2027</span>
+    <span class="names">Zsófia Lakatos in Budapest, Owen Marsh in Leeds</span>
+  </p>
+</header>
+
+<main class="paper">
+  <h2 id="books">Books</h2>
+  <ol class="books" reversed>
+    <li>
+      <span class="title">The Salt Year</span>
+      <span class="gloss">Novel by Gáspár Erdős, from <i lang="hu">A sós esztendő</i></span>
+      <time datetime="2026">2026</time>
+    </li>
+    <li>
+      <span class="title">Ferry at Six</span>
+      <span class="gloss">Novel by Réka Hollós, from <i lang="hu">Hatórás komp</i></span>
+      <time datetime="2024">2024</time>
+    </li>
+    <li>
+      <span class="title">Notes from the Lower Town</span>
+      <span class="gloss">Poems by Bence Szirtes, from <i lang="hu">Jegyzetek az alsóvárosból</i></span>
+      <time datetime="2022">2022</time>
+    </li>
+    <li>
+      <span class="title">A Small Winter</span>
+      <span class="gloss">Novel by Gáspár Erdős, from <i lang="hu">Kis tél</i></span>
+      <time datetime="2019">2019</time>
+    </li>
+    <li>
+      <span class="title">The Weighing House</span>
+      <span class="gloss">Novel by Ilka Rónai, from <i lang="hu">A mérlegház</i></span>
+      <time datetime="2017">2017</time>
+    </li>
+    <li>
+      <span class="title">Letters to a Lock-keeper</span>
+      <span class="gloss">Novel by Márton Vidor, from <i lang="hu">Levelek egy zsilipőrnek</i></span>
+      <time datetime="2014">2014</time>
+    </li>
+    <li>
+      <span class="title">Seven Bridges and No River</span>
+      <span class="gloss">Poems by Bence Szirtes, from <i lang="hu">Hét híd, folyó nélkül</i></span>
+      <time datetime="2011">2011</time>
+    </li>
+    <li>
+      <span class="title">The Walnut Tree</span>
+      <span class="gloss">Novel by Ilka Rónai, from <i lang="hu">A diófa</i>, our first book together</span>
+      <time datetime="2009">2009</time>
+    </li>
+  </ol>
+
+  <section class="drafts-intro" aria-labelledby="drafts">
+    <h2 id="drafts">Drafts</h2>
+    <p>We keep every draft. This is the first line of <i>The Walnut Tree</i>, from Ilka Rónai’s Hungarian to the sentence we printed in 2009.</p>
+    <ol class="drafts">
+      <li>
+        <span class="who"><b>1</b> Ilka Rónai, 2004</span>
+        <q lang="hu">A kert végében állt egy diófa, és senki sem emlékezett, ki ültette.</q>
+      </li>
+      <li>
+        <span class="who"><b>2</b> Zsófia, first pass</span>
+        <q>At the end of the garden there stood a walnut tree, and nobody remembered who had planted it.</q>
+      </li>
+      <li>
+        <span class="who"><b>3</b> Owen, read aloud</span>
+        <q>A walnut tree stood at the bottom of the garden, and no one could remember who had planted it.</q>
+      </li>
+      <li>
+        <span class="who"><b>4</b> Printed, 2009</span>
+        <q>At the bottom of the garden stood a walnut tree that nobody remembered planting.</q>
+      </li>
+    </ol>
+  </section>
+
+  <hr class="rule">
+</main>
+
+<footer>
+  <p>Publishers and agents, write to <a href="mailto:desk@ketto.example">desk@ketto.example</a>; we send a sample chapter within three weeks of receiving a book. Kettő, Ráday utca 18, 1092 Budapest.</p>
+</footer>
+
+</body>
+</html>

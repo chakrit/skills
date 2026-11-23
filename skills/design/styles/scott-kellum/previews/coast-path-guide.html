@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>The Saltway, stage 6 — Scott Kellum style preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Brygada+1918:ital,wght@0,400..700;1,400..700&family=Encode+Sans:wdth,wght@75..125,100..900&display=swap">
+<style>
+  /* Ochre flood for the brand, warm paper for reading; the three coast stretches each
+     keep one colour so the rail reads as a map of the path. */
+  :root {
+    --ochre: #c29812;
+    --ochre-line: #a37f0c;
+    --paper: #f4eedf;
+    --ink: #3b241b;
+    --ink-on-ochre: #2a1a12;
+    --brown: #8b5a49;
+    --hair: #d9ccb0;
+    /* Stretch colours are darkened tones of the seed hues so the group names reach
+       4.5:1 on the ochre; the warning on paper keeps the full red, which already does. */
+    --north: #0e3940;
+    --estuary: #413105;
+    --south: #661317;
+    --warn: #be242a;
+
+    --serif: "Brygada 1918", Georgia, serif;
+    --sans: "Encode Sans", "Arial Narrow", sans-serif;
+
+    --measure: min(38rem, 100% - 2.5rem);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+  }
+
+  body {
+    margin: 0;
+    container: page / inline-size;
+  }
+
+  a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+  a:hover { text-decoration-thickness: 2px; }
+  a:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+
+  p, ol, figure, table { margin: 0; }
+
+  /* Every role is drawn at two masters, its narrowest container (320px) and its widest
+     (1100px). A paused animation scrubbed by the container's width gives each size in
+     between; the timing function is the curve. The `from` keyframe is the narrow master,
+     so a browser without the maths still gets a complete setting. The page is the one
+     container: measuring the stage column instead would shrink every size at the moment
+     the rail appears beside it. */
+  .prose, .stage h1, .stage h2, .warn, .util, .brand {
+    animation-duration: 1s;
+    animation-play-state: paused;
+    animation-fill-mode: both;
+    animation-delay: calc((tan(atan2(100cqi, 1px)) - 320) / 780 * -1s);
+  }
+
+  /* Body text reaches reading size early and holds it. */
+  .prose {
+    animation-name: t-body;
+    animation-timing-function: cubic-bezier(.15, .75, .35, 1);
+    font-size: 1.0625rem;
+    line-height: 1.45;
+  }
+  @keyframes t-body {
+    from { font-size: 1.0625rem; line-height: 1.45; }
+    to   { font-size: 1.25rem;   line-height: 1.6; }
+  }
+
+  /* Heads stay modest through the middle widths and grow late, widening as they go. */
+  .stage h1 {
+    animation-name: t-title;
+    animation-timing-function: cubic-bezier(.65, 0, .9, .45);
+    font-family: var(--sans);
+    font-size: 1.9rem;
+    line-height: 1;
+    font-stretch: 80%;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+    margin: 0;
+  }
+  @keyframes t-title {
+    from { font-size: 1.9rem; line-height: 1;   font-stretch: 80%;  font-weight: 700; }
+    to   { font-size: 4.2rem; line-height: .95; font-stretch: 112%; font-weight: 640; }
+  }
+
+  .stage h2 {
+    animation-name: t-section;
+    animation-timing-function: cubic-bezier(.65, 0, .9, .45);
+    font-family: var(--sans);
+    font-size: 1.25rem;
+    line-height: 1.1;
+    font-stretch: 85%;
+    font-weight: 700;
+    text-wrap: balance;
+    margin: 0;
+  }
+  @keyframes t-section {
+    from { font-size: 1.25rem; font-stretch: 85%;  font-weight: 700; }
+    to   { font-size: 1.75rem; font-stretch: 105%; font-weight: 650; }
+  }
+
+  /* Danger has its own typographic thread: heavy, condensed, red. No box, no label. */
+  .warn {
+    animation-name: t-warn;
+    animation-timing-function: cubic-bezier(.15, .75, .35, 1);
+    font-family: var(--sans);
+    font-weight: 800;
+    color: var(--warn);
+    font-size: 1.05rem;
+    line-height: 1.3;
+    font-stretch: 75%;
+  }
+  @keyframes t-warn {
+    from { font-size: 1.05rem; line-height: 1.3;  font-stretch: 75%; }
+    to   { font-size: 1.2rem;  line-height: 1.35; font-stretch: 90%; }
+  }
+
+  /* Distances, times and tides: wide, small, tabular, so columns of figures line up. */
+  .util {
+    animation-name: t-util;
+    animation-timing-function: cubic-bezier(.15, .75, .35, 1);
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    font-stretch: 110%;
+    font-weight: 500;
+    line-height: 1.4;
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+  /* The name grows with the page, a little later than the text does. */
+  .brand {
+    animation-name: t-brand;
+    animation-timing-function: cubic-bezier(.65, 0, .9, .45);
+  }
+  @keyframes t-brand {
+    from { font-size: 1.2rem; font-stretch: 105%; }
+    to   { font-size: 1.6rem; font-stretch: 122%; }
+  }
+
+  @keyframes t-util {
+    from { font-size: 0.8rem;  font-stretch: 110%; }
+    to   { font-size: 0.88rem; font-stretch: 125%; }
+  }
+
+  /* Place names and figures keep their own threads inside running text: places in
+     spaced capitals, distances and times in the wide tabular sans. */
+  .place {
+    font-family: var(--serif);
+    text-transform: uppercase;
+    font-size: 0.8em;
+    letter-spacing: 0.06em;
+  }
+  .util .place { font-size: 0.92em; }
+  .fig {
+    font-family: var(--sans);
+    font-size: 0.86em;
+    font-stretch: 115%;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+
+  /* ---------- Masthead: the loud part ---------- */
+
+  .masthead {
+    background: var(--ochre);
+    color: var(--ink-on-ochre);
+    box-shadow: inset 0 -1px 0 var(--ochre-line);
+    padding: 0.9rem max(1.25rem, env(safe-area-inset-right)) 0.9rem max(1.25rem, env(safe-area-inset-left));
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.4rem 1.5rem;
+  }
+  .brand {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    text-decoration: none;
+    font-family: var(--sans);
+    font-weight: 850;
+    font-stretch: 105%;
+    font-size: 1.2rem;
+    letter-spacing: -0.01em;
+  }
+  .brand svg { width: 1.2em; height: 1.2em; flex: none; align-self: center; }
+  .masthead > .util { margin-inline-end: auto; }
+  .masthead nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 1.1rem;
+  }
+
+  /* ---------- Layout: rail beside the stage, or a strip above it ---------- */
+
+  .layout { display: grid; grid-template-columns: minmax(0, 1fr); }
+
+  /* On narrow screens the strip stays pinned so the reader's place in the 14 stages is
+     always in view; its ochre sits on ::before so it can reach under the status bar. */
+  .rail {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    color: var(--ink-on-ochre);
+    padding-top: env(safe-area-inset-top);
+  }
+  .rail::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--ochre);
+    box-shadow: inset 0 -1px 0 var(--ochre-line);
+  }
+  .rail-inner {
+    display: flex;
+    min-width: 0;
+    gap: 1.1rem;
+    padding-block: 0.5rem 0.6rem;
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+  }
+  /* The hidden names are positioned inside the scroller so they cannot widen the page. */
+  .stretch { flex: none; position: relative; }
+  .stretch.north { --stretch: var(--north); }
+  .stretch.estuary { --stretch: var(--estuary); }
+  .stretch.south { --stretch: var(--south); }
+  .stretch-name {
+    font-weight: 750;
+    white-space: nowrap;
+    color: var(--stretch);
+    margin-bottom: 0.15rem;
+  }
+  .stretch ol {
+    list-style: none;
+    padding: 0 0 0.25rem;
+    display: flex;
+    box-shadow: inset 0 -3px 0 var(--stretch);
+  }
+  .stretch a {
+    display: grid;
+    place-items: center;
+    min-width: 2.25rem;
+    min-height: 2.25rem;
+    text-decoration: none;
+  }
+  .stretch .name, .stretch .km {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  /* Stage names ride the utility curve, a step larger; on narrow screens they are hidden. */
+  .stretch .name { font-size: 1.1em; }
+
+  /* Anchor jumps land below the pinned stage strip while it is pinned. */
+  [id] { scroll-margin-top: calc(5.5rem + env(safe-area-inset-top)); }
+
+  .stretch .n { display: inline-grid; place-items: center; min-width: 1.6em; height: 1.6em; border-radius: 1em; }
+  .stretch a[aria-current] .n { background: var(--ink-on-ochre); color: var(--ochre); }
+  .stretch a:hover .n { box-shadow: inset 0 0 0 1px currentColor; }
+
+  @container page (min-width: 60rem) {
+    .layout { grid-template-columns: 18rem 1fr; }
+    .rail { position: relative; z-index: 0; padding-top: 0; }
+    .rail::before { box-shadow: inset -1px 0 0 var(--ochre-line); }
+    .rail-inner {
+      position: sticky;
+      top: 0;
+      max-height: 100vh;
+      overflow-y: auto;
+      flex-direction: column;
+      gap: 1.6rem;
+      padding: 2rem 1.25rem 2rem max(1.5rem, env(safe-area-inset-left));
+    }
+    .stretch-name { margin-bottom: 0.5rem; }
+    .stretch ol {
+      flex-direction: column;
+      padding: 0 0 0 0.9rem;
+      box-shadow: inset 3px 0 0 var(--stretch);
+    }
+    .stretch a {
+      display: grid;
+      grid-template-columns: 1.8em 1fr auto;
+      align-items: baseline;
+      gap: 0.4rem;
+      place-items: baseline start;
+      min-height: 0;
+      padding: 0.28rem 0;
+    }
+    .stretch .name, .stretch .km {
+      position: static;
+      width: auto;
+      height: auto;
+      overflow: visible;
+      clip-path: none;
+      white-space: normal;
+    }
+    .stretch .km { font-weight: 400; }
+    .stretch a[aria-current] .name { font-weight: 700; }
+    [id] { scroll-margin-top: 0; }
+  }
+
+  /* ---------- The stage: the quiet part, with its grid drawn ---------- */
+
+  .stage {
+    display: grid;
+    grid-template-columns: 1fr var(--measure) 1fr;
+    padding-bottom: 4rem;
+    background:
+      linear-gradient(var(--hair), var(--hair)) no-repeat calc(50% - min(19rem, 50% - 1.25rem)) 0 / 1px 100%,
+      linear-gradient(var(--hair), var(--hair)) no-repeat calc(50% + min(19rem, 50% - 1.25rem)) 0 / 1px 100%;
+  }
+  .stage > section, .stage > header, .stage > nav {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: subgrid;
+    box-shadow: inset 0 1px 0 var(--hair);
+    padding-block: 2.25rem;
+  }
+  .stage > header { box-shadow: none; padding-block: 2.5rem 0; }
+  .stage > * > * { grid-column: 2; }
+
+  .facts {
+    margin-top: 1.1rem;
+    padding-block: 0.55rem;
+    box-shadow: inset 0 1px 0 var(--hair), inset 0 -1px 0 var(--hair);
+    color: var(--brown);
+  }
+
+  .stage > header .prose { margin-top: 1.6rem; }
+  .prose p + p { margin-top: 0.75em; }
+
+  .stage h2 + * { margin-top: 1rem; }
+
+  /* ---------- Elevation profile: a construction drawing across the whole stage ---------- */
+
+  /* The figure covers the column hairlines, so only its own guides read as data. */
+  .profile { grid-column: 1 / -1; padding-inline: 1.25rem; background: var(--paper); }
+  .plot {
+    position: relative;
+    aspect-ratio: 1000 / 240;
+    min-height: 10rem;
+    margin-top: 1.2rem;
+  }
+  .plot svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .mk {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    translate: -50% -50%;
+    width: 1.7em;
+    height: 1.7em;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--paper);
+    box-shadow: inset 0 0 0 1.5px var(--brown);
+    font-weight: 700;
+  }
+  .mk.tidal { color: var(--warn); box-shadow: inset 0 0 0 1.5px var(--warn); }
+  .profile figcaption { margin-top: 1.25rem; max-width: 38rem; margin-inline: auto; }
+
+  .key {
+    list-style: none;
+    padding: 0;
+    margin-top: 0.9rem;
+    max-width: 38rem;
+    margin-inline: auto;
+  }
+  .key li {
+    display: grid;
+    grid-template-columns: 1.7em 1fr auto 4.2em;
+    gap: 0.6rem;
+    padding-block: 0.4rem;
+    box-shadow: inset 0 -1px 0 var(--hair);
+  }
+  .key li > :nth-child(n+3) { text-align: right; }
+  .key .tidal { color: var(--warn); }
+
+  /* ---------- Tide table ---------- */
+
+  .table-scroll { margin-top: 1.4rem; overflow-x: auto; }
+  .tides { width: 100%; border-collapse: collapse; }
+  .tides td { white-space: nowrap; }
+  .tides caption { text-align: left; color: var(--brown); padding-bottom: 0.5rem; caption-side: top; }
+  .tides th, .tides td {
+    text-align: left;
+    padding: 0.45rem 0.6rem 0.45rem 0;
+    box-shadow: inset 0 -1px 0 var(--hair);
+    vertical-align: baseline;
+  }
+  .tides thead th { font-weight: 700; box-shadow: inset 0 -2px 0 var(--hair); }
+  .tides td:last-child, .tides th:last-child { padding-right: 0; }
+  .tides .none { color: var(--warn); font-weight: 700; }
+
+  .stage .warn { margin-top: 1.6rem; }
+  .table-scroll + .prose { margin-top: 1.4rem; }
+
+  /* ---------- Directions ---------- */
+
+  .directions { padding: 0; list-style: none; counter-reset: step; }
+  .directions li { counter-increment: step; position: relative; padding-left: 2.2em; }
+  .directions li + li { margin-top: 0.9em; }
+  .directions li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 0.1em;
+    font-family: var(--sans);
+    font-weight: 800;
+    font-stretch: 80%;
+    color: var(--brown);
+  }
+
+  /* ---------- Previous and next ---------- */
+
+  .pager ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.8rem 2rem;
+  }
+  /* Stage names in the pager ride the body curve, a step above it. */
+  .pager a { font-size: 1.05em; text-decoration: none; }
+  .pager a:hover span { text-decoration: underline; }
+  .pager .util { display: block; color: var(--brown); }
+
+  /* ---------- Footer: back to the flood ---------- */
+
+  .colophon {
+    background: var(--ochre);
+    color: var(--ink-on-ochre);
+    padding: 2.5rem max(1.25rem, env(safe-area-inset-right)) 3rem max(1.25rem, env(safe-area-inset-left));
+  }
+  .colophon p { max-width: 40rem; }
+  .colophon p + p { margin-top: 0.8rem; }
+
+  /* Print keeps the stage, drops the brand and the rail, and fixes every size. */
+  @media print {
+    html, body { background: #fff; color: #000; }
+    .masthead nav, .rail { display: none; }
+    .masthead, .colophon { background: none; box-shadow: none; padding: 0 0 12pt; color: #000; }
+    .layout, .stage { display: block; background: none; }
+    .prose, .stage h1, .stage h2, .warn, .util, .brand { animation: none; }
+    .brand { font-size: 14pt; }
+    .stage > *, .stage > section, .stage > header, .stage > nav, .stage > * > * { display: block; grid-column: auto; }
+    .stage > *, .stage > section, .stage > header, .stage > nav { padding-block: 10pt; box-shadow: none; }
+    .stage > .pager { display: none; }
+    .profile { padding-inline: 0; background: none; }
+    .prose { font-size: 11pt; line-height: 1.45; }
+    .stage h1 { font-size: 22pt; }
+    .stage h2 { font-size: 14pt; }
+    .warn { font-size: 11pt; color: #000; }
+    .util { font-size: 8.5pt; }
+    .plot { min-height: 0; }
+    .mk, .mk.tidal { background: #fff; color: #000; box-shadow: none; border: 1pt solid #000; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .facts, .key li, .tides th, .tides td, .tides thead th { box-shadow: none; border-bottom: .5pt solid #000; }
+    .facts { border-top: .5pt solid #000; }
+    .profile .pf-grid, .profile .pf-km, .profile .pf-line { stroke: #000; }
+    .profile .pf-ground { fill: #fff; }
+    .profile .pf-tidal { fill: none; stroke: #000; stroke-dasharray: 2 2; }
+    .facts, figcaption, .tides caption, .directions li::before, .tides .none, .key .tidal { color: #000; }
+    a { text-decoration: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <a class="brand" href="#">
+    <svg viewBox="0 0 32 32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square">
+      <path d="M3 5 H29"/>
+      <path d="M16 5 V28"/>
+      <path d="M5 28 L16 11 L27 28"/>
+    </svg>
+    The Saltway
+  </a>
+  <p class="util">The Kestle coast path, 118 km in 14 stages</p>
+  <nav aria-label="Guide">
+    <ul class="util">
+      <li><a href="#stages">Stages</a></li>
+      <li><a href="#tides">Tide tables</a></li>
+      <li><a href="#report">Report a problem on the path</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="layout">
+
+  <nav class="rail" id="stages" aria-label="All stages of the Saltway">
+    <div class="rail-inner util">
+      <div class="stretch north">
+        <p class="stretch-name">North shore</p>
+        <ol>
+          <li><a href="#"><span class="n">1</span><span class="name">Kestle Quay to St Wenna</span><span class="km">7.8 km</span></a></li>
+          <li><a href="#"><span class="n">2</span><span class="name">St Wenna to Gull Rock</span><span class="km">9.4 km</span></a></li>
+          <li><a href="#"><span class="n">3</span><span class="name">Gull Rock to Porthellow</span><span class="km">8.1 km</span></a></li>
+          <li><a href="#"><span class="n">4</span><span class="name">Porthellow to Penhallow</span><span class="km">10.2 km</span></a></li>
+        </ol>
+      </div>
+      <div class="stretch estuary">
+        <p class="stretch-name">The estuary</p>
+        <ol>
+          <li><a href="#"><span class="n">5</span><span class="name">Penhallow to Tregarrick Ferry</span><span class="km">6.9 km</span></a></li>
+          <li><a href="#" aria-current="page"><span class="n">6</span><span class="name">Tregarrick Ferry to Polwenna Cove</span><span class="km">11.2 km</span></a></li>
+          <li><a href="#"><span class="n">7</span><span class="name">Polwenna Cove to Lanvean</span><span class="km">8.6 km</span></a></li>
+          <li><a href="#"><span class="n">8</span><span class="name">Lanvean to Carn Du</span><span class="km">7.4 km</span></a></li>
+        </ol>
+      </div>
+      <div class="stretch south">
+        <p class="stretch-name">South cliffs</p>
+        <ol>
+          <li><a href="#"><span class="n">9</span><span class="name">Carn Du to Hellan Point</span><span class="km">9.8 km</span></a></li>
+          <li><a href="#"><span class="n">10</span><span class="name">Hellan Point to Merrow Steps</span><span class="km">6.1 km</span></a></li>
+          <li><a href="#"><span class="n">11</span><span class="name">Merrow Steps to Treloan</span><span class="km">8.9 km</span></a></li>
+          <li><a href="#"><span class="n">12</span><span class="name">Treloan to Brea Head</span><span class="km">7.7 km</span></a></li>
+          <li><a href="#"><span class="n">13</span><span class="name">Brea Head to Rosvear</span><span class="km">9.3 km</span></a></li>
+          <li><a href="#"><span class="n">14</span><span class="name">Rosvear to Penvose Light</span><span class="km">6.6 km</span></a></li>
+        </ol>
+      </div>
+    </div>
+  </nav>
+
+  <main class="stage">
+
+    <header>
+      <h1>6. Tregarrick Ferry to Polwenna Cove</h1>
+      <p class="facts util">11.2 km, about 4 h 10 min, 255 m of ascent, a tidal beach at 5.8 km</p>
+      <div class="prose">
+        <p>This stage starts with the foot ferry across the <span class="place">Tregarrick river</span> and ends at the lifeboat slip in <span class="place">Polwenna Cove</span>. The first <span class="fig">4.6 km</span> climb along slate cliffs to <span class="place">Hennock Beacon</span>. After the beach the path turns inland on field edges over <span class="place">Withel Downs</span> and drops through gorse to the cove; it is grassy, wide and easy to follow all the way.</p>
+        <p>One stretch needs planning. At <span class="place">Gwithel sands</span> the path goes down onto the beach for <span class="fig">400 metres</span>, and the beach floods. Work out your day from the tide and the ferry before you work out anything else.</p>
+      </div>
+    </header>
+
+    <section aria-labelledby="profile-title">
+      <h2 id="profile-title">The ground</h2>
+      <figure class="profile">
+        <div class="plot">
+          <svg viewBox="0 0 1000 240" preserveAspectRatio="none" aria-hidden="true">
+            <g class="pf-grid" stroke="#d9ccb0" stroke-width="1">
+              <line x1="0" y1="230" x2="1000" y2="230" vector-effect="non-scaling-stroke"/>
+              <line x1="0" y1="160" x2="1000" y2="160" vector-effect="non-scaling-stroke"/>
+              <line x1="0" y1="90" x2="1000" y2="90" vector-effect="non-scaling-stroke"/>
+              <line x1="0" y1="20" x2="1000" y2="20" vector-effect="non-scaling-stroke"/>
+            </g>
+            <g class="pf-km" stroke="#cdbd9b" stroke-width="1" stroke-dasharray="3 5">
+              <line x1="178.6" y1="10" x2="178.6" y2="235" vector-effect="non-scaling-stroke"/>
+              <line x1="357.1" y1="10" x2="357.1" y2="235" vector-effect="non-scaling-stroke"/>
+              <line x1="535.7" y1="10" x2="535.7" y2="235" vector-effect="non-scaling-stroke"/>
+              <line x1="714.3" y1="10" x2="714.3" y2="235" vector-effect="non-scaling-stroke"/>
+              <line x1="892.9" y1="10" x2="892.9" y2="235" vector-effect="non-scaling-stroke"/>
+            </g>
+            <rect class="pf-tidal" x="517.9" y="10" width="35.7" height="220" fill="#be242a" fill-opacity="0.1" vector-effect="non-scaling-stroke"/>
+            <path d="M0 230 L0 224.4 L71.4 199.2 L142.9 144.6 L214.3 106.8 L276.8 129.2 L348.2 97 L410.7 64.8 L464.3 140.4 L517.9 221.6 L553.6 221.6 L589.3 188 L651.8 132 L714.3 84.4 L776.8 46.6 L839.3 95.6 L901.8 148.8 L955.4 188 L1000 218.8 L1000 230 Z" class="pf-ground" fill="#e9dfc6"/>
+            <path d="M0 224.4 L71.4 199.2 L142.9 144.6 L214.3 106.8 L276.8 129.2 L348.2 97 L410.7 64.8 L464.3 140.4 L517.9 221.6 L553.6 221.6 L589.3 188 L651.8 132 L714.3 84.4 L776.8 46.6 L839.3 95.6 L901.8 148.8 L955.4 188 L1000 218.8" class="pf-line" fill="none" stroke="#8b5a49" stroke-width="2" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+          </svg>
+          <span class="mk util" style="--x: 0%; --y: 93.5%">A</span>
+          <span class="mk util" style="--x: 41.07%; --y: 27%">B</span>
+          <span class="mk util tidal" style="--x: 51.79%; --y: 92.33%">C</span>
+          <span class="mk util" style="--x: 77.68%; --y: 19.4%">D</span>
+          <span class="mk util" style="--x: 100%; --y: 91.2%">E</span>
+        </div>
+        <figcaption class="util">Height above sea level along the stage. Solid lines every 50 m, dashed every 2 km; the band over C is the stretch the tide covers.</figcaption>
+        <ol class="key util">
+          <li><span>A</span><span><span class="place">Tregarrick Ferry</span> slip</span><span>0 km</span><span>4 m</span></li>
+          <li><span>B</span><span><span class="place">Hennock Beacon</span> lookout</span><span>4.6 km</span><span>118 m</span></li>
+          <li class="tidal"><span>C</span><span><span class="place">Gwithel sands</span></span><span>5.8 km</span><span>6 m</span></li>
+          <li><span>D</span><span><span class="place">Withel Downs</span> trig pillar</span><span>8.7 km</span><span>131 m</span></li>
+          <li><span>E</span><span><span class="place">Polwenna Cove</span> lifeboat slip</span><span>11.2 km</span><span>8 m</span></li>
+        </ol>
+      </figure>
+    </section>
+
+    <section id="tides" aria-labelledby="tides-title">
+      <h2 id="tides-title">The ferry and the tide</h2>
+      <div class="prose">
+        <p>The ferry is a twelve-seat launch that Jory Pascoe runs from the slip below the <span class="place">Ferry Inn</span>. In winter it crosses on demand from <span class="fig">09:30</span> to <span class="fig">16:30</span>, Thursday to Sunday; ring the bell on the post. The crossing takes <span class="fig">10 minutes</span> and costs <span class="fig">£3</span>.</p>
+        <p>Allow two hours from the far slip to <span class="place">Gwithel sands</span> at an ordinary pace.</p>
+      </div>
+      <div class="table-scroll" role="region" aria-labelledby="tides-caption" tabindex="0">
+      <table class="tides util">
+        <caption id="tides-caption">Ferry hours and <span class="place">Gwithel sands</span>, 26 to 30 November 2026</caption>
+        <thead>
+          <tr><th scope="col">Day</th><th scope="col">Ferry</th><th scope="col">Low water</th><th scope="col">Sands passable</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Thu 26</th><td>09:30–16:30</td><td>07:12<br>19:37</td><td>03:12–11:12<br>15:37–23:37</td></tr>
+          <tr><th scope="row">Fri 27</th><td>09:30–16:30</td><td>08:01<br>20:26</td><td>04:01–12:01<br>16:26–00:26</td></tr>
+          <tr><th scope="row">Sat 28</th><td>09:30–16:30</td><td>08:49<br>21:14</td><td>04:49–12:49<br>17:14–01:14</td></tr>
+          <tr><th scope="row">Sun 29</th><td>09:30–16:30</td><td>09:36<br>22:01</td><td>05:36–13:36<br>18:01–02:01</td></tr>
+          <tr><th scope="row">Mon 30</th><td class="none">No ferry</td><td>10:24<br>22:49</td><td>06:24–14:24<br>18:49–02:49</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="prose">
+        <p>Off the first boat at <span class="fig">09:40</span>, you reach the sands about <span class="fig">11:40</span>. On Thursday that is <span class="fig">28 minutes</span> after they close. The afternoon window opens at <span class="fig">15:37</span>, which leaves the last <span class="fig">5 km</span> to <span class="place">Polwenna Cove</span> in the dark; the sun sets at about <span class="fig">16:20</span>. On Thursday, walk the stage the other way: leave <span class="place">Polwenna Cove</span> by <span class="fig">08:30</span>, reach the sands before <span class="fig">10:30</span>, and take any afternoon boat across at the end. On Friday you would have <span class="fig">21 minutes</span> in hand, which a headwind will eat. Saturday and Sunday work with time to spare. With no ferry on Monday, the way round is <span class="fig">9 km</span> by the inland road through <span class="place">Tregarrick village</span>.</p>
+      </div>
+      <p class="warn"><span class="place">Gwithel sands</span> is under water except from four hours before low water until four hours after. The cliff above it cannot be climbed anywhere along those <span class="fig">400 metres</span>; in 2024 the <span class="place">Kestle</span> lifeboat took two walkers off the rocks there. If you reach the beach outside the times in the table, wait at the top of the rough steps below <span class="place">Hennock Beacon</span>, or at the top of the concrete steps if you are walking from <span class="place">Polwenna</span>.</p>
+    </section>
+
+    <section aria-labelledby="directions-title">
+      <h2 id="directions-title">Directions</h2>
+      <ol class="directions prose">
+        <li>From the ferry slip, walk up the lane past the <span class="place">Ferry Inn</span> and turn right at the top onto the cliff path, signed with the Saltway’s benchmark arrow. Keep the sea on your right all day.</li>
+        <li>The path climbs steadily, dropping once into a combe at <span class="fig">3 km</span>, before the long pull up to <span class="place">Hennock Beacon</span> at <span class="fig">4.6 km</span>. The old coastguard lookout has a bench, and on a clear day you can see south past <span class="place">Carn Du</span> to <span class="place">Hellan Point</span>.</li>
+        <li>Go down the rough steps on the far side of the beacon to <span class="place">Gwithel sands</span>. Cross <span class="fig">400 metres</span> of beach close under the cliff, where the sand is firm, to the concrete steps at the south end.</li>
+        <li>Above the steps the path follows a field edge for <span class="fig">2.5 km</span> to <span class="place">Withel Downs</span>. The trig pillar on your left is the highest point of the stage. There is no shelter up here.</li>
+        <li>Drop through gorse to <span class="place">Polwenna Cove</span>. The stage ends at the lifeboat slip; buses to <span class="place">Kestle</span> leave from the top of the hill at <span class="fig">15:50</span> and <span class="fig">17:20</span>.</li>
+      </ol>
+    </section>
+
+    <nav class="pager" aria-label="Neighbouring stages">
+      <ul class="prose">
+        <li><a href="#"><span>← 5. Penhallow to Tregarrick Ferry</span><span class="util">Previous stage, 6.9 km</span></a></li>
+        <li><a href="#"><span>7. Polwenna Cove to Lanvean →</span><span class="util">Next stage, 8.6 km</span></a></li>
+      </ul>
+    </nav>
+
+  </main>
+</div>
+
+<footer class="colophon" id="report">
+  <p class="prose">The Kestle Coast Path Trust keeps the Saltway waymarked with volunteers and with money from the people who walk it. If a sign is down or a stile is broken, email paths@saltway.example with the stage number and what you found.</p>
+  <p class="util">There is no Kestle Coast Path Trust and no Saltway; the guide was written for a Scott Kellum style preview. Set in Brygada 1918 and Encode Sans.</p>
+</footer>
+
+</body>
+</html>

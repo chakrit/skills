@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Volt Pepper Co., small-batch hot sauce from Tucson: Dan Cederholm style preview</title>
+<meta name="description" content="Volt Pepper Co. is a fictional hot sauce maker, built as a preview of the Dan Cederholm style.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Titan+One&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;800&display=swap">
+<style>
+:root {
+  --cream: #f5ecd9;
+  --volt: #e8442c;
+  --volt-text: #b7321d;
+  --brown: #2e1f16;
+  --mustard: #e0a526;
+  --teal: #1f5c5a;
+  --muted: #6e5b4b;
+  --rule: #d9c9a8;
+
+  --display: "Titan One", "Cooper Black", Georgia, serif;
+  --text: "Figtree", "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+
+  --column: 40rem;
+  --margin: clamp(1.25rem, 5vw, 2.5rem);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--brown);
+  font: 400 1.1875rem/1.55 var(--text);
+}
+
+h1, h2, h3, p, ul, ol, dl, dd, figure, form { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+
+a {
+  color: var(--volt-text);
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.2em;
+  transition: color 0.25s ease;
+}
+a:hover, a:focus-visible { color: var(--brown); }
+:focus-visible { outline: 3px solid var(--volt); outline-offset: 3px; }
+
+/* The edge border: a zigzag of current along the top and foot of the page. */
+.zig {
+  height: 1.25rem;
+  background:
+    linear-gradient(135deg, var(--brown) 25%, transparent 25%) -0.625rem 0 / 1.25rem 1.25rem,
+    linear-gradient(225deg, var(--brown) 25%, transparent 25%) -0.625rem 0 / 1.25rem 1.25rem,
+    var(--mustard);
+}
+.zig--foot { transform: scaleY(-1); }
+
+.column { max-width: calc(var(--column) + 2 * var(--margin)); margin: 0 auto; padding-inline: var(--margin); }
+.wide { max-width: 64rem; margin: 0 auto; padding-inline: var(--margin); }
+
+/* ---------- Header ---------- */
+
+.masthead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 2rem;
+  padding-block: 1.5rem;
+}
+.cap-link { display: block; margin-right: auto; }
+.cap { width: 6.5rem; height: 6.5rem; display: block; transition: transform 0.25s ease; }
+.cap-link:hover .cap, .cap-link:focus-visible .cap { transform: rotate(20deg); }
+
+.nav { display: flex; flex-wrap: wrap; gap: 0.75rem 1.75rem; }
+.nav a {
+  text-decoration: none;
+  color: var(--muted);
+  font: 800 0.72rem/1.3 var(--text);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.nav a small {
+  display: block;
+  font-weight: 400;
+  font-size: 0.82rem;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--muted);
+}
+.nav a[aria-current], .nav a:hover, .nav a:focus-visible { color: var(--volt-text); }
+
+/* ---------- Opening ---------- */
+
+.opening { padding-block: 1.5rem 0; }
+.opening h1 {
+  font: 400 clamp(1.9rem, 4.6vw, 3.1rem)/1.08 var(--display);
+  text-transform: uppercase;
+  color: var(--brown);
+}
+.opening p { margin-top: 1.25rem; }
+
+/* Still life: the four bottles on the table, the bottle cap leaning on them. */
+.still-life { margin-top: 2.5rem; }
+.still-life svg { display: block; width: 100%; height: auto; }
+.still-life .bottle { transform-box: fill-box; transform-origin: 50% 100%; transition: transform 0.25s ease; }
+.still-life a { display: block; }
+.still-life a:hover .bottle:nth-of-type(odd), .still-life a:focus-visible .bottle:nth-of-type(odd) { transform: rotate(-2deg); }
+.still-life a:hover .bottle:nth-of-type(even), .still-life a:focus-visible .bottle:nth-of-type(even) { transform: rotate(2deg); }
+
+/* ---------- Specimen: the heat scale, cropped at the edges ---------- */
+
+.specimen {
+  overflow: hidden;
+  white-space: nowrap;
+  background: var(--brown);
+  color: var(--cream);
+  padding-block: 2rem;
+  text-transform: uppercase;
+}
+.sp1 { font: 400 clamp(2.2rem, 6vw, 4.6rem)/1 var(--display); color: var(--mustard); margin-left: -0.3em; }
+.sp2 { font: 800 clamp(0.9rem, 1.8vw, 1.2rem)/2 var(--text); letter-spacing: 0.3em; color: var(--cream); margin-left: -2.5em; }
+.sp3 { font: 400 clamp(3rem, 9vw, 7rem)/1 var(--display); color: var(--volt); margin-left: -1.2em; }
+.sp4 { font: 600 clamp(1.3rem, 3vw, 2.2rem)/1.4 var(--text); color: var(--mustard); letter-spacing: 0.04em; margin-left: -0.8em; }
+.sp5 { font: 400 clamp(2.6rem, 7.4vw, 5.8rem)/1 var(--display); color: var(--cream); margin-left: -0.5em; }
+.specimen .glyph { display: inline-block; width: 0.75em; height: 0.75em; vertical-align: -0.04em; margin-inline: 0.25em; color: var(--mustard); }
+
+/* ---------- The sauces: ruled slats ---------- */
+
+.sauces { padding-block: 3.5rem 1rem; }
+h2 {
+  font: 400 clamp(1.7rem, 3.4vw, 2.2rem)/1.1 var(--display);
+  text-transform: uppercase;
+  color: var(--brown);
+}
+
+.slats { margin-top: 1.25rem; }
+.slat {
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr) auto;
+  gap: 0 1.1rem;
+  padding-block: 1.25rem;
+  box-shadow: inset 0 -1px 0 var(--rule);
+}
+.slat:first-child { box-shadow: inset 0 2px 0 var(--brown), inset 0 -1px 0 var(--rule); }
+.slat > svg { width: 2.25rem; height: 3.5rem; }
+.slat h3 { font: 400 1.35rem/1.2 var(--display); text-transform: uppercase; }
+.slat p { font-size: 1rem; color: var(--muted); margin-top: 0.2rem; }
+.meter { display: flex; gap: 0.15rem; margin-top: 0.5rem; }
+.meter svg { width: 1rem; height: 1rem; color: var(--rule); }
+.meter svg.on { color: var(--volt); }
+.meter .volts { margin-left: 0.5rem; font: 800 0.8rem/1 var(--text); letter-spacing: 0.08em; color: var(--muted); align-self: center; font-variant-numeric: tabular-nums; }
+.slat .price { font: 800 1.1rem/1.3 var(--text); white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+/* ---------- Where to find us ---------- */
+
+.find { padding-block: 2.5rem 1rem; }
+.facts { margin-top: 1rem; display: grid; gap: 0.75rem; }
+.facts li { display: grid; grid-template-columns: 1.5rem minmax(0, 1fr); gap: 0.6rem; }
+.facts svg { width: 1.15rem; height: 1.15rem; color: var(--volt); margin-top: 0.3rem; }
+
+/* ---------- Batch notes ---------- */
+
+.notes { padding-block: 2.5rem 4rem; }
+.notes > p { margin-top: 0.9rem; }
+.notes > p + p { margin-top: 1em; }
+.end-mark { display: inline-block; width: 0.8em; height: 0.8em; margin-left: 0.3em; vertical-align: -0.05em; color: var(--volt); }
+
+.signup { margin-top: 1.75rem; display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.signup label { flex-basis: 100%; font-size: 0.95rem; font-weight: 600; }
+.signup input {
+  flex: 1 1 14rem;
+  font: inherit;
+  font-size: 1rem;
+  padding: 0.7rem 0.9rem;
+  border: 2px solid var(--brown);
+  border-radius: 6px;
+  background: var(--cream);
+  color: var(--brown);
+}
+.signup button {
+  font: 800 1rem/1 var(--text);
+  padding: 0.8rem 1.3rem;
+  border: 0;
+  border-radius: 6px;
+  background: var(--volt-text);
+  color: var(--cream);
+  cursor: pointer;
+  transition: background-color 0.25s ease, transform 0.25s ease;
+}
+.signup button:hover, .signup button:focus-visible { background: var(--brown); transform: translateY(-1px); }
+
+/* ---------- Footer ---------- */
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.75rem;
+  padding-block: 2rem;
+  box-shadow: inset 0 1px 0 var(--rule);
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+.footer .cap { width: 4.5rem; height: 4.5rem; }
+.footer p { max-width: 32em; }
+
+/* One breakpoint, where the nav stops fitting beside the cap. */
+@media (max-width: 640px) {
+  body { font-size: 1.0625rem; }
+  .nav { width: 100%; display: grid; grid-template-columns: 1fr 1fr; }
+  .slat { grid-template-columns: 1.75rem minmax(0, 1fr); }
+  .slat > svg { width: 1.75rem; height: 2.75rem; }
+  .slat .price { grid-column: 2; margin-top: 0.4rem; }
+  .facts { grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .facts li { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="bolt" viewBox="0 0 24 24"><path fill="currentColor" d="M13.5 1 4 14h6.5L9 23l11-13.5h-6.8z"/></symbol>
+  <symbol id="pin" viewBox="0 0 24 24"><path fill="currentColor" d="M12 1a8 8 0 0 0-8 8c0 6 8 14 8 14s8-8 8-14a8 8 0 0 0-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></symbol>
+  <symbol id="box" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5 12 12l9-4.5M12 12v9"/></g></symbol>
+  <symbol id="small-bottle" viewBox="0 0 24 38"><path fill="currentColor" d="M9 0h6v3h-1v5c4 2 7 5 7 10v17a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V18c0-5 3-8 7-10V3H9z"/></symbol>
+  <!-- The bottle cap: scalloped rim, name on the top arc, a bolt in the middle. -->
+  <symbol id="cap" viewBox="0 0 120 120">
+    <defs>
+      <path id="cap-top" d="M22 60a38 38 0 0 1 76 0"/>
+      <path id="cap-bottom" d="M20 60a40 40 0 0 0 80 0"/>
+    </defs>
+    <path fill="#2e1f16" d="M60.0 2.0L67.8 8.6L77.1 4.6L82.6 13.1L92.7 12.1L95.4 21.9L105.3 23.8L105.0 34.0L114.0 38.8L110.7 48.4L117.8 55.7L111.9 63.9L116.5 72.9L108.4 79.0L110.2 89.0L100.7 92.4L99.5 102.5L89.3 103.0L85.2 112.3L75.3 109.7L68.6 117.4L60.0 112.0L51.4 117.4L44.7 109.7L34.8 112.3L30.7 103.0L20.5 102.5L19.3 92.4L9.8 89.0L11.6 79.0L3.5 72.9L8.1 63.9L2.2 55.7L9.3 48.4L6.0 38.8L15.0 34.0L14.7 23.8L24.6 21.9L27.3 12.1L37.4 13.1L42.9 4.6L52.2 8.6z"/>
+    <circle cx="60" cy="60" r="48" fill="#e8442c"/>
+    <circle cx="60" cy="60" r="27" fill="#f5ecd9"/>
+    <text font-family="Titan One, Cooper Black, serif" font-size="12" fill="#f5ecd9"><textPath href="#cap-top" startOffset="50%" text-anchor="middle">VOLT PEPPER CO.</textPath></text>
+    <text font-family="Figtree, Arial, sans-serif" font-weight="800" font-size="9" fill="#f5ecd9" letter-spacing="1.2"><textPath href="#cap-bottom" startOffset="50%" text-anchor="middle">HANDLE WITH CARE</textPath></text>
+    <path fill="#2e1f16" d="M64 36 48 62h10l-4 22 18-28H61z"/>
+  </symbol>
+</svg>
+
+<div class="zig" aria-hidden="true"></div>
+
+<div class="wide">
+  <header class="masthead">
+    <a class="cap-link" href="#top" aria-label="Volt Pepper Co., home"><svg class="cap" aria-hidden="true" width="48" height="48"><use href="#cap"/></svg></a>
+    <nav class="nav" aria-label="Main">
+      <a href="#sauces" aria-current="page">Sauces<small>four of them</small></a>
+      <a href="#find">Markets<small>Saturdays and Sundays</small></a>
+      <a href="#notes">Batch notes<small>one email a batch</small></a>
+    </nav>
+  </header>
+</div>
+
+<main id="top">
+  <div class="column opening">
+    <h1>Hot sauce from a rented kitchen behind a laundromat in Tucson.</h1>
+    <p>Volt Pepper Co. is Rosa Ybarra and Ken Duvall. We make about two hundred bottles a batch and ferment the peppers for six weeks in crocks that used to hold Rosa&rsquo;s grandmother&rsquo;s pickles. Every label goes on by hand at the folding table next to the dryers.</p>
+  </div>
+
+  <div class="wide">
+    <figure class="still-life"><a href="#sauces" aria-label="See the four sauces">
+      <svg viewBox="0 0 900 330" role="img" aria-labelledby="bottles-title">
+        <title id="bottles-title">The four sauces standing in a row on a mustard table, with the bottle-cap badge leaning against the last one.</title>
+        <rect y="268" width="900" height="62" fill="#e0a526"/>
+        <rect y="268" width="900" height="5" fill="#2e1f16" opacity="0.2"/>
+        <!-- Low Voltij: brown label -->
+        <g class="bottle">
+          <path d="M150 40h28v14h-4v26c22 10 34 26 34 48v128a12 12 0 0 1-12 12h-64a12 12 0 0 1-12-12V128c0-22 12-38 34-48V54h-4z" fill="#e0a526"/>
+          <rect x="146" y="28" width="36" height="16" rx="3" fill="#2e1f16"/>
+          <rect x="128" y="150" width="72" height="92" rx="9" fill="#2e1f16"/>
+          <text x="164" y="186" font-family="Titan One, serif" font-size="15" fill="#f5ecd9" text-anchor="middle">LOW</text>
+          <text x="164" y="204" font-family="Titan One, serif" font-size="15" fill="#f5ecd9" text-anchor="middle">VOLTIJ</text>
+          <path fill="#e0a526" d="M168 212l-10 14h6l-2 10 10-14h-6z"/>
+        </g>
+        <!-- Short Sircuit: cream label -->
+        <g class="bottle">
+          <path d="M316 50h32v14h-4v24c20 10 30 24 30 44v124a12 12 0 0 1-12 12h-60a12 12 0 0 1-12-12V132c0-20 10-34 30-44V64h-4z" fill="#e8442c"/>
+          <rect x="314" y="38" width="36" height="16" rx="3" fill="#2e1f16"/>
+          <rect x="298" y="152" width="68" height="90" rx="9" fill="#f5ecd9"/>
+          <text x="332" y="186" font-family="Titan One, serif" font-size="14" fill="#2e1f16" text-anchor="middle">SHORT</text>
+          <text x="332" y="204" font-family="Titan One, serif" font-size="14" fill="#2e1f16" text-anchor="middle">SIRCUIT</text>
+          <path fill="#e8442c" d="M336 212l-10 14h6l-2 10 10-14h-6z"/>
+        </g>
+        <!-- Live Wire: mustard label -->
+        <g class="bottle">
+          <path d="M490 30h28v14h-4v30c24 10 36 28 36 52v130a12 12 0 0 1-12 12h-68a12 12 0 0 1-12-12V126c0-24 12-42 36-52V44h-4z" fill="#2e1f16"/>
+          <rect x="486" y="18" width="36" height="16" rx="3" fill="#e8442c"/>
+          <rect x="466" y="148" width="76" height="94" rx="9" fill="#e0a526"/>
+          <text x="504" y="184" font-family="Titan One, serif" font-size="16" fill="#2e1f16" text-anchor="middle">LIVE</text>
+          <text x="504" y="204" font-family="Titan One, serif" font-size="16" fill="#2e1f16" text-anchor="middle">WIRE</text>
+          <path fill="#e8442c" d="M508 212l-10 14h6l-2 10 10-14h-6z"/>
+        </g>
+        <!-- Blown Fuze: teal label -->
+        <g class="bottle">
+          <path d="M654 60h32v14h-4v22c18 10 28 22 28 40v120a12 12 0 0 1-12 12h-56a12 12 0 0 1-12-12V136c0-18 10-30 28-40V74h-4z" fill="#e8442c"/>
+          <rect x="652" y="48" width="36" height="16" rx="3" fill="#2e1f16"/>
+          <rect x="639" y="156" width="62" height="86" rx="9" fill="#1f5c5a"/>
+          <text x="670" y="188" font-family="Titan One, serif" font-size="14" fill="#f5ecd9" text-anchor="middle">BLOWN</text>
+          <text x="670" y="206" font-family="Titan One, serif" font-size="14" fill="#f5ecd9" text-anchor="middle">FUZE</text>
+          <path fill="#e0a526" d="M674 214l-10 14h6l-2 10 10-14h-6z"/>
+        </g>
+        <!-- The cap, leaning against the last bottle -->
+        <use href="#cap" x="700" y="160" width="110" height="110" transform="rotate(12 755 215)"/>
+      </svg>
+    </a></figure>
+  </div>
+
+  <div class="specimen" aria-hidden="true">
+    <p class="sp1">Low voltij 2,500 SHU<svg class="glyph" width="24" height="24"><use href="#bolt"/></svg>jalape&ntilde;o<svg class="glyph" width="24" height="24"><use href="#bolt"/></svg>garlic</p>
+    <p class="sp2">Fermented six weeks<svg class="glyph" width="24" height="24"><use href="#bolt"/></svg>batch 44<svg class="glyph" width="24" height="24"><use href="#bolt"/></svg>Tucson, Arizona<svg class="glyph" width="24" height="24"><use href="#bolt"/></svg>5 fl oz<svg class="glyph" width="24" height="24"><use href="#bolt"/></svg>hand labelled<svg class="glyph" width="24" height="24"><use href="#bolt"/></svg>shipped Mondays<svg class="glyph" width="24" height="24"><use href="#bolt"/></svg>keep cold after opening</p>
+    <p class="sp3">Short sircuit 8,000 SHU</p>
+    <p class="sp4">Live wire 100,000 SHU<svg class="glyph" width="24" height="24"><use href="#bolt"/></svg>chiltepin and charred tomatillo<svg class="glyph" width="24" height="24"><use href="#bolt"/></svg>Sonoran foothills</p>
+    <p class="sp5">Blown fuze 150,000 SHU<svg class="glyph" width="24" height="24"><use href="#bolt"/></svg>habanero</p>
+  </div>
+
+  <section class="column sauces" id="sauces" aria-labelledby="sauces-head">
+    <h2 id="sauces-head">The four sauces</h2>
+    <ul class="slats">
+      <li class="slat">
+        <svg aria-hidden="true" width="24" height="38" style="color:#2e1f16"><use href="#small-bottle"/></svg>
+        <div>
+          <h3>Low Voltij</h3>
+          <p>Green jalape&ntilde;o and roasted garlic. Eggs and rice, and mild enough for kids.</p>
+          <div class="meter" role="img" aria-label="Heat: 1.5 volts, 1 of 4"><svg class="on" width="16" height="16"><use href="#bolt"/></svg><svg width="16" height="16"><use href="#bolt"/></svg><svg width="16" height="16"><use href="#bolt"/></svg><svg width="16" height="16"><use href="#bolt"/></svg><span class="volts">1.5 V</span></div>
+        </div>
+        <span class="price">$9</span>
+      </li>
+      <li class="slat">
+        <svg aria-hidden="true" width="24" height="38" style="color:#e8442c"><use href="#small-bottle"/></svg>
+        <div>
+          <h3>Short Sircuit</h3>
+          <p>Red Fresno and carrot, a little sweet. Our best seller at the Saturday market.</p>
+          <div class="meter" role="img" aria-label="Heat: 9 volts, 2 of 4"><svg class="on" width="16" height="16"><use href="#bolt"/></svg><svg class="on" width="16" height="16"><use href="#bolt"/></svg><svg width="16" height="16"><use href="#bolt"/></svg><svg width="16" height="16"><use href="#bolt"/></svg><span class="volts">9 V</span></div>
+        </div>
+        <span class="price">$9</span>
+      </li>
+      <li class="slat">
+        <svg aria-hidden="true" width="24" height="38" style="color:#e0a526"><use href="#small-bottle"/></svg>
+        <div>
+          <h3>Live Wire</h3>
+          <p>Wild chiltepin from the Sonoran foothills with charred tomatillo. Tacos, mostly.</p>
+          <div class="meter" role="img" aria-label="Heat: 120 volts, 3 of 4"><svg class="on" width="16" height="16"><use href="#bolt"/></svg><svg class="on" width="16" height="16"><use href="#bolt"/></svg><svg class="on" width="16" height="16"><use href="#bolt"/></svg><svg width="16" height="16"><use href="#bolt"/></svg><span class="volts">120 V</span></div>
+        </div>
+        <span class="price">$11</span>
+      </li>
+      <li class="slat">
+        <svg aria-hidden="true" width="24" height="38" style="color:#1f5c5a"><use href="#small-bottle"/></svg>
+        <div>
+          <h3>Blown Fuze</h3>
+          <p>Orange habanero and mango. Ken puts it on pizza by the spoonful.</p>
+          <div class="meter" role="img" aria-label="Heat: 240 volts, 4 of 4"><svg class="on" width="16" height="16"><use href="#bolt"/></svg><svg class="on" width="16" height="16"><use href="#bolt"/></svg><svg class="on" width="16" height="16"><use href="#bolt"/></svg><svg class="on" width="16" height="16"><use href="#bolt"/></svg><span class="volts">240 V</span></div>
+        </div>
+        <span class="price">$12</span>
+      </li>
+    </ul>
+  </section>
+
+  <section class="column find" id="find" aria-labelledby="find-head">
+    <h2 id="find-head">Markets and mail</h2>
+    <ul class="facts">
+      <li><svg aria-hidden="true" width="24" height="24"><use href="#pin"/></svg><span>Barrio Sur growers&rsquo; market on Saturdays, 8 to noon</span></li>
+      <li><svg aria-hidden="true" width="24" height="24"><use href="#pin"/></svg><span>The Grant Road feed store lot on Sundays, 9 to 1</span></li>
+      <li><svg aria-hidden="true" width="24" height="24"><use href="#box"/></svg><span>Any three bottles by mail for $30, shipped Mondays</span></li>
+      <li><svg aria-hidden="true" width="24" height="24"><use href="#bolt"/></svg><span>When we sell out, the next batch is usually three weeks away</span></li>
+    </ul>
+  </section>
+
+  <section class="column notes" id="notes" aria-labelledby="notes-head">
+    <h2 id="notes-head">Batch notes</h2>
+    <p>When a batch comes out of the crocks we send one email saying what is in it and how hot it came out. Batch 44 had a lot of rain on the chiltepin and runs a little milder.</p>
+    <p>The laundromat owner takes the first bottle of every batch as part of our rent.<svg class="end-mark" aria-hidden="true" width="16" height="16"><use href="#bolt"/></svg></p>
+    <form class="signup" action="#notes" method="post">
+      <label for="email">Your email</label>
+      <input id="email" name="email" type="email" autocomplete="email" required placeholder="you@example.com">
+      <button type="submit">Send me batch notes</button>
+    </form>
+  </section>
+</main>
+
+<div class="wide">
+  <footer class="footer">
+    <svg class="cap" aria-hidden="true" width="48" height="48"><use href="#cap"/></svg>
+    <p>Volt Pepper Co., 2210 N. Stone Ave (round the back of Suds City Laundry), Tucson, Arizona. Made in small batches since 2019.</p>
+  </footer>
+</div>
+
+<div class="zig zig--foot" aria-hidden="true"></div>
+
+</body>
+</html>

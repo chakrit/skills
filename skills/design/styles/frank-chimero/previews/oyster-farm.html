@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pennick Cove Oysters · a day told by the tide · Frank Chimero style preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@100;400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style>
+  :root {
+    --text: "Source Serif 4", Georgia, serif;
+    --thin: "Lato", "Helvetica Neue", Arial, sans-serif;
+
+    --charcoal: #23302b;
+    --mint: #f3fae4;
+    --flood: #3f5f54;
+    --high: #24332e;
+    --sand: #f6f1e7;
+    --light-text: #eef3e6;
+    --accent: #b8325a;
+
+    --gutter: clamp(1.25rem, 5vw, 4rem);
+    --measure: 32em;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--mint);
+    color: var(--charcoal);
+    font-family: var(--text);
+    font-size: clamp(1.125rem, 1rem + 0.4vw, 1.25rem);
+    line-height: 1.55;
+    font-variant-numeric: oldstyle-nums;
+    font-synthesis: none;
+  }
+
+  a {
+    color: inherit;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+  }
+
+  .light a, .sand a { text-decoration-color: var(--accent); }
+
+  .small {
+    font-family: var(--thin);
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+
+  /* Each band takes the tide's colour at that hour; the text column never moves. */
+
+  .band {
+    --quiet: #4f5d57;
+    padding: clamp(3.5rem, 9vw, 7rem) var(--gutter);
+  }
+
+  .band { background: var(--ground); }
+  .band.light { --ground: var(--mint); color: var(--charcoal); }
+  .band.sand { --quiet: #5a5f55; --ground: var(--sand); }
+  .band.flood { --quiet: #cfe3d8; --ground: var(--flood); color: var(--light-text); }
+  .band.high { --quiet: #a9c2b6; --ground: var(--high); color: var(--light-text); }
+  .band.title { --quiet: #b3c0b8; --ground: var(--charcoal); color: var(--light-text); }
+
+  .band p, .band ol, .band table { max-width: var(--measure); }
+
+  /* A plain block on phones, so each band's sticky gauge can travel the whole band. */
+  .column {
+    max-width: 62rem;
+    margin-inline: auto;
+  }
+
+  /* Frame: name and places, always visible as words. */
+
+  .frame {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem 3rem;
+    max-width: 62rem;
+    margin: 0 auto;
+    padding: 1.25rem 0 0;
+  }
+
+  .frame .name { margin: 0; }
+  .frame b { display: block; font-weight: 400; color: var(--light-text); }
+  .frame span { display: block; color: #b3c0b8; }
+
+  .frame ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem clamp(1.25rem, 3vw, 2.5rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .frame a { display: block; text-decoration: none; }
+  .frame a:hover b, .frame a:focus-visible b { text-decoration: underline; }
+
+  header.title { padding-top: 0; }
+
+  h1 {
+    margin: clamp(4rem, 12vw, 8rem) 0 1rem;
+    font-family: var(--thin);
+    font-weight: 100;
+    font-size: clamp(3rem, 1rem + 8.5vw, 8.5rem);
+    line-height: 0.98;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  .subtitle {
+    margin: 0 0 1.5rem;
+    font-style: italic;
+    color: var(--quiet);
+  }
+
+  .tides {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .tides caption {
+    padding-bottom: 0.75rem;
+    text-align: left;
+    color: var(--quiet);
+  }
+
+  .tides th, .tides td {
+    padding: 0.55rem 0;
+    text-align: left;
+    font-weight: 400;
+    box-shadow: inset 0 -1px 0 rgb(238 243 230 / 0.22);
+  }
+
+  .tides td { text-align: right; }
+
+  .first-order { margin: 0 0 3rem; }
+
+  /* Title cards: a name from the tide's own set, one short rule, an epigraph. */
+
+  .card {
+    margin: 0 auto clamp(2.5rem, 6vw, 4rem);
+    text-align: center;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 1em;
+    font-weight: 600;
+  }
+
+  .card hr {
+    width: 3rem;
+    height: 1px;
+    margin: 0.9rem auto 1.1rem;
+    border: 0;
+    background: currentColor;
+    opacity: 0.55;
+  }
+
+  .light .card hr, .sand .card hr { background: var(--accent); opacity: 1; }
+
+  .card figure {
+    max-width: 26em;
+    margin: 0 auto;
+  }
+
+  .card blockquote { margin: 0; font-style: italic; }
+  .card blockquote p { margin: 0 auto; }
+  .card figcaption { margin-top: 0.35rem; color: var(--quiet); }
+
+  /* The gauge stays in view while its band scrolls past, on every width. */
+  .gauge {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    padding-block: 0.5rem;
+    background: var(--ground);
+    color: var(--quiet);
+  }
+
+  .gauge b { font-weight: 400; color: inherit; }
+
+  .gauge .depth { display: none; }
+
+  .prose p { margin: 0 0 1em; }
+  .prose p:last-child { margin-bottom: 0; }
+
+  /* The break: one sentence read a few words per screen. */
+
+  .break {
+    padding: 30vh var(--gutter);
+    background: linear-gradient(to bottom, #f6d9c4, #e7a9bc 35%, #b9a3c9 70%, var(--mint));
+    color: #2c2533;
+    text-align: center;
+  }
+
+  .break p {
+    margin: 0;
+    font-family: var(--thin);
+    font-weight: 100;
+    font-size: clamp(2.5rem, 1rem + 6vw, 6rem);
+    line-height: 1.05;
+  }
+
+  .break span { display: block; }
+  .break span + span { margin-top: 45vh; }
+
+  .growth {
+    display: flex;
+    align-items: flex-end;
+    gap: 2rem clamp(1.5rem, 5vw, 4rem);
+    margin: clamp(2.5rem, 6vw, 4rem) 0;
+  }
+
+  .growth figure { min-width: 0; margin: 0; }
+  .growth svg { display: block; max-width: 100%; height: auto; margin-bottom: 0.75rem; }
+  .growth figcaption { color: var(--quiet); }
+
+  .void {
+    padding-block: clamp(5rem, 16vw, 12rem);
+  }
+
+  .void .still {
+    max-width: 22em;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .prose .statement {
+    max-width: 22em;
+    margin: clamp(3rem, 8vw, 5rem) auto 0;
+    text-align: center;
+  }
+
+  .statement::before, .statement::after {
+    content: "";
+    display: block;
+    width: 3rem;
+    height: 1px;
+    margin: 0 auto 1.5rem;
+    background: var(--accent);
+  }
+
+  .statement::after { margin: 1.5rem auto 0; }
+
+  .order {
+    margin: 2rem 0;
+    padding: 0;
+    list-style: none;
+    box-shadow: inset 0 1px 0 #d6d0c3;
+  }
+
+  .order li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 0.7rem 0;
+    box-shadow: inset 0 -1px 0 #d6d0c3;
+  }
+
+  .order .price { font-variant-numeric: lining-nums tabular-nums; }
+
+  footer {
+    padding: 2rem var(--gutter) 2.5rem;
+    background: var(--charcoal);
+    color: #b3c0b8;
+  }
+
+  footer p { max-width: 62rem; margin: 0 auto; }
+
+  @media (min-width: 60rem) {
+    .column {
+      display: grid;
+      grid-template-columns: 9rem minmax(0, var(--measure)) 1fr;
+      column-gap: clamp(2rem, 4vw, 4rem);
+    }
+
+    .column > * { grid-column: 2; }
+    .title .column > * { grid-column: 1 / -1; }
+
+    .column > .gauge {
+      grid-column: 1;
+      grid-row: span 6;
+      position: sticky;
+      top: 1.5rem;
+      align-self: start;
+      padding-block: 0;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.15rem 0.9rem;
+      margin: 0.35rem 0 0;
+    }
+
+    /* A hairline from 0 to 4.5 m with the water level marked on it. */
+    .gauge .depth {
+      display: block;
+      position: relative;
+      grid-row: span 2;
+      width: 1px;
+      height: 5.5rem;
+      background: currentColor;
+    }
+
+    .gauge .depth::after {
+      content: "";
+      position: absolute;
+      left: -0.3rem;
+      bottom: calc(var(--level) / 4.5 * 100% - 0.3rem);
+      width: 0.6rem;
+      height: 0.6rem;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .flood .gauge .depth::after,
+    .high .gauge .depth::after { background: var(--light-text); }
+  }
+
+  @media (max-width: 40rem) {
+    .break { padding-block: 20vh; }
+    .break span + span { margin-top: 28vh; }
+  }
+</style>
+</head>
+<body>
+
+<header class="band title">
+  <nav class="frame small" aria-label="Sections">
+    <p class="name"><b>Pennick Cove Oysters</b><span>Two acres of tidal lease</span></p>
+    <ul>
+      <li><a href="#low"><b>The day</b><span>Told by the tide</span></a></li>
+      <li><a href="#flood"><b>Growing</b><span>One oyster, three years</span></a></li>
+      <li><a href="#ebb"><b>Order</b><span>Saturdays at the shed</span></a></li>
+    </ul>
+  </nav>
+
+  <div class="column">
+    <h1>A day on the flats at Pennick Cove</h1>
+    <p class="subtitle">Two acres of oysters, worked in the order the water allows.</p>
+    <p class="first-order">Order a dozen by Thursday noon and collect it at the shed on Saturday morning: <a href="mailto:orders@pennickcove.example">orders@pennickcove.example</a>.</p>
+    <table class="tides small">
+      <caption>The tide table pinned inside the shed door, Saturday 14 March</caption>
+      <tbody>
+        <tr><th scope="row">Low water</th><td>05:12</td><td>0.4 m</td></tr>
+        <tr><th scope="row">High water</th><td>11:31</td><td>4.1 m</td></tr>
+        <tr><th scope="row">Low water</th><td>17:44</td><td>0.6 m</td></tr>
+        <tr><th scope="row">High water</th><td>23:58</td><td>4.0 m</td></tr>
+      </tbody>
+    </table>
+  </div>
+</header>
+
+<main>
+
+<section class="band light" id="low" aria-labelledby="low-h">
+  <div class="column">
+    <div class="card">
+      <h2 id="low-h">Low water</h2>
+      <hr>
+      <figure>
+        <blockquote><p>The bags don’t know it’s Saturday.</p></blockquote>
+        <figcaption class="small">Jim Rowe, who farmed the lease for thirty years before us</figcaption>
+      </figure>
+    </div>
+    <p class="gauge small" style="--level: 0.4"><span class="depth" aria-hidden="true"></span><b>05:12</b><span>Low water, 0.4 m, slack</span></p>
+    <div class="prose">
+      <p>We are on the flats by five with head torches and a sack of spare clips. At low water the trestles stand clear of the sea in rows of forty, and every mesh bag on them gets turned by hand: lifted, shaken, flipped, clipped back down. Turning knocks off the thin new edge of each shell, so the oysters grow deep instead of long.</p>
+      <p>Kerra counts bags; Dan checks for the ones the storm on Tuesday worked loose. There are 1,140 of them, and an hour and a half before the water comes back.</p>
+    </div>
+  </div>
+</section>
+
+<div class="break">
+  <p>
+    <span>The water comes back</span>
+    <span>over the flats</span>
+    <span>and we carry the last sack up the slip.</span>
+  </p>
+</div>
+
+<section class="band flood" id="flood" aria-labelledby="flood-h">
+  <div class="column">
+    <div class="card">
+      <h2 id="flood-h">Flood</h2>
+      <hr>
+      <figure>
+        <blockquote><p>An oyster grows at the speed of the water it sits in.</p></blockquote>
+        <figcaption class="small">Written on the shed’s grading bench</figcaption>
+      </figure>
+    </div>
+    <p class="gauge small" style="--level: 2.1"><span class="depth" aria-hidden="true"></span><b>08:12</b><span>3 h after low water, 2.1 m, rising</span></p>
+    <div class="prose">
+      <p>While the tide fills the cove we grade in the shed. Every oyster goes through a sizing riddle and back into a bag with others its own size, so the small ones are not crowded out by their neighbours.</p>
+      <p>An oyster from Pennick takes three years to reach the plate. It is the same animal in each drawing below, kept track of through every grading, one year apart.</p>
+    </div>
+    <div class="growth">
+      <figure>
+        <svg width="54" height="70" viewBox="0 0 100 130" aria-hidden="true"><use href="#shell"/><use href="#ring" transform="translate(50 6) scale(0.7) translate(-50 -6)"/></svg>
+        <figcaption class="small">1 year, 3 cm</figcaption>
+      </figure>
+      <figure>
+        <svg width="100" height="130" viewBox="0 0 100 130" aria-hidden="true"><use href="#shell"/><use href="#ring" transform="translate(50 6) scale(0.82) translate(-50 -6)"/><use href="#ring" transform="translate(50 6) scale(0.62) translate(-50 -6)"/><use href="#ring" transform="translate(50 6) scale(0.4) translate(-50 -6)"/></svg>
+        <figcaption class="small">2 years, 6 cm</figcaption>
+      </figure>
+      <figure>
+        <svg width="142" height="185" viewBox="0 0 100 130" aria-hidden="true"><use href="#shell"/><use href="#ring" transform="translate(50 6) scale(0.88) translate(-50 -6)"/><use href="#ring" transform="translate(50 6) scale(0.76) translate(-50 -6)"/><use href="#ring" transform="translate(50 6) scale(0.62) translate(-50 -6)"/><use href="#ring" transform="translate(50 6) scale(0.48) translate(-50 -6)"/><use href="#ring" transform="translate(50 6) scale(0.32) translate(-50 -6)"/></svg>
+        <figcaption class="small">3 years, 8.5 cm, ready</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="band high void" aria-labelledby="high-h">
+  <div class="column">
+    <div class="card">
+      <h2 id="high-h">High water</h2>
+      <hr>
+      <figure>
+        <blockquote><p>From the quay at high water it is just the cove.</p></blockquote>
+        <figcaption class="small">Kerra, asked where the farm is</figcaption>
+      </figure>
+    </div>
+    <p class="gauge small" style="--level: 4.1"><span class="depth" aria-hidden="true"></span><b>11:31</b><span>High water, 4.1 m, slack</span></p>
+    <p class="still">The lease is under four metres of sea. Nothing on it can be reached, so nobody tries.</p>
+  </div>
+</section>
+
+<section class="band sand" id="ebb" aria-labelledby="ebb-h">
+  <div class="column">
+    <div class="card">
+      <h2 id="ebb-h">Ebb</h2>
+      <hr>
+      <figure>
+        <blockquote><p>Order by Thursday noon and they come out of the water on Friday.</p></blockquote>
+        <figcaption class="small">The rule since 2019</figcaption>
+      </figure>
+    </div>
+    <p class="gauge small" style="--level: 2.0"><span class="depth" aria-hidden="true"></span><b>14:31</b><span>3 h after high water, 2.0 m, falling</span></p>
+    <div class="prose">
+      <p>By the afternoon ebb the shed on Pennick Quay has shut for the week. It opens on Saturdays from nine until one, and we sell what came out of the water that week and nothing older; when it is gone, the door shuts.</p>
+      <ol class="order">
+        <li><span>A dozen, unopened, in a wet sack</span><span class="price">£18</span></li>
+        <li><span>Two dozen, unopened</span><span class="price">£34</span></li>
+        <li><span>A dozen opened at the shed, on ice to take away</span><span class="price">£22</span></li>
+        <li><span>A short-bladed oyster knife, Sheffield made</span><span class="price">£14</span></li>
+      </ol>
+      <p>Write to <a href="mailto:orders@pennickcove.example">orders@pennickcove.example</a> with how many and your name. We reply the same evening with a collection time.</p>
+      <p class="statement">Tomorrow, Sunday, low water is at 05:51, 0.5 m, and we will be out on the flats again.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="small">
+  <p>Pennick Cove Oysters, lease PC-14, farmed by Kerra and Dan Polglase. Class A water, tested every month. The shed: Pennick Quay, Saturdays 9–13.</p>
+</footer>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <path id="ring" d="M50 6C38 8 30 18 24 32C14 54 8 78 14 98C20 118 40 126 58 122C78 118 92 104 90 82C88 60 80 40 70 24C64 14 58 6 50 6Z" fill="none" stroke="#eef3e6" stroke-width="1.2" vector-effect="non-scaling-stroke"/>
+    <g id="shell">
+      <path d="M50 6C38 8 30 18 24 32C14 54 8 78 14 98C20 118 40 126 58 122C78 118 92 104 90 82C88 60 80 40 70 24C64 14 58 6 50 6Z" fill="#36544a" stroke="#eef3e6" stroke-width="1.6" vector-effect="non-scaling-stroke"/>
+      <path d="M50 6L49 14" stroke="#eef3e6" stroke-width="1.6" vector-effect="non-scaling-stroke"/>
+    </g>
+  </defs>
+</svg>
+
+</body>
+</html>

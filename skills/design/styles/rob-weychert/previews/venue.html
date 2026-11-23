@@ -1,0 +1,604 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Undercroft, Rennick Street: listings for December and January — Rob Weychert style preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,100..900&display=swap">
+<style>
+  /* The system. Interval 3:2; sizes multiply by it, weights divide by it, so large
+     lines are drawn with the thin pen and small ones with the thick pen. */
+  :root {
+    --s-1: 0.8125rem;  /* 0.75rem by the scale; raised by eye for the small capitals */
+    --s0: 1.125rem;
+    --s1: 1.6875rem;
+    --s2: 2.53rem;
+    --s3: 3.8rem;
+    --s4: 5.7rem;
+    --w-1: 640;
+    --w0: 430;
+    --w1: 287;
+    --w2: 191;
+    --w-thick: 820;
+
+    --pen-thin: 0.0625rem;
+    --pen-thick: 0.1875rem;
+
+    /* One base hue. Each show turns back from it by its date; the neutrals take its
+       complement, hue 120. */
+    --base: 300;
+    --paper: oklch(0.965 0.018 calc(var(--base) + 180));
+    --ink: oklch(0.21 0.02 calc(var(--base) + 180));
+    --ink-soft: oklch(0.44 0.02 calc(var(--base) + 180));
+    --rule: oklch(0.78 0.02 calc(var(--base) + 180));
+
+    /* Grid ratios margin : column : gutter : padding = 3 : 3 : 2 : 1 in units of --u.
+       Twelve columns take 3·2 + 3·12 + 2·11 = 64 units. */
+    --cols: 12;
+    --u: calc(min(100vw, 84rem) / 64);
+  }
+
+  @media (max-width: 60em) {
+    :root { --cols: 8; --u: calc(100vw / 44); }
+  }
+
+  @media (max-width: 34em) {
+    /* Phones drop the largest step: every size above the body moves one step down the
+       same 3:2 scale and its weight moves with it. The name drops two steps so it fits
+       the width. */
+    :root { --cols: 4; --u: calc(100vw / 24); --s4: 2.53rem; --s3: 2.53rem; --s2: 1.6875rem; --w2: 287; --s1: 1.125rem; --w1: 430; }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    font-size: 100%;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Anybody", "Arial Narrow", sans-serif;
+    font-synthesis: none;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    font-size: var(--s0);
+    font-weight: var(--w0);
+    font-stretch: 90%;
+    line-height: 1.45;
+  }
+
+  h1, h2, h3, p, dl, dd, ol { margin: 0; padding: 0; }
+  ol { list-style: none; }
+
+  a { color: inherit; text-decoration-thickness: var(--pen-thin); text-underline-offset: 0.18em; }
+  a:focus-visible { outline: var(--pen-thick) solid var(--ink); outline-offset: 0.2em; }
+
+  .vh {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+    column-gap: calc(2 * var(--u));
+    max-width: 84rem;
+    margin-inline: auto;
+    padding-inline: max(calc(3 * var(--u)), env(safe-area-inset-left)) max(calc(3 * var(--u)), env(safe-area-inset-right));
+  }
+
+  .cap, .wk {
+    font-stretch: 112%;
+  }
+  .cap {
+    font-size: var(--s-1);
+    font-weight: var(--w-1);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* ---------- Masthead ---------- */
+  .top {
+    padding-block: calc(2 * var(--u)) 0;
+  }
+  .nav {
+    grid-column: 1 / -1;
+  }
+  .address {
+    grid-column: 1 / span 9;
+    padding-bottom: calc(6 * var(--u));
+    color: var(--ink-soft);
+  }
+  .nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0 calc(3 * var(--u)); }
+  .nav a { text-decoration: none; }
+  .nav a:hover { text-decoration: underline; }
+
+  .name {
+    grid-column: 1 / -1;
+    margin-top: calc(4 * var(--u));
+    font-size: var(--s4);
+    font-weight: var(--w-thick);
+    font-stretch: 62%;
+    line-height: 0.9;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+
+  .intro {
+    grid-column: 1 / span 9;
+    margin-top: calc(3 * var(--u));
+    padding-bottom: calc(1.5 * var(--u));
+    font-size: var(--s1);
+    font-weight: var(--w1);
+    line-height: 1.3;
+    max-width: 34em;
+  }
+
+  /* ---------- The listing ---------- */
+  .month {
+    padding-top: calc(3 * var(--u));
+  }
+  .month h2 {
+    grid-column: 1 / -1;
+    padding-block: calc(1 * var(--u)) calc(2 * var(--u));
+    font-size: var(--s2);
+    font-weight: var(--w2);
+    font-stretch: 100%;
+    line-height: 1.05;
+  }
+
+  .shows {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-column: 1 / -1;
+  }
+
+  /* Each show's colour comes from its date: hue = 300 − month × 30 − day. Lightness
+     and chroma are fixed so each hue sits at about the same contrast on the paper; a few
+     blues fall just outside sRGB and the browser clips them slightly. */
+  .show {
+    --h: calc(var(--base) - var(--d));
+    --c: oklch(0.5 0.14 var(--h));
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-column: 1 / -1;
+    align-items: start;
+    padding-block: calc(2 * var(--u)) calc(3 * var(--u));
+    box-shadow: inset 0 var(--pen-thin) 0 var(--c);
+  }
+
+  .when {
+    grid-column: 1 / span 2;
+    color: var(--c);
+  }
+  .when time { display: block; }
+  .day {
+    display: block;
+    font-size: var(--s3);
+    font-weight: var(--w-thick);
+    font-stretch: 70%;
+    line-height: 0.95;
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+  .wk {
+    display: block;
+    margin-top: 0.35rem;
+    font-size: var(--s-1);
+    font-weight: var(--w-1);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .who {
+    grid-column: 3 / span 6;
+  }
+  .act {
+    font-size: var(--s2);
+    font-weight: var(--w2);
+    line-height: 1;
+    letter-spacing: -0.005em;
+    text-wrap: balance;
+  }
+  .support {
+    margin-top: 0.6rem;
+    font-size: var(--s0);
+  }
+  .note {
+    margin-top: 0.6rem;
+    max-width: 32em;
+    color: var(--ink-soft);
+  }
+
+  .facts {
+    grid-column: 9 / span 2;
+    padding-top: 0.5rem;
+    line-height: 1.6;
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+  .facts dd + dd { margin-top: 0.1rem; }
+
+  .ticket {
+    grid-column: 11 / span 2;
+    padding-top: 0.25rem;
+  }
+  .buy {
+    display: inline-block;
+    padding: calc(0.6 * var(--u)) calc(1.4 * var(--u));
+    min-width: 3.5em;
+    font-weight: var(--w0);
+    font-variant-numeric: lining-nums tabular-nums;
+    text-decoration: none;
+    color: var(--paper);
+    background: var(--ink);
+  }
+  .buy:hover { background: var(--c); }
+  .sold {
+    font-size: var(--s-1);
+    font-weight: var(--w-1);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    padding-top: 0.6rem;
+  }
+
+  /* Played shows fade toward grey, the way older years do in a concert diary. */
+  .played h2 { color: var(--ink-soft); }
+  .past {
+    --c: oklch(0.47 0.04 var(--h));
+    padding-block: calc(1.5 * var(--u));
+    box-shadow: inset 0 var(--pen-thin) 0 var(--c);
+    color: var(--ink-soft);
+  }
+  .past .day { font-size: var(--s1); font-weight: var(--w1); font-stretch: 90%; display: inline; }
+  .past .wk { display: inline; margin-left: 0.4em; }
+  .past .act { font-size: var(--s1); font-weight: var(--w1); }
+
+  /* ---------- Getting in ---------- */
+  .visit {
+    padding-block: calc(8 * var(--u)) calc(4 * var(--u));
+  }
+  .visit h2 {
+    grid-column: 1 / span 4;
+    font-size: var(--s2);
+    font-weight: var(--w2);
+    line-height: 1.05;
+  }
+  .visit-text {
+    grid-column: 5 / span 5;
+    max-width: 34em;
+  }
+  .visit-text p + p { margin-top: 0.9em; }
+  .visit dl {
+    grid-column: 5 / span 5;
+    margin-top: calc(3 * var(--u));
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 0;
+  }
+  .visit dt, .visit dd {
+    padding-block: 0.55rem;
+    box-shadow: inset 0 var(--pen-thin) 0 var(--rule);
+  }
+  .visit dt { padding-right: calc(2 * var(--u)); font-size: var(--s-1); font-weight: var(--w-1); letter-spacing: 0.1em; text-transform: uppercase; padding-top: 0.75rem; }
+
+  /* ---------- Footer ---------- */
+  .foot {
+    padding-block: calc(3 * var(--u)) calc(4 * var(--u));
+    box-shadow: inset 0 var(--pen-thin) 0 var(--ink);
+    color: var(--ink-soft);
+  }
+  .foot .sign {
+    grid-column: 1 / span 4;
+    padding-top: calc(2 * var(--u));
+    font-weight: var(--w-thick);
+    font-stretch: 62%;
+    text-transform: uppercase;
+    color: var(--ink);
+    font-size: var(--s1);
+    line-height: 1;
+  }
+  .colophon {
+    grid-column: 5 / span 6;
+    padding-top: calc(2 * var(--u));
+    font-size: var(--s-1);
+    font-weight: var(--w-1);
+    line-height: 1.55;
+    max-width: 34em;
+  }
+  .colophon p + p { margin-top: 0.8em; }
+
+  /* ---------- Middle widths: 8 columns ---------- */
+  @media (max-width: 60em) {
+    .address { grid-column: 1 / -1; }
+    .intro { grid-column: 1 / -1; }
+    .when { grid-column: 1 / span 2; }
+    .facts { grid-column: 3 / span 4; display: grid; grid-template-columns: 1fr 1fr; column-gap: calc(2 * var(--u)); padding-top: 0.9rem; }
+    .facts dd + dd { margin-top: 0; }
+    .ticket { grid-column: 7 / span 2; grid-row: 2; padding-top: 0.6rem; }
+    .visit h2 { grid-column: 1 / -1; margin-bottom: calc(2 * var(--u)); }
+    .visit-text, .visit dl { grid-column: 1 / span 6; }
+    .foot .sign { grid-column: 1 / -1; }
+    .colophon { grid-column: 1 / span 6; }
+  }
+
+  /* ---------- Phones: 4 columns ---------- */
+  @media (max-width: 34em) {
+    .when { grid-column: 1 / span 1; }
+    .who { grid-column: 2 / -1; }
+    .facts { grid-column: 2 / -1; grid-template-columns: 1fr; }
+    .ticket { grid-column: 2 / -1; grid-row: auto; }
+    .visit-text, .visit dl, .colophon { grid-column: 1 / -1; }
+    .past .day { font-size: var(--s0); }
+    .past .act { font-size: var(--s0); font-weight: var(--w0); }
+    .past .wk { display: block; margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top grid">
+  <nav class="nav" aria-label="Main">
+    <ul>
+      <li><a href="#december">Listings</a></li>
+      <li><a href="#visit">Getting in</a></li>
+      <li><a href="#hire">Room hire</a></li>
+      <li><a href="#list">Mailing list</a></li>
+    </ul>
+  </nav>
+  <h1 class="name">The Undercroft</h1>
+  <p class="intro">Two rooms under the Kessler laundrette. The main room holds 160 and the back bar sixty. Main-room doors open at half seven and back-bar doors at eight, and everyone is out by eleven because the flats upstairs have small children.</p>
+  <p class="address">14 Rennick Street, Leeds LS6. The door is the green one to the left of the laundrette.</p>
+</header>
+
+<main>
+  <section class="month grid" id="december" aria-labelledby="december-title">
+    <h2 id="december-title">December 2026</h2>
+    <ol class="shows">
+      <li class="show" style="--d: 364">
+        <p class="when"><time datetime="2026-12-04"><span class="day">4</span> <span class="wk">Fri</span></time></p>
+        <div class="who">
+          <h3 class="act" style="font-stretch: 75%">Sister Varnish</h3>
+          <p class="support">with Pell Grey, Cold Frame</p>
+          
+        </div>
+        <dl class="facts">
+          <dt class="vh">Genre</dt><dd class="cap">Post-punk</dd>
+          <dt class="vh">Room</dt><dd class="cap">Main room</dd>
+          <dt class="vh">Doors</dt><dd>Doors 7.30</dd>
+          <dt class="vh">Ages</dt><dd>14+</dd>
+        </dl>
+        <p class="ticket"><a class="buy" href="#tickets">£12<span class="vh"> tickets for Sister Varnish</span></a></p>
+      </li>
+      <li class="show" style="--d: 365">
+        <p class="when"><time datetime="2026-12-05"><span class="day">5</span> <span class="wk">Sat</span></time></p>
+        <div class="who">
+          <h3 class="act" style="font-stretch: 55%">Lowmoor Brass Collective</h3>
+          <p class="support">with Nettlebed</p>
+          
+        </div>
+        <dl class="facts">
+          <dt class="vh">Genre</dt><dd class="cap">Brass, dub</dd>
+          <dt class="vh">Room</dt><dd class="cap">Main room</dd>
+          <dt class="vh">Doors</dt><dd>Doors 7.30</dd>
+          <dt class="vh">Ages</dt><dd>14+</dd>
+        </dl>
+        <p class="ticket"><a class="buy" href="#tickets">£14<span class="vh"> tickets for Lowmoor Brass Collective</span></a></p>
+      </li>
+      <li class="show" style="--d: 370">
+        <p class="when"><time datetime="2026-12-10"><span class="day">10</span> <span class="wk">Thu</span></time></p>
+        <div class="who">
+          <h3 class="act" style="font-stretch: 75%">Orrin Vale Trio</h3>
+          
+          <p class="note">Seated. Sixty chairs, first come.</p>
+        </div>
+        <dl class="facts">
+          <dt class="vh">Genre</dt><dd class="cap">Jazz</dd>
+          <dt class="vh">Room</dt><dd class="cap">Back bar</dd>
+          <dt class="vh">Doors</dt><dd>Doors 8.00</dd>
+          <dt class="vh">Ages</dt><dd>18+</dd>
+        </dl>
+        <p class="ticket"><a class="buy" href="#tickets">£8<span class="vh"> tickets for Orrin Vale Trio</span></a></p>
+      </li>
+      <li class="show" style="--d: 372">
+        <p class="when"><time datetime="2026-12-12"><span class="day">12</span> <span class="wk">Sat</span></time></p>
+        <div class="who">
+          <h3 class="act" style="font-stretch: 80%">Gull Arcade</h3>
+          <p class="support">with Tannoy Saints, Hesketh Moon</p>
+          
+        </div>
+        <dl class="facts">
+          <dt class="vh">Genre</dt><dd class="cap">Indie</dd>
+          <dt class="vh">Room</dt><dd class="cap">Main room</dd>
+          <dt class="vh">Doors</dt><dd>Doors 7.30</dd>
+          <dt class="vh">Ages</dt><dd>14+</dd>
+        </dl>
+        <p class="ticket sold">Sold out</p>
+      </li>
+      <li class="show" style="--d: 378">
+        <p class="when"><time datetime="2026-12-18"><span class="day">18</span> <span class="wk">Fri</span></time></p>
+        <div class="who">
+          <h3 class="act" style="font-stretch: 70%">The Damp Fifths</h3>
+          <p class="support">with Brother Wicket</p>
+          
+        </div>
+        <dl class="facts">
+          <dt class="vh">Genre</dt><dd class="cap">Folk</dd>
+          <dt class="vh">Room</dt><dd class="cap">Back bar</dd>
+          <dt class="vh">Doors</dt><dd>Doors 8.00</dd>
+          <dt class="vh">Ages</dt><dd>18+</dd>
+        </dl>
+        <p class="ticket"><a class="buy" href="#tickets">£9<span class="vh"> tickets for The Damp Fifths</span></a></p>
+      </li>
+      <li class="show" style="--d: 379">
+        <p class="when"><time datetime="2026-12-19"><span class="day">19</span> <span class="wk">Sat</span></time></p>
+        <div class="who">
+          <h3 class="act" style="font-stretch: 80%">Felt Hammer</h3>
+          <p class="support">with Quarry Lights, Marram</p>
+          <p class="note">Earplugs at the bar, 50p.</p>
+        </div>
+        <dl class="facts">
+          <dt class="vh">Genre</dt><dd class="cap">Noise rock</dd>
+          <dt class="vh">Room</dt><dd class="cap">Main room</dd>
+          <dt class="vh">Doors</dt><dd>Doors 7.30</dd>
+          <dt class="vh">Ages</dt><dd>14+</dd>
+        </dl>
+        <p class="ticket"><a class="buy" href="#tickets">£11<span class="vh"> tickets for Felt Hammer</span></a></p>
+      </li>
+      <li class="show" style="--d: 391">
+        <p class="when"><time datetime="2026-12-31"><span class="day">31</span> <span class="wk">Thu</span></time></p>
+        <div class="who">
+          <h3 class="act" style="font-stretch: 52%">Municipal Swimming Baths</h3>
+          <p class="support">with every band from December, two songs each</p>
+          <p class="note">Doors at eight in both rooms. Runs to 1.00; the flats upstairs have agreed, once a year.</p>
+        </div>
+        <dl class="facts">
+          <dt class="vh">Genre</dt><dd class="cap">New Year&#x27;s Eve</dd>
+          <dt class="vh">Room</dt><dd class="cap">Both rooms</dd>
+          <dt class="vh">Doors</dt><dd>Doors 8.00</dd>
+          <dt class="vh">Ages</dt><dd>18+</dd>
+        </dl>
+        <p class="ticket"><a class="buy" href="#tickets">£20<span class="vh"> tickets for Municipal Swimming Baths</span></a></p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="month grid" id="january" aria-labelledby="january-title">
+    <h2 id="january-title">January 2027</h2>
+    <ol class="shows">
+      <li class="show" style="--d: 38">
+        <p class="when"><time datetime="2027-01-08"><span class="day">8</span> <span class="wk">Fri</span></time></p>
+        <div class="who">
+          <h3 class="act" style="font-stretch: 78%">Hesketh Moon</h3>
+          <p class="support">with Ida Calloway</p>
+          
+        </div>
+        <dl class="facts">
+          <dt class="vh">Genre</dt><dd class="cap">Songwriter</dd>
+          <dt class="vh">Room</dt><dd class="cap">Back bar</dd>
+          <dt class="vh">Doors</dt><dd>Doors 8.00</dd>
+          <dt class="vh">Ages</dt><dd>18+</dd>
+        </dl>
+        <p class="ticket"><a class="buy" href="#tickets">£8<span class="vh"> tickets for Hesketh Moon</span></a></p>
+      </li>
+      <li class="show" style="--d: 39">
+        <p class="when"><time datetime="2027-01-09"><span class="day">9</span> <span class="wk">Sat</span></time></p>
+        <div class="who">
+          <h3 class="act" style="font-stretch: 76%">Marrow Choir</h3>
+          <p class="support">with Sister Varnish, Pell Grey</p>
+          
+        </div>
+        <dl class="facts">
+          <dt class="vh">Genre</dt><dd class="cap">Post-punk</dd>
+          <dt class="vh">Room</dt><dd class="cap">Main room</dd>
+          <dt class="vh">Doors</dt><dd>Doors 7.30</dd>
+          <dt class="vh">Ages</dt><dd>14+</dd>
+        </dl>
+        <p class="ticket"><a class="buy" href="#tickets">£12<span class="vh"> tickets for Marrow Choir</span></a></p>
+      </li>
+      <li class="show" style="--d: 45">
+        <p class="when"><time datetime="2027-01-15"><span class="day">15</span> <span class="wk">Fri</span></time></p>
+        <div class="who">
+          <h3 class="act" style="font-stretch: 72%">Tannoy Saints</h3>
+          <p class="support">with Cold Frame</p>
+          
+        </div>
+        <dl class="facts">
+          <dt class="vh">Genre</dt><dd class="cap">Indie</dd>
+          <dt class="vh">Room</dt><dd class="cap">Main room</dd>
+          <dt class="vh">Doors</dt><dd>Doors 7.30</dd>
+          <dt class="vh">Ages</dt><dd>14+</dd>
+        </dl>
+        <p class="ticket"><a class="buy" href="#tickets">£10<span class="vh"> tickets for Tannoy Saints</span></a></p>
+      </li>
+      <li class="show" style="--d: 52">
+        <p class="when"><time datetime="2027-01-22"><span class="day">22</span> <span class="wk">Fri</span></time></p>
+        <div class="who">
+          <h3 class="act" style="font-stretch: 56%">Kessler Laundrette Night</h3>
+          <p class="support">with the staff of the laundrette upstairs, and their bands</p>
+          <p class="note">All money to the Rennick Street food bank.</p>
+        </div>
+        <dl class="facts">
+          <dt class="vh">Genre</dt><dd class="cap">Mixed</dd>
+          <dt class="vh">Room</dt><dd class="cap">Main room</dd>
+          <dt class="vh">Doors</dt><dd>Doors 7.30</dd>
+          <dt class="vh">Ages</dt><dd>14+</dd>
+        </dl>
+        <p class="ticket"><a class="buy" href="#tickets">£5<span class="vh"> tickets for Kessler Laundrette Night</span></a></p>
+      </li>
+      <li class="show" style="--d: 60">
+        <p class="when"><time datetime="2027-01-30"><span class="day">30</span> <span class="wk">Sat</span></time></p>
+        <div class="who">
+          <h3 class="act" style="font-stretch: 76%">Quarry Lights</h3>
+          <p class="support">with Nettlebed, Gull Arcade (DJ set)</p>
+          
+        </div>
+        <dl class="facts">
+          <dt class="vh">Genre</dt><dd class="cap">Shoegaze</dd>
+          <dt class="vh">Room</dt><dd class="cap">Main room</dd>
+          <dt class="vh">Doors</dt><dd>Doors 7.30</dd>
+          <dt class="vh">Ages</dt><dd>14+</dd>
+        </dl>
+        <p class="ticket"><a class="buy" href="#tickets">£11<span class="vh"> tickets for Quarry Lights</span></a></p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="month played grid" aria-labelledby="november-title">
+    <h2 id="november-title">Played in November</h2>
+    <ol class="shows">
+      <li class="show past" style="--d: 336">
+        <p class="when"><time datetime="2026-11-06"><span class="day">6</span> <span class="wk">Fri</span></time></p>
+        <div class="who"><h3 class="act">Brother Wicket</h3></div>
+        <dl class="facts"><dt class="vh">Genre</dt><dd class="cap">Folk</dd></dl>
+      </li>
+      <li class="show past" style="--d: 343">
+        <p class="when"><time datetime="2026-11-13"><span class="day">13</span> <span class="wk">Fri</span></time></p>
+        <div class="who"><h3 class="act">Cold Frame</h3></div>
+        <dl class="facts"><dt class="vh">Genre</dt><dd class="cap">Post-punk</dd></dl>
+      </li>
+      <li class="show past" style="--d: 350">
+        <p class="when"><time datetime="2026-11-20"><span class="day">20</span> <span class="wk">Fri</span></time></p>
+        <div class="who"><h3 class="act">Nettlebed</h3></div>
+        <dl class="facts"><dt class="vh">Genre</dt><dd class="cap">Indie</dd></dl>
+      </li>
+      <li class="show past" style="--d: 351">
+        <p class="when"><time datetime="2026-11-21"><span class="day">21</span> <span class="wk">Sat</span></time></p>
+        <div class="who"><h3 class="act">Orrin Vale Trio</h3></div>
+        <dl class="facts"><dt class="vh">Genre</dt><dd class="cap">Jazz</dd></dl>
+      </li>
+    </ol>
+  </section>
+
+  <section class="visit grid" id="visit" aria-labelledby="visit-title">
+    <h2 id="visit-title">Getting in</h2>
+    <div class="visit-text" id="tickets">
+      <p>Advance tickets are sold here and behind the bar. On the door they cost two pounds more, cash or card.</p>
+      <p>The main room is down twenty-two steps from Rennick Street and there is no lift. The street runs downhill, so the back bar opens level onto the yard behind the laundrette. If stairs are a problem, email <a href="mailto:door@undercroft.example">door@undercroft.example</a> before the night and we will meet you at the yard gate; from there the main room is eight steps down.</p>
+    </div>
+    <dl>
+      <dt>Ages</dt><dd>Main room 14+ with an adult; back bar 18+</dd>
+      <dt>Bar</dt><dd>Until 10.45; tea and soup all night</dd>
+      <dt id="hire">Hire</dt><dd>Sunday to Wednesday, from £180</dd>
+      <dt id="list">Mailing list</dt><dd>One email a month, the listing and nothing else</dd>
+    </dl>
+  </section>
+</main>
+
+<footer class="foot grid">
+  <p class="sign">The Undercroft</p>
+  <div class="colophon">
+    <p>Each show takes its colour from its date. The hue moves thirty degrees a month and one degree a day, so winter shows come out blue and violet and summer shows run from yellow through orange to red. Shows we have played fade to grey.</p>
+    <p>Set in Anybody by Etcetera Type Co., one family throughout, wide for the small type and narrow for the names.</p>
+    <p>The Undercroft, Rennick Street and every band here are fictional. This page is a Rob Weychert style preview.</p>
+  </div>
+</footer>
+
+</body>
+</html>
