@@ -77,8 +77,9 @@ chakrit names a designer. Work through these steps in this repository.
    the notes.
 6. **Style.** Write `style.md` as the designer's own set of instructions, in the shape
    their way of working suggests. Point to the synthesis and notes for detail.
-7. **Previews.** Build two or three previews by running the skill's own process with
-   this style, each for a different fictional business that suits it.
+7. **Previews.** Build five previews by running the skill's own process with this
+   style: three in English, one in Thai, one in Japanese, each for a different
+   fictional business that suits it. Run at most three preview agents at a time.
 8. **Register.** Add the style's row to `styles/README.md` and its section to
    `styles/index.html`.
 
