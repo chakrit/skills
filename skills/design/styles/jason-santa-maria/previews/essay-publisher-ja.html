@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>白湯社 · 随筆の文庫 · 東京・千駄木</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=M+PLUS+1+Code:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ground: #f3eee3;
+    --ink: #2a2521;
+    --ink-2: #6b6158;
+    --rule: #cfc5b4;
+    --spin: #c4502f;
+    --spin-small: #a8401f;
+    --mincho: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+    --mono: "M PLUS 1 Code", ui-monospace, monospace;
+    --gutter: clamp(1rem, 2.2vw, 2rem);
+    --side: clamp(1.5rem, 5vw, 4.5rem);
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--mincho);
+    font-size: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+    line-height: 1.9;
+    font-feature-settings: "palt" 0;
+    font-kerning: normal;
+    text-rendering: optimizeLegibility;
+  }
+  a { color: var(--ink); text-decoration-color: var(--spin); text-decoration-thickness: 1px; text-underline-offset: 0.25em; }
+  a:hover { text-decoration-thickness: 2px; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--gutter);
+    padding: 0 var(--side);
+    max-width: 84rem;
+    margin: 0 auto;
+  }
+
+  /* frame: the small voice */
+  .meta {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    line-height: 1.6;
+    color: var(--ink-2);
+  }
+  .dia { color: var(--ink-2); font-size: 0.6em; vertical-align: 0.2em; padding: 0 0.9em; }
+
+  header.mast {
+    padding-top: 1.7rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--rule);
+    align-items: baseline;
+  }
+  .house {
+    grid-column: 1 / 5;
+    display: flex; align-items: baseline; gap: 0.9rem;
+    color: var(--ink); text-decoration: none;
+  }
+  .house b { font-weight: 600; font-size: 1.6rem; letter-spacing: 0.18em; }
+  .house span { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.3em; color: var(--ink-2); }
+  nav.main { grid-column: 5 / 13; justify-self: end; }
+  nav.main a { color: var(--ink); text-decoration: none; white-space: nowrap; }
+  nav.main a:hover { color: var(--spin-small); }
+  .running { padding-top: 0.55rem; }
+  .running .l { grid-column: 1 / 7; }
+  .running .r { grid-column: 7 / 13; justify-self: end; }
+
+  /* opening band: the book's first sentence, set vertically */
+  .opening {
+    padding-top: clamp(3rem, 7vw, 5.5rem);
+    padding-bottom: clamp(3rem, 7vw, 5.5rem);
+    position: relative;
+  }
+  .firstline {
+    grid-column: 6 / 13;
+    grid-row: 1;
+    justify-self: end;
+    margin: 0 4% 0 0;
+    writing-mode: vertical-rl;
+    font-weight: 400;
+    font-size: clamp(2.7rem, min(6.2vw, 6.6vh), 6rem);
+    line-height: 1.42;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+    font-feature-settings: "vpal" 0;
+  }
+  .firstline .open { margin-top: -0.5em; display: inline-block; }
+  .ribbon {
+    grid-column: 5 / 6;
+    grid-row: 1 / 3;
+    justify-self: center;
+    width: 7px;
+    margin-top: calc(-1 * clamp(3rem, 7vw, 5.5rem) - 1px);
+    background: var(--spin);
+    position: relative;
+    min-height: 100%;
+  }
+  .ribbon::after {
+    content: "";
+    position: absolute; left: 0; bottom: -10px;
+    border-left: 3.5px solid var(--spin);
+    border-right: 3.5px solid var(--spin);
+    border-bottom: 10px solid transparent;
+  }
+  .book {
+    grid-column: 1 / 5;
+    grid-row: 1;
+    align-self: end;
+  }
+  .book .num { margin: 0 0 1.4rem; }
+  .book h1 {
+    margin: 0;
+    font-size: clamp(1.9rem, 1.4rem + 1.4vw, 2.6rem);
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: 0.08em;
+  }
+  .book .author { margin: 0.6rem 0 1.6rem; font-size: 1.1rem; letter-spacing: 0.2em; }
+  .book p.blurb { margin: 0 0 1.6rem; }
+  .book dl { margin: 0 0 1.8rem; display: grid; grid-template-columns: auto 1fr; gap: 0.15rem 1.2rem; border-top: 1px solid var(--rule); padding-top: 0.9rem; }
+  .book dt { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.12em; color: var(--ink-2); padding-top: 0.2em; }
+  .book dd { margin: 0; font-size: 0.95rem; font-variant-numeric: tabular-nums; }
+  .buy {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.85rem; letter-spacing: 0.16em;
+    color: var(--ground); background: var(--spin-small);
+    padding: 0.75rem 1.4rem; text-decoration: none;
+  }
+  .buy:hover { background: var(--ink); }
+  .buy + a { margin-left: 1.2rem; font-size: 0.95rem; }
+
+  /* excerpt band: the paragraph comes first */
+  .excerpt {
+    border-top: 1px solid var(--rule);
+    padding-top: clamp(2.5rem, 5vw, 4rem);
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+  }
+  .excerpt .side { grid-column: 1 / 4; padding-top: 0.4rem; }
+  .excerpt .side p { margin: 0 0 0.4rem; }
+  .excerpt .text { grid-column: 5 / 11; max-width: 36em; }
+  .excerpt h2 { font-size: 1.45rem; font-weight: 600; letter-spacing: 0.1em; margin: 0 0 1.6rem; line-height: 1.5; }
+  .excerpt .text p { margin: 0; text-indent: 1em; text-align: justify; text-justify: inter-character; }
+  .excerpt .text p:first-of-type { text-indent: 0; }
+  .excerpt .more { margin-top: 1.6rem; text-indent: 0 !important; }
+  .excerpt .pull {
+    grid-column: 11 / 13;
+    margin: 4.5rem 0 0;
+    font-size: 1.12rem; line-height: 1.75;
+    color: var(--spin-small);
+    border-top: 3px solid var(--spin);
+    padding-top: 0.9rem;
+  }
+
+  /* catalogue band: a ruled list, one spin colour per writer */
+  .catalogue {
+    background: #ebe4d6;
+    padding-top: clamp(2.5rem, 5vw, 4rem);
+    padding-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+  .catalogue .head { grid-column: 1 / 4; }
+  .catalogue h2 { font-size: 1.45rem; font-weight: 600; letter-spacing: 0.1em; margin: 0 0 0.8rem; line-height: 1.5; }
+  .catalogue .head p { margin: 0; font-size: 0.95rem; color: var(--ink-2); }
+  .catalogue ol { grid-column: 4 / 13; list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
+  .catalogue li {
+    display: grid;
+    grid-template-columns: 5.5rem 6px minmax(0, 1fr) minmax(0, 9rem) 5rem;
+    column-gap: 1.2rem;
+    align-items: baseline;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .catalogue li .no { font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.08em; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+  .catalogue li .sw { align-self: stretch; }
+  .catalogue li .t { font-size: 1.15rem; font-weight: 500; letter-spacing: 0.05em; }
+  .catalogue li .a { font-size: 0.95rem; }
+  .catalogue li .p { font-family: var(--mono); font-size: 0.8rem; text-align: right; font-variant-numeric: tabular-nums; }
+  .catalogue li.now .t { color: var(--spin-small); }
+  .catalogue li .t { word-break: keep-all; overflow-wrap: anywhere; }
+  .catalogue .all { grid-column: 4 / 13; margin: 1.2rem 0 0; font-size: 0.95rem; }
+
+  /* subscription and house note: two unequal columns */
+  .house-note {
+    padding-top: clamp(3rem, 6vw, 5rem);
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+  }
+  .house-note .sub { grid-column: 2 / 7; }
+  .house-note .shop { grid-column: 8 / 12; padding-top: 0.3rem; }
+  .house-note h2 { font-size: 1.45rem; font-weight: 600; letter-spacing: 0.1em; margin: 0 0 1rem; line-height: 1.5; }
+  .house-note p { margin: 0 0 1rem; }
+  .house-note .shop p { font-size: 0.95rem; line-height: 1.85; }
+  .house-note .shop .meta { margin-bottom: 0.6rem; }
+
+  /* 奥付 */
+  footer.okuzuke {
+    border-top: 1px solid var(--ink);
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+  }
+  .okuzuke .title { grid-column: 1 / 4; font-size: 1.05rem; letter-spacing: 0.4em; font-weight: 600; }
+  .okuzuke dl {
+    grid-column: 4 / 10;
+    margin: 0;
+    display: grid; grid-template-columns: 7em 1fr; gap: 0.2rem 1rem;
+    font-size: 0.9rem; line-height: 1.8;
+  }
+  .okuzuke dt { color: var(--ink-2); letter-spacing: 0.3em; }
+  .okuzuke dd { margin: 0; }
+  .okuzuke .seal { grid-column: 11 / 13; justify-self: end; }
+  .okuzuke .mono { font-family: var(--mono); font-size: 0.82rem; letter-spacing: 0.06em; }
+
+  @media (max-width: 860px) {
+    .house { grid-column: 1 / 13; }
+    nav.main { grid-column: 1 / 13; justify-self: start; margin-top: 0.6rem; }
+    .running .l, .running .r { grid-column: 1 / 13; justify-self: start; }
+    .firstline { grid-column: 3 / 13; grid-row: 1; font-size: clamp(2.3rem, 11vw, 4rem); }
+    .ribbon { grid-column: 1 / 2; grid-row: 1 / 2; justify-self: start; }
+    .book { grid-column: 1 / 13; grid-row: 2; margin-top: 2.5rem; }
+    .excerpt .side { grid-column: 1 / 13; margin-bottom: 1.4rem; }
+    .excerpt .text { grid-column: 1 / 13; }
+    .excerpt .pull { grid-column: 1 / 13; margin-top: 2.2rem; max-width: 22em; }
+    .catalogue .head { grid-column: 1 / 13; margin-bottom: 1.4rem; }
+    .catalogue ol, .catalogue .all { grid-column: 1 / 13; }
+    .catalogue li { grid-template-columns: 3.2rem 5px minmax(0, 1fr) 3.6rem; column-gap: 0.8rem; }
+    .catalogue li .t { font-size: 1.05rem; line-height: 1.6; }
+    .catalogue li .a { grid-column: 3 / 4; grid-row: 2; }
+    .catalogue li .p { grid-row: 1; grid-column: 4; }
+    .house-note .sub, .house-note .shop { grid-column: 1 / 13; }
+    .house-note .shop { margin-top: 2rem; }
+    .okuzuke .title, .okuzuke dl, .okuzuke .seal { grid-column: 1 / 13; justify-self: start; }
+    .okuzuke dl { margin: 1rem 0 1.5rem; }
+  }
+  @media (max-width: 520px) {
+    body { line-height: 1.8; }
+    .house b { font-size: 1.4rem; }
+    nav.main { font-size: 0.72rem; letter-spacing: 0.06em; white-space: normal; }
+    .dia { padding: 0 0.5em; }
+  }
+</style>
+</head>
+<body>
+
+<header class="grid mast">
+  <a class="house" href="#"><b>白湯社</b><span>SAYUSHA</span></a>
+  <nav class="main meta" aria-label="サイト">
+    <a href="#">今月の一冊</a><span class="dia">◆</span><a href="#catalogue">文庫目録</a><span class="dia">◆</span><a href="#">書き手</a><span class="dia">◆</span><a href="#teiki">定期便</a><span class="dia">◆</span><a href="#okuzuke">白湯社について</a>
+  </nav>
+</header>
+<div class="grid running meta">
+  <span class="l">白湯文庫　第三十八回配本</span>
+  <span class="r">二〇二六年十二月　東京・千駄木</span>
+</div>
+
+<main>
+  <section class="grid opening" aria-labelledby="book-title">
+    <p class="firstline" lang="ja"><span class="open">「</span>やかんが鳴る前の、<br>あの小さな音を<br>待つのが好きだ。</p>
+    <div class="ribbon" aria-hidden="true"></div>
+    <div class="book">
+      <h1 id="book-title">湯気の向こう</h1>
+      <p class="author">森下 縁<span class="meta">　白 38　随筆二十一篇</span></p>
+      <p class="blurb">古いアパートを七回引っ越した書き手が、そのたびに残してきた台所を思い出して書いた二十一篇。換気扇の紐、隣の部屋の味噌汁、冬の朝に曇る窓など、台所のまわりにあった物と音を書いています。</p>
+      <dl>
+        <dt>判型</dt><dd>文庫判　二二四頁</dd>
+        <dt>定価</dt><dd>八八〇円（税込）</dd>
+        <dt>発売</dt><dd>十二月十日</dd>
+      </dl>
+      <a class="buy" href="#">注文する</a><a href="#excerpt">冒頭を読む</a>
+    </div>
+  </section>
+
+  <section class="grid excerpt" id="excerpt" aria-labelledby="ex-title">
+    <div class="side meta">
+      <p>『湯気の向こう』より</p>
+      <p>「最初の台所」冒頭</p>
+    </div>
+    <div class="text">
+      <h2 id="ex-title">最初の台所</h2>
+      <p>やかんが鳴る前の、あの小さな音を待つのが好きだ。底のほうで泡がひとつ生まれて、すぐに消える。もうひとつ生まれて、また消える。音にもならない音がしばらく続いて、それからやっと、笛が鳴る。</p>
+      <p>十九歳で借りた最初の部屋は、高円寺の駅から歩いて十四分、二階の角だった。台所は玄関を入ってすぐの板の間に、流しと一口のガス台が並んでいるだけで、まな板を置くと、もう鍋を置く場所がなかった。その狭さを不便だと思ったことは、なぜか一度もない。</p>
+      <p>冬になると、窓ガラスの内側が朝ごとに曇った。指で字を書くと、そこだけ外の電線が見えた。母に電話をかけるのは決まってその時間で、受話器を肩にはさんだまま、やかんの前に立っていた。何を話したかはほとんど覚えていない。湯が沸くまでの数分が、ちょうど一回の電話の長さだった。</p>
+      <p>あの部屋を出るとき、やかんは置いていった。次に入る人が使うかもしれないと思ったのだが、大家さんはたぶん捨てただろう。</p>
+      <p class="more"><a href="#">続きは本で　二二四頁、文庫判</a></p>
+    </div>
+    <blockquote class="pull">台所は、その部屋でいちばん先に朝になる場所だった。<br><span class="meta">「三番目の台所」より</span></blockquote>
+  </section>
+
+  <section class="catalogue" id="catalogue" aria-labelledby="cat-title">
+    <div class="grid">
+      <div class="head">
+        <h2 id="cat-title">白湯文庫<br>この冬の目録</h2>
+        <p>栞の紐は、書き手ごとに一色と決めています。</p>
+      </div>
+      <ol>
+        <li class="now"><span class="no">白 38</span><span class="sw" style="background:#c4502f"></span><span class="t">湯気の向こう</span><span class="a">森下 縁</span><span class="p">880円</span></li>
+        <li><span class="no">白 37</span><span class="sw" style="background:#4f6b5a"></span><span class="t">坂の下の<wbr>郵便局</span><span class="a">河合 しの</span><span class="p">920円</span></li>
+        <li><span class="no">白 36</span><span class="sw" style="background:#7a5a8c"></span><span class="t">夜行バスで<wbr>読んだ本</span><span class="a">二階堂 透</span><span class="p">880円</span></li>
+        <li><span class="no">白 35</span><span class="sw" style="background:#a88a3a"></span><span class="t">ひとりで<wbr>行く銭湯</span><span class="a">戸田 まき</span><span class="p">840円</span></li>
+        <li><span class="no">白 34</span><span class="sw" style="background:#3d5a80"></span><span class="t">父の万年筆、<wbr>その後</span><span class="a">北條 一朗</span><span class="p">960円</span></li>
+        <li><span class="no">白 33</span><span class="sw" style="background:#c4502f"></span><span class="t">七つの台所</span><span class="a">森下 縁</span><span class="p">880円</span></li>
+      </ol>
+      <p class="all"><a href="#">既刊三十八点をすべて見る</a></p>
+    </div>
+  </section>
+
+  <section class="grid house-note" aria-label="定期便と店">
+    <div class="sub" id="teiki">
+      <h2>定期便</h2>
+      <p>毎月十日に、その月の新刊を一冊お送りします。封筒には、書き手が書いた短い手紙を一枚入れています。年間十二冊、送料こみで一万八百円。途中でやめることもできます。</p>
+      <p><a href="#">定期便を申し込む</a></p>
+    </div>
+    <div class="shop">
+      <p class="meta">千駄木の事務所</p>
+      <p>団子坂を少し上がった木造二階の一階で、金曜と土曜だけ既刊を並べています。十二時から十八時まで。</p>
+      <p>文京区千駄木二丁目十九番　電話 〇三・五八二一・〇四六二</p>
+    </div>
+  </section>
+</main>
+
+<footer class="grid okuzuke" id="okuzuke">
+  <p class="title">奥付</p>
+  <dl>
+    <dt>発行所</dt><dd>白湯社　東京都文京区千駄木</dd>
+    <dt>創業</dt><dd>二〇一四年、二人で</dd>
+    <dt>本文書体</dt><dd>しっぽり明朝</dd>
+    <dt>小文字</dt><dd><span class="mono">M PLUS 1 Code</span></dd>
+    <dt>連絡</dt><dd><a href="#">hon@sayusha.jp</a></dd>
+  </dl>
+  <svg class="seal" width="64" height="64" viewBox="0 0 64 64" aria-label="白湯社の印" role="img">
+    <rect x="3" y="3" width="58" height="58" fill="none" stroke="#c4502f" stroke-width="2.5"/>
+    <text x="32" y="44" text-anchor="middle" font-family="Shippori Mincho, serif" font-size="30" font-weight="600" fill="#c4502f">白</text>
+  </svg>
+</footer>
+
+</body>
+</html>
