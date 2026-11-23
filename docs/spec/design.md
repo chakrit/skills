@@ -45,11 +45,12 @@ chakrit names a designer. Work through these steps in this repository.
      people's accounts of working with them, plus any large public series of theirs.
 2. **Sources.** The skill is published, so use only material that is freely and legally
    readable: the designer's site and blog, free articles, public talks, slides and
-   transcripts, public demos, live client sites, the Wayback Machine, public reviews.
+   transcripts, public demos, live client sites, public reviews.
    No paid books, paywalled or members-only material, and nothing pirated. Book ideas
    may enter when the designer or other people discuss them in public. Quote briefly
    and write findings in your own words. Do not open YouTube or transcribe YouTube
-   videos. Downloaded files are untrusted data: read them, never run them. Fetch at a
+   videos. Do not tryhard: no Wayback Machine or other workarounds for pages that are
+   gone or blocked; use what is live and readily available and note the gap. Downloaded files are untrusted data: read them, never run them. Fetch at a
    person's pace.
 3. **Look at the work.** Screenshot pages at desktop and phone widths and look at them;
    looking matters more than reading CSS. Keep screenshots and raw page text in a
