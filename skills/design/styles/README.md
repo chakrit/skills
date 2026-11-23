@@ -5,6 +5,7 @@ One row per style. Each style lives in `styles/<style>/`: its instructions in
 Anything else in the folder is reference material that `style.md` points to.
 `index.html` shows every style's previews on one page; it gets a section per style.
 
-| Style         | Description                                                                   | Previews                                                                 |
-|---------------|-------------------------------------------------------------------------------|--------------------------------------------------------------------------|
-| `andy-clarke` | Concept-led art direction: one idea per business, poster and magazine layouts | `bike-shop.html`, `dental-practice.html`, `record-shop.html`             |
+| Style               | Description                                                                   | Previews                                                     |
+|---------------------|-------------------------------------------------------------------------------|--------------------------------------------------------------|
+| `andy-clarke`       | Concept-led art direction: one idea per business, poster and magazine layouts | `bike-shop.html`, `dental-practice.html`, `record-shop.html` |
+| `jason-santa-maria` | Typography first: a fixed frame, pieces that earn their own art direction     | `essay.html`, `cook-post.html`, `letterpress.html`           |
