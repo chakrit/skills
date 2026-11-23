@@ -16,3 +16,11 @@ nearest sibling (listed under each ban) breaks the same ban.
 - **The italic punchline.** No copy built as a setup followed by a short emphasised
   payoff, such as "Ship it today, because *you can*." Siblings: the same payoff as a bold
   fragment, after an em dash, or as its own one-line paragraph. Say the thing plainly.
+- **Cards.** No content set in boxes: a fill, border, radius or shadow around an icon or
+  number, a title and a blurb, repeated in a grid. Siblings: the same boxes as a bento
+  mosaic, as frosted glass panels, or as a list whose every row is a box. Let the
+  content itself be the block: a ruled list, a spec sheet, a contact sheet.
+- **Writing tells.** No copy in a design may use any tell in the de-slop skill's
+  `references/copy-tells.md`; read it in full before writing copy. That includes the
+  contrastive frame: "It's not X, it's Y", "Unlike traditional X…", "The difference?
+  …", "It's not about A. It's about B." State the thing directly.

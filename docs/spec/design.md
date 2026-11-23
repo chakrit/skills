@@ -17,7 +17,9 @@ The `design` skill (`skills/design/`): its rules, and how to add a designer's st
   the user says "you pick" or nobody is there to ask.
 - Bans live in `skills/design/references/bans.md` and hold in every style. They start
   with: eyebrow labels everywhere; emphasis on words inside a headline, including a
-  slanted or hand-drawn line under a word; copy such as "because *you can*".
+  slanted or hand-drawn line under a word; copy such as "because *you can*"; card
+  layouts; the contrastive frame and every writing tell in
+  `skills/de-slop/references/copy-tells.md`.
 - No word-level emphasis inside headlines. Body copy is not covered by this rule.
   `skills/de-slop/references/design-tells.md` gives the same fix.
 - Each designer's style is its own set of instructions in `styles/<style>/style.md`.
