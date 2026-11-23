@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Tune Book of the Hebden Bridge Folk Festival, 18 to 20 June 2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;1,400&family=Sofia+Sans+Extra+Condensed:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --slate:#1b5a72; --bracken:#b4472a; --grey:#8a877f; --ink:#1c1c1b; --paper:#f4f0e7;
+  --text:"Spectral", Georgia, "Times New Roman", serif;
+  --display:"Sofia Sans Extra Condensed", "Arial Narrow", sans-serif;
+}
+*{box-sizing:border-box}
+html{font-size:20px}
+body{margin:0; background:var(--paper); color:var(--ink); font-family:var(--text); line-height:1.55;
+  font-variant-numeric:oldstyle-nums proportional-nums}
+a{color:var(--slate); text-decoration-thickness:1px; text-underline-offset:3px}
+a:hover{color:var(--bracken)}
+.wrap{max-width:1180px; margin:0 auto; padding:0 40px}
+.grid{display:grid; grid-template-columns:repeat(6,1fr); column-gap:28px}
+.main{grid-column:1 / span 4}
+.aside{grid-column:5 / span 2}
+.sc{font-variant-caps:all-small-caps; letter-spacing:.07em}
+.spaced{text-transform:uppercase; letter-spacing:.3em; font-size:.6rem}
+.lining{font-variant-numeric:lining-nums tabular-nums}
+
+/* five hairlines: the stave, generated from the kit's rule */
+.stave{height:21px; border:0; margin:0;
+  background:repeating-linear-gradient(to bottom, var(--ink) 0 1px, transparent 1px 5px)}
+.stave.slate{background:repeating-linear-gradient(to bottom, var(--slate) 0 1px, transparent 1px 5px)}
+
+/* top line */
+.topline{display:flex; justify-content:space-between; align-items:baseline; gap:20px; flex-wrap:wrap;
+  padding:18px 0 10px; border-bottom:1px solid var(--ink); font-size:.8rem}
+.topline .when{font-style:italic; color:#55524c}
+.topline nav a{color:var(--ink); text-decoration:none; margin-left:24px; white-space:nowrap; display:inline-block}
+.topline nav a:first-child{margin-left:0}
+.topline nav a:hover{color:var(--bracken)}
+
+/* masthead lockup */
+.mast{padding:56px 0 0; text-align:center}
+.mast .being{font-style:italic; font-size:1.1rem; margin:0}
+.mast .nth{margin:16px 0 2px}
+.mast h1{margin:0; font-family:var(--display); font-weight:800; color:var(--slate); text-transform:uppercase;
+  font-size:clamp(4.4rem, 15.5vw, 11.4rem); line-height:.84; letter-spacing:.005em}
+.mast .kind{margin:16px 0 0; font-size:.72rem}
+.mast .desc{font-style:italic; font-size:1.3rem; margin:12px auto 0; max-width:31em; text-wrap:balance}
+.mast .stave{margin-top:40px}
+
+section{padding:70px 0 0}
+.head{margin-bottom:28px}
+h2{font-family:var(--display); font-weight:800; text-transform:uppercase; color:var(--slate);
+  font-size:3.7rem; line-height:.92; letter-spacing:.01em; margin:0}
+.head .under{hyphens:none; font-style:italic; font-size:1.15rem; margin:4px 0 12px}
+p{margin:0 0 1em; hyphens:auto}
+.drop::first-letter{float:left; font-family:var(--display); font-weight:800; color:var(--bracken);
+  font-size:6.6rem; line-height:.74; padding:9px 12px 0 0}
+sup a{text-decoration:none; color:var(--bracken); font-size:.72em; padding:0 1px}
+
+/* aside: italic metadata between dotted rules */
+.meta{border-top:2px dotted var(--grey); border-bottom:2px dotted var(--grey); padding:14px 0 4px; margin-top:4px}
+.meta dl{margin:0}
+.meta dt{font-variant-caps:all-small-caps; letter-spacing:.07em; color:var(--grey); font-size:.9rem}
+.meta dd{margin:0 0 12px; font-style:italic}
+
+/* engravings */
+figure{margin:0}
+.plate{display:block; width:100%; height:auto; max-height:230px; margin:0 0 10px}
+.plate path{fill:none; stroke:var(--slate); stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round}
+.plate path.hatch{stroke-width:1}
+figcaption{font-style:italic; font-size:.92rem; line-height:1.45; border-top:1px solid var(--ink); padding-top:8px}
+figcaption b{font-style:normal; font-weight:400; font-variant-caps:all-small-caps; letter-spacing:.07em}
+.sticky{position:sticky; top:24px}
+
+/* the tunes: catalogue entries */
+.tunes{list-style:none; margin:0; padding:0}
+.tune{display:grid; grid-template-columns:3.6rem 1fr 8.4rem; column-gap:16px;
+  padding:14px 0 15px; border-bottom:1px solid rgba(28,28,27,.32)}
+.tune .no{color:var(--bracken); font-variant-numeric:lining-nums tabular-nums; font-size:.85rem; padding-top:6px}
+.tune h3{margin:0; font-family:var(--display); font-weight:700; text-transform:uppercase; font-size:1.75rem;
+  line-height:1; letter-spacing:.02em}
+.tune .what{margin:3px 0 0; font-style:italic}
+.tune .key{font-size:.85rem; text-align:right; padding-top:5px; line-height:1.35}
+.tune .key span{display:block; color:var(--grey); font-style:italic}
+
+/* index of places */
+.places{list-style:none; margin:0; padding:0}
+.place{display:grid; grid-template-columns:1fr auto; column-gap:12px; padding:12px 0 13px; border-bottom:1px solid rgba(28,28,27,.32)}
+.place .name{display:flex; align-items:baseline; gap:8px}
+.place .name span{font-weight:600}
+.place .name i{flex:1; border-bottom:2px dotted var(--grey); transform:translateY(-5px); min-width:16px}
+.place .cap{font-variant-numeric:lining-nums tabular-nums; font-size:.9rem}
+.place .note{grid-column:1 / -1; font-style:italic; font-size:.93rem; color:#4a4842}
+
+/* timeline */
+.history .lead{max-width:none}
+.timeline{position:relative; list-style:none; margin:36px 0 0; padding:0;
+  display:grid; grid-template-columns:repeat(6,1fr); column-gap:28px}
+.timeline::before{content:""; position:absolute; left:0; right:0; top:3.2rem; height:21px;
+  background:repeating-linear-gradient(to bottom, var(--ink) 0 1px, transparent 1px 5px)}
+.timeline li{position:relative; padding-top:5.4rem; font-size:.92rem; line-height:1.42}
+.timeline .yr{position:absolute; top:0; left:0; font-family:var(--display); font-weight:800; font-size:2.5rem; line-height:1; color:var(--slate)}
+.timeline li::after{content:""; position:absolute; left:2px; top:calc(3.2rem + 6px); width:12px; height:9px;
+  border-radius:50%; background:var(--bracken); transform:rotate(-20deg)}
+.timeline li.turn .yr{color:var(--bracken)}
+.timeline p{margin:0; hyphens:none}
+.timeline li:nth-child(1)::after{top:calc(3.2rem + 13px)} .timeline li:nth-child(2)::after{top:calc(3.2rem + 8px)} .timeline li:nth-child(3)::after{top:calc(3.2rem + 3px)} .timeline li:nth-child(4)::after{top:calc(3.2rem + 8px)} .timeline li:nth-child(5)::after{top:calc(3.2rem - 2px)} .timeline li:nth-child(6)::after{top:calc(3.2rem + 13px)}
+
+/* tickets */
+.prices{list-style:none; margin:0; padding:0}
+.prices li{display:grid; grid-template-columns:1fr auto; column-gap:16px; padding:11px 0 12px; border-bottom:1px solid rgba(28,28,27,.32)}
+.prices .t{display:flex; align-items:baseline; gap:8px}
+.prices .t i{flex:1; border-bottom:2px dotted var(--grey); transform:translateY(-5px); min-width:16px}
+.prices .p{font-variant-numeric:lining-nums tabular-nums}
+.prices small{grid-column:1 / -1; font-style:italic; font-size:.9rem; color:#4a4842}
+.buy{margin-top:30px; padding:18px 0 20px; border-top:1px solid var(--ink); border-bottom:1px solid var(--ink)}
+.buy label{display:block; font-style:italic; margin-bottom:10px}
+.buy .row{display:flex; gap:12px; flex-wrap:wrap}
+.buy select,.buy input{font:inherit; font-size:1rem; padding:10px 12px; background:#fffdf8; border:1px solid var(--ink); border-radius:0; color:var(--ink)}
+.buy select{flex:2; min-width:220px}
+.buy input{flex:0 0 5.5rem; width:5.5rem}
+.buy button{font-family:var(--display); font-weight:800; text-transform:uppercase; letter-spacing:.05em; font-size:1.45rem;
+  background:var(--bracken); color:var(--paper); border:0; border-radius:0; padding:8px 24px 6px; cursor:pointer}
+.buy button:hover{background:var(--slate)}
+.buy small{display:block; margin-top:10px; font-style:italic; font-size:.85rem; color:#4a4842}
+
+/* footnotes */
+.notes{margin:76px 0 0; padding-top:16px; border-top:1px solid var(--ink); font-size:.85rem}
+.notes ol{margin:0; padding-left:1.3rem; columns:2; column-gap:48px}
+.notes li{margin:0 0 .6em; break-inside:avoid}
+.notes a.back{text-decoration:none; color:var(--bracken)}
+
+/* footer: ampersand lockup on a reversed slate block */
+footer{background:var(--slate); color:var(--paper); margin-top:64px; padding:58px 0 40px}
+footer a{color:var(--paper)}
+.amp{display:grid; grid-template-columns:1fr auto 1fr; align-items:center; column-gap:30px; text-align:center}
+.amp .side{font-family:var(--display); font-weight:800; text-transform:uppercase; font-size:2.6rem; line-height:1; letter-spacing:.02em}
+.amp .side small{display:block; font-family:var(--text); font-weight:400; font-style:italic; text-transform:none; letter-spacing:0; font-size:1rem; margin-top:10px; color:#d6dfe2}
+.amp .and{font-family:var(--text); font-style:italic; font-size:12rem; line-height:.8; color:var(--bracken)}
+footer .stave{margin-top:42px; background:repeating-linear-gradient(to bottom, rgba(244,240,231,.45) 0 1px, transparent 1px 5px)}
+.colophon{padding-top:14px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; font-size:.82rem; font-style:italic; color:#d6dfe2}
+
+@media (max-width: 860px){
+  html{font-size:20px}
+  .wrap{padding:0 22px}
+  .main,.aside{grid-column:1 / -1}
+  .aside{margin-top:30px}
+  .aside figure{max-width:320px}
+  .sticky{position:static}
+  .topline nav a{margin:0 18px 0 0}
+  h2{font-size:3rem}
+  .tune{grid-template-columns:2.8rem 1fr}
+  .tune .key{grid-column:2; text-align:left; padding-top:6px}
+  .tune .key span{display:inline}
+  .tune .key span::before{content:", "}
+  .timeline{grid-template-columns:1fr; row-gap:20px}
+  .timeline::before{left:0; right:auto; top:0; bottom:0; width:21px; height:auto;
+    background:repeating-linear-gradient(to right, var(--ink) 0 1px, transparent 1px 5px)}
+  .timeline li{padding:0 0 0 2.8rem}
+  .timeline li:nth-child(n)::after{left:5px; top:.7rem}
+  .timeline .yr{position:static; display:block; margin-bottom:4px}
+  .notes ol{columns:1}
+  .amp{grid-template-columns:1fr; row-gap:8px}
+  .amp .and{font-size:7rem}
+  .amp .side{font-size:2.1rem}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topline">
+    <span class="when">Friday 18 to Sunday 20 June 2027, in the Calder Valley, weather permitting and usually not</span>
+    <nav class="spaced" aria-label="Sections">
+      <a href="#tunes">The Tunes</a><a href="#places">Index of Places</a><a href="#summers">Thirty Summers</a><a href="#tickets">Tickets</a>
+    </nav>
+  </div>
+
+  <header class="mast">
+    <p class="being">Being the tune book of the</p>
+    <p class="nth spaced">Thirty-First</p>
+    <h1>Hebden Bridge</h1>
+    <p class="kind spaced">Folk Festival</p>
+    <p class="desc">three days of songs, tunes and dancing at the bottom of a valley so steep that the houses are built on top of each other</p>
+    <div class="stave" role="presentation"></div>
+  </header>
+
+  <section class="grid" aria-label="Introduction">
+    <div class="main">
+      <p class="drop">Every June since 1997 the town fills up with fiddles. The festival began in the back room of the White Lion with eleven musicians and a borrowed piano,<sup><a id="r1" href="#n1">1</a></sup> and it has grown, slowly and against the advice of the neighbours, into three days across six rooms, a square and a chapel up the hill in Heptonstall.</p>
+      <p>This year there are twenty-two acts on the bill and more sessions than anybody has counted. The tunes are listed below the way a tune book lists them: by number, with the key and the time they are played in. Anyone with an instrument may join a session. Anyone without one may sing.</p>
+    </div>
+    <div class="aside">
+      <div class="meta">
+        <dl>
+          <dt>When</dt><dd>Friday 18 June, from six in the evening, until the last session on Sunday gives up</dd>
+          <dt>Where</dt><dd>Hebden Bridge, West Yorkshire, and Heptonstall, a thirty-minute walk straight up</dd>
+          <dt>Trains</dt><dd>every half hour from Leeds and Manchester Victoria on the Calder Valley line</dd>
+          <dt>Free</dt><dd>everything in St George&rsquo;s Square and every session in every pub</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid" id="tunes">
+    <div class="main">
+      <div class="head">
+        <h2>The Tunes</h2>
+        <p class="under">a selection from this year&rsquo;s bill, numbered from where last year&rsquo;s left off</p>
+        <div class="stave slate" role="presentation"></div>
+      </div>
+      <ol class="tunes">
+        <li class="tune"><span class="no">№ 412</span><div><h3>Ellen Sutcliffe</h3><p class="what">Unaccompanied songs collected from farms around Colden and Blackshaw Head, some of them from her own grandmother.</p></div><p class="key">G major, 6/8<span>Friday, Trades Club</span></p></li>
+        <li class="tune"><span class="no">№ 413</span><div><h3>The Mytholm Ranters</h3><p class="what">A five-piece dance band from the bottom of Mytholm Steeps. Polkas, rants and a caller who will not let you sit down.</p></div><p class="key">D major, 2/4<span>Saturday, Town Hall</span></p></li>
+        <li class="tune"><span class="no">№ 414</span><div><h3>Joe Ackroyd &amp; Martha Lee</h3><p class="what">Fiddle and Anglo concertina. Slip jigs mostly, and one waltz Joe wrote for the Rochdale Canal.</p></div><p class="key">A major, 9/8<span>Saturday, Picture House</span></p></li>
+        <li class="tune"><span class="no">№ 415</span><div><h3>The Lumb Falls Sisters</h3><p class="what">Three sisters singing in three parts. They have sung at every festival since 2004 and have never once agreed on a set list.</p></div><p class="key">E minor, 3/4<span>Sunday, Heptonstall Chapel</span></p></li>
+        <li class="tune"><span class="no">№ 416</span><div><h3>Rowan Haigh</h3><p class="what">Guitar and songs about the mills, written in Todmorden over the winter and played here for the first time.</p></div><p class="key">C major, 4/4<span>Friday, Picture House</span></p></li>
+        <li class="tune"><span class="no">№ 417</span><div><h3>Cragg Vale Rapper</h3><p class="what">Five dancers, five flexible swords and a fiddler. They dance on a square of plywood they carry with them.</p></div><p class="key">G major, 6/8<span>Saturday, the Square, free</span></p></li>
+        <li class="tune"><span class="no">№ 418</span><div><h3>Niamh Ó Riada</h3><p class="what">Uilleann pipes, from Ennis by way of Halifax. Slow airs first, then reels until the room is warm.</p></div><p class="key">D major, 12/8<span>Sunday, Trades Club</span></p></li>
+        <li class="tune"><span class="no">№ 419</span><div><h3>The Old Town Mummers</h3><p class="what">The same play every year, with a doctor, a dragon and a Turkish knight. Somebody dies and gets better.</p></div><p class="key">no known key<span>Sunday, the Square, free</span></p></li>
+      </ol>
+      <p style="margin-top:18px">The other fourteen acts are in the printed programme, sold for a pound at the Town Hall door. The money pays for the piano tuner.</p>
+    </div>
+    <div class="aside">
+      <figure class="sticky">
+        <svg class="plate" viewBox="56 10 250 150" role="img" aria-label="A garden snail, engraved"><path class="hatch" d="M162.4 71.8L158.0 62.5 M160.1 87.6L158.6 78.3 M163.6 71.8L159.8 62.2 M164.8 72.0L161.6 62.1 M160.2 87.3L160.0 77.8 M165.9 72.2L163.4 62.1 M167.1 72.5L165.3 62.2 M160.5 87.0L161.5 77.6 M168.3 72.8L167.1 62.5 M169.4 73.3L169.0 62.9 M160.8 86.8L163.0 77.6 M170.5 73.8L170.8 63.4 M171.6 74.5L172.5 64.1 M161.2 86.6L164.6 77.8 M172.6 75.2L174.3 64.9 M173.6 76.0L176.0 65.8 M161.6 86.6L166.2 78.3 M174.6 76.9L177.6 66.8 M175.5 77.8L179.2 68.0 M162.1 86.6L167.8 79.0 M176.3 78.8L180.6 69.2 M177.0 79.9L182.0 70.6 M162.6 86.8L169.2 79.9 M177.7 81.0L183.4 72.1 M178.3 82.2L184.6 73.7 M163.1 87.0L170.6 81.1 M178.9 83.5L185.7 75.4 M179.3 84.8L186.6 77.1 M163.5 87.4L171.8 82.6 M179.7 86.1L187.5 79.0 M179.9 87.5L188.2 80.9 M163.9 87.9L172.8 84.2 M180.1 88.9L188.8 82.8 M180.2 90.3L189.3 84.8 M164.3 88.5L173.5 86.0 M180.1 91.8L189.6 86.9 M180.0 93.2L189.8 89.0 M164.5 89.2L174.0 87.9 M179.7 94.6L189.9 91.1 M179.4 96.1L189.7 93.2 M164.6 89.9L174.2 89.9 M178.9 97.5L189.5 95.3 M178.4 98.9L189.1 97.4 M164.6 90.7L174.2 92.0 M177.7 100.2L188.5 99.5 M177.0 101.5L187.8 101.5 M164.5 91.6L173.8 94.1 M176.1 102.8L186.9 103.5 M175.2 104.0L185.9 105.4 M164.2 92.4L173.1 96.2 M174.1 105.2L184.8 107.3 M173.0 106.3L183.5 109.1 M163.7 93.2L172.1 98.1 M171.8 107.3L182.1 110.8 M170.5 108.2L180.5 112.5 M163.1 94.0L170.8 100.0 M169.1 109.1L178.9 114.0 M167.7 109.8L177.1 115.4 M162.4 94.7L169.2 101.7 M166.2 110.5L175.2 116.7 M164.6 111.0L173.3 117.8 M161.5 95.3L167.3 103.2 M163.1 111.5L171.2 118.9 M161.4 111.8L169.1 119.7 M160.5 95.8L165.2 104.4 M159.8 112.0L166.9 120.5 M158.1 112.1L164.6 121.0 M159.3 96.2L162.9 105.3 M156.4 112.1L162.3 121.4 M154.6 112.0L159.9 121.7 M158.1 96.4L160.5 105.9 M152.9 111.7L157.6 121.8 M151.2 111.3L155.2 121.7 M156.9 96.3L157.9 106.1 M149.6 110.8L152.8 121.5 M147.9 110.2L150.4 121.0 M155.6 96.1L155.3 106.0 M146.3 109.4L148.1 120.5 M144.7 108.6L145.8 119.7 M154.3 95.7L152.7 105.5 M143.2 107.6L143.5 118.8 M141.8 106.5L141.3 117.7 M153.0 95.1L150.1 104.6 M140.4 105.3L139.2 116.5 M139.1 104.0L137.1 115.1 M151.8 94.3L147.7 103.3 M137.9 102.6L135.2 113.5 M136.7 101.1L133.3 111.9 M150.7 93.3L145.4 101.7 M135.7 99.5L131.6 110.0 M134.8 97.9L129.9 108.1 M149.7 92.0L143.4 99.7 M134.0 96.1L128.5 106.0 M133.3 94.4L127.1 103.9 M148.9 90.6L141.6 97.4 M132.8 92.5L125.9 101.6 M132.4 90.6L124.9 99.2 M148.3 89.1L140.1 94.9 M155.9 56.6L146.3 49.6 M158.0 72.5L151.3 64.7 M158.1 56.2L149.0 48.6 M160.3 56.0L151.8 47.7 M160.2 72.0L154.5 63.3 M162.6 55.9L154.6 47.1 M100 142L96 146 M109 142L105 146 M118 142L114 146 M127 142L123 146 M136 142L132 146 M145 142L141 146 M154 142L150 146 M163 142L159 146 M172 142L168 146 M181 142L177 146 M190 142L186 146 M199 142L195 146 M208 142L204 146 M217 142L213 146 M226 142L222 146 M235 142L231 146 M244 142L240 146 M253 142L249 146 M262 142L258 146 M271 142L267 146 M280 142L276 146 M289 142L285 146"/><path d="M160.4 87.1 L160.4 87.0 L160.5 86.9 L160.7 86.9 L160.8 86.8 L160.9 86.7 L161.0 86.7 L161.2 86.6 L161.3 86.6 L161.5 86.6 L161.6 86.6 L161.8 86.6 L161.9 86.6 L162.1 86.6 L162.3 86.7 L162.4 86.7 L162.6 86.8 L162.8 86.9 L162.9 86.9 L163.1 87.0 L163.3 87.2 L163.4 87.3 L163.6 87.4 L163.7 87.6 L163.8 87.8 L164.0 87.9 L164.1 88.1 L164.2 88.3 L164.3 88.5 L164.4 88.8 L164.5 89.0 L164.5 89.2 L164.6 89.5 L164.6 89.7 L164.6 90.0 L164.6 90.3 L164.6 90.5 L164.6 90.8 L164.6 91.1 L164.5 91.4 L164.4 91.7 L164.3 92.0 L164.2 92.2 L164.1 92.5 L164.0 92.8 L163.8 93.1 L163.6 93.4 L163.4 93.6 L163.2 93.9 L163.0 94.1 L162.8 94.4 L162.5 94.6 L162.2 94.8 L161.9 95.1 L161.6 95.3 L161.3 95.4 L161.0 95.6 L160.6 95.8 L160.2 95.9 L159.9 96.0 L159.5 96.1 L159.1 96.2 L158.7 96.3 L158.3 96.3 L157.9 96.4 L157.4 96.4 L157.0 96.4 L156.6 96.3 L156.1 96.3 L155.7 96.2 L155.2 96.1 L154.8 95.9 L154.4 95.8 L153.9 95.6 L153.5 95.4 L153.1 95.2 L152.7 94.9 L152.2 94.6 L151.8 94.3 L151.5 94.0 L151.1 93.7 L150.7 93.3 L150.4 92.9 L150.0 92.5 L149.7 92.1 L149.4 91.6 L149.2 91.1 L148.9 90.7 L148.7 90.2 L148.5 89.6 L148.3 89.1 L148.1 88.6 L148.0 88.0 L147.9 87.4 L147.8 86.8 L147.8 86.3 L147.7 85.7 L147.7 85.1 L147.8 84.5 L147.9 83.8 L148.0 83.2 L148.1 82.6 L148.2 82.0 L148.4 81.4 L148.7 80.8 L148.9 80.2 L149.2 79.6 L149.5 79.0 L149.9 78.5 L150.2 77.9 L150.6 77.4 L151.1 76.9 L151.5 76.4 L152.0 75.9 L152.5 75.4 L153.1 75.0 L153.7 74.5 L154.3 74.1 L154.9 73.8 L155.5 73.4 L156.2 73.1 L156.9 72.8 L157.6 72.6 L158.3 72.4 L159.0 72.2 L159.7 72.0 L160.5 71.9 L161.3 71.8 L162.0 71.8 L162.8 71.8 L163.6 71.8 L164.4 71.9 L165.2 72.0 L166.0 72.2 L166.8 72.4 L167.5 72.6 L168.3 72.9 L169.1 73.2 L169.8 73.5 L170.6 73.9 L171.3 74.3 L172.0 74.8 L172.7 75.3 L173.4 75.8 L174.1 76.4 L174.7 77.0 L175.3 77.6 L175.9 78.3 L176.4 79.0 L176.9 79.7 L177.4 80.5 L177.8 81.3 L178.3 82.1 L178.6 82.9 L179.0 83.8 L179.3 84.6 L179.5 85.5 L179.7 86.4 L179.9 87.4 L180.0 88.3 L180.1 89.3 L180.2 90.2 L180.1 91.2 L180.1 92.2 L180.0 93.1 L179.8 94.1 L179.6 95.1 L179.4 96.0 L179.1 97.0 L178.8 97.9 L178.4 98.9 L178.0 99.8 L177.5 100.7 L177.0 101.6 L176.4 102.4 L175.8 103.3 L175.1 104.1 L174.4 104.9 L173.7 105.6 L172.9 106.4 L172.1 107.0 L171.2 107.7 L170.4 108.3 L169.4 108.9 L168.5 109.4 L167.5 109.9 L166.5 110.4 L165.5 110.8 L164.4 111.1 L163.3 111.4 L162.2 111.7 L161.1 111.9 L160.0 112.0 L158.9 112.1 L157.7 112.1 L156.6 112.1 L155.4 112.0 L154.3 111.9 L153.1 111.7 L152.0 111.5 L150.8 111.2 L149.7 110.9 L148.6 110.5 L147.5 110.0 L146.4 109.5 L145.3 108.9 L144.3 108.3 L143.2 107.6 L142.3 106.9 L141.3 106.1 L140.4 105.3 L139.5 104.4 L138.6 103.5 L137.8 102.6 L137.1 101.6 L136.4 100.5 L135.7 99.4 L135.1 98.3 L134.5 97.2 L134.0 96.0 L133.5 94.8 L133.1 93.6 L132.7 92.3 L132.4 91.0 L132.2 89.7 L132.0 88.4 L131.9 87.1 L131.9 85.8 L131.9 84.5 L132.0 83.1 L132.1 81.8 L132.3 80.4 L132.6 79.1 L132.9 77.8 L133.3 76.5 L133.8 75.2 L134.3 73.9 L134.9 72.6 L135.6 71.4 L136.3 70.2 L137.1 69.0 L137.9 67.9 L138.8 66.8 L139.7 65.7 L140.7 64.7 L141.8 63.7 L142.9 62.8 L144.0 61.9 L145.2 61.1 L146.4 60.3 L147.7 59.6 L149.0 58.9 L150.4 58.3 L151.7 57.8 L153.1 57.3 L154.6 56.9 L156.0 56.6 L157.5 56.3 L159.0 56.1 L160.5 56.0 L162.0 55.9 L163.5 55.9 L165.1 56.0 L166.6 56.2 L168.1 56.4 L169.6 56.7 L171.1 57.1 L172.6 57.5 L174.1 58.0 L175.6 58.6 L177.0 59.3 L178.4 60.0 L179.7 60.8 L181.1 61.7 L182.4 62.6 L183.6 63.6 L184.8 64.7 L186.0 65.8 L187.1 67.0 L188.2 68.2 L189.2 69.5 L190.1 70.8 L191.0 72.2 L191.8 73.6 L192.6 75.1 L193.3 76.6 L193.9 78.2 L194.4 79.7 L194.9 81.3 L195.3 83.0 L195.6 84.6 L195.8 86.3 L196.0 88.0 L196.1 89.7 L196.1 91.4 L196.0 93.1 L195.8 94.8 L195.6 96.5 L195.3 98.2 L194.9 99.9 L194.4 101.6 L193.8 103.3 L193.1 104.9 L192.4 106.5 L191.6 108.1 L190.7 109.6 L189.8 111.1 L188.7 112.5 L187.6 114.0 L186.5 115.3 L185.2 116.6 L183.9 117.9 L182.6 119.1 L181.1 120.2 L179.7 121.3 L178.1 122.3 L176.6 123.2 L174.9 124.0 L173.3 124.8 L171.5 125.5 L169.8 126.1 L168.0 126.7 L166.2 127.1 L164.4 127.5 L162.5 127.8 L160.6 128.0 L158.7 128.1 L156.8 128.1 L154.9 128.0 L153.0 127.8 L151.2 127.6 L149.3 127.2 L147.4 126.8 L145.5 126.3 L143.7 125.7 L141.9 125.0 L140.1 124.2 L138.4 123.3 L136.7 122.3 L135.0 121.3 L133.4 120.2 L131.8 119.0 L130.3 117.7 L128.8 116.3 L127.5 114.9 L126.1 113.4 L124.9 111.9 L123.7 110.3 L122.6 108.6 L121.5 106.8 L120.6 105.1 L119.7 103.2 L118.9 101.3 L118.2 99.4 L117.6 97.5 L117.1 95.5 L116.7 93.5 L116.3 91.4 L116.1 89.4 L116.0 87.3 L115.9 85.2 L116.0 83.1 L116.1 81.1 L116.4 79.0 L116.8 76.9 L117.2 74.8 L117.8 72.8 L118.4 70.8 L119.2 68.8 L120.0 66.8 L121.0 64.9 L122.0 63.0 L123.1 61.2 L124.3 59.4 L125.6 57.7 L127.0 56.0 L128.5 54.4 L130.0 52.9 L131.6 51.4 L133.3 50.0 L135.1 48.7 L136.9 47.5 L138.8 46.3 L140.7 45.2 L142.7 44.3 L144.7 43.4 L146.8 42.6 L148.9 41.9 L151.1 41.3 L153.3 40.8 L155.5 40.5 L157.7 40.2 L160.0 40.0 M86 138C110 141 200 142 236 139C258 137 270 128 276 114C280 104 282 96 288 90 M236 139C252 141 266 142 300 140C300 145 280 147 250 147L90 146C80 145 80 140 86 138 M276 112C280 96 286 82 294 70 M294 70m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0 M282 104C282 92 281 82 282 74 M282 74m-2.5 0a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0"/></svg>
+        <figcaption><b>Plate i.</b> A garden snail, found on the steps of the Trades Club after the Saturday ceilidh in 2019. It had come further than most of the audience.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="grid" id="places">
+    <div class="main">
+      <div class="head">
+        <h2>Index of Places</h2>
+        <p class="under">every room with music in it, and how many it holds before the door is shut</p>
+        <div class="stave slate" role="presentation"></div>
+      </div>
+      <ol class="places">
+        <li class="place"><span class="name"><span>The Trades Club</span><i></i></span><span class="cap">holds 300</span><span class="note">Holme Street. Built by the town&rsquo;s trade unions in 1924 and still owned by its members. The main concerts, every night.</span></li>
+        <li class="place"><span class="name"><span>The Picture House</span><i></i></span><span class="cap">holds 490</span><span class="note">New Road, by the canal. A cinema since 1921, bought by the town in 1978 so it would stay one. Seated concerts, Friday and Saturday.</span></li>
+        <li class="place"><span class="name"><span>The Town Hall</span><i></i></span><span class="cap">holds 220</span><span class="note">St George&rsquo;s Street. The ceilidh on Saturday night, and the workshops by day: clog, concertina, and songs for people who say they cannot sing.</span></li>
+        <li class="place"><span class="name"><span>St George&rsquo;s Square</span><i></i></span><span class="cap">holds the town</span><span class="note">Dancing outside from eleven on Saturday and Sunday. If it rains, the dancing carries on and the audience stands under the shop awnings.</span></li>
+        <li class="place"><span class="name"><span>Heptonstall Methodist Chapel</span><i></i></span><span class="cap">holds 160</span><span class="note">Northgate, Heptonstall. Octagonal, built in 1764, and the best room for unaccompanied singing in the valley.<sup><a id="r2" href="#n2">2</a></sup> Sunday afternoon only.</span></li>
+        <li class="place"><span class="name"><span>The White Lion &amp; the Shoulder of Mutton</span><i></i></span><span class="cap">hold whoever fits</span><span class="note">Open sessions from noon each day. Bring an instrument, sit down, wait for a tune you know.</span></li>
+      </ol>
+    </div>
+    <div class="aside">
+      <figure class="sticky">
+        <svg class="plate" viewBox="70 -4 160 226" role="img" aria-label="A pear, engraved"><path class="hatch" d="M168.6 64.0C156.6 66.0 148.6 70.0 142.6 76.0 M172.2 70.6C160.2 72.6 152.2 76.6 146.2 82.6 M175.8 77.2C163.8 79.2 155.8 83.2 149.8 89.2 M179.3 83.8C167.3 85.8 159.3 89.8 153.3 95.8 M182.6 90.4C170.6 92.4 162.6 96.4 156.6 102.4 M185.7 97.0C173.7 99.0 165.7 103.0 159.7 109.0 M188.4 103.6C176.4 105.6 168.4 109.6 162.4 115.6 M190.6 110.2C178.6 112.2 170.6 116.2 164.6 122.2 M192.4 116.8C180.4 118.8 172.4 122.8 166.4 128.8 M193.7 123.4C181.7 125.4 173.7 129.4 167.7 135.4 M194.3 130.0C182.3 132.0 174.3 136.0 168.3 142.0 M194.3 136.6C182.3 138.6 174.3 142.6 168.3 148.6 M193.7 143.2C181.7 145.2 173.7 149.2 167.7 155.2 M192.4 149.8C180.4 151.8 172.4 155.8 166.4 161.8 M190.4 156.4C178.4 158.4 170.4 162.4 164.4 168.4 M187.7 163.0C175.7 165.0 167.7 169.0 161.7 175.0 M184.3 169.6C172.3 171.6 164.3 175.6 158.3 181.6 M180.3 176.2C168.3 178.2 160.3 182.2 154.3 188.2 M175.7 182.8C163.7 184.8 155.7 188.8 149.7 194.8 M173.2 189.4C161.2 191.4 153.2 195.4 147.2 201.4 M173.9 196.0C161.9 198.0 153.9 202.0 147.9 208.0 M174.6 202.6C162.6 204.6 154.6 208.6 148.6 214.6 M112 188L118 199.8 M119 190L125 201.0 M126 192L132 202.2 M133 194L139 203.4 M140 196L146 204.6 M147 198L153 205.8 M154 200L160 207.0 M161 198L167 205.8 M168 196L174 204.6 M175 194L181 203.4 M182 192L188 202.2 M189 190L195 201.0 M130 120l1 1 M140 150l1 1 M122 170l1 1 M160 132l1 1 M148 176l1 1 M132 196l1 1 M176 160l1 1 M118 140l1 1"/><path d="M150 30C140 30 136 40 134 56C131 80 112 96 100 120C84 152 92 196 130 210C142 214 158 214 170 210C208 196 216 152 200 120C188 96 169 80 166 56C164 40 160 30 150 30ZM150 30C150 20 152 10 158 2 M156 14C170 4 192 6 206 16C190 24 170 24 156 14Z M160 14L200 15"/></svg>
+        <figcaption><b>Plate ii.</b> A Williams pear. The festival committee has met in the same kitchen on Crossley Street for twenty years, and there is always a bowl of these on the table that nobody eats.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="history" id="summers">
+    <div class="grid">
+      <div class="main">
+        <div class="head">
+          <h2>Thirty Summers</h2>
+          <p class="under">the festival&rsquo;s life so far, written up from the minutes of the committee</p>
+          <div class="stave slate" role="presentation"></div>
+        </div>
+      </div>
+    </div>
+    <ol class="timeline">
+      <li><span class="yr">1997</span><p>Eleven musicians, one borrowed piano and the back room of the White Lion. Forty people come.</p></li>
+      <li><span class="yr">2003</span><p>The Trades Club offers its hall for the Saturday night. The festival has a stage for the first time.</p></li>
+      <li><span class="yr">2008</span><p>Cragg Vale Rapper dance in the Square, and have done every year since.</p></li>
+      <li><span class="yr">2012</span><p>Hebden Water floods the town centre twice in one summer. The festival moves up the hill to Heptonstall for a year.</p></li>
+      <li class="turn"><span class="yr">2015</span><p>On Boxing Day the river comes into the Picture House and the shops on Market Street. The 2016 festival raises the money for a new piano.<sup><a id="r3" href="#n3">3</a></sup></p></li>
+      <li><span class="yr">2026</span><p>The thirtieth festival. The White Lion sessions run until twenty to four on Monday morning.</p></li>
+    </ol>
+  </section>
+
+  <section class="grid" id="tickets">
+    <div class="main">
+      <div class="head">
+        <h2>Tickets</h2>
+        <p class="under">priced so that a family of four can come and still eat</p>
+        <div class="stave slate" role="presentation"></div>
+      </div>
+      <ul class="prices">
+        <li><span class="t"><span>The whole weekend</span><i></i></span><span class="p">£92</span><small>Every concert, the ceilidh and the workshops. Wristbands from the Town Hall from Friday at four.</small></li>
+        <li><span class="t"><span>Friday evening</span><i></i></span><span class="p">£26</span><small>The Trades Club and the Picture House.</small></li>
+        <li><span class="t"><span>Saturday, all day</span><i></i></span><span class="p">£44</span><small>Includes the ceilidh at the Town Hall.</small></li>
+        <li><span class="t"><span>Sunday, all day</span><i></i></span><span class="p">£38</span><small>Includes the chapel concert at Heptonstall.</small></li>
+        <li><span class="t"><span>Under sixteens</span><i></i></span><span class="p">free</span><small>With a ticketed adult. Children under five are not counted, and some of them dance better than the Ranters.</small></li>
+      </ul>
+      <form class="buy" onsubmit="event.preventDefault(); this.querySelector('small').textContent='Thank you. Your tickets are on their way by email, and the wristbands wait for you at the Town Hall.';">
+        <label for="kind">Which tickets, and how many. The box office is three volunteers and a laptop in Margaret&rsquo;s front room, so we answer within a day.</label>
+        <div class="row">
+          <select id="kind" name="kind">
+            <option>The whole weekend, £92</option>
+            <option>Friday evening, £26</option>
+            <option>Saturday, all day, £44</option>
+            <option>Sunday, all day, £38</option>
+          </select>
+          <input id="qty" name="qty" type="number" min="1" max="12" value="2" aria-label="How many">
+          <button type="submit">Buy tickets</button>
+        </div>
+        <small>We take cards. We will also take cash at the Town Hall, as we always have.</small>
+      </form>
+    </div>
+    <div class="aside">
+      <figure>
+        <svg class="plate" viewBox="80 10 210 220" role="img" aria-label="A wellington boot, engraved"><path class="hatch" d="M164 40L184 40 M164 45L184 45 M164 50L184 50 M164 55L184 55 M164 60L184 60 M164 65L184 65 M164 70L184 70 M164 75L184 75 M164 80L184 80 M164 85L184 85 M164 90L184 90 M164 95L184 95 M164 100L184 100 M164 105L184 105 M164 110L184 110 M164 115L184 115 M164 120L184 120 M164 125L184 125 M164 130L184 130 M164 135L184 135 M164 140L184 140 M164 145L184 145 M164 150L184 150 M164 155L184 155 M104 224L110 214 M117 224L123 214 M130 224L136 214 M143 224L149 214 M156 224L162 214 M169 224L175 214 M182 224L188 214 M195 224L201 214 M208 224L214 214 M221 224L227 214 M234 224L240 214 M247 224L253 214 M260 224L266 214 M273 224L279 214 M196.0 176.0L246.0 182.0 M202.0 179.6L249.0 185.6 M208.0 183.2L252.0 189.2 M214.0 186.8L255.0 192.8 M220.0 190.4L258.0 196.4 M226.0 194.0L261.0 200.0 M232.0 197.6L264.0 203.6 M238.0 201.2L267.0 207.2 M244.0 204.8L270.0 210.8 M250.0 208.4L273.0 214.4"/><path d="M110 20L190 20L192 30L186 30L188 170C200 172 236 176 260 184C278 190 282 204 280 214L92 214C88 196 92 170 98 150L104 30L108 30ZM108 30L186 30 M92 214L92 224L280 224L280 214M98 150C130 150 160 158 188 170"/></svg>
+        <figcaption><b>Plate iii.</b> A wellington boot, left foot, size nine. Handed in at the Town Hall in 2022 and still in the lost property box under the stage, if it is yours.</figcaption>
+      </figure>
+      <div class="meta" style="margin-top:34px">
+        <dl>
+          <dt>Camping</dt><dd>Calder Holmes Park, by the river, £12 a night a tent</dd>
+          <dt>Step-free</dt><dd>Trades Club, Picture House and Town Hall; the chapel has two steps and a ramp</dd>
+          <dt>Dogs</dt><dd>in the Square and the pubs; not in the chapel</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <aside class="notes" aria-label="Footnotes">
+    <ol>
+      <li id="n1">The piano belonged to the landlord&rsquo;s sister and went back to her on the Monday, one key short. <a class="back" href="#r1" aria-label="Back to text">&#8617;</a></li>
+      <li id="n2">John Wesley preached there and called it the most beautiful chapel he knew. He did not mention the acoustics, but he was not a singer. <a class="back" href="#r2" aria-label="Back to text">&#8617;</a></li>
+      <li id="n3">A Yamaha upright, bought from a school in Burnley, now in the Trades Club and in tune. <a class="back" href="#r3" aria-label="Back to text">&#8617;</a></li>
+    </ol>
+  </aside>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="amp">
+      <div class="side">Down the hill<small>to the Trades Club on Friday night</small></div>
+      <div class="and" aria-hidden="true">&amp;</div>
+      <div class="side">Up again<small>to the chapel in Heptonstall on Sunday</small></div>
+    </div>
+    <div class="stave" role="presentation"></div>
+    <div class="colophon">
+      <span>The Hebden Bridge Folk Festival is run by volunteers from the town, and has been since 1997.</span>
+      <span>Write to <a href="mailto:tunes@hebdenfolk.org.uk">tunes@hebdenfolk.org.uk</a>. Letters are read at the committee on Tuesdays.</span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
