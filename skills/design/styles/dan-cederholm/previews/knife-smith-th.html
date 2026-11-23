@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>โรงตีมีดลุงเพิ่ม ตราไก่ขัน · อรัญญิก อยุธยา</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chonburi&family=Sarabun:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #f1e8d6;
+  --orange: #e0552a;
+  --navy: #23324a;
+  --brass: #c99a2e;
+  --tamarind: #7a4a2a;
+  --ink: #3a2a20;
+  --muted: #8b7966;
+  --rule: #d8ccb6;
+}
+* { box-sizing: border-box; }
+html { background: var(--cream); }
+body {
+  margin: 0;
+  color: var(--ink);
+  font: 400 19px/1.65 "Sarabun", "Thonburi", "Leelawadee UI", sans-serif;
+}
+a { color: var(--orange); text-decoration-thickness: 1px; text-underline-offset: 4px; }
+a:hover, a:focus-visible { color: var(--navy); }
+img, svg { max-width: 100%; }
+
+/* Edge border: the handle of an Aranyik knife, tamarind wood with brass ferrule rings */
+.handle-edge {
+  height: 22px;
+  background:
+    repeating-linear-gradient(90deg,
+      var(--tamarind) 0 120px,
+      var(--brass) 120px 128px,
+      var(--navy) 128px 131px,
+      var(--brass) 131px 139px,
+      var(--tamarind) 139px 260px);
+  border-bottom: 4px solid var(--navy);
+}
+.handle-edge.foot { border-bottom: 0; border-top: 4px solid var(--navy); }
+
+.wrap { max-width: 36em; margin: 0 auto; padding: 0 1.25rem; }
+
+/* Header: badge + name + nav */
+.masthead {
+  display: flex; align-items: center; gap: 1.25rem;
+  padding: 2rem 0 1.5rem;
+}
+.badge { width: 128px; flex: none; transform: rotate(-5deg); transition: transform .25s; }
+.badge:hover { transform: rotate(2deg) scale(1.04); }
+.shopname {
+  font-family: "Chonburi", serif; font-weight: 400;
+  font-size: 2.6rem; line-height: 1.15; margin: 0; color: var(--navy);
+  filter: url(#struck);
+}
+.shopname span { display: block; font-size: .55em; color: var(--tamarind); }
+
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 1.75rem; flex-wrap: wrap; }
+nav { border-top: 2px solid var(--navy); border-bottom: 1px solid var(--rule); padding: .7rem 0; }
+.label { font-size: .78rem; font-weight: 700; letter-spacing: .06em; line-height: 1.3; display: block; text-decoration: none; color: var(--ink); }
+.label small { display: block; font-weight: 400; color: var(--muted); letter-spacing: 0; font-size: .95em; }
+nav a.label:hover small, nav a.label:focus-visible small { color: var(--orange); }
+nav [aria-current] { color: var(--orange); }
+
+/* Specimen band: words of the trade, edge to edge, cropped */
+.specimen {
+  overflow: hidden; white-space: nowrap; background: var(--navy);
+  color: var(--cream); padding: 1.1rem 0; margin: 0;
+}
+.specimen p { margin: 0; line-height: 1.25; }
+.specimen .a { font-family: "Chonburi", serif; font-size: 2.7rem; color: var(--brass); margin-left: -3.5rem; filter: url(#struck); }
+.specimen .b { font-weight: 700; font-size: 1.15rem; letter-spacing: .04em; margin-left: -1rem; }
+.specimen .c { font-family: "Chonburi", serif; font-size: 1.9rem; color: var(--orange); margin-left: -6rem; filter: url(#struck); }
+.specimen .d { font-size: 1.05rem; color: #b9c2cf; margin-left: -2rem; }
+.specimen .e { font-family: "Chonburi", serif; font-size: 3.4rem; color: var(--cream); margin-left: -1.5rem; filter: url(#struck); }
+.specimen .f { font-weight: 600; font-size: 1.3rem; color: var(--brass); margin-left: -4.5rem; }
+.specimen i { font-style: normal; color: var(--orange); padding: 0 .5em; }
+
+main h1, main h2 {
+  font-family: "Chonburi", serif; font-weight: 400; color: var(--navy);
+  line-height: 1.3; filter: url(#struck);
+}
+main h1 { font-size: 2.1rem; margin: 2.75rem 0 .75rem; }
+main h2 { font-size: 1.6rem; margin: 3rem 0 .5rem; }
+
+/* Index heading: small bold with orange arrow, for lists */
+h2.index {
+  font-family: "Sarabun", sans-serif; font-weight: 700; font-size: .9rem;
+  letter-spacing: .06em; color: var(--ink); filter: none;
+  margin: 3rem 0 0; padding-bottom: .5rem; border-bottom: 2px solid var(--navy);
+}
+h2.index::after { content: " →"; color: var(--orange); }
+
+/* Slat: ruled row, glyph, title, line, price */
+.slats { list-style: none; margin: 0; padding: 0; }
+.slat {
+  display: grid; grid-template-columns: 30px 1fr auto; gap: .2rem .9rem;
+  padding: .85rem 0; border-bottom: 1px solid var(--rule); align-items: baseline;
+}
+.slat svg { width: 26px; height: 16px; align-self: center; grid-row: span 2; }
+.slat b { font-weight: 700; color: var(--navy); }
+.slat .price { font-weight: 700; color: var(--tamarind); white-space: nowrap; }
+.slat .line { grid-column: 2 / 4; color: var(--muted); font-size: .92em; line-height: 1.5; }
+
+/* Still life */
+.stilllife { margin: 2.5rem -1.25rem 0; }
+.stilllife figcaption { font-size: .82rem; color: var(--muted); padding: 0 1.25rem; }
+
+/* Fact line */
+.facts { list-style: none; margin: 1rem 0 0; padding: 0; }
+.facts li { display: flex; gap: .7rem; align-items: baseline; padding: .35rem 0; }
+.facts svg { width: 18px; height: 18px; flex: none; position: relative; top: 3px; }
+.hours { columns: 2; column-gap: 2rem; }
+.hours li { break-inside: avoid; }
+
+.steps { padding-left: 1.3rem; }
+.steps li { margin-bottom: .5rem; }
+.steps li::marker { color: var(--orange); font-weight: 700; }
+
+.end::after {
+  content: ""; display: inline-block; width: 22px; height: 12px; margin-left: .4em;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 12'%3E%3Cpath d='M1 1h14l6 3-4 2v5h-4V6H5v5H2V6L1 4z' fill='%23e0552a'/%3E%3C/svg%3E") no-repeat;
+  vertical-align: baseline;
+}
+
+.button {
+  display: inline-block; background: var(--orange); color: var(--cream);
+  font-weight: 700; text-decoration: none; padding: .6rem 1.2rem; border-radius: 6px;
+  box-shadow: 0 2px 0 var(--tamarind); transition: transform .2s, background-color .2s;
+}
+.button:hover, .button:focus-visible { background: var(--navy); color: var(--cream); transform: translateY(-2px) rotate(-1deg); }
+
+footer { margin-top: 4rem; }
+.colophon { padding: 1.5rem 0 2rem; font-size: .85rem; color: var(--muted); display: flex; gap: 1rem; align-items: center; }
+.colophon svg { width: 64px; flex: none; transform: rotate(4deg); }
+
+@media (max-width: 640px) {
+  body { font-size: 18px; }
+  .masthead { gap: .9rem; padding-top: 1.4rem; }
+  .badge { width: 92px; }
+  .shopname { font-size: 1.9rem; }
+  nav ul { gap: .8rem 1.4rem; display: grid; grid-template-columns: 1fr 1fr; }
+  .specimen .a { font-size: 2.1rem; }
+  .specimen .e { font-size: 2.5rem; }
+  .stilllife { margin: 2rem -1.25rem 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="struck">
+    <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="37" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+  </filter>
+  <filter id="worn">
+    <feTurbulence type="fractalNoise" baseFrequency="2.2" numOctaves="1" seed="21" result="n"/>
+    <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.1 1.55" result="m"/>
+    <feComposite in="SourceGraphic" in2="m" operator="in" result="c"/>
+    <feTurbulence type="fractalNoise" baseFrequency=".7" numOctaves="2" seed="5" result="n2"/>
+    <feDisplacementMap in="c" in2="n2" scale="2"/>
+  </filter>
+  <symbol id="g-blade" viewBox="0 0 26 16"><rect x="0" y="6" width="9" height="5" rx="2" fill="#7a4a2a"/><rect x="9" y="5" width="2" height="7" fill="#c99a2e"/><path d="M11 5h12c2 0 3 2 2 4l-3 3H11z" fill="#23324a"/></symbol>
+  <symbol id="g-clock" viewBox="0 0 18 18"><circle cx="9" cy="9" r="7.5" fill="none" stroke="#e0552a" stroke-width="2"/><path d="M9 4.5V9l3 2" fill="none" stroke="#e0552a" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="g-pin" viewBox="0 0 18 18"><path d="M9 17s6-6 6-10A6 6 0 0 0 3 7c0 4 6 10 6 10z" fill="#e0552a"/><circle cx="9" cy="7" r="2.2" fill="#f1e8d6"/></symbol>
+  <symbol id="g-phone" viewBox="0 0 18 18"><path d="M4 1.5l3 3.5-1.6 2.2a10 10 0 0 0 5.4 5.4L13 11l3.5 3-1.5 2.5C8 16.5 1.5 10 1.5 3z" fill="#e0552a"/></symbol>
+  <symbol id="g-hand" viewBox="0 0 18 18"><path d="M1 7h9l-2-3h1.5l4 3H17v6h-4l-2 1H5v-1.5h4V12H4v-1.5h5V9H2z" fill="#e0552a"/></symbol>
+  <symbol id="g-flame" viewBox="0 0 18 18"><path d="M9 1c1 4 5 5 5 10a5 5 0 0 1-10 0c0-3 2-4 2-6 1 1 1.5 2 1.5 3C9 6 9 3.5 9 1z" fill="#e0552a"/></symbol>
+</svg>
+
+<div class="handle-edge" aria-hidden="true"></div>
+
+<div class="wrap">
+  <header class="masthead">
+    <svg class="badge" viewBox="0 0 200 150" role="img" aria-label="ตราไก่ขัน ตีตั้งแต่ไก่ขัน อรัญญิก อยุธยา" filter="url(#worn)">
+      <defs>
+        <path id="rim-top" d="M28 75 A72 52 0 0 1 172 75"/>
+        <path id="rim-bot" d="M24 75 A76 56 0 0 0 176 75"/>
+      </defs>
+      <ellipse cx="100" cy="75" rx="96" ry="71" fill="#e0552a"/>
+      <ellipse cx="100" cy="75" rx="88" ry="63" fill="none" stroke="#f1e8d6" stroke-width="2.5"/>
+      <ellipse cx="100" cy="75" rx="60" ry="40" fill="#f1e8d6"/>
+      <text font-family="Sarabun, sans-serif" font-weight="700" font-size="13" fill="#f1e8d6" letter-spacing="1.5">
+        <textPath href="#rim-top" startOffset="50%" text-anchor="middle">ตีตั้งแต่ไก่ขัน · ตั้งแต่ ๒๕๒๙</textPath>
+      </text>
+      <text font-family="Sarabun, sans-serif" font-weight="700" font-size="12" fill="#f1e8d6" letter-spacing="1.5" dy="9">
+        <textPath href="#rim-bot" startOffset="50%" text-anchor="middle">อรัญญิก · อยุธยา</textPath>
+      </text>
+      <!-- rooster, cut like a stamp punch -->
+      <g fill="#23324a">
+        <path d="M78 92c-4-10 0-22 10-26l6-10c2-4 7-4 9 0 1 3 0 5-2 7l2 1-4 3c3 6 2 12-1 16 8-2 14-8 18-17l6 2c-3 14-12 24-26 26H86z"/>
+        <path d="M96 52c1-4 4-5 6-3-2-3 1-6 4-3 0-3 4-4 5 0-3 1-5 4-6 7z" fill="#e0552a"/>
+        <path d="M104 58l6 1-6 2z" fill="#c99a2e"/>
+        <path d="M118 72c6-8 14-9 18-4-5 0-8 3-10 8 4-2 8-1 9 2-5 0-9 2-11 6z"/>
+        <rect x="86" y="96" width="3" height="10"/><rect x="95" y="96" width="3" height="10"/>
+        <rect x="80" y="104" width="22" height="3"/>
+      </g>
+    </svg>
+    <p class="shopname">โรงตีมีดลุงเพิ่ม<span>ตราไก่ขัน · บ้านอรัญญิก</span></p>
+  </header>
+
+  <nav aria-label="หลัก">
+    <ul>
+      <li><a class="label" href="#knives" aria-current="page">มีด<small>ที่ตีอยู่ตอนนี้</small></a></li>
+      <li><a class="label" href="#order">สั่งทำ<small>บอกขนาดมือมา</small></a></li>
+      <li><a class="label" href="#sharpen">ลับฟรี<small>ตลอดอายุมีด</small></a></li>
+      <li><a class="label" href="#visit">มาหา<small>ทางไปโรงตี</small></a></li>
+    </ul>
+  </nav>
+</div>
+
+<div class="specimen" aria-hidden="true">
+  <p class="a">มีดอีโต้<i>✦</i>พร้าหัวตัด<i>✦</i>ปังตอ ๘ นิ้ว<i>✦</i>มีดเหน็บ<i>✦</i>ขวาน<i>✦</i>มีดปลายแหลม<i>✦</i>มีดหั่นหมู</p>
+  <p class="b">เหล็กแหนบสิบล้อ · ชุบน้ำมันหล่อ · ด้ามมะขาม · ปลอกทองเหลือง · ฝักไม้ขนุน · ฿450–1,200 · ตีร้อนสามไฟ · เจียหินทราย · ตอกตราไก่ · ตอกปีที่ตี · ห่อกระดาษหนังสือพิมพ์</p>
+  <p class="c">ตีมือ ตีร้อน ตีซ้ำ ตีจนไก่ขันรอบสอง ตีจนเลิก ตีให้ร้านข้าวมันไก่ ตีให้คนสวน ตีให้ลูกค้าที่บอกว่าแค่มาดูเฉย ๆ</p>
+  <p class="d">ก่อเตาตีห้า · พักเที่ยง · ลับหินน้ำ เบอร์ 400 / 1000 / 6000 · หยุดวันพระ · ต.ท่าช้าง อ.นครหลวง · เหล็กกล้าคาร์บอน · สนิมขึ้นได้ อย่าแช่น้ำค้างคืน · มีดเก่าแลกส่วนลดได้ · ส่งไปรษณีย์ทั่วประเทศ</p>
+  <p class="e">อรัญญิก อยุธยา ๒๕๒๙ ตราไก่ขัน ตีมือ ลับฟรี</p>
+  <p class="f">มีดแล่ปลา · มีดตัดหน่อไม้ · มีดกรีดยาง · เสียมขุดมัน · มีดปอกมะพร้าว · มีดพับ · ขวานผ่าฟืน · มีดสับเนื้อ · กรรไกรตัดกิ่ง (ซ่อมอย่างเดียว) · มีดโต้ด้ามสั้น</p>
+</div>
+
+<main class="wrap">
+  <h1>ไฟติดตอนไก่ขัน มีดเสร็จตอนเย็น</h1>
+  <p>โรงตีเล็ก ๆ ท้ายซอยบ้านอรัญญิก ลุงเพิ่มตีมีดมาตั้งแต่ปี 2529 ใช้เหล็กแหนบรถสิบล้อที่ไปขอซื้อจากอู่แถวบางปะหัน เผาในเตาถ่าน ตีด้วยค้อนกับทั่งตัวเดิมที่พ่อทิ้งไว้ให้ ทุกเล่มชุบแข็งเอง ลับเอง ใส่ด้ามเอง ตอกตราเอง</p>
+  <p>ไก่ที่บ้านขันตีห้าทุกเช้า เราก็ก่อเตาตอนนั้น มันไม่เคยช่วยตีสักเล่ม แต่ได้ชื่อไปอยู่บนใบมีดทุกเล่ม ลุงบอกว่ายุติธรรมดี ไก่ไม่รู้เรื่อง</p>
+
+  <h2 class="index" id="knives">มีดที่ตีอยู่ตอนนี้</h2>
+  <ul class="slats">
+    <li class="slat"><svg aria-hidden="true"><use href="#g-blade"/></svg><b>ปังตอ 8 นิ้ว</b><span class="price">฿850</span><span class="line">สับกระดูกหมูขาดในทีเดียว เขียงก็ขาดได้ถ้าไม่ระวัง</span></li>
+    <li class="slat"><svg aria-hidden="true"><use href="#g-blade"/></svg><b>มีดอีโต้</b><span class="price">฿650</span><span class="line">ผ่าฟืน ฟันกิ่งมะม่วง ตัดหน่อไม้ เล่มเดียวจบงานหลังบ้าน</span></li>
+    <li class="slat"><svg aria-hidden="true"><use href="#g-blade"/></svg><b>มีดแล่ปลา</b><span class="price">฿550</span><span class="line">ใบบาง ปลายงอนนิดหน่อย ลับหินน้ำเบอร์ 1000 แล้วจะชอบ</span></li>
+    <li class="slat"><svg aria-hidden="true"><use href="#g-blade"/></svg><b>พร้าหัวตัด ด้ามยาว</b><span class="price">฿900</span><span class="line">คนสวนสั่งไปเยอะที่สุด หนักหัว ฟันแล้วไม่ต้องออกแรงเอง</span></li>
+    <li class="slat"><svg aria-hidden="true"><use href="#g-blade"/></svg><b>มีดเหน็บ พร้อมฝักไม้ขนุน</b><span class="price">฿480</span><span class="line">ห้อยเอวเข้าสวน ฝักแกะทีละอัน เลยไม่มีอันไหนเหมือนกัน</span></li>
+  </ul>
+
+  <figure class="stilllife">
+    <svg viewBox="0 0 720 300" role="img" aria-label="มีดสี่เล่มวางเรียงบนโต๊ะ กับหินลับมีดและเหล็กตอกตรา">
+      <!-- cleaver -->
+      <g transform="translate(40 40) rotate(-6)">
+        <path d="M0 10 L150 0 L156 92 L8 100 Z" fill="#23324a"/>
+        <path d="M8 100 L156 92 L157 100 L9 108Z" fill="#b9c2cf"/>
+        <circle cx="20" cy="24" r="6" fill="#f1e8d6"/>
+        <ellipse cx="118" cy="44" rx="14" ry="9" fill="none" stroke="#c99a2e" stroke-width="2"/>
+        <rect x="150" y="30" width="12" height="30" fill="#c99a2e"/>
+        <rect x="162" y="32" width="110" height="26" rx="12" fill="#7a4a2a"/>
+      </g>
+      <!-- eto (curved chopper) -->
+      <g transform="translate(470 40) rotate(8) scale(.95)">
+        <path d="M0 20 C60 0 150 0 200 30 L206 70 C150 52 70 58 4 74 Z" fill="#23324a"/>
+        <path d="M4 74 C70 58 150 52 206 70 L205 78 C150 62 70 66 6 82Z" fill="#b9c2cf"/>
+        <rect x="-14" y="28" width="16" height="28" fill="#c99a2e"/>
+        <rect x="-110" y="31" width="98" height="22" rx="10" fill="#7a4a2a"/>
+      </g>
+      <!-- small fillet knife -->
+      <g transform="translate(60 200) rotate(-2)">
+        <path d="M110 6 L300 0 C320 2 328 8 330 14 L110 22Z" fill="#23324a"/>
+        <path d="M110 18 L330 14 L328 18 L110 26Z" fill="#b9c2cf"/>
+        <rect x="98" y="2" width="12" height="24" fill="#c99a2e"/>
+        <rect x="0" y="4" width="100" height="20" rx="9" fill="#7a4a2a"/>
+      </g>
+      <!-- whetstone -->
+      <g transform="translate(440 200) rotate(-4)">
+        <rect width="170" height="44" rx="4" fill="#c99a2e"/>
+        <rect y="22" width="170" height="22" rx="4" fill="#e0552a"/>
+        <text x="12" y="17" font-family="Sarabun, sans-serif" font-weight="700" font-size="13" fill="#3a2a20">1000</text>
+        <text x="12" y="38" font-family="Sarabun, sans-serif" font-weight="700" font-size="13" fill="#f1e8d6">400</text>
+      </g>
+      <!-- stamp punch -->
+      <g transform="translate(672 150) rotate(20)">
+        <rect x="-11" y="0" width="22" height="110" fill="#8b98aa"/>
+        <rect x="-11" y="0" width="22" height="10" fill="#23324a"/>
+        <ellipse cx="0" cy="116" rx="13" ry="8" fill="#23324a"/>
+      </g>
+    </svg>
+    <figcaption>ของบนโต๊ะลุงเช้าวันพุธ หินสองหน้ากับเหล็กตอกตรา ไม่ขาย</figcaption>
+  </figure>
+
+  <h2 id="order">สั่งทำ</h2>
+  <p>อยากได้เล่มไหนที่ไม่มีในรายการ บอกมาได้ ลุงตีให้เกือบทุกอย่างที่เป็นเหล็กและมีคม</p>
+  <ol class="steps">
+    <li>บอกว่าจะเอาไปทำอะไร สับ ผ่า แล่ หรือฟัน</li>
+    <li>วัดมือ จากข้อมือถึงปลายนิ้วกลาง ด้ามจะได้พอดี</li>
+    <li>มัดจำครึ่งหนึ่ง รอ 3–4 สัปดาห์ ถ้าฝนตกเตาไม่ค่อยติด อาจนานกว่านั้น</li>
+  </ol>
+  <p><a class="button" href="https://line.me/R/ti/p/@kaikhan.knife">ทักไลน์ @kaikhan.knife</a></p>
+
+  <h2 id="sharpen">ลับฟรีตลอดอายุมีด</h2>
+  <p class="end">เล่มไหนตีจากที่นี่ เอากลับมาลับได้ฟรีตลอด ทิ้งไว้เช้า มารับบ่าย ลุงขอแค่อย่าเอาไปงัดฝาสีหรือแงะกระป๋อง เล่มที่โดนแบบนั้นมาลุงดูออก แล้วจะบ่นยาว</p>
+
+  <h2 id="visit">มาหา</h2>
+  <ul class="facts">
+    <li><svg aria-hidden="true"><use href="#g-pin"/></svg><span>หมู่ 4 บ้านต้นโพธิ์ ต.ท่าช้าง อ.นครหลวง พระนครศรีอยุธยา เลี้ยวซ้ายตรงร้านก๋วยเตี๋ยวเรือ ตามเสียงค้อนไป</span></li>
+    <li><svg aria-hidden="true"><use href="#g-phone"/></svg><span><a href="tel:+66894172263">089 417 2263</a> ลุงไม่ค่อยรับตอนตีเหล็ก โทรตอนเที่ยงดีที่สุด</span></li>
+  </ul>
+  <ul class="facts hours">
+    <li><svg aria-hidden="true"><use href="#g-flame"/></svg><span>ก่อเตา 05:00</span></li>
+    <li><svg aria-hidden="true"><use href="#g-clock"/></svg><span>เปิดหน้าร้าน 08:00</span></li>
+    <li><svg aria-hidden="true"><use href="#g-clock"/></svg><span>พักเที่ยง 12:00–13:00</span></li>
+    <li><svg aria-hidden="true"><use href="#g-clock"/></svg><span>ปิด 17:00</span></li>
+    <li><svg aria-hidden="true"><use href="#g-hand"/></svg><span>หยุดวันพระ</span></li>
+    <li><svg aria-hidden="true"><use href="#g-hand"/></svg><span>สงกรานต์หยุดยาว</span></li>
+  </ul>
+</main>
+
+<footer>
+  <div class="wrap colophon">
+    <svg viewBox="0 0 200 150" aria-hidden="true" filter="url(#worn)">
+      <ellipse cx="100" cy="75" rx="96" ry="71" fill="#23324a"/>
+      <ellipse cx="100" cy="75" rx="60" ry="40" fill="#f1e8d6"/>
+      <path d="M78 92c-4-10 0-22 10-26l6-10c2-4 7-4 9 0 1 3 0 5-2 7l2 1-4 3c3 6 2 12-1 16 8-2 14-8 18-17l6 2c-3 14-12 24-26 26H86z" fill="#e0552a"/>
+    </svg>
+    <p style="margin:0">โรงตีมีดลุงเพิ่ม ตราไก่ขัน บ้านอรัญญิก ตีมือมาตั้งแต่ 2529 ไก่ตัวปัจจุบันเป็นรุ่นที่ห้า</p>
+  </div>
+  <div class="handle-edge foot" aria-hidden="true"></div>
+</footer>
+</body>
+</html>
