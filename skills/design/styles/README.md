@@ -8,7 +8,7 @@ Anything else in the folder is reference material that `style.md` points to.
 | Style               | Description                                                                     | Previews                                                                                               |
 |---------------------|---------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
 | `andy-clarke`       | Concept-led art direction: one idea per business, poster and magazine layouts   | `bike-shop.html`, `dental-practice.html`, `record-shop.html`, `sake-brewery-ja.html`, `tailor-th.html` |
-| `jason-santa-maria` | Typography first: a fixed frame, pieces that earn their own art direction       | `poetry-journal.html`, `bookshop.html`, `type-foundry.html`                                            |
+| `jason-santa-maria` | Typography first: a fixed frame, pieces that earn their own art direction       | `poetry-journal.html`, `bookshop.html`, `type-foundry.html`, `literary-magazine-th.html`               |
 | `dan-cederholm`     | Handcrafted bits: a quiet page warmed by found lettering, one orange, a badge   |                                                                                                        |
 | `frank-chimero`     | Write the design first, then set it plainly: one sentence, an index, a split    |                                                                                                        |
 | `rob-weychert`      | One stated system, one bent convention: listings, ledgers, data features        |                                                                                                        |
