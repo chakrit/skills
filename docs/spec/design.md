@@ -62,7 +62,8 @@ shows it, or another person reported it. An agent adds nothing of its own: no re
 designer did not give, no instruction for a case the sources do not cover, no summing-up
 the sources do not support. What an agent remembers about the designer from its training
 is not a source; it goes in only when a live page says or shows it. Where the sources
-are silent, write that they are silent.
+are silent, write that they are silent. Do not read this repository's git history for
+earlier research on a designer.
 
 1. **Sources.** The skill is published, so use only material that is freely and legally
    readable: the designer's site and blog, free articles, public talks, slides and
