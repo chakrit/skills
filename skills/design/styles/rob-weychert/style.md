@@ -10,48 +10,41 @@ other people's accounts. Written in our own words.
   maths and then trusted his eye. Even, calm type where large lines are light and small
   ones are heavy; a grid with visible proportion; a strong limited palette from one hue;
   one surprising structural idea, such as an empty grid showing what is missing.
-- **Suits:** newsrooms and long reads, archives, diaries, listings and calendars (venues,
-  cinemas, programmes), anything with data, counts or permutations to show, catalogues
-  of a system (modular products, editions), small cultural venues, zines.
-- **Does not suit:** a business with nothing to list, count or tell; a brand that wants
-  warmth from illustration or photography above all; a page that must sell in one
-  screen.
+- **Suits:** newsrooms and long reads, archives, diaries, listings, anything with data,
+  counts or permutations to show, small cultural venues, zines.
 
 ## The way of working
 
-Work in this order. Write each step's result into the design brief.
+Work in this order.
 
 1. **Inventory.** List every kind of content the page holds and how often each appears
    (body, dates, names, prices, captions, labels, headings). For a listing, list what a
-   reader scans for. Most pages need two text sizes plus two rare ones.
+   reader scans for.
 2. **The conventional version.** Lay the content out the most ordinary way that works:
    one reading column, a plain list, a plain table. Do it in black and white.
-3. **Read it as a reader.** Ask how that convention fails this content: what the reader
-   cannot see, compare or find, what the structure of the story is that the layout hides.
-   Write the answer in one sentence.
+3. **Read it as a reader.** Ask how that convention fails this content.
 4. **State the system.** Fill in the parameter sheet below. Everything visual comes from
    it.
-5. **Make one deviation.** Change the one convention the sentence in step 3 names, and
-   only that. See "Deviations" for the moves he uses.
+5. **Make one deviation.** Change the one convention step 3 names, and only that. See
+   "Deviations" for the moves he uses.
 6. **Grey, then hue.** Settle hierarchy in black and white, add greys as a second layer of
    contrast, then map one hue and its rotations onto the grey roles.
 7. **Subtract until it breaks.** Remove pieces one at a time until the page stops working,
    then put the last one back.
-8. **Eyeball the system.** Where a derived value looks wrong, override it and note the
-   override. The system is the foundation; it does not have the final say.
-9. **Show your work.** Answer the review questions at the end.
+8. **Eyeball the system.** Where a derived value looks wrong, override it. The system is
+   the foundation; it does not have the final say.
 
-Draw the deviation on paper first (or in the brief, as a sketch in words or ASCII) when it
-is a grid or a partition. Patterns like these cannot be found by nudging boxes in code.
+Draw the deviation on paper first when it is a grid or a partition. Patterns like these
+cannot be found in code.
 
 ## The parameter sheet
 
-State every value before layout. One number should drive most of the others.
+State every value. One number should drive most of the others.
 
 | Variable          | What it sets                                         | His habit                                           |
 |-------------------|------------------------------------------------------|-----------------------------------------------------|
 | Interval          | Ratio between size steps, weight steps, grid units   | 1.5 (V6), 4:3 (V7); choose one with a reason        |
-| Base size         | `--scale0`, body text                                | rem from a percentage root; never px for type       |
+| Base size         | `--scale0`, body text                                | rem from a percentage root                          |
 | Base weight       | Weight at `--scale0`                                 | about 400 on a variable weight axis                 |
 | Pens              | The thin and the thick stroke                        | a thin pen for most type, a thick one for the name  |
 | Grid ratios       | margin : column : gutter : padding                   | small integers, e.g. 4 : 4 : 2 : 1                  |
@@ -60,7 +53,7 @@ State every value before layout. One number should drive most of the others.
 | Base hue          | The one hue all colour derives from                  | from a date, a source image, or the RYB wheel       |
 | Rotations         | Accent and neutral hues                              | triad ±120°, complement +180° for neutrals          |
 | Hue source        | What sets the base hue per page                      | the page's own date when it has one                 |
-| The deviation     | The one convention bent for this content             | one sentence, from step 3                           |
+| The deviation     | The one convention bent for this content             | from step 3                                         |
 
 ### Deriving from the interval
 
@@ -68,8 +61,7 @@ State every value before layout. One number should drive most of the others.
   `--scale0`, `--scale1`, `--scale2`. Use few steps.
 - **Weights run the other way:** `weight(step) = base weight ÷ interval^step`. Large type
   is light and small type is heavy, so every stroke on the page looks drawn with the same
-  thin pen. Keep one heavy setting as the thick pen, for the name or a single key figure.
-  This needs a variable font with a continuous weight axis; choose a low-contrast face
+  thin pen. Keep one heavy setting as the thick pen, for the name. This needs a variable font with a continuous weight axis; choose a low-contrast face
   with a little character in its joins, not a sterile geometric.
 - **Grid:** take the four grid ratios from the interval or from small integers, and
   derive widths from them. The type and the layout should speak the same language.
@@ -80,14 +72,12 @@ State every value before layout. One number should drive most of the others.
 
 ## Type
 
-- **Two voices by job.** Structural text (navigation, dates, labels, figures, headings)
-  in one sans; prose in which the business speaks to the reader may take a text serif,
-  reserved for that voice alone. One family alone is also his way (V7): then the two
-  pens make the distinction.
+- **Two voices by job.** Structural text (navigation, dates, labels, headings) in one
+  sans; prose in which the business speaks to the reader may take a text serif, reserved
+  for that voice alone. One family alone is also his way (V7).
 - **Print craft, translated.** A measure near 66 characters; paragraph indents on short
-  texts and space between paragraphs on long ones; true small caps only, never beside
-  faux ones; letterspaced capitals for a date line; text figures in prose, lining
-  tabular figures in listings.
+  texts and space between paragraphs on long ones; true small caps never beside faux
+  ones; letterspaced capitals for a date line.
 - **Fit type to its cell.** When a name must fill a cell of fixed width, use a variable
   width axis and set the width per cell, tested against the longest name.
 - Use rem throughout so a reader's larger default font scales the whole design.
@@ -101,8 +91,7 @@ State every value before layout. One number should drive most of the others.
   and a phone override. Size and position say as much as the content does: a small image
   off-centre in white space reads differently from a full-width establishing image.
 - Never centre lists or running text: each line should start in the same place.
-- Long pages need places to pause and resume: a full-bleed figure, a change of column, a
-  data piece.
+- Long pages need places to pause and resume: a full-bleed figure.
 - A homepage for an organisation may open with one sentence of purpose, its sections
   linked inline, then a section per part with the section name in a left column and its
   few items to the right.
@@ -110,13 +99,13 @@ State every value before layout. One number should drive most of the others.
 ## Deviations
 
 Each starts from a convention, names how it fails, and changes one thing. Use the one
-the content calls for; most pages need one, a long page two at most.
+the content calls for.
 
 - **A gallery of the known items**, when the data is partial and the gap is the news:
   draw the whole population at full count and fill only what is known, so the empty
   slots carry the finding. Keep it a plain list in the markup.
 - **A table of figures**, when order or proportion is the point: restyle the same table
-  as a bar chart or a dot field. The markup stays a table.
+  as a bar chart. The markup stays a table.
 - **One reading column**, when the story has two places, threads or voices: shift the
   column one way for one thread and the other way for the other, and let them meet at
   the end.
@@ -132,8 +121,6 @@ the content calls for; most pages need one, a long page two at most.
 - **A few showcase examples**, when the product is a system of parts: enumerate every
   combination and show all of them, each numbered with a code, under the rule that made
   them.
-- **Photographs of the subject**, when there are none or they would be uneven: draw it,
-  white line on black or isometric, stroke-only at the stem width.
 
 The deviation serves the information. Information can take whatever shape the reader
 needs; what it is "supposed" to look like is only the convention.
@@ -143,41 +130,30 @@ needs; what it is "supposed" to look like is only the convention.
 - Map colour onto roles, not swatches: text, inverse, background, background alt, accent
   one (metadata), accent two (links and actions, used sparingly).
 - Strong and limited: black and white with one vivid hue; or white line on black; or a
-  hue family from one base with its triad. He calls colour his weakest skill, so he keeps
-  it few and systematic.
+  hue family from one base with its triad. He calls colour his weakest skill.
 - When hues change from page to page or item to item, solve each one's lightness so
   contrast stays the same, and give the neutrals a slight tint of the complementary hue.
-- Take a palette from one collected image (a print, a poster, a painting) or the RYB
-  wheel when no date drives it.
+- Take a palette from one collected image (a painting) or the RYB wheel.
 
 ## Surface and motion
 
-- **Overprint:** flat colour shapes overlapping to make a third colour, a duotone, a
-  scribble masking a picture. Use flat SVG shapes with `mix-blend-mode: multiply` on a
-  light ground.
+- **Overprint:** a duotone, a scribble masking a picture.
 - **Generative texture behind a strict page:** a field of thin parallel lines or a moiré,
   low in contrast, behind type that stays on the grid. The texture may vary; the page may
   not.
-- **Genre costume** for a piece that is itself an event (a festival, a season, a
-  marathon): borrow one period of one genre's printed matter (a handbill, a VHS sleeve, a
-  title card) and build it in CSS and SVG, fitted to any aspect ratio. Accept the genre's
-  clichés when the piece belongs to that tradition.
+- **Genre costume** for a piece that is itself an event (a marathon): borrow one period of
+  one genre's printed matter (a VHS sleeve) and build it in CSS and SVG, fitted to any
+  aspect ratio. Accept the genre's clichés when the piece belongs to that tradition.
 - **Motion** as an animator would: count in frames, build transitions from one rule, keep
   it behind `prefers-reduced-motion: no-preference`. The base page is the thing unadorned;
-  motion is an occasional experiment, never required to read.
-- Humour is welcome in copy and small details (a bio, a caption, a footnote), in a dry,
-  self-deprecating voice.
+  motion is an occasional experiment.
+- Humour is welcome in copy (a bio), in a self-deprecating voice.
 
 ## Phones
 
 - Set column counts per breakpoint (for example 4, 8, 12) from the same four ratios, so a
   phone layout is the same system with fewer columns.
-- Give each figure a phone override: full width, or a different crop or drawing. Never
-  just a scaled copy.
-- The deviation must survive on the phone in a phone form: a population grid gets
-  smaller dots and more rows, a partition falls back to its two-column patterns, a
-  shifting column shifts by its margin rather than by columns.
-- The type system keeps its interval; drop the largest step if it no longer fits.
+- Give each figure a phone override: full width, or a different crop.
 
 ## Out of bounds
 
@@ -192,22 +168,6 @@ needs; what it is "supposed" to look like is only the convention.
   above a section heading. A section name in a left column beside its items is the
   heading itself.
 - Decoration that overwhelms the substance; interactivity added to look forward-thinking.
-- Faux small caps, faux bold, type in px.
-
-## Show your work
-
-Answer each in one line before the design is accepted:
-
-- What was the conventional version, and in one sentence, how did it fail this content?
-- What single deviation answers that sentence? Is it the only one?
-- Write the system: interval, base size and weight, grid ratios, column counts, base
-  hue and rotations. Which values were overridden by eye, and why?
-- Do large lines read lighter than small ones, and do the rules match the stem?
-- Does the hierarchy hold in black and white alone?
-- Which piece was taken away last, and did the page break without it?
-- Does the deviation survive on a phone, and in what form?
-- Could this page belong to another business in the same trade? If yes, the deviation is
-  not specific enough.
 
 ## Deeper reference
 

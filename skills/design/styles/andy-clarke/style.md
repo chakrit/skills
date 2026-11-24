@@ -11,8 +11,6 @@ own words; no material from his paid books.
   empty space, bespoke illustration instead of stock.
 - **Fits:** small businesses, personal sites, campaigns, editorial pages: anything with
   a story or an owner with a personality.
-- **Fits poorly:** dense app interfaces and dashboards, where familiar mechanics are the
-  whole job.
 
 ## The default to beat
 
@@ -53,15 +51,13 @@ Look in these five places, in one intake conversation with the owner:
 ### Pinning the concept down
 
 1. **One line.** List true things about the business, keep the single one that is
-   theirs alone and hard to argue with, and state it in one line. The line is a design
-   tool first; production copy still comes from the owner.
-2. **Three or four single words** for how the site should feel (for example bold, warm,
-   precise, cheeky). Each word must turn into concrete choices: a colour temperature, a
-   type weight, a motion speed.
+   theirs alone and hard to argue with, and state it in one line.
+2. **Three or four single words** for how the site should feel. Each word must turn into
+   concrete choices.
 3. **One test question** every later decision must pass, taken from what customers really
    buy: "Does this make them feel they are in safe hands?"
 4. **What not to show.** The concept also rules imagery out: no building photos for a firm
-   that sells trust, no stock smiles for a clinic that sells family care.
+   that sells trust.
 5. **Reassuring or energetic.** Symmetry, even columns and a shallow type hierarchy read
    as stable and calm. Asymmetry, odd column counts and a steep hierarchy read as energetic
    and opinionated. Choose on purpose for this business; a site may move between the two
@@ -78,8 +74,8 @@ Look in these five places, in one intake conversation with the owner:
   exact shapes. Never reproduce a source's artwork.
 - Look first at things the customers already know: local film and concert posters,
   market and shop signage, fair posters, packaging, comics, the shop's own printed menu.
-- The page can become an object from the customer's world: a menu card, a ticket, a
-  magazine cover, a shop sign, a label.
+- The page can become an object from the customer's world: a menu card, a magazine
+  cover, a shop sign.
 
 ## Order of work
 
@@ -91,7 +87,7 @@ Look in these five places, in one intake conversation with the owner:
    because they are everywhere.
 4. Palette with roles: one dominant, one supporting, one accent, plus a dark that is not
    pure black and a light that is not pure white. Use them in clearly unequal amounts.
-   Sample colours from the business's own things (sign, product, packaging, place).
+   Sample colours from the business's own things.
 5. Compose in greys, phone and desktop side by side, before any colour or decoration.
    Every agent design passes through this composition step before code: designing
    directly in code drifts to boxes.
@@ -122,8 +118,7 @@ straight back to the default. For every site, make and keep these as reusable fi
 - an illustration set or image treatment in one style (drawn motif, duotone photos,
   cut-outs with a consistent outline);
 - display lockups (the name, the line, key numbers);
-- the palette with roles;
-- the dressed signature controls.
+- the palette with roles.
 
 Prefer imagery that is drawn from the business's own logo, products, place or people over
 stock or generic illustration. Owner photos treated in the palette (duotone, cut-out) are
@@ -167,9 +162,6 @@ Each move replaces a default. Use one only when it serves the concept.
 | Captions beside the image, aligned to its bottom, or as a composed block; rules above and below | grey caption under the photo    |
 | Magazine anatomy: running head, standfirst, lede, pull quote, drop cap                          | hero, features, CTA slots only  |
 
-Mixed weights in a stacked lockup work line by line. A headline still carries no
-emphasis on single words inside it (see `../../references/bans.md`).
-
 ### Colour, image and motion
 
 | Move                                                                                                 | Replaces                      |
@@ -208,7 +200,7 @@ people rely on.
 ## Thai script
 
 - Thai has no capitals and few condensed widths: get display contrast from weight, scale,
-  tight leading, colour splits and width-fitting instead of condensed capitals.
+  tight leading and colour splits instead of condensed capitals.
 - Do not set Thai vertically. Vertical type is limited to Latin numerals, dates and short
   Latin words.
 - Thai has no spaces between words: text wrapped around shapes is set ragged, never
@@ -216,18 +208,6 @@ people rely on.
 - Giant numerals (prices, years, counts) work in any script.
 - Choose display faces that have enough Thai weights for the type moves the concept
   needs.
-
-## Review questions
-
-Before a design is accepted, answer each in one line:
-
-- What is the concept, and where on the page is it at full strength?
-- Could this site belong to a different business in the same trade? If yes, what is
-  generic?
-- Which default does each unusual move replace, and why does this business need it?
-- Which signature element survives on a phone, and in what form?
-- Which assets are bespoke, and are they saved for reuse?
-- Does every familiar mechanic still behave as people expect?
 
 ## Deeper reference
 

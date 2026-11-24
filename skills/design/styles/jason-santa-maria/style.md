@@ -10,45 +10,43 @@ Written in our own words.
   display voice at a scale far above it; an off-centre column with real white space; a
   calm field with one accent; every page clearly from the same house, each piece with its
   own colour or treatment.
-- **Fits:** editorial sites, magazines and journals, studios and personal sites, writers,
-  publishers, type and book businesses, series content (issues, episodes, books, drops),
-  any business whose value is in something people read.
-- **Fits poorly:** dense app interfaces and dashboards; businesses with little to say;
-  pages that must convert in three seconds. He designs for readers who stay.
+- **Fits:** editorial sites, magazines and journals, studios and personal sites, series
+  content (issues, episodes, books, drops), any business whose value is in something
+  people read.
+- **Fits poorly:** pages that must convert in three seconds. He designs for readers who
+  stay.
 
 ## How he thinks
 
 Type is the smallest unit of the design and the page is the largest; work by zooming
-between them. A choice at one scale sets the other: the column fixes the measure, the
-measure fixes the size, the size fixes the leading, and all of it fixes how the page
-breathes. Do not finish a layout and then "add typography". The typography is the layout.
+between them. A choice at one scale sets the other: the column fixes the measure. The
+typography is the layout.
 
 Judge by eye. Every number below is a starting point. When the maths and the look
 disagree, the look wins.
 
-Be good rather than original. A design that strains to be new falls into a trend; a
-design that serves the reading and fits its subject will not look like anyone else's.
+Be good rather than original. A design that strains to be new falls into a trend.
 
 ## 1. Ask what the content is
 
 Before any layout, decide what this content would be if it were a made thing: a journal
-read closely, a field guide, a broadsheet, a paperback, a programme, a specimen book, a
-label, a letter. Write the answer in the brief.
+read closely, a field guide, a broadsheet, a paperback, a specimen book, a letter. Write
+the answer in the brief.
 
 - Borrow that thing's **structure**, not its costume: issue numbers, ruled bylines, a
   masthead, running heads, drop caps, marginal quotes, a colophon. Two or three devices
-  are enough. Paper textures and fake wear are not structure.
+  are enough. Paper textures are not structure.
 - Study the subject's real material and culture. Take ornament and colour from inside
   it (an object named in the text, a colour the product really has), and drop the
   symbols everyone reaches for first in that trade.
-- Define the business in a few plain words of character (for example: reliable, curious,
-  dry). The visual direction shows those words; it does not decorate them.
+- Define the business in a few plain words of character (for example: reliable,
+  curious). The visual direction shows those words.
 
 ## 2. Words before faces
 
-Write five to ten words for how the type must feel (sturdy, machined, warm, bookish,
-gruff, delicate), group them, and keep the one or two that matter most. Look for faces
-that carry those words. Do not open a font menu and scroll.
+Write words for how the type must feel (sturdy, machined, gruff, delicate), group them,
+and keep the one or two that matter most. Look for faces that carry those words. Do not
+open a font menu and scroll.
 
 ## 3. Choose the face you live with
 
@@ -65,7 +63,7 @@ Readers spend their time in paragraphs, so choose the text face first.
   workhorse comes to mind, list the traits that make it itself and find a face that
   shares the defining ones but is less used.
 - Pick a big family: real italics, several weights, small caps, old-style and tabular
-  figures, every language the site needs. Never let the browser fake a bold or italic.
+  figures. Never let the browser fake a bold or italic.
 
 ## 4. Choose the voice for a moment
 
@@ -98,7 +96,7 @@ issue numbers, navigation, captions, colophon.
   different speaker from the story.
 - Use small letterspaced capitals for utility labels, bylines and navigation, tracked
   generously. Keep them as utility text in the frame, not as a stamp above each section
-  heading; a heading carries its own section.
+  heading.
 - Separate navigation items or byline parts with a small ornament from the content's
   printed source, such as a diamond, when the reference is bookish or letterpress.
 - Close a page or piece with a colophon naming its typefaces.
@@ -111,24 +109,21 @@ Set the paragraph before anything else on the page.
 |--------------------|--------------------------------------------------------------------|
 | Body size          | 16–18px or larger, in relative units; when unsure, bigger          |
 | Measure            | 45–75 characters                                                   |
-| Line-height        | 1.4–1.6 to start (range 1.2–1.8); longer lines get more            |
-| Paragraphs         | a 1em first-line indent with no gap, or a gap of about one line    |
+| Line-height        | 1.2–1.8; longer lines get more                                     |
+| Paragraphs         | a 1em first-line indent with no gap, or a gap                      |
 | Text colour        | a dark grey or a dark shade of the ground's hue, not pure black    |
 | Grey value         | aim for an even medium grey; light faces tighter, heavy looser     |
 | Headlines          | two to three times body; subheads between; then adjust by eye      |
 | Small text         | about 80% of body, for a change of voice, a few lines at most      |
-| Captions           | about 12–13px, may switch serif to sans to mark another speaker    |
+| Captions           | about 12px, may switch serif to sans to mark another speaker       |
 | Margin round text  | at least 1.5–2em                                                   |
 | Scale              | hand-picked: small steps at text sizes, large jumps at display     |
 
 - Do not use a baseline grid. Get rhythm from size and spacing.
-- Do not run text justified and hyphenated unless you have checked it for rivers.
 - Use real quotes and apostrophes, primes for measurements, old-style figures in
-  running text, tabular figures in tables, true small caps for acronyms.
+  running text, tabular figures in tables, true small caps.
 - Treat very large type like a photograph: few words, line breaks tuned for each width,
   awkward letter pairs kerned by hand, quotes hung.
-- Check contrast against the text colour you chose; dark grey on a tinted ground must
-  still pass WCAG AA.
 
 ## 6. Zoom out: hierarchy and grid
 
@@ -150,10 +145,9 @@ sizes and placement. Add colour and imagery only once the hierarchy works in gre
   a wider "supercolumn"; keep the rest on the grid. Details that drift off the grid are
   what make a design come apart.
 - **Stack the page as bands**, each with its own internal columns where the content needs
-  them, leading to one message. Bands differ in width, density and alignment; they do not
-  repeat one padding and one alignment down the page.
-- **For long pages, repeat a few devices like a chorus:** a drop cap, a hanging pull
-  quote in the accent, a full-width image, each recurring at the same size and colour.
+  them.
+- **For long pages, repeat a few devices like a chorus:** a drop cap, a full-width image,
+  each recurring at the same size and colour.
 - **Fill the page all the way down.** A reading page should feel like something meant to
   be read, not supporting copy adrift under a big header. Do not design around the fold.
 - The story's first sentence may serve as the display line, with the title set small
@@ -172,17 +166,14 @@ Every site is a frame and the pieces inside it.
 3. **Re-tint the frame, never remove it.** On a varied piece the logo, navigation and
    rules take the piece's colours but stay in place.
 4. **Keep a plain default.** Most pages use the house design unchanged. Art-direct only
-   the piece that earns it (a feature, a launch, a quote, a photo story), and let the
-   piece's own content decide the treatment: its subject's period, material, objects and
-   colours. Variety for its own sake reads as noise.
+   the piece that earns it (a feature, a quote, a photo story), and let the piece's own
+   content decide the treatment: its subject's period, material, objects and colours.
+   Variety for its own sake reads as noise.
 5. **Give a series a small kit** that never changes (a byline treatment, a closing note),
    and vary everything else issue to issue.
 6. **Bound any randomness.** If the variable changes per visit (an accent pair, an image
    from an archive), set a floor so it can never break reading: a contrast check, a
    curated pool.
-
-When the page you are designing is a single page, still name the frame and the variable:
-it tells the reader what is the house and what is this piece.
 
 ## 8. Colour
 
@@ -200,8 +191,7 @@ it tells the reader what is the house and what is this piece.
   same.
 - His recurring taste is warm: a cream or warm off-white ground, browns or a dark warm
   grey for text, a book serif, and one confident accent such as rust, burnt orange or
-  signal red. Use it when the content is bookish or crafted; choose the exact tones from
-  the business's own artefact so they belong to it.
+  signal red.
 - For a series, change the accent per issue or piece and keep the warm base fixed.
 - When the subject is play, let the palette go right up to the edge of clashing.
 - Refuse safe corporate blue. A brand afraid of saying the wrong thing says nothing.
@@ -218,27 +208,22 @@ it tells the reader what is the house and what is this piece.
   colours of things in the copy become link or accent colours.
 - Use a material reference (paper, print, wear) only when the content is about that
   material. Never as an interface style.
-- Use motion only where the subject itself plays (a type specimen, a toy, a game), and
-  tie it to the subject, for example a variable font's own axes on hover. Respect
-  reduced motion.
+- Use motion only where the subject itself plays (a type specimen), and tie it to the
+  subject, for example a variable font's own axes on hover.
 
 ## 10. Phones
 
 The research is thinnest here; these follow from his type rules.
 
 - Keep body text large. As lines shorten, bring line-height down toward 1.3 and the size
-  down only slightly.
-- Size the display line against the viewport (`clamp()`), so the scale contrast
-  survives; hand-tune its breaks at phone width.
-- The frame survives intact and recognisable. The variable (the accent, the lead image,
-  the display face) survives too; secondary ornaments may go.
-- The off-centre column may become a full-width column with generous side margins; keep
-  at least 1.5em each side.
+  down.
+- Size the display line against the viewport (`clamp()`); hand-tune its breaks at phone
+  width.
 
 ## What to refuse
 
-- One neutral grotesque or the system stack as the whole type system; a fashionable
-  face picked first with the page built round it.
+- One neutral grotesque as the whole type system; a fashionable face picked first with
+  the page built round it.
 - Ready-made novelty fonts; faux bold and italic; straight quotes; small body text.
 - Two faces too alike to tell apart; more faces than the content needs.
 - Pages that peter out into empty space; templates where the content is a bit player.
@@ -248,29 +233,9 @@ The research is thinnest here; these follow from his type rules.
 - Any emphasis on a word inside a headline: no single word in another colour, weight,
   case or face, no object or picture hung between its words. Give the whole line one
   treatment.
-- Copy built as a setup with a short emphasised payoff. Say the thing plainly.
 - Navigation written as a big display sentence with highlighted words. If a site's
   sections really are parts of one sentence, set that sentence at lead or body size and
   mark its links as ordinary links.
-
-## Judge it
-
-Look at the rendered page, not the code, and answer each in one line:
-
-- Is the text a pleasure to read at desktop and phone width: size, measure, leading,
-  grey value? Would you want to read it?
-- What is the content as an object, and which two or three of that object's devices
-  does the page use?
-- Name the text face and the display face, and the reason for each. Do they differ
-  clearly?
-- Where is the one focal point, and what two contrasts make it?
-- What is the frame and what is the variable? Would the next piece in the series be
-  recognisably the same house?
-- Is there one accent, used scarcely, and where did the palette come from?
-- Do the details hold: real quotes, true italics, figures, kerning in the display line?
-- Squint at the page: is the white space doing a job, and does the page feel full to the
-  bottom?
-- Could this belong to another business in the same trade? If yes, what is generic?
 
 ## Deeper reference
 
