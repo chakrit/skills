@@ -159,8 +159,9 @@ depart.
   `1fr 1.5fr 1fr` pulled to the window edges by negative inline margins (observed, work
   P14).
 - **Phone:** one column with 18 px margins on his own site, P12, P13 and P14, 27 px on P9
-  and P10 (observed, work). In the CSS of his site, Lockrose, Mountain Duck and Codeboxx the
-  eight-track template applies only from 64em up (observed, work move 1, "In the CSS").
+  and P10 (observed, work). In the CSS of his site, Lockrose, Mountain Duck and Codeboxx
+  the eight-track template applies only from 64em up (observed, work move 1, "In the
+  CSS").
   He says he keeps the compound grid on small screens with fewer columns (stated, 2022,
   words-2 [Z4]).
 

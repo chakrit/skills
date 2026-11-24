@@ -80,10 +80,10 @@ financial business does not need conservative type to be credible.
   short lines (four or five lines for a short headline), with `text-wrap: balance`.
   Black and light weights, negative tracking and tight leading make a headline block
   that "demands attention" without a fancy font.
-- Draw title lettering and the logotype as artwork: a script line over heavy condensed
-  capitals, jostled hand-cut letters, an outlined condensed lockup, or a tall condensed
-  logotype with a coloured box behind its middle line. When a display face appears once
-  on a page, outline it as SVG and keep the text available to assistive technology.
+- Draw the logotype as artwork: a script line over heavy condensed capitals, jostled
+  hand-cut letters, an outlined condensed lockup, or a tall condensed logotype with a
+  coloured box behind its middle line. When a display face appears once on a page,
+  outline it as SVG and keep the text available to assistive technology.
 
 ## 5. Build a limited palette around one accent
 
@@ -150,8 +150,7 @@ Set the measure first and let layout follow it: start at `--measure: 60ch` and a
 eye, `55ch` for captions and short blocks, `80ch` for introductions, headings and hero
 sections, e.g. `grid-template-columns: minmax(0, var(--measure)) 1fr`. Take breakpoints
 from the measure with container queries: when a column gets narrower than a readable
-line, the layout changes. Clarke's own pages run body text at 73 to 85 characters
-per line in the 807 px column.
+line, the layout changes.
 
 ## 7. Let small parts of the scene move, slowly
 

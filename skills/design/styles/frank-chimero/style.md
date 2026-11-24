@@ -1,10 +1,10 @@
 # Frank Chimero
 
 Work the way he does: settle why the page exists, then its limits, then the phone stack,
-and only then the wide screen. The page is plain material handled closely: one text
-size, a typewriter voice, a still half and a scrolling half, a lot of empty field, one
-hand-made image at a time, one hue and one accent. Detail, sources and the pages each
-number comes from are in `synthesis.md` and `notes/`.
+and only then the wide screen. The page is plain material handled closely: titles at the
+text size, a typewriter voice, a still half and a scrolling half, a lot of empty field,
+one hand-made image at a time, one hue and at most one accent. Detail, sources and the
+pages each number comes from are in `synthesis.md` and `notes/`.
 
 ## 1. Before any layout
 
@@ -45,11 +45,11 @@ On the phone:
 720 px. The left half carries the name and navigation, or one small image on an
 otherwise empty field, and stays fixed at full viewport height (sticky or fixed). The
 right half holds the content and scrolls in its own box (`overflow-y: scroll`, height
-100dvh), padded calc(3vw + 1rem), with a text column of at most 36rem (504 px) centred
-in it. On a page that has nothing to read, such as a home page, leave the right half
-empty. He built a side column for navigation because his site had many pages and he
-did not want navigation hidden, knowing it looks "very, very reminiscent of 90's
-frames".
+100dvh), padded calc(3vw + 1rem), with a text column of at most 504 px (36rem at his
+14 px root size) centred in it. On a page that has nothing to read, such as a home page,
+leave the right half empty. He built a side column for navigation because his site had
+many pages and he did not want navigation hidden, knowing it looks "very, very
+reminiscent of 90's frames".
 
 **Leave a large field empty, and measure it.** Half the screen (720×891 on a home page);
 or 40–45% of the first screen between the header and the first item; or the top
@@ -65,12 +65,12 @@ the screen for you to tap on."
 
 ## 4. Type
 
-**Set every word at one size.** Make hierarchy with weight and colour only: a title is
+**Set titles at the text size.** Make hierarchy with weight and colour only: a title is
 the body size, set bold or in the accent; a secondary line is the body size in a dimmer
 tint of the text colour. For the book he gave the reason: with all the type the same
 size, the text "retains its hierarchy, regardless of the user's settings."
 
-- Typewriter setting: monospace (Courier) 13 px / 19.5 px for navigation and short text,
+- Typewriter setting: a monospace at 13 px / 19.5 px for navigation and short text,
   14 px / 21 px for reading; reading column 504 px, about 57–60 characters a line, left
   aligned, ragged right. The title of a piece: 14 px bold, centred, its date under it in
   the dim tint, with about 84 px of space above and below the pair.
@@ -90,7 +90,7 @@ proportional-nums`), tabular for a column of years, and kerning.
 
 ## 5. Colour
 
-Build the palette from one hue family for both the field and the text, plus a single
+Build the palette from one hue family for both the field and the text, plus at most one
 accent used only for links, hover or one element. Pick a new ground for each project.
 His palettes have this shape:
 
