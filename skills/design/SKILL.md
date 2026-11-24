@@ -72,6 +72,8 @@ small change.
    - **No:** rework the design as a whole toward what the reviewer named, then
      critique again with a new reviewer.
    - **Yes:** the critique is done.
+   Render and critique again whenever the design changed after its screenshots were
+   taken, including after a yes.
    When no screenshot can be taken, the reviewer judges the source, and tell the user
    the design was not checked visually.
 
@@ -86,6 +88,6 @@ A design is done when:
 
 - `design-brief.md` exists with the seed string and its reading, the style facts and
   the style's decisions;
-- the last critique's verdict was yes;
+- the last critique's verdict was yes, on the design as it now stands;
 - the user has the brief's path and the design's location, and knows whether the
   critique was visual or source-only.

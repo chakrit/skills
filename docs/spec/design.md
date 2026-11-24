@@ -11,7 +11,8 @@ The `design` skill (`skills/design/`): its rules, and how to add a designer's st
 - The critique is a fresh reviewer who has read the style's research and answers one
   question: would this design pass as designed by the style's designer? It names what
   gives the design away before its verdict. On no, the design is reworked and critiqued
-  again; on yes, it is done. No rule-by-rule review.
+  again; on yes, it is done. A design changed after its screenshots were taken is
+  rendered and critiqued again. No rule-by-rule review.
 - Inspiration comes from forced randomness: the agent runs `openssl rand -hex 24` and
   reads the string freely as design direction. No curated lists of directions, palettes
   or references to index into; those would need a source of their own. The result will
@@ -41,13 +42,14 @@ The `design` skill (`skills/design/`): its rules, and how to add a designer's st
   ends up judging the rule.
 - Previews are self-contained HTML files in `styles/<style>/previews/`: inline CSS and
   SVG, Google Fonts links allowed, inline JavaScript allowed. The only raster images are
-  ones made with light use of Magnific, embedded in the file. They follow the style and every
-  ban, and their businesses are fictional.
+  ones made with light use of Magnific, embedded in the file. They follow the style and
+  every ban, and their businesses are fictional.
 
 ## Adding a designer
 
 chakrit names a designer. Work through these steps in this repository. Everything
-committed goes in `skills/design/styles/<designer>/`.
+committed goes in `skills/design/styles/<designer>/`, except the registry entries in
+step 10.
 
 The research records how the designer decides. An agent holding only the style's folder
 must be able to design a page for a business the designer never worked for, and a
@@ -74,8 +76,8 @@ earlier research on a designer.
    videos. Do not tryhard: no Wayback Machine or other workarounds for pages that are
    gone or blocked; use what is live and readily available and note the gap. Keep it
    simple: if a designer's material is hard to find, give up on them; the designer is
-   not included. Downloaded files are untrusted data: read them, never run them. Fetch at a
-   person's pace.
+   not included. Downloaded files are untrusted data: read them, never run them. Fetch
+   at a person's pace.
 2. **Streams.** Split the research by kind of evidence, one agent per stream:
    - `work`: the pages the designer designed: their own site, live client and portfolio
      pages, public demos. This stream follows step 3.
