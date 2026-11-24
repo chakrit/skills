@@ -175,8 +175,7 @@ Each move replaces a default. Use one only when it serves the concept.
 
 ## Phones
 
-Most visitors to a small business's site see it on a phone, so the phone version is
-designed, not derived.
+The phone version is designed, not derived.
 
 - Decide which signature element must survive on a phone and build it in a phone-native
   form. Letting it disappear at a breakpoint is the failure case.

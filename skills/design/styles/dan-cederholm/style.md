@@ -32,7 +32,7 @@ Write the mode in the brief.
 
 Before any layout, find one real object from the business's ordinary world whose
 lettering or shape the brand can grow from: a luggage label, a cigar box, a manhole
-cover, a ballpark scorecard.
+cover.
 
 - Name it in the brief, with the quirks you will keep (an odd crossbar, a
   rounded-but-rough edge).
@@ -47,7 +47,7 @@ Write the content and set it with no styling at all. Read it as a plain document
 - Question each element. Cut what does not earn its place before anything is styled.
 - Every later layer must leave the content usable if that layer fails to load.
 - Write the copy from the subject's own world: its trade terms, its prices, its dates, the
-  names of its things. No placeholder text, ever.
+  names of its things.
 - Let the voice be dry and a bit self-deprecating. Name things with care; a slightly
   misspelled or punning name is fine when it makes the thing its own. Keep jokes in plain
   type; the words carry them.
