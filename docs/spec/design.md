@@ -95,9 +95,10 @@ earlier research on a designer.
    different projects and of different kinds (a home page, an article, a case study, a
    shop). List two more to set aside, client work where there is any: screenshot those
    two and do nothing else with them; step 8 uses them. Open each page in a browser at
-   desktop width and at phone width, screenshot it, and look at it. Keep screenshots and
-   raw page text in a temporary directory outside the repository; they are not
-   committed.
+   desktop width and at phone width, screenshot the whole page from top to bottom at
+   both widths, and look at it. The two set aside are screenshotted the same way. Keep
+   screenshots and raw page text in a temporary directory outside the repository; they
+   are not committed.
 
    For each page studied, write what is there, with numbers taken from the rendered
    page. Read the CSS to get a number for something you saw, never in place of looking.
@@ -169,8 +170,8 @@ earlier research on a designer.
    the pages are real. A no means the research claims more than the work shows: go back
    to the pages for what the reviewer named, correct the notes, the synthesis and
    `style.md` from what is there, and ask a new reviewer.
-9. **Previews.** Build five previews by running the skill's own process with this
-   style: three in English, one in Thai, one in Japanese, each for a different
+9. **Previews.** Build four previews by running the skill's own process with this
+   style: two in English, one in Thai, one in Japanese, each for a different
    fictional business that suits it. Run at most three preview agents at a time. A
    preview's critique reworks the preview; it does not change `style.md`.
 10. **Register.** Add the style's row to `styles/README.md` and its section to
