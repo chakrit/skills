@@ -30,7 +30,9 @@ The `design` skill (`skills/design/`): its rules, and how to add a designer's st
 - The registry is `styles/README.md`, one row per style with its previews.
 - `styles/index.html` shows every style's previews on one page, so the user (or an
   agent) can open one file in a browser for a quick view. The skill asks the user to
-  preview the styles there.
+  preview the styles there. Each preview appears as a static screenshot,
+  `styles/<style>/previews/<page>.webp` (the top of the page at 1280 px wide, 704×416),
+  linking to the live page; live frames made the index too slow.
 - Start each preview with one agent running the skill once. Brief it the way a user
   would ask: the style, the language, a fictional business, the file path, plus the
   environment's limits. Add nothing else: no fonts, copy rules, review rules or
@@ -82,6 +84,6 @@ chakrit names a designer. Work through these steps in this repository.
    style: three in English, one in Thai, one in Japanese, each for a different
    fictional business that suits it. Run at most three preview agents at a time.
 8. **Register.** Add the style's row to `styles/README.md` and its section to
-   `styles/index.html`.
+   `styles/index.html`, with a screenshot of each preview.
 
 All of it goes in `skills/design/styles/<designer>/`.
