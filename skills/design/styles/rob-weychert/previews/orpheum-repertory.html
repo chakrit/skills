@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Orpheum Repertory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@100..900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --hue: 306;
+  --ghue: calc(var(--hue) + 180);
+  --accent: oklch(0.65 0.18 var(--hue));
+  --g0: oklch(0.985 0.008 var(--ghue));
+  --g1: oklch(0.95 0.008 var(--ghue));
+  --g2: oklch(0.86 0.008 var(--ghue));
+  --g3: oklch(0.56 0.008 var(--ghue));
+  --g4: oklch(0.40 0.008 var(--ghue));
+  --g5: oklch(0.18 0.008 var(--ghue));
+  --hair: 0.0625rem;
+  /* 4:3 scale from 22px */
+  --s-1: 1.03125rem;  /* 16.5 */
+  --s0: 1.375rem;     /* 22 */
+  --s1: 1.8333rem;    /* 29.3 */
+  --s2: 2.4444rem;    /* 39.1 */
+  --s3: 3.2593rem;    /* 52.1 */
+  --s4: 4.3457rem;    /* 69.5 */
+  --gut: 44px;
+  --mar: 110px;
+}
+* { box-sizing: border-box; }
+html { background: var(--g0); color: var(--g5); }
+body {
+  margin: 0;
+  font-family: "Hanken Grotesk", sans-serif;
+  font-size: var(--s0);
+  font-weight: 400;
+  line-height: 1.45;
+  font-optical-sizing: auto;
+}
+#moire { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+a { color: inherit; text-decoration: underline; text-decoration-color: var(--accent);
+    text-decoration-thickness: var(--hair); text-underline-offset: 0.18em; }
+@media (prefers-reduced-motion: no-preference) {
+  a { transition: color 0.2s; }
+}
+a:hover { color: var(--accent); }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gut);
+  max-width: calc(1220px + 2 * var(--mar));
+  padding: 0 var(--mar);
+  margin: 0 auto;
+}
+
+/* header */
+.masthead { padding-top: 28px; }
+.masthead .name { grid-column: 1 / 7; font-size: var(--s0); font-weight: 700; letter-spacing: 0.01em; }
+.masthead .name a { text-decoration: none; }
+.masthead nav { grid-column: 7 / 13; display: flex; gap: 1.6em; justify-content: flex-end;
+  font-size: var(--s-1); font-weight: 533; padding-top: 0.25em; }
+.masthead nav a { text-decoration: none; color: var(--g4); }
+.masthead nav a:hover, .masthead nav a[aria-current] { color: var(--g5); }
+.masthead nav a[aria-current] { text-decoration: underline; text-decoration-color: var(--accent); }
+.masthead .rule { grid-column: 1 / 13; border: 0; border-top: 6px solid var(--g5); margin: 22px 0 0; }
+
+/* title block */
+.title { padding-top: 66px; }
+.title h1 { grid-column: 1 / 10; margin: 0; font-size: var(--s4); font-weight: 700; line-height: 0.9;
+  letter-spacing: -0.012em; }
+.title .intro { grid-column: 1 / 9; margin: 0.7em 0 0; font-size: var(--s2); font-weight: 225;
+  line-height: 1.2; color: var(--g5); }
+
+/* main + sidebar */
+.page { padding-top: 66px; align-items: start; }
+main { grid-column: 1 / 9; }
+aside { grid-column: 9 / 13; position: sticky; top: 22px; max-height: calc(100vh - 44px);
+  overflow-y: auto; }
+
+main p { margin: 0; max-width: 36em; }
+main p + p { text-indent: 2em; }
+.runin { letter-spacing: 0.13em; text-transform: uppercase; font-size: 0.82em; font-weight: 533; }
+
+figure.marquee { float: right; width: 34%; margin: 0.35em 0 0.6em var(--gut); }
+figure.marquee svg { display: block; width: 100%; height: auto; }
+figcaption { font-size: var(--s-1); font-weight: 533; color: var(--g4); line-height: 1.35;
+  margin-top: 10px; }
+
+h2 { font-size: var(--s1); font-weight: 300; line-height: 1.15; margin: 0; }
+section { margin-top: 88px; clear: both; }
+section > h2 { padding-bottom: 14px; border-bottom: 3px solid var(--g5); }
+
+/* program */
+.program { list-style: none; margin: 0; padding: 0; }
+.night { display: grid; grid-template-columns: 5.5rem 1fr 1fr; column-gap: var(--gut);
+  border-bottom: var(--hair) solid var(--accent); padding: 18px 0 20px; }
+.night .day { font-size: var(--s-1); font-weight: 533; line-height: 1.3; }
+.night .day b { display: block; font-size: var(--s1); font-weight: 300; line-height: 1; margin-top: 2px; }
+.film .time { font-size: var(--s-1); font-weight: 533; color: var(--g4);
+  font-variant-numeric: tabular-nums; }
+.film h3 { font-size: var(--s0); font-weight: 600; margin: 0; line-height: 1.2; }
+.film h3 a { text-decoration: none; }
+.film h3 a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+.film .credit { font-size: var(--s-1); font-weight: 400; color: var(--g4); line-height: 1.4; }
+.film .fmt { font-weight: 533; color: var(--g5); }
+.night.dark .films { grid-column: 2 / 4; color: var(--g3); font-size: var(--s-1); font-weight: 400;
+  align-self: center; }
+.night.dark .day { color: var(--g3); }
+.night.dark { padding: 14px 0; }
+
+/* book lists */
+ol.hang, ul.hang { margin: 0.4em 0 0; padding: 0; list-style: none; max-width: 36em; }
+.hang li { position: relative; }
+.hang li::before { position: absolute; right: calc(100% + 0.6em); color: var(--accent); }
+ul.hang li::before { content: "•"; }
+ol.hang { counter-reset: n; }
+ol.hang li { counter-increment: n; }
+ol.hang li::before { content: counter(n); font-weight: 533; font-variant-numeric: tabular-nums; }
+
+/* chips + segmented control */
+.meta { margin-top: 44px; display: flex; flex-wrap: wrap; gap: 10px; }
+.chip { display: inline-flex; align-items: center; gap: 7px; font-size: var(--s-1); font-weight: 533;
+  line-height: 1; padding: 7px 12px 8px; border: var(--hair) solid var(--accent); border-radius: 999px;
+  color: var(--g4); text-decoration: none; }
+.chip svg { width: 14px; height: 14px; stroke: var(--accent); fill: none; stroke-width: 1.4; }
+.seg { margin-top: 22px; display: inline-flex; border: var(--hair) solid var(--accent); border-radius: 4px;
+  font-size: var(--s-1); font-weight: 533; }
+.seg a { text-decoration: none; padding: 9px 18px 10px; color: var(--g4); }
+.seg a + a { border-left: var(--hair) solid var(--accent); }
+.seg a:hover { color: var(--accent); }
+
+/* sidebar */
+.side-head { background: var(--accent); color: var(--g0); padding: 12px 16px 13px; border-radius: 4px 4px 0 0; }
+.side-head h2 { font-size: var(--s-1); font-weight: 533; line-height: 1.3; }
+.side-body { padding: 0; }
+.side-body .tonight { padding: 16px 0 18px; border-bottom: var(--hair) solid var(--accent); }
+.side-body .tonight p { margin: 0; font-size: var(--s-1); line-height: 1.4; color: var(--g4); }
+.side-body .tonight .pair { font-size: var(--s0); color: var(--g5); line-height: 1.25; margin: 4px 0 6px; }
+.side-body .tonight .pair span { display: block; }
+dl.facts { margin: 0; font-size: var(--s-1); line-height: 1.4; }
+dl.facts div { display: grid; grid-template-columns: 6.2em 1fr; gap: 12px;
+  padding: 11px 0 12px; border-bottom: var(--hair) solid var(--accent); }
+dl.facts dt { font-weight: 533; }
+dl.facts dd { margin: 0; color: var(--g4); }
+.side-close, .side-toggle { display: none; }
+
+/* footer */
+footer.grid { margin-top: 132px; padding-bottom: 44px; }
+footer .top { grid-column: 1 / 13; border-top: 6px solid var(--g5); }
+footer .row { grid-column: 1 / 13; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gut); padding: 14px 0 15px; border-bottom: var(--hair) solid var(--accent);
+  font-size: var(--s-1); font-weight: 533; }
+footer .row .k { grid-column: 1 / 4; }
+footer .row .v { grid-column: 4 / 13; font-weight: 400; color: var(--g4); }
+
+/* phone */
+@media (max-width: 760px) {
+  :root { --gut: 18px; --mar: 16px; }
+  body { font-size: 1.125rem; line-height: 1.45; }
+  .grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .masthead .name { grid-column: 1 / 7; }
+  .masthead nav { grid-column: 1 / 7; justify-content: flex-start; gap: 1.1em; padding-top: 6px; }
+  .masthead .rule { grid-column: 1 / 7; margin-top: 14px; }
+  .title { padding-top: 36px; }
+  .title h1 { grid-column: 1 / 7; font-size: 2.6875rem; }
+  .title .intro { grid-column: 1 / 7; font-size: 1.5rem; font-weight: 250; }
+  .page { padding-top: 40px; }
+  main { grid-column: 1 / 7; }
+  figure.marquee { float: none; width: 100%; margin: 0 0 22px; }
+  section { margin-top: 56px; }
+  h2 { font-size: 1.5rem; }
+  .night { grid-template-columns: 1fr 1fr; row-gap: 12px; column-gap: 18px; }
+  .night .day { grid-column: 1 / 3; }
+  .night .day b { display: inline; font-size: inherit; font-weight: 533; margin: 0; }
+  .night.dark .films { grid-column: 1 / 3; }
+  .film h3 { font-size: 1.125rem; }
+  ol.hang, ul.hang { padding-left: 0.9em; }
+  aside { position: fixed; inset: auto 12px 76px 12px; top: auto; max-height: 70vh; background: var(--g0);
+    border: var(--hair) solid var(--accent); border-radius: 4px; z-index: 5; display: none;
+    box-shadow: 0 0 0 100vmax oklch(0.18 0.008 var(--ghue) / 0.25); }
+  aside.open { display: block; }
+  .side-body { padding: 0 14px 6px; }
+  .side-head { position: sticky; top: 0; display: flex; justify-content: space-between; align-items: center; }
+  .side-close { display: block; background: none; border: 0; color: var(--g0); font: inherit;
+    font-size: var(--s-1); font-weight: 533; cursor: pointer; padding: 0; }
+  .side-toggle { display: inline-flex; align-items: center; gap: 8px; position: fixed; left: 16px; bottom: 16px;
+    z-index: 6; background: var(--accent); color: var(--g0); border: 0; border-radius: 999px;
+    font: inherit; font-size: var(--s-1); font-weight: 533; padding: 11px 18px 12px; cursor: pointer; }
+  footer.grid { margin-top: 80px; padding-bottom: 90px; }
+  footer .top, footer .row { grid-column: 1 / 7; }
+  footer .row { grid-template-columns: 1fr; row-gap: 2px; }
+  footer .row .k, footer .row .v { grid-column: 1; }
+}
+</style>
+</head>
+<body>
+<svg id="moire" aria-hidden="true"></svg>
+
+<header class="masthead grid">
+  <div class="name"><a href="#">The Orpheum Repertory</a></div>
+  <nav aria-label="Main">
+    <a href="#program" aria-current="page">Program</a>
+    <a href="#season">Season</a>
+    <a href="#members">Members</a>
+    <a href="#visit">Visit</a>
+  </nav>
+  <hr class="rule">
+</header>
+
+<div class="title grid">
+  <h1>Two films a night, on film</h1>
+  <p class="intro">One ticket buys the double bill. Nearly every print is 35&#8239;mm, run from the booth upstairs by Ines and Walt.</p>
+</div>
+
+<div class="page grid">
+<main>
+  <figure class="marquee">
+    <svg viewBox="0 0 240 300" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">
+      <path d="M20 296V118h200v178"/>
+      <path d="M8 118h224l-14-38H22z"/>
+      <path d="M22 80l26-44h144l26 44"/>
+      <path d="M86 36V14h68v22"/>
+      <text x="120" y="31" text-anchor="middle" font-family="Hanken Grotesk, sans-serif" font-size="11" font-weight="600" letter-spacing="2" fill="currentColor" stroke="none">ORPHEUM</text>
+      <path d="M30 88h180M34 98h172M38 108h164" stroke="var(--accent)" stroke-width="1"/>
+      <text x="120" y="96" text-anchor="middle" font-family="Hanken Grotesk, sans-serif" font-size="7.5" font-weight="500" letter-spacing="1.2" fill="currentColor" stroke="none">THE APARTMENT</text>
+      <text x="120" y="106" text-anchor="middle" font-family="Hanken Grotesk, sans-serif" font-size="7.5" font-weight="500" letter-spacing="1.2" fill="currentColor" stroke="none">REAR WINDOW</text>
+      <path d="M44 296V176h56v120M140 296V176h56v120"/>
+      <path d="M72 176v120M168 176v120"/>
+      <path d="M36 150h168"/>
+      <path d="M100 138h40v22h-40z"/>
+      <path d="M0 296h240"/>
+    </svg>
+    <figcaption>The Calder Street front, drawn from the 1931 permit plans.</figcaption>
+  </figure>
+
+  <p><span class="runin">The Orpheum opened</span> on Calder Street in 1927 as a vaudeville house with a screen, and it has shown films in the same 412-seat room ever since. We program by the week. Each night pairs two pictures that have something to say to each other, and you can stay for both on one ticket or leave at the interval.</p>
+  <p>We still run 35&#8239;mm on two Century projectors with a changeover, and keep a 70&#8239;mm head for the few prints that ask for it. When a film exists only as a digital restoration we say so in the listing. Seats are unreserved; the doors open forty minutes before the first show.</p>
+
+  <section id="program">
+    <h2>The week of 24 November</h2>
+    <ol class="program">
+      <li class="night">
+        <div class="day">Tue <b>24</b></div>
+        <div class="film"><div class="time">7.00</div><h3><a href="#">The Apartment</a></h3><div class="credit">Billy Wilder, 1960 · <span class="fmt">35&#8239;mm</span> · 125 min</div></div>
+        <div class="film"><div class="time">9.20</div><h3><a href="#">Rear Window</a></h3><div class="credit">Alfred Hitchcock, 1954 · <span class="fmt">35&#8239;mm</span> · 112 min</div></div>
+      </li>
+      <li class="night">
+        <div class="day">Wed <b>25</b></div>
+        <div class="film"><div class="time">6.45</div><h3><a href="#">Playtime</a></h3><div class="credit">Jacques Tati, 1967 · <span class="fmt">70&#8239;mm</span> · 124 min</div></div>
+        <div class="film"><div class="time">9.10</div><h3><a href="#">The Shop Around the Corner</a></h3><div class="credit">Ernst Lubitsch, 1940 · <span class="fmt">35&#8239;mm</span> · 99 min</div></div>
+      </li>
+      <li class="night">
+        <div class="day">Thu <b>26</b></div>
+        <div class="film"><div class="time">7.00</div><h3><a href="#">Rope</a></h3><div class="credit">Alfred Hitchcock, 1948 · <span class="fmt">35&#8239;mm</span> · 80 min</div></div>
+        <div class="film"><div class="time">8.40</div><h3><a href="#">The Exterminating Angel</a></h3><div class="credit">Luis Buñuel, 1962 · <span class="fmt">35&#8239;mm</span> · 95 min</div></div>
+      </li>
+      <li class="night">
+        <div class="day">Fri <b>27</b></div>
+        <div class="film"><div class="time">7.15</div><h3><a href="#">Chungking Express</a></h3><div class="credit">Wong Kar-wai, 1994 · <span class="fmt">35&#8239;mm</span> · 102 min</div></div>
+        <div class="film"><div class="time">9.15</div><h3><a href="#">In the Mood for Love</a></h3><div class="credit">Wong Kar-wai, 2000 · <span class="fmt">DCP restoration</span> · 98 min</div></div>
+      </li>
+      <li class="night">
+        <div class="day">Sat <b>28</b></div>
+        <div class="film"><div class="time">7.00</div><h3><a href="#">Repulsion</a></h3><div class="credit">Roman Polanski, 1965 · <span class="fmt">35&#8239;mm</span> · 105 min</div></div>
+        <div class="film"><div class="time">9.10</div><h3><a href="#">The Shining</a></h3><div class="credit">Stanley Kubrick, 1980 · <span class="fmt">70&#8239;mm</span> · 146 min</div></div>
+      </li>
+      <li class="night">
+        <div class="day">Sun <b>29</b></div>
+        <div class="film"><div class="time">2.00</div><h3><a href="#">Late Spring</a></h3><div class="credit">Yasujirō Ozu, 1949 · <span class="fmt">35&#8239;mm</span> · 108 min</div></div>
+        <div class="film"><div class="time">4.15</div><h3><a href="#">Tokyo Story</a></h3><div class="credit">Yasujirō Ozu, 1953 · <span class="fmt">35&#8239;mm</span> · 136 min</div></div>
+      </li>
+      <li class="night dark">
+        <div class="day">Mon <b>30</b></div>
+        <div class="films">Dark. Ines and Walt clean the gates and splice next week's prints.</div>
+      </li>
+    </ol>
+  </section>
+
+  <section id="season">
+    <h2>This season: Rooms</h2>
+    <p style="margin-top:18px"><span class="runin">Through 20 December</span> every double bill is set mostly inside four walls: an office floor after hours, a courtyard seen from one window, a dinner party nobody can leave, a hotel shut for the winter. Lena Okafor, who books the Orpheum, chose the pairs after watching <a href="#">Rope</a> and <a href="#">The Exterminating Angel</a> back to back and finding that the second picks up almost where the first stops.</p>
+    <p>Three evenings in the season come with someone at the microphone before the first film:</p>
+    <ul class="hang">
+      <li>2 December, the set designer Hal Breuer on building the <a href="#">Playtime</a> office maze at full scale.</li>
+      <li>9 December, a reading of Cornell Woolrich's story <a href="#">It Had to Be Murder</a> before Rear Window.</li>
+      <li>16 December, Ines on why The Shining print weighs 41 kilos and how she threads it.</li>
+    </ul>
+  </section>
+
+  <section id="members">
+    <h2>Members</h2>
+    <p style="margin-top:18px"><span class="runin">Membership is $90</span> a year. It gets you $6 double bills instead of $12, a guest on Tuesdays, and the printed calendar by post on the first of each month. Members also vote, twice a year, on one double bill of their own choosing; the autumn vote put Repulsion and The Shining together.</p>
+    <ul class="hang">
+      <li><a href="#">Join at the box office</a> or online; the card is posted within a week.</li>
+      <li>Students and anyone over 65 pay $8 a night without a membership.</li>
+    </ul>
+  </section>
+
+  <div class="meta">
+    <a class="chip" href="#"><svg viewBox="0 0 14 14"><rect x="1.5" y="2.5" width="11" height="10" rx="1"/><path d="M1.5 5.5h11M4.5 1v3M9.5 1v3"/></svg>24–30 November</a>
+    <a class="chip" href="#"><svg viewBox="0 0 14 14"><circle cx="7" cy="7" r="5.5"/><circle cx="7" cy="7" r="1.2"/><circle cx="7" cy="3.8" r="1"/><circle cx="7" cy="10.2" r="1"/><circle cx="3.8" cy="7" r="1"/><circle cx="10.2" cy="7" r="1"/></svg>9 prints on 35&#8239;mm</a>
+    <a class="chip" href="#"><svg viewBox="0 0 14 14"><path d="M2 12V2h10v10z M2 5h10"/></svg>Season: Rooms</a>
+  </div>
+  <nav class="seg" aria-label="Weeks">
+    <a href="#">← 17 Nov</a><a href="#">All weeks</a><a href="#">1 Dec →</a>
+  </nav>
+</main>
+
+<aside id="side" aria-label="Tonight and visiting">
+  <div class="side-head"><h2>Tonight, Tuesday 24 November</h2><button class="side-close" type="button" aria-label="Close">Close</button></div>
+  <div class="side-body">
+    <div class="tonight">
+      <p class="pair"><span>The Apartment, 7.00</span><span>Rear Window, 9.20</span></p>
+      <p>Doors 6.20. About 230 seats left at noon. <a href="#">Buy at the door or here</a>.</p>
+    </div>
+    <dl class="facts" id="visit">
+      <div><dt>Address</dt><dd>118 Calder Street, between Fourth and Fifth</dd></div>
+      <div><dt>Box office</dt><dd>Opens at 5 on weekdays, 1 on Sundays. Cash and card.</dd></div>
+      <div><dt>Tickets</dt><dd>$12 the double bill, $8 students and over 65, $6 members</dd></div>
+      <div><dt>Getting here</dt><dd>Fourth Street station, three minutes. Bike racks by the stage door.</dd></div>
+      <div><dt>Access</dt><dd>Step-free to the stalls. Hearing loop in rows F to K.</dd></div>
+      <div><dt>Bar</dt><dd>Coffee, beer and Walt's popcorn, salted in the pan.</dd></div>
+    </dl>
+  </div>
+</aside>
+</div>
+
+<button class="side-toggle" type="button" aria-controls="side" aria-expanded="false">Tonight &amp; visit</button>
+
+<footer class="grid">
+  <div class="top"></div>
+  <div class="row"><span class="k">The Orpheum Repertory</span><span class="v">118 Calder Street. A nonprofit cinema since 1974, in a building from 1927.</span></div>
+  <div class="row"><span class="k">Write to us</span><span class="v"><a href="#">boxoffice@orpheum.example</a>, or leave a note with whoever is at the door.</span></div>
+  <div class="row"><span class="k">Calendar by post</span><span class="v"><a href="#">Sign up</a> and we send the month's program on paper, free to members.</span></div>
+</footer>
+
+<script>
+(function () {
+  var d = new Date();
+  var hue = ((300 - (d.getMonth() + 1) * 30 - d.getDate()) % 360 + 360) % 360;
+  document.documentElement.style.setProperty("--hue", hue);
+
+  var svg = document.getElementById("moire");
+  var ns = "http://www.w3.org/2000/svg";
+  function ring(cx, cy, n, step) {
+    var g = document.createElementNS(ns, "g");
+    for (var i = 1; i <= n; i++) {
+      var c = document.createElementNS(ns, "circle");
+      c.setAttribute("cx", cx); c.setAttribute("cy", cy); c.setAttribute("r", i * step);
+      g.appendChild(c);
+    }
+    return g;
+  }
+  svg.setAttribute("viewBox", "0 0 1000 1000");
+  svg.setAttribute("preserveAspectRatio", "xMidYMid slice");
+  svg.setAttribute("fill", "none");
+  svg.setAttribute("stroke", "oklch(0.65 0.18 " + hue + ")");
+  svg.setAttribute("stroke-width", "0.6");
+  svg.setAttribute("stroke-opacity", "0.07");
+  svg.appendChild(ring(-120, 1180, 220, 6.6));
+  svg.appendChild(ring(-60, 1120, 220, 6.6));
+
+  var side = document.getElementById("side");
+  var btn = document.querySelector(".side-toggle");
+  function set(open) { side.classList.toggle("open", open); btn.setAttribute("aria-expanded", open); }
+  btn.addEventListener("click", function () { set(!side.classList.contains("open")); });
+  document.querySelector(".side-close").addEventListener("click", function () { set(false); });
+})();
+</script>
+</body>
+</html>

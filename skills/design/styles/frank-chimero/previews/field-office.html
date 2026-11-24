@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Field Office, architects</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --still: #3a3532;
+    --still-text: #ece7e1;
+    --still-dim: #8c847d;
+    --paper: #ece7e1;
+    --ink: #34302d;
+    --dim: #8f8780;
+    --brick: #ac4f45;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: "Courier Prime", Courier, monospace;
+    font-size: 14px;
+    line-height: 21px;
+    font-kerning: normal;
+    font-variant-numeric: oldstyle-nums proportional-nums;
+    background: var(--paper);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: underline; text-decoration-color: var(--dim);
+      text-underline-offset: 3px; transition: color .25s ease; }
+  a:hover { color: var(--brick); text-decoration-color: var(--brick); }
+  b, strong { font-weight: 700; }
+  .dim { color: var(--dim); }
+
+  /* still half */
+  .still {
+    background: var(--still);
+    color: var(--still-text);
+    padding: 28px 28px 40px;
+  }
+  .still .dim { color: var(--still-dim); }
+  .still a { text-decoration: none; }
+  .still a:hover { color: #d98a7f; }
+  .masthead { display: grid; grid-template-columns: 1fr; gap: 21px; font-size: 13px; line-height: 19.5px; }
+  .masthead nav ul { list-style: none; }
+  .masthead nav a[aria-current] { color: var(--still-dim); }
+  .drawing { margin: 56px auto 0; width: 100%; max-width: 300px; }
+  .drawing svg { display: block; width: 100%; height: auto; }
+  .drawing p { margin-top: 14px; font-size: 13px; line-height: 19.5px; text-align: center; color: var(--still-dim); }
+
+  /* reading half */
+  .reading { padding: 56px calc(3vw + 1rem) 84px; }
+  .col { max-width: 504px; margin: 0 auto; }
+  .col p + p { margin-top: 21px; }
+  section + section { margin-top: 84px; }
+  h1, h2 { font-size: 14px; line-height: 21px; font-weight: 700; }
+  h1 { color: var(--ink); }
+  h2 { margin-bottom: 21px; }
+
+  .lede { margin-bottom: 0; }
+
+  .projects { list-style: none; border-top: 1px solid #cfc8c0; }
+  .projects li {
+    display: grid; grid-template-columns: 4ch 1fr; column-gap: 2ch;
+    padding: 10px 0 11px; border-bottom: 1px solid #cfc8c0;
+  }
+  .projects .yr { font-variant-numeric: oldstyle-nums tabular-nums; color: var(--dim); }
+
+  .start { list-style: none; counter-reset: s; }
+  .start li { display: grid; grid-template-columns: 4ch 1fr; column-gap: 2ch; }
+  .start li + li { margin-top: 21px; }
+  .start li::before { counter-increment: s; content: counter(s) "."; color: var(--dim); }
+
+  address { font-style: normal; }
+  footer { margin-top: 84px; font-size: 13px; line-height: 19.5px; color: var(--dim); }
+
+  @media (min-width: 900px) {
+    body { overflow: hidden; }
+    .page { display: grid; grid-template-columns: 1fr 1fr; height: 100dvh; }
+    .still {
+      height: 100dvh; display: grid; grid-template-rows: auto 1fr;
+      padding: 28px;
+    }
+    .masthead { grid-template-columns: 1fr 1fr; gap: 0; }
+    .drawing { align-self: center; margin-top: 0; max-width: 260px; }
+    .reading { height: 100dvh; overflow-y: scroll; padding-top: calc(28px + 33vh); }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <aside class="still">
+    <div class="masthead">
+      <div>
+        <b>Field Office</b><br>
+        <span class="dim">Architects, Wraybridge</span>
+      </div>
+      <nav aria-label="Site">
+        <ul>
+          <li><a href="#" aria-current="page">Home</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#start">Starting a job</a></li>
+          <li><a href="#notes">Site notes</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <figure class="drawing">
+      <svg viewBox="0 0 260 200" role="img" aria-labelledby="dtitle">
+        <title id="dtitle">Line drawing of the Field Office building: a single-storey 1960 hut with a flat roof, three windows and a red door.</title>
+        <defs>
+          <filter id="hand" x="-5%" y="-5%" width="110%" height="110%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="45" result="n"/>
+            <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6"/>
+          </filter>
+        </defs>
+        <g filter="url(#hand)" fill="none" stroke="#ece7e1" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <!-- ground -->
+          <path d="M6 168 C 60 167.4, 140 168.8, 254 167.6"/>
+          <!-- roof slab, overhanging -->
+          <path d="M22 62 L 238 61.4 L 238.6 70 L 21.6 70.6 Z"/>
+          <!-- walls -->
+          <path d="M34 70.4 L 33.6 168"/>
+          <path d="M226 70.2 L 226.4 167.8"/>
+          <!-- brick plinth -->
+          <path d="M34 146 L 226 145.6"/>
+          <path d="M34 156 L 226 156.4"/>
+          <path d="M60 146 L 60 156 M92 146 L 92 156 M124 146 L 124 156 M190 146 L 190 156 M76 156 L 76 168 M108 156 L 108 168 M200 156 L 200 168 M216 146 L 216 156"/>
+          <!-- windows -->
+          <path d="M48 88 L 96 87.6 L 96.4 130 L 48 130.4 Z"/>
+          <path d="M72 88 L 72.2 130"/>
+          <path d="M48 106 L 96 105.8"/>
+          <path d="M168 88 L 214 88.2 L 213.6 130 L 168.4 130.2 Z"/>
+          <path d="M191 88 L 191 130"/>
+          <path d="M168 106 L 214 106.2"/>
+          <!-- door frame -->
+          <path d="M126 84 L 156 84 L 156.2 168 M126 84 L 125.8 168"/>
+          <!-- step -->
+          <path d="M120 168 L 162 168 L 162 172.6 L 120 172.4 Z"/>
+          <!-- lamp -->
+          <path d="M141 76 L 141 80 M137 80 L 145 80 L 143.6 83 L 138.4 83 Z"/>
+          <!-- number plate -->
+          <path d="M108 96 L 118 96 L 118 104 L 108 104 Z"/>
+          <!-- downpipe -->
+          <path d="M231 70.4 C 231.4 100, 230.6 130, 231.2 166"/>
+          <!-- a tree, off to the left -->
+          <path d="M14 168 C 14.4 150, 13.6 132, 14.2 118"/>
+          <path d="M14 140 C 9 134, 6 130, 4 122 M14 128 C 18 122, 21 118, 22 110"/>
+          <!-- hand-lettered sign on the fascia -->
+          <path d="M98 66.4 L 98 64.6 M101 66.4 L 101 64.6 M104 66.6 L 104 64.4 M107 66.4 L 107 64.6 M110 66.4 L 110 64.6 M150 66.4 L 150 64.6 M153 66.6 L 153 64.4 M156 66.4 L 156 64.6 M159 66.4 L 159 64.6 M162 66.4 L 162 64.6"/>
+        </g>
+        <g filter="url(#hand)" fill="none" stroke="#ac4f45" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <!-- the door, the one red thing -->
+          <path d="M129.6 87.6 L 152.4 87.4 L 152.6 167.4 L 129.4 167.6 Z"/>
+          <path d="M147.8 128 L 147.8 132"/>
+        </g>
+      </svg>
+      <figcaption><p>The office, Mill Lane, built 1960<br>for the county surveyor</p></figcaption>
+    </figure>
+  </aside>
+
+  <main class="reading">
+    <div class="col">
+      <section>
+        <p class="lede"><b>We mostly work on buildings that are already standing.</b></p>
+        <p>Field Office is three architects in a hut on Mill Lane. The county built it in 1960
+        so its surveyors had somewhere dry to unroll drawings. We bought it in 2014, mended the
+        roof and kept the rest.</p>
+        <p>Most of what we do is like that. A chapel becomes a library, a dairy becomes four
+        homes, a school gets a hall it can heat. We take on about eight jobs a year, and every
+        one of them is drawn and run by one of the three of us from the first visit to the
+        handover.</p>
+      </section>
+
+      <section id="projects">
+        <h2>Recent projects<br><span class="dim" style="font-weight:400">Eighteen since we moved in</span></h2>
+        <ul class="projects">
+          <li><span class="yr">2025</span><span><a href="#">Holt Street Library</a><br><span class="dim">A Methodist chapel, kept and given a mezzanine</span></span></li>
+          <li><span class="yr">2024</span><span><a href="#">Ashby Dairy</a><br><span class="dim">Four homes in a 1930s milking parlour</span></span></li>
+          <li><span class="yr">2024</span><span><a href="#">Wraybridge Lido kiosk</a><br><span class="dim">A ticket hut and a place to sit out of the rain</span></span></li>
+          <li><span class="yr">2023</span><span><a href="#">St Anne's Primary hall</a><br><span class="dim">A timber hall the school can heat for £9 a day</span></span></li>
+          <li><span class="yr">2022</span><span><a href="#">The Kemp house</a><br><span class="dim">A terraced house opened up at the back</span></span></li>
+          <li><span class="yr">2021</span><span><a href="#">Mill Lane bus shelter</a><br><span class="dim">Our smallest job, across the road from us</span></span></li>
+        </ul>
+      </section>
+
+      <section id="start">
+        <h2>Starting a job<br><span class="dim" style="font-weight:400">What happens after you write</span></h2>
+        <ol class="start">
+          <li><span>Tell us about the building and where it is. A few phone photos are plenty.</span></li>
+          <li><span>One of us comes to look at it, free, within two weeks if it is inside the county.</span></li>
+          <li><span>We send you a letter with what we would do first, roughly what it costs, and our fee.</span></li>
+        </ol>
+      </section>
+
+      <section id="notes">
+        <h2>Site notes<br><span class="dim" style="font-weight:400">Written up most Fridays</span></h2>
+        <p><a href="#">Taking up the chapel floor</a> <span class="dim">14 November</span><br>
+        <a href="#">What the dairy walls are made of</a> <span class="dim">31 October</span><br>
+        <a href="#">Lime mortar, again</a> <span class="dim">17 October</span></p>
+      </section>
+
+      <section id="contact">
+        <h2>Contact</h2>
+        <address>
+          Field Office<br>
+          2 Mill Lane, Wraybridge<br>
+          <a href="mailto:hello@fieldoffice.example">hello@fieldoffice.example</a><br>
+          01632 960 145
+        </address>
+        <p class="dim" style="margin-top:21px">The door is open Tuesday to Thursday, 9 to 5.
+        Knock if the lamp is on.</p>
+      </section>
+
+      <footer>
+        Field Office Architects Ltd<br>
+        Registered with the ARB
+      </footer>
+    </div>
+  </main>
+</div>
+</body>
+</html>

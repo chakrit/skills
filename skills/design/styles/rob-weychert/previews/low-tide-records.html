@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Low Tide Records</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@100..900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --hue: 305;
+  --accent: oklch(0.65 0.18 var(--hue));
+  --g0: oklch(0.985 0.008 125);  /* paper */
+  --g1: oklch(0.95 0.008 125);   /* moire */
+  --g2: oklch(0.86 0.008 125);   /* hairlines */
+  --g3: oklch(0.62 0.008 125);   /* faint meta */
+  --g4: oklch(0.45 0.008 125);   /* meta, captions */
+  --g5: oklch(0.2 0.008 125);    /* ink */
+  --hair: 0.0625rem;
+  --s-1: 1.03125rem;  /* 16.5 */
+  --s0: 1.375rem;     /* 22 */
+  --s1: 1.833rem;     /* 29.3 */
+  --s2: 2.444rem;     /* 39.1 */
+  --s4: 4.345rem;     /* 69.5 */
+  --gut: 2.75rem;
+}
+* { box-sizing: border-box; }
+html { font-size: 100%; }
+body {
+  margin: 0;
+  background: var(--g0);
+  color: var(--g5);
+  font-family: Commissioner, sans-serif;
+  font-size: var(--s0);
+  font-weight: 400;
+  line-height: 1.45;
+  font-feature-settings: "kern", "onum";
+}
+.moire {
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+}
+a { color: inherit; text-decoration-line: underline; text-decoration-color: var(--accent);
+    text-decoration-thickness: var(--hair); text-underline-offset: 0.18em;
+    transition: color 0.2s; }
+a:hover { color: var(--accent); }
+
+.page {
+  max-width: calc(1220px + 220px);
+  margin: 0 auto;
+  padding: 0 110px;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--gut);
+}
+
+/* header */
+.masthead {
+  grid-column: 1 / -1;
+  display: grid; grid-template-columns: subgrid;
+  align-items: baseline;
+  padding: 1.6rem 0 0.9rem;
+  border-bottom: var(--hair) solid var(--g2);
+  font-size: var(--s-1); font-weight: 533;
+}
+.masthead .mark { grid-column: 1 / 5; display: flex; gap: 0.6rem; align-items: center; text-decoration: none; }
+.masthead nav { grid-column: 5 / -1; display: flex; gap: 2.2rem; justify-content: flex-end; }
+.masthead nav a { text-decoration: none; }
+.masthead nav a[aria-current] { text-decoration: underline; text-decoration-color: var(--accent); }
+
+.title { grid-column: 1 / -1; margin: 3.4rem 0 0; }
+.title h1 {
+  margin: 0; font-size: var(--s4); font-weight: 700; line-height: 0.9;
+  letter-spacing: -0.01em;
+  padding-bottom: 1.1rem;
+  border-bottom: 0.375rem solid var(--g5);
+}
+.intro {
+  grid-column: 1 / 9;
+  margin: 1.4rem 0 3.2rem;
+  font-size: var(--s2); font-weight: 225; line-height: 1.2;
+}
+
+main { grid-column: 1 / 9; }
+aside { grid-column: 9 / -1; }
+
+/* feature article */
+.feature { border-top: var(--hair) solid var(--g2); padding-top: 1.1rem; }
+.meta { font-size: var(--s-1); font-weight: 533; color: var(--g4); margin: 0 0 1.2rem; }
+.feature h2, .section h2 {
+  font-size: var(--s1); font-weight: 300; line-height: 1.15; margin: 0 0 1.3rem;
+}
+.prose p { margin: 0; text-indent: 2em; max-width: 36em; }
+.prose p:first-of-type { text-indent: 0; }
+.runin { letter-spacing: 0.13em; text-transform: uppercase; font-size: 0.86em; font-weight: 500; }
+figure.cover {
+  float: right; width: 34%; margin: 0.35rem 0 1rem 1.8rem;
+}
+figure.cover svg { display: block; width: 100%; height: auto; border-radius: 4px; }
+figcaption { font-size: var(--s-1); font-weight: 533; color: var(--g4); line-height: 1.35; margin-top: 0.5rem; }
+
+.chips { clear: both; list-style: none; padding: 1.6rem 0 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.55rem; }
+.chips li {
+  font-size: var(--s-1); font-weight: 533; line-height: 1;
+  border: var(--hair) solid var(--accent); border-radius: 99px;
+  padding: 0.45rem 0.8rem 0.5rem; display: inline-flex; gap: 0.45rem; align-items: center;
+}
+.chips svg { width: 0.9em; height: 0.9em; stroke: var(--accent); fill: none; stroke-width: 1.4; }
+.listen { margin-top: 1.4rem; display: flex; align-items: center; gap: 0.9rem; font-size: var(--s-1); font-weight: 533; }
+.play {
+  width: 2.6rem; height: 2.6rem; border-radius: 50%; border: var(--hair) solid var(--accent);
+  background: none; cursor: pointer; display: grid; place-items: center; color: var(--accent);
+  transition: background 0.2s, color 0.2s;
+}
+.play:hover, .play[aria-pressed="true"] { background: var(--accent); color: var(--g0); }
+.play svg { width: 0.9rem; height: 0.9rem; fill: currentColor; }
+
+/* sections */
+.section { margin-top: 4rem; border-top: 0.375rem solid var(--g5); padding-top: 1rem; }
+.section > p.lede { font-size: var(--s0); margin: 0 0 1.4rem; max-width: 36em; }
+
+/* catalogue */
+ol.cat { list-style: none; margin: 0; padding: 0; }
+ol.cat li {
+  position: relative;
+  display: grid; grid-template-columns: 1fr auto;
+  column-gap: 1.5rem;
+  padding: 0.7rem 0 0.75rem;
+  border-bottom: var(--hair) solid var(--g2);
+}
+ol.cat li:first-child { border-top: var(--hair) solid var(--g2); }
+ol.cat .no {
+  position: absolute; right: 100%; margin-right: 1.1rem; top: 0.95rem;
+  font-size: var(--s-1); font-weight: 533; color: var(--accent);
+  font-variant-numeric: tabular-nums lining-nums; white-space: nowrap;
+}
+ol.cat .who { font-weight: 400; }
+ol.cat .what { color: var(--g4); }
+ol.cat .fmt { font-size: var(--s-1); font-weight: 533; color: var(--g4); align-self: center; text-align: right; }
+ol.cat li.gap .who { color: var(--g3); font-weight: 225; }
+ol.cat li.gap { background: repeating-linear-gradient(-30deg, transparent 0 7px, var(--g1) 7px 8px); }
+
+/* tide table */
+table.tides { width: 100%; border-collapse: collapse; font-size: var(--s0); }
+table.tides th { text-align: left; font-size: var(--s-1); font-weight: 533; color: var(--g4); padding: 0 1rem 0.4rem 0; border-bottom: var(--hair) solid var(--g5); }
+table.tides td { padding: 0.65rem 1rem 0.7rem 0; border-bottom: var(--hair) solid var(--g2); vertical-align: baseline; }
+table.tides td.d { font-variant-numeric: tabular-nums lining-nums; white-space: nowrap; font-weight: 400; }
+table.tides td.t { font-size: var(--s-1); font-weight: 533; color: var(--g4); white-space: nowrap; }
+table.tides .bar { display: inline-block; height: var(--hair); background: var(--accent); vertical-align: middle; margin-right: 0.5rem; }
+
+/* sidebar */
+.side {
+  position: sticky; top: 1.5rem;
+  max-height: calc(100vh - 3rem); overflow-y: auto;
+  border-top: var(--hair) solid var(--g2); padding-top: 1.1rem;
+  font-size: var(--s-1); font-weight: 533; line-height: 1.4;
+}
+.side h2 {
+  margin: 0 0 0.9rem; font-size: var(--s-1); font-weight: 600;
+  background: var(--accent); color: var(--g0);
+  padding: 0.35rem 0.6rem 0.4rem; border-radius: 4px; display: inline-block;
+}
+.side h3 { font-size: var(--s0); font-weight: 400; margin: 2rem 0 0.5rem; }
+.side p { margin: 0 0 0.9rem; font-weight: 400; font-size: var(--s-1); color: var(--g5); }
+.side form { display: flex; gap: 0.5rem; margin-bottom: 0.4rem; }
+.side input {
+  flex: 1; min-width: 0; font: inherit; font-weight: 400; color: var(--g5); background: transparent;
+  border: var(--hair) solid var(--accent); border-radius: 4px; padding: 0.5rem 0.6rem;
+}
+.side button.join {
+  font: inherit; font-weight: 600; background: none; color: var(--g5);
+  border: var(--hair) solid var(--accent); border-radius: 4px; padding: 0.5rem 0.8rem; cursor: pointer;
+  transition: color 0.2s;
+}
+.side button.join:hover { color: var(--accent); }
+.side ul { list-style: none; margin: 0; padding: 0; }
+.side ul li { border-bottom: var(--hair) solid var(--g2); padding: 0.5rem 0; display: flex; justify-content: space-between; gap: 1rem; }
+.side ul li span:last-child { color: var(--g4); font-weight: 400; }
+.side ul li a { font-weight: 400; color: var(--g5); }
+
+/* footer */
+footer { grid-column: 1 / -1; margin-top: 5rem; border-top: 0.375rem solid var(--g5); font-size: var(--s-1); font-weight: 533; }
+footer .row { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gut); padding: 0.8rem 0; border-bottom: var(--hair) solid var(--g2); }
+footer .row > :first-child { grid-column: 1 / 5; color: var(--g4); }
+footer .row > :last-child { grid-column: 5 / -1; }
+footer .row:last-child { border-bottom: 0; padding-bottom: 3rem; }
+
+.sidebtn { display: none; }
+
+@media (max-width: 760px) {
+  :root { --gut: 18px; }
+  body { font-size: 1.125rem; line-height: 1.45; }
+  .page { grid-template-columns: repeat(6, 1fr); padding: 0 16px; }
+  .masthead { grid-template-columns: 1fr; gap: 0.4rem; }
+  .masthead .mark, .masthead nav { grid-column: 1 / -1; justify-content: flex-start; }
+  .masthead nav { gap: 1.3rem; flex-wrap: wrap; }
+  .title { margin-top: 2.2rem; }
+  .title h1 { font-size: 2.69rem; }
+  .intro { grid-column: 1 / -1; font-size: 1.5rem; font-weight: 250; margin-bottom: 2.4rem; }
+  main, aside { grid-column: 1 / -1; }
+  figure.cover { float: none; width: 100%; margin: 0 0 1.2rem; }
+  .prose p { max-width: none; }
+  ol.cat { padding-left: 4.6rem; }
+  ol.cat li { grid-template-columns: 1fr; }
+  ol.cat .fmt { text-align: left; }
+  table.tides td.t, table.tides th.t { display: none; }
+  table.tides { font-size: 1.125rem; }
+  aside { position: fixed; inset: auto 0 0 0; z-index: 5; background: var(--g0);
+          border-top: 0.375rem solid var(--g5); padding: 0 16px 5rem;
+          max-height: 75vh; overflow-y: auto; transform: translateY(100%); transition: transform 0.25s; }
+  aside.open { transform: none; }
+  .side { position: static; max-height: none; border-top: 0; }
+  .sidebtn {
+    display: grid; place-items: center; position: fixed; left: 16px; bottom: 16px; z-index: 6;
+    width: 3.2rem; height: 3.2rem; border-radius: 50%; border: 0;
+    background: var(--accent); color: var(--g0); cursor: pointer;
+  }
+  .sidebtn svg { width: 1.2rem; height: 1.2rem; stroke: currentColor; fill: none; stroke-width: 1.6; }
+  footer .row { grid-template-columns: 1fr; }
+  footer .row > :first-child, footer .row > :last-child { grid-column: 1 / -1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<svg class="moire" aria-hidden="true" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" viewBox="0 0 1600 1000">
+  <defs>
+    <g id="arcs" fill="none" stroke="oklch(0.9 0.012 125)" stroke-width="0.6">
+      <path d="M-200 120 Q 800 40 1800 120"/><path d="M-200 150 Q 800 70 1800 150"/>
+      <path d="M-200 180 Q 800 100 1800 180"/><path d="M-200 210 Q 800 130 1800 210"/>
+      <path d="M-200 240 Q 800 160 1800 240"/><path d="M-200 270 Q 800 190 1800 270"/>
+      <path d="M-200 300 Q 800 220 1800 300"/><path d="M-200 330 Q 800 250 1800 330"/>
+      <path d="M-200 360 Q 800 280 1800 360"/><path d="M-200 390 Q 800 310 1800 390"/>
+      <path d="M-200 420 Q 800 340 1800 420"/><path d="M-200 450 Q 800 370 1800 450"/>
+      <path d="M-200 480 Q 800 400 1800 480"/><path d="M-200 510 Q 800 430 1800 510"/>
+      <path d="M-200 540 Q 800 460 1800 540"/><path d="M-200 570 Q 800 490 1800 570"/>
+      <path d="M-200 600 Q 800 520 1800 600"/><path d="M-200 630 Q 800 550 1800 630"/>
+      <path d="M-200 660 Q 800 580 1800 660"/><path d="M-200 690 Q 800 610 1800 690"/>
+      <path d="M-200 720 Q 800 640 1800 720"/><path d="M-200 750 Q 800 670 1800 750"/>
+      <path d="M-200 780 Q 800 700 1800 780"/><path d="M-200 810 Q 800 730 1800 810"/>
+      <path d="M-200 840 Q 800 760 1800 840"/><path d="M-200 870 Q 800 790 1800 870"/>
+      <path d="M-200 900 Q 800 820 1800 900"/><path d="M-200 930 Q 800 850 1800 930"/>
+      <path d="M-200 960 Q 800 880 1800 960"/><path d="M-200 990 Q 800 910 1800 990"/>
+      <path d="M-200 1020 Q 800 940 1800 1020"/><path d="M-200 90 Q 800 10 1800 90"/>
+    </g>
+  </defs>
+  <use href="#arcs"/>
+  <use href="#arcs" transform="rotate(2.2 800 500) translate(0 9)"/>
+</svg>
+
+<div class="page">
+  <header class="masthead">
+    <a class="mark" href="#">
+      <svg width="26" height="18" viewBox="0 0 26 18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M1 3h24M5 9h16M9 15h8"/></svg>
+      Low Tide Records
+    </a>
+    <nav aria-label="Main">
+      <a href="#" aria-current="page">Home</a>
+      <a href="#catalogue">Catalogue</a>
+      <a href="#roster">Artists</a>
+      <a href="#shows">Shows</a>
+      <a href="#">Shop</a>
+      <a href="#">About</a>
+    </nav>
+  </header>
+
+  <div class="title"><h1>Low Tide Records</h1></div>
+  <p class="intro">A small record label in Hastings, putting out quiet music on vinyl and tape since 2011, one catalogue number at a time.</p>
+
+  <main>
+    <article class="feature">
+      <p class="meta">New this month · LT-046 · out 14 November 2026</p>
+      <h2>Mara Quell, <span style="font-weight:inherit">Slack Water</span></h2>
+      <div class="prose">
+        <figure class="cover">
+          <svg viewBox="0 0 300 300" role="img" aria-label="Cover of Slack Water: a grey field crossed by fine curved lines, with one violet line near the bottom">
+            <rect width="300" height="300" fill="oklch(0.93 0.008 125)"/>
+            <g fill="none" stroke="oklch(0.3 0.008 125)" stroke-width="0.8">
+              <path d="M0 40 Q150 20 300 40"/><path d="M0 58 Q150 38 300 58"/><path d="M0 76 Q150 56 300 76"/>
+              <path d="M0 94 Q150 74 300 94"/><path d="M0 112 Q150 92 300 112"/><path d="M0 130 Q150 110 300 130"/>
+              <path d="M0 148 Q150 128 300 148"/><path d="M0 166 Q150 146 300 166"/><path d="M0 184 Q150 164 300 184"/>
+              <path d="M0 202 Q150 182 300 202"/>
+            </g>
+            <path d="M0 238 Q150 218 300 238" fill="none" stroke="oklch(0.65 0.18 305)" stroke-width="1.4"/>
+            <text x="18" y="282" font-family="Commissioner" font-size="13" font-weight="533" fill="oklch(0.3 0.008 125)">MARA QUELL · SLACK WATER</text>
+          </svg>
+          <figcaption>Cover by Ines Varga. 12-inch LP, 180 g, and a cassette run of 150.</figcaption>
+        </figure>
+        <p><span class="runin">Slack water is</span> the short stretch between tides when the sea stops moving. Mara Quell recorded her second album in it, on the shingle at Rock-a-Nore, between four and six in the morning over eleven days in March. You can hear the boats being winched up behind the piano on side one.</p>
+        <p>There are seven pieces. The longest, “Net Shops”, runs nineteen minutes and uses a single chord on a borrowed harmonium. The shortest is under two. Mara played everything except the clarinet, which is Tom Beale, who drove down from Leeds with it on the back seat.</p>
+        <p>We pressed 500 copies at Curved Pressings in Ramsgate. Once they are gone we will press more, but the cassettes are a single run and will not come back.</p>
+      </div>
+      <ul class="chips" aria-label="Release details">
+        <li><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5"/><circle cx="8" cy="8" r="1.5"/></svg>LP £24</li>
+        <li><svg viewBox="0 0 16 16"><rect x="1.5" y="4" width="13" height="8" rx="1"/><circle cx="5.5" cy="8" r="1.4"/><circle cx="10.5" cy="8" r="1.4"/></svg>Cassette £9</li>
+        <li><svg viewBox="0 0 16 16"><path d="M8 2v8M4.5 7 8 10.5 11.5 7M2.5 14h11"/></svg>Download £8</li>
+        <li><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5"/><path d="M8 4.5V8l2.5 1.5"/></svg>47 minutes</li>
+      </ul>
+      <div class="listen">
+        <button class="play" aria-pressed="false" aria-label="Play “Net Shops” excerpt">
+          <svg viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z"/></svg>
+        </button>
+        <span id="listen-label">Listen to an excerpt of “Net Shops”, 2:10</span>
+      </div>
+    </article>
+
+    <section class="section" id="catalogue">
+      <h2>The catalogue</h2>
+      <p class="lede">Every release gets the next number. LT-042 was assigned to a record that was never finished; we kept the number empty.</p>
+      <ol class="cat">
+        <li><span class="no">LT-046</span><span><span class="who">Mara Quell</span>, <span class="what">Slack Water</span></span><span class="fmt">LP, cassette · Nov 2026</span></li>
+        <li><span class="no">LT-045</span><span><span class="who">Fenwick &amp; Daughters</span>, <span class="what">Groyne</span></span><span class="fmt">7-inch · Aug 2026</span></li>
+        <li><span class="no">LT-044</span><span><span class="who">Pell Harbour Choir</span>, <span class="what">Songs for the Lifeboat Hall</span></span><span class="fmt">LP · May 2026</span></li>
+        <li><span class="no">LT-043</span><span><span class="who">Odile Marsh</span>, <span class="what">Tidewrack</span></span><span class="fmt">Cassette · Jan 2026</span></li>
+        <li class="gap"><span class="no">LT-042</span><span><span class="who">Unreleased</span></span><span class="fmt">—</span></li>
+        <li><span class="no">LT-041</span><span><span class="who">Mara Quell</span>, <span class="what">Undertow Exercises</span></span><span class="fmt">LP · Sep 2025</span></li>
+        <li><span class="no">LT-040</span><span><span class="who">The Saltings</span>, <span class="what">East Hill Lift</span></span><span class="fmt">LP · Jun 2025</span></li>
+        <li><span class="no">LT-039</span><span><span class="who">Bram Okoye</span>, <span class="what">Harbour Arm (live)</span></span><span class="fmt">Download · Mar 2025</span></li>
+      </ol>
+      <p class="meta" style="margin-top:1rem"><a href="#">All 46 numbers, back to LT-001</a></p>
+    </section>
+
+    <section class="section" id="shows">
+      <h2>Shows, by the tide table</h2>
+      <p class="lede">Three dates of Mara Quell’s six-night run along the coast are on sale. Each starts an hour after low water, so the times move.</p>
+      <table class="tides">
+        <thead><tr><th>Date</th><th>Place</th><th class="t">Low water</th><th class="t">Doors</th></tr></thead>
+        <tbody>
+          <tr><td class="d">Fri 4 Dec</td><td><a href="#">The Stade Hall, Hastings</a></td><td class="t"><span class="bar" style="width:1.2rem"></span>0.6 m · 19:12</td><td class="t">20:10</td></tr>
+          <tr><td class="d">Sat 5 Dec</td><td><a href="#">Harbour Arm, Folkestone</a></td><td class="t"><span class="bar" style="width:1.6rem"></span>0.8 m · 19:58</td><td class="t">20:55</td></tr>
+          <tr><td class="d">Sun 6 Dec</td><td><a href="#">Turner Contemporary, Margate</a></td><td class="t"><span class="bar" style="width:2.2rem"></span>1.1 m · 20:41</td><td class="t">21:40</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <aside id="side">
+    <div class="side">
+      <h2>Post from the label</h2>
+      <p>About one letter a month: new numbers, show dates, and the occasional test pressing we have spare.</p>
+      <form onsubmit="event.preventDefault(); this.querySelector('button').textContent='Thanks';">
+        <label for="email" class="visually-hidden" style="position:absolute;left:-9999px">Email address</label>
+        <input id="email" type="email" placeholder="you@example.com" required>
+        <button class="join" type="submit">Join</button>
+      </form>
+
+      <h3 id="roster">Artists</h3>
+      <ul>
+        <li><a href="#">Mara Quell</a><span>Hastings</span></li>
+        <li><a href="#">Odile Marsh</a><span>Rye</span></li>
+        <li><a href="#">Fenwick &amp; Daughters</a><span>Deal</span></li>
+        <li><a href="#">The Saltings</a><span>Hastings</span></li>
+        <li><a href="#">Pell Harbour Choir</a><span>Pett Level</span></li>
+        <li><a href="#">Bram Okoye</a><span>Folkestone</span></li>
+      </ul>
+
+      <h3>The shop</h3>
+      <p>Orders go out on Tuesdays and Fridays from the back room at 18 High Street. If you are passing, you can collect.</p>
+    </div>
+  </aside>
+
+  <footer>
+    <div class="row"><span>Low Tide Records</span><span>18 High Street, Hastings TN34 3EY</span></div>
+    <div class="row"><span>Write to us</span><span><a href="#">post@lowtide.example</a></span></div>
+    <div class="row"><span>Demos</span><span>We listen to everything sent by post. Tapes and CD-Rs are both fine; we answer in about two months.</span></div>
+    <div class="row"><span>© 2011–2026</span><span><a href="#">Bandcamp</a> · <a href="#">Instagram</a> · <a href="#">RSS for new numbers</a></span></div>
+  </footer>
+</div>
+
+<button class="sidebtn" aria-controls="side" aria-expanded="false" aria-label="Open the mailing list, artists and shop">
+  <svg viewBox="0 0 20 20"><path d="M3 5h14M3 10h10M3 15h6"/></svg>
+</button>
+
+<script>
+const btn = document.querySelector('.sidebtn');
+const side = document.getElementById('side');
+btn.addEventListener('click', () => {
+  const open = side.classList.toggle('open');
+  btn.setAttribute('aria-expanded', open);
+});
+const play = document.querySelector('.play');
+play.addEventListener('click', () => {
+  const on = play.getAttribute('aria-pressed') !== 'true';
+  play.setAttribute('aria-pressed', on);
+  play.innerHTML = on
+    ? '<svg viewBox="0 0 10 10"><path d="M2 1h2v8H2zM6 1h2v8H6z"/></svg>'
+    : '<svg viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z"/></svg>';
+});
+</script>
+</body>
+</html>

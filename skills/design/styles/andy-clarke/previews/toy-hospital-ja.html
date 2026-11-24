@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>おもちゃ病院 つぎはぎ堂｜こわれたおもちゃ、入院できます</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green: #386f5d;
+  --deep: #1f3d33;
+  --ink: #1b2622;
+  --paper: #f6f0e4;
+  --mint: #dbe8df;
+  --coral: #e07262;
+  --coral-dark: #b94a39;
+  --tin: #e9c46a;
+  --line: #1b2622;
+
+  --grid-4-5: [a1] 4fr [b2] 1fr [a2] 3fr [b3] 2fr [a3] 2fr [b4] 3fr [a4] 1fr [b5] 4fr [a5];
+  --grid-12-col: repeat(12, 1fr);
+  --grid-column-gap: clamp(1.6875rem, 1.6223rem + .3261vi, 1.875rem);
+  --grid-row-gap: clamp(1rem, calc(.89rem + .54vw), 1.31rem);
+  --measure: 60ch;
+  --margin: 20px;
+
+  --stitch: repeating-linear-gradient(90deg, var(--coral) 0 10px, transparent 10px 18px);
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.85;
+  font-feature-settings: "palt" 0;
+}
+a { color: var(--coral-dark); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+a:hover { color: var(--deep); }
+h1, h2, h3 { font-weight: 900; line-height: 1.15; margin: 0; text-wrap: balance; letter-spacing: .01em; }
+h2 { font-size: clamp(30px, 2.2rem + 1vw, 44px); }
+h3 { font-size: 22px; line-height: 1.35; }
+p { margin: 0 0 1em; }
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.wrap { padding-inline: var(--margin); }
+
+/* header */
+.masthead {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: 14px var(--margin);
+  background: var(--deep); color: var(--paper);
+}
+.masthead nav { display: none; }
+.masthead nav a { color: var(--paper); text-decoration: none; font-weight: 500; font-size: 15px; letter-spacing: .06em; }
+.masthead nav a:hover { color: var(--tin); }
+.logo { display: block; width: 180px; }
+.call { color: var(--paper); text-decoration: none; font-weight: 700; font-size: 15px; white-space: nowrap; }
+.call span { color: var(--tin); }
+
+/* hero */
+.hero { background: var(--deep); color: var(--paper); position: relative; }
+.hero-scene { position: relative; height: 430px; overflow: hidden; }
+.hero-scene svg.scene { position: absolute; top: 0; right: -40px; height: 100%; width: auto; }
+.hero-copy { padding: 26px var(--margin) 70px; }
+.hero h1 { font-size: 40px; line-height: 1.12; font-weight: 900; letter-spacing: .02em; }
+.hero-copy p { max-width: 34ch; margin-top: 1.2em; color: #e7efe9; }
+.hero-copy .open { font-size: 15px; color: var(--tin); font-weight: 700; margin-top: 1.4em; }
+.seam { position: absolute; left: 0; right: 0; bottom: -1px; width: 100%; height: 40px; z-index: 2; display: block; }
+.pause {
+  position: absolute; right: 14px; bottom: 44px; z-index: 3;
+  font: 700 13px/1 "Zen Maru Gothic", sans-serif; color: var(--paper);
+  background: var(--ink); border: 2px solid var(--paper); border-radius: 999px; padding: 8px 14px; cursor: pointer;
+}
+.pause:focus-visible { outline: 3px solid var(--tin); outline-offset: 2px; }
+
+/* sections */
+section { padding-block: 72px; }
+.lead { font-size: 19px; max-width: 34ch; }
+
+/* course of treatment */
+.course h2 { margin-bottom: 1rem; }
+.chart { list-style: none; margin: 2.2rem 0 0; padding: 0; border-top: 3px solid var(--ink); }
+.chart li { display: grid; grid-template-columns: 92px 1fr; gap: 0 18px; padding: 22px 0 20px; border-bottom: 1px solid var(--ink); position: relative; }
+.chart li::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; }
+.chart .word { font-weight: 900; font-size: 34px; line-height: 1; color: var(--green); }
+.chart .days { display: block; font-size: 13px; font-weight: 700; color: var(--coral-dark); margin-top: 10px; letter-spacing: .05em; }
+.chart h3 { margin-bottom: .35rem; }
+.chart p { margin: 0; max-width: var(--measure); }
+.chart svg { width: 84px; height: 84px; }
+
+/* departments */
+.depts { background: var(--green); color: var(--paper); }
+.depts a { color: var(--tin); }
+.dept-list { list-style: none; margin: 2.4rem 0 0; padding: 0; }
+.dept-list li { padding: 22px 0; border-top: 1px solid rgba(246,240,228,.45); }
+.dept-list h3 { font-size: 24px; display: flex; align-items: baseline; gap: .5em; }
+.dept-list .fee { font-size: 14px; font-weight: 700; color: var(--tin); }
+.dept-list p { margin: .4rem 0 0; color: #e7efe9; font-size: 16px; }
+.depts .note { margin-top: 2rem; font-size: 15px; color: #e7efe9; }
+
+/* doctors */
+.doctors .doc { margin-top: 2.4rem; }
+.doctors figure { margin: 0; }
+.doctors figcaption { font-size: 14px; color: #4b5a54; margin-top: .4rem; }
+.doctors .quote { font-size: 23px; font-weight: 700; line-height: 1.55; border-top: 3px solid var(--coral); padding-top: 16px; margin: 2rem 0; }
+.doctors .quote cite { display: block; font-style: normal; font-size: 14px; font-weight: 500; margin-top: .6rem; color: #4b5a54; }
+
+/* discharges */
+.discharges { background: var(--mint); }
+.ward { display: flex; gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--margin); margin: 2rem calc(-1 * var(--margin)) 0; padding: 0 var(--margin) 8px; list-style: none; scrollbar-width: none; }
+.ward::-webkit-scrollbar { display: none; }
+.ward li { flex: 0 0 85%; scroll-snap-align: start; }
+.ward svg { display: block; width: 100%; height: 190px; }
+.ward li { border-top: 3px solid var(--ink); padding-top: 10px; }
+.ward .rec { border-top: 1px solid var(--ink); padding-top: 10px; }
+.ward .rec { display: grid; grid-template-columns: auto 1fr; gap: 2px 14px; font-size: 15px; margin-top: 12px; }
+.ward .rec dt { font-weight: 700; color: var(--green); }
+.ward .rec dd { margin: 0; }
+.ward h3 { margin-top: 14px; font-size: 20px; }
+.progress { height: 4px; background: rgba(27,38,34,.15); margin-top: 18px; }
+.progress span { display: block; height: 100%; width: 30%; background: var(--coral); }
+
+/* faq */
+.faq details { border-top: 1px solid var(--ink); }
+.faq details:last-child { border-bottom: 1px solid var(--ink); }
+.faq summary { list-style: none; display: grid; grid-template-columns: 8px 1fr; gap: 16px; align-items: baseline; padding: 18px 0; cursor: pointer; font-weight: 700; font-size: 19px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::before { content: ""; width: 8px; height: 8px; background: var(--coral); transform: translateY(-3px); transition: transform .3s ease-in-out; }
+.faq details[open] summary::before { transform: translateY(-3px) rotate(45deg); }
+.faq details p { margin: 0 0 20px 24px; max-width: var(--measure); }
+.faq-list { margin-top: 2rem; }
+
+/* visit */
+.visit { background: var(--deep); color: var(--paper); padding-bottom: 0; }
+.visit a { color: var(--tin); }
+.visit dl { display: grid; grid-template-columns: 6em 1fr; gap: 10px 16px; margin: 2rem 0; }
+.visit dt { font-weight: 700; color: var(--tin); }
+.visit dd { margin: 0; }
+.visit .wave svg { display: block; width: 220px; margin-top: 1rem; }
+.foot { padding: 40px var(--margin) 30px; border-top: 1px solid rgba(246,240,228,.3); margin-top: 48px; font-size: 13px; color: #b9cbc2; }
+
+/* motion */
+@media (prefers-reduced-motion: no-preference) {
+  .lamp { transform-origin: 640px 0; animation: sway 9.1s cubic-bezier(.45,.05,.55,.95) infinite alternate; }
+  .key { transform-box: fill-box; transform-origin: 50% 50%; animation: turn 19s linear infinite; }
+  .breath { transform-box: fill-box; transform-origin: 50% 100%; animation: breathe 5.3s ease-in-out infinite; }
+  .mote { animation: drift 91s linear infinite; }
+  .cog { transform-box: fill-box; transform-origin: 50% 50%; }
+  .cog-a { animation: turn 24s linear infinite; }
+  .cog-b { animation: turn 14s linear infinite reverse; }
+  .mote.m2 { animation-duration: 67s; animation-delay: -30s; }
+  .mote.m3 { animation-duration: 113s; animation-delay: -70s; }
+  .glow { animation: glow 4.8s ease-in-out infinite; }
+  .wave-arm { transform-box: fill-box; transform-origin: 10% 90%; animation: wave 3.3s ease-in-out infinite alternate; }
+  .paused * { animation-play-state: paused !important; }
+}
+@keyframes sway { from { transform: rotate(-3deg); } to { transform: rotate(3deg); } }
+@keyframes turn { to { transform: rotate(360deg); } }
+@keyframes breathe { 0%,100% { transform: scaleY(1); } 50% { transform: scaleY(1.035); } }
+@keyframes drift { from { transform: translate(0,0); } 50% { transform: translate(-60px, 40px); } to { transform: translate(0,0); } }
+@keyframes glow { 0%,100% { opacity: .55; } 50% { opacity: .8; } }
+@keyframes wave { from { transform: rotate(-8deg); } to { transform: rotate(10deg); } }
+
+/* desktop: eight-track mirrored grid */
+@media (width >= 64em) {
+  :root { --margin: 40px; }
+  .masthead { padding: 18px var(--margin); }
+  .masthead nav { display: flex; gap: 2.2rem; }
+  .logo { width: 220px; }
+  .grid {
+    display: grid; grid-template-columns: var(--grid-4-5);
+    column-gap: var(--grid-column-gap); row-gap: var(--grid-row-gap);
+    padding-inline: var(--margin);
+  }
+  .hero { display: grid; grid-template-columns: var(--grid-4-5); column-gap: 0; min-height: 600px; }
+  .hero-copy { grid-column: a1 / b3; grid-row: 1; align-self: end; padding: 0 0 110px var(--margin); position: relative; z-index: 2; }
+  .hero h1 { font-size: 64px; line-height: 1.1; }
+  .hero-copy p { font-size: 18px; }
+  .hero-scene { grid-column: b3 / a5; grid-row: 1; height: auto; min-height: 600px; }
+  .hero-scene svg.scene { left: 0; right: 0; width: 100%; height: 100%; }
+  .pause { right: 28px; bottom: 56px; }
+
+  /* sunamachi: heading a1/b3, chart a3/a5 */
+  .course h2 { grid-column: a1 / b3; }
+  .course .lead { grid-column: a1 / b3; grid-row: 2; }
+  .course .chart { grid-column: b3 / a5; grid-row: 1 / span 3; margin-top: 0; }
+  .chart li { grid-template-columns: 120px 1fr 90px; }
+  .chart .art { grid-column: 3; grid-row: 1 / span 2; }
+
+  /* togoshi: twelve columns with ruled gutters */
+  .depts h2 { grid-column: a1 / a3; }
+  .depts .lead { grid-column: b4 / a5; align-self: end; }
+  .dept-list { grid-column: a1 / a5; display: grid; grid-template-columns: var(--grid-12-col); column-gap: 0; }
+  .dept-list li { grid-column: span 3; border-top: 3px solid var(--paper); padding: 22px 26px 6px; border-left: 1px solid rgba(246,240,228,.45); }
+  .dept-list li:first-child { border-left: 0; padding-left: 0; }
+  .depts .note { grid-column: a1 / b3; }
+
+  /* yanaka: portrait a1/b2, text a2/b4, quote a4/a5 */
+  .doctors h2 { grid-column: a2 / b4; grid-row: 1; }
+  .doctors .doc { grid-column: a1 / b2; grid-row: 1 / span 3; margin-top: 0; }
+  .doctors .bio { grid-column: a2 / b4; grid-row: 2; }
+  .doctors .quote { grid-column: b4 / a5; grid-row: 1 / span 2; align-self: center; margin: 0; }
+
+  /* jujo: heading a1/b3, row across */
+  .discharges h2 { grid-column: a1 / b3; }
+  .discharges .lead { grid-column: a3 / a5; align-self: end; }
+  .ward { grid-column: a1 / a5; margin: 1rem 0 0; padding: 0; display: grid; grid-template-columns: var(--grid-12-col); column-gap: var(--grid-column-gap); overflow: visible; }
+  .ward li { grid-column: span 4; }
+  .progress { display: none; }
+
+  .faq h2 { grid-column: a1 / b3; }
+  .faq-list { grid-column: a2 / b5; margin-top: 0; }
+
+  .visit h2 { grid-column: a1 / b3; grid-row: 1; }
+  .visit .info { grid-column: b3 / a4; grid-row: 1; }
+  .visit .wave { grid-column: a4 / a5; grid-row: 1; align-self: end; }
+  .visit .wave svg { width: 100%; max-width: 300px; margin-left: auto; }
+  .foot { grid-column: a1 / a5; padding-inline: 0; }
+  .visit .grid { padding-inline: var(--margin); }
+  section { padding-block: 110px; }
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <a href="#" aria-label="おもちゃ病院 つぎはぎ堂 トップへ">
+    <svg class="logo" viewBox="0 0 440 96" role="img" aria-labelledby="logo-t">
+      <title id="logo-t">おもちゃ病院 つぎはぎ堂</title>
+      <text x="6" y="24" fill="#e9c46a" font-family="Zen Maru Gothic" font-weight="700" font-size="20" letter-spacing="5">おもちゃ病院</text>
+      <rect x="104" y="36" width="190" height="56" fill="#e07262" transform="rotate(-1.5 200 64)"/>
+      <text x="2" y="84" fill="#f6f0e4" font-family="Zen Maru Gothic" font-weight="900" font-size="54" letter-spacing="1">つぎはぎ堂</text>
+      <path d="M104 92 l190 -5" stroke="#f6f0e4" stroke-width="3" stroke-dasharray="9 7" fill="none"/>
+      <g stroke="#f6f0e4" stroke-width="3" stroke-linecap="round"><path d="M300 52 l14 10 M314 52 l-14 10"/></g>
+    </svg>
+  </a>
+  <nav aria-label="メインメニュー">
+    <a href="#course">入院の流れ</a>
+    <a href="#depts">診療科</a>
+    <a href="#doctors">先生</a>
+    <a href="#faq">よくある質問</a>
+    <a href="#visit">受付時間</a>
+  </nav>
+  <a class="call" href="tel:0300000000"><span>☎</span> 03-0000-0000</a>
+</header>
+
+<main>
+<section class="hero" aria-labelledby="hero-h" style="padding:0">
+  <div class="hero-scene" id="scene">
+    <svg class="scene" viewBox="0 -80 1000 680" role="img" aria-labelledby="scene-t" preserveAspectRatio="xMinYMax slice">
+      <title id="scene-t">商店街の工房の作業台。ばんそうこうを貼ったブリキのロボットが座り、となりのベッドでは継ぎあてのあるクマがカルテを下げて眠っている。</title>
+      <defs>
+        <pattern id="dots" width="10" height="10" patternUnits="userSpaceOnUse">
+          <circle cx="3" cy="3" r="2.1" fill="#6d4329"/><circle cx="8" cy="8" r="2.1" fill="#6d4329"/>
+        </pattern>
+        <pattern id="dotsg" width="9" height="9" patternUnits="userSpaceOnUse">
+          <circle cx="2.5" cy="2.5" r="1.6" fill="#1f3d33"/>
+        </pattern>
+        <pattern id="tile" width="40" height="40" patternUnits="userSpaceOnUse">
+          <rect width="40" height="40" fill="#2a5246"/>
+          <path d="M0 0H40V40" fill="none" stroke="#24463c" stroke-width="2"/>
+        </pattern>
+      </defs>
+      <!-- back wall -->
+      <rect y="-80" width="1000" height="680" fill="url(#tile)"/>
+      <!-- window to the street, warm light -->
+      <g>
+        <rect x="120" y="96" width="300" height="220" fill="#e9c46a" stroke="#1b2622" stroke-width="5"/>
+        <rect x="120" y="96" width="300" height="220" fill="#f6f0e4" class="glow" opacity=".6"/>
+        <path d="M270 96V316M120 206H420" stroke="#1b2622" stroke-width="5"/>
+        <!-- shopping street arcade outline seen through the window -->
+        <path d="M128 200 q70 -70 140 0 M276 200 q70 -70 140 0" fill="none" stroke="#386f5d" stroke-width="4"/>
+        <g fill="#e07262" stroke="#1b2622" stroke-width="3">
+          <ellipse cx="170" cy="262" rx="12" ry="18"/><ellipse cx="226" cy="262" rx="12" ry="18"/>
+          <ellipse cx="318" cy="262" rx="12" ry="18"/><ellipse cx="374" cy="262" rx="12" ry="18"/>
+        </g>
+      </g>
+      <!-- noren curtain cut by the top edge -->
+      <g stroke="#1b2622" stroke-width="5">
+        <path d="M30 -90 H560 V70 H30Z" fill="#386f5d"/>
+        <path d="M206 -90 V70 M384 -90 V70" />
+        <circle cx="295" cy="28" r="26" fill="#f6f0e4"/>
+        <path d="M295 12 V44 M279 28 H311" stroke="#e07262" stroke-width="9" stroke-linecap="round"/>
+        <text x="80" y="46" fill="#f6f0e4" stroke="none" font-family="Zen Maru Gothic" font-weight="900" font-size="30">つぎ</text>
+        <text x="430" y="46" fill="#f6f0e4" stroke="none" font-family="Zen Maru Gothic" font-weight="900" font-size="30">はぎ</text>
+      </g>
+      <!-- shelf of waiting toys -->
+      <g stroke="#1b2622" stroke-width="4">
+        <rect x="560" y="140" width="460" height="14" fill="#c9a24c"/>
+        <!-- daruma -->
+        <path d="M600 140 q-24 -4 -22 -34 q2 -30 22 -32 q20 2 22 32 q2 30 -22 34z" fill="#e07262"/>
+        <ellipse cx="600" cy="100" rx="11" ry="9" fill="#f6f0e4"/>
+        <!-- spinning top -->
+        <path d="M680 140 l-26 -30 h52 z" fill="#e9c46a"/><path d="M654 110 q26 -16 52 0" fill="#386f5d"/>
+        <path d="M680 98 v-12" />
+        <!-- kokeshi with a crack -->
+        <rect x="742" y="96" width="30" height="44" rx="10" fill="#f6f0e4"/>
+        <circle cx="757" cy="84" r="17" fill="#f6f0e4"/>
+        <path d="M740 76 q17 -18 34 0" fill="#1b2622"/>
+        <path d="M748 112 l8 8 l-4 6 l8 8" fill="none" stroke-width="3"/>
+        <!-- train car -->
+        <rect x="810" y="102" width="74" height="34" fill="#386f5d"/>
+        <rect x="822" y="110" width="18" height="14" fill="#e9c46a"/><rect x="850" y="110" width="18" height="14" fill="#e9c46a"/>
+        <circle cx="828" cy="140" r="7" fill="#1b2622"/><circle cx="868" cy="140" r="7" fill="#1b2622"/>
+      </g>
+      <!-- pegboard of tools between window and shelf -->
+      <g stroke="#1b2622" stroke-width="4" stroke-linejoin="round">
+        <rect x="446" y="104" width="104" height="250" fill="#c9a24c"/>
+        <rect x="452" y="110" width="104" height="250" fill="url(#dots)" stroke="none" opacity=".5"/>
+        <path d="M470 130 v40 M470 170 l-10 60 M470 170 l10 60" fill="none" stroke-width="5"/>
+        <circle cx="462" cy="238" r="8" fill="#e07262"/><circle cx="480" cy="238" r="8" fill="#e07262"/>
+        <path d="M522 128 v26" stroke-width="3"/>
+        <circle cx="522" cy="176" r="20" fill="#f6f0e4"/><circle cx="522" cy="176" r="8" fill="#c9a24c"/>
+        <path d="M506 270 h34 l-6 60 h-22z" fill="#386f5d"/>
+        <path d="M512 270 v-16 M520 270 v-22 M528 270 v-14" stroke-width="3"/>
+      </g>
+      <!-- spare cogs on the wall, turning -->
+      <g stroke="#1b2622" stroke-width="4">
+        <g class="cog cog-a"><circle cx="980" cy="40" r="44" fill="#e9c46a" stroke-dasharray="10 7" stroke-width="12"/><circle cx="980" cy="40" r="38" fill="#e9c46a"/><circle cx="980" cy="40" r="10" fill="#1f3d33"/></g>
+        <g class="cog cog-b"><circle cx="910" cy="-10" r="30" fill="#e07262" stroke-dasharray="8 6" stroke-width="10"/><circle cx="910" cy="-10" r="25" fill="#e07262"/><circle cx="910" cy="-10" r="7" fill="#1f3d33"/></g>
+      </g>
+      <!-- hanging lamp -->
+      <g class="lamp">
+        <path d="M640 -90 V150" stroke="#1b2622" stroke-width="4"/>
+        <path d="M600 186 q40 -56 80 0 z" fill="#e07262" stroke="#1b2622" stroke-width="5"/>
+        <path d="M612 186 q28 52 56 0" fill="#f6f0e4" opacity=".35" class="glow"/>
+        <circle cx="640" cy="190" r="10" fill="#f6f0e4" stroke="#1b2622" stroke-width="4"/>
+      </g>
+      <!-- bench -->
+      <path d="M0 430 H1000 V600 H0Z" fill="#8a5a3b" stroke="#1b2622" stroke-width="5"/>
+      <path d="M0 430 H1000" stroke="#1b2622" stroke-width="5"/>
+      <path d="M0 446 H1000" stroke="#6d4329" stroke-width="6"/>
+      <rect x="0" y="452" width="1000" height="148" fill="url(#dots)" opacity=".45"/>
+      <ellipse cx="752" cy="428" rx="110" ry="10" fill="url(#dotsg)"/>
+      <g stroke="#1b2622" stroke-width="4">
+        <g class="cog cog-b"><circle cx="410" cy="412" r="20" fill="#9aa7a1" stroke-dasharray="7 5" stroke-width="9"/><circle cx="410" cy="412" r="16" fill="#9aa7a1"/><circle cx="410" cy="412" r="5" fill="#1b2622"/></g>
+        <g class="cog cog-a"><circle cx="440" cy="420" r="12" fill="#e9c46a" stroke-dasharray="6 4" stroke-width="7"/><circle cx="440" cy="420" r="9" fill="#e9c46a"/></g>
+      </g>
+      <!-- cutting mat -->
+      <path d="M460 430 l40 -30 h380 l-30 30z" fill="#386f5d" stroke="#1b2622" stroke-width="4"/>
+      <path d="M520 400 l-28 30 M580 400 l-28 30 M640 400 l-28 30 M700 400 l-28 30 M760 400 l-28 30 M820 400 l-28 30" stroke="#4f8a75" stroke-width="2"/>
+      <!-- bed with the bear -->
+      <g stroke="#1b2622" stroke-width="5">
+        <path d="M70 430 V320 M70 360 H360 M360 430 V340" fill="none"/>
+        <rect x="70" y="360" width="290" height="40" fill="#f6f0e4"/>
+        <ellipse cx="128" cy="352" rx="44" ry="18" fill="#dbe8df"/>
+        <!-- bear head -->
+        <g class="breath">
+          <circle cx="108" cy="306" r="15" fill="#c98a4b"/><circle cx="160" cy="306" r="15" fill="#c98a4b"/>
+          <circle cx="134" cy="330" r="34" fill="#c98a4b"/>
+          <ellipse cx="134" cy="342" rx="14" ry="10" fill="#e9c46a"/>
+          <path d="M120 324 q5 4 10 0 M140 324 q5 4 10 0" fill="none" stroke-width="3"/>
+          <!-- patch on head -->
+          <rect x="146" y="298" width="20" height="18" fill="#e07262" transform="rotate(12 156 307)" stroke-width="3"/>
+          <path d="M148 296 l-3 -4 M156 297 l-1 -5 M164 300 l1 -5" stroke-width="2.5"/>
+          <!-- blanket -->
+          <path d="M150 352 H352 V400 H150 Z" fill="#e07262"/>
+          <path d="M240 362 h52 v30 h-52z" fill="#e9c46a" stroke-width="3"/>
+          <path d="M240 362 h52 v30 h-52z" fill="none" stroke="#1b2622" stroke-width="2" stroke-dasharray="5 5" transform="translate(-5 -5) scale(1.03)" transform-origin="266 377"/>
+        </g>
+        <!-- chart hanging on the bed end -->
+        <path d="M360 340 l-10 30" stroke-width="3"/>
+        <rect x="318" y="370" width="56" height="70" fill="#f6f0e4" transform="rotate(-4 346 405)"/>
+        <rect x="334" y="364" width="24" height="10" fill="#1b2622"/>
+        <path d="M328 392 h36 M328 404 h30 M328 416 h34" stroke-width="2.5"/>
+      </g>
+      <!-- spool, needle, screwdriver on the mat -->
+      <g stroke="#1b2622" stroke-width="4">
+        <rect x="520" y="378" width="34" height="40" fill="#e07262"/>
+        <rect x="514" y="372" width="46" height="8" fill="#c9a24c"/><rect x="514" y="416" width="46" height="8" fill="#c9a24c"/>
+        <path d="M556 400 q40 -10 70 8" fill="none" stroke="#e07262" stroke-width="3"/>
+        <path d="M626 408 l44 -14" stroke-width="3"/>
+        <path d="M720 424 l90 -14" stroke-width="7" stroke="#9aa7a1"/>
+        <path d="M806 412 l46 -8" stroke-width="16" stroke="#e9c46a" stroke-linecap="round"/>
+      </g>
+      <!-- Tsugio the tin robot -->
+      <g id="tsugio" stroke="#1b2622" stroke-width="5" stroke-linejoin="round">
+        <!-- key in his back -->
+        <g class="key">
+          <path d="M876 300 h-24 M852 300 m-8 0 a14 22 0 1 0 -28 0 a14 22 0 1 0 28 0 M852 300 m0 0 a14 22 0 1 1 28 0" fill="#c9a24c"/>
+        </g>
+        <!-- legs -->
+        <rect x="700" y="372" width="34" height="46" fill="#9aa7a1"/>
+        <rect x="770" y="372" width="34" height="46" fill="#9aa7a1"/>
+        <rect x="690" y="410" width="54" height="20" rx="4" fill="#386f5d"/>
+        <rect x="760" y="410" width="54" height="20" rx="4" fill="#386f5d"/>
+        <!-- body -->
+        <rect x="679" y="256" width="160" height="130" rx="10" fill="#e9c46a" stroke="none"/>
+        <rect x="672" y="250" width="160" height="130" rx="10" fill="#e9c46a" fill-opacity=".35"/>
+        <rect x="680" y="300" width="18" height="70" fill="url(#dotsg)" stroke="none" opacity=".5"/>
+        <rect x="700" y="274" width="104" height="58" fill="#f6f0e4"/>
+        <circle cx="724" cy="303" r="11" fill="#e07262"/>
+        <circle cx="758" cy="303" r="11" fill="#386f5d"/>
+        <path d="M786 290 v26" stroke-width="4"/>
+        <path d="M692 360 h120" stroke-dasharray="8 6" stroke-width="3"/>
+        <!-- arms -->
+        <path d="M672 276 q-40 10 -44 64" fill="none" stroke-width="18" stroke-linecap="round"/>
+        <path d="M672 276 q-40 10 -44 64" fill="none" stroke="#9aa7a1" stroke-width="9" stroke-linecap="round"/>
+        <circle cx="628" cy="346" r="14" fill="#9aa7a1"/>
+        <path d="M832 276 q34 20 32 70" fill="none" stroke-width="18" stroke-linecap="round"/>
+        <path d="M832 276 q34 20 32 70" fill="none" stroke="#9aa7a1" stroke-width="9" stroke-linecap="round"/>
+        <circle cx="864" cy="350" r="14" fill="#9aa7a1"/>
+        <!-- head -->
+        <rect x="700" y="160" width="106" height="88" rx="8" fill="#9aa7a1"/>
+        <rect x="738" y="246" width="30" height="8" fill="#1b2622"/>
+        <path d="M753 160 v-30" />
+        <circle cx="753" cy="124" r="9" fill="#e07262"/>
+        <rect x="716" y="188" width="74" height="30" rx="15" fill="#1b2622"/>
+        <circle cx="736" cy="203" r="8" fill="#f6f0e4" stroke="none"/>
+        <circle cx="770" cy="203" r="8" fill="#f6f0e4" stroke="none"/>
+        <path d="M730 232 q23 10 46 0" fill="none" stroke-width="4"/>
+        <!-- plaster across the head -->
+        <g transform="rotate(-22 760 172)">
+          <rect x="728" y="164" width="66" height="18" rx="5" fill="#f2c7a8"/>
+          <rect x="752" y="164" width="18" height="18" fill="#e6a585" stroke-width="3"/>
+        </g>
+        <!-- rivets -->
+        <g fill="#1b2622" stroke="none"><circle cx="710" cy="170" r="3"/><circle cx="796" cy="170" r="3"/><circle cx="710" cy="238" r="3"/><circle cx="796" cy="238" r="3"/></g>
+      </g>
+      <!-- dust motes in the lamp light -->
+      <g fill="#f6f0e4" opacity=".7">
+        <circle class="mote" cx="620" cy="240" r="3"/>
+        <circle class="mote m2" cx="680" cy="210" r="2.4"/>
+        <circle class="mote m3" cx="560" cy="280" r="2"/>
+      </g>
+    </svg>
+    <button class="pause" type="button" aria-pressed="false" id="pause">動きを止める</button>
+  </div>
+  <div class="hero-copy">
+    <h1 id="hero-h">こわれた<br>おもちゃ、<br>入院<br>できます。</h1>
+    <p>ひだまり通り商店街の豆腐屋のとなりで、壊れたおもちゃを預かって直しています。縫ったところには、つぎはぎの跡が少し残ります。</p>
+    <p class="open">受付 火〜土 11:00–18:00</p>
+  </div>
+  <svg class="seam" viewBox="0 0 1440 40" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 40 V20 L46 28 L92 18 L138 30 L184 16 L230 26 L276 17 L322 31 L368 15 L414 28 L460 19 L508 30 L552 14 L600 27 L644 17 L690 30 L736 15 L780 26 L826 17 L872 31 L920 15 L966 28 L1012 18 L1060 30 L1104 14 L1150 27 L1196 17 L1240 31 L1290 16 L1330 29 L1372 15 L1410 27 L1440 18 V40 Z" fill="#f6f0e4"/>
+    <path d="M0 8 H1440" stroke="#e07262" stroke-width="3" stroke-dasharray="14 10" vector-effect="non-scaling-stroke"/>
+  </svg>
+</section>
+
+<section class="course" id="course" aria-labelledby="course-h">
+  <div class="grid wrap">
+    <h2 id="course-h">受付から退院まで</h2>
+    <p class="lead">お預かりしたおもちゃには、一つずつカルテをつくります。いまどの段階にいるかは、電話でもお店でもお伝えします。</p>
+    <ol class="chart">
+      <li>
+        <div><span class="word">受付</span><span class="days">当日</span></div>
+        <div><h3>症状を聞かせてください</h3><p>いつ、どうして動かなくなったか。思い出せる範囲で大丈夫です。持ち主のお名前と、そのおもちゃの呼び名もカルテに書きます。</p></div>
+        <svg class="art" viewBox="0 0 84 84" aria-hidden="true"><rect x="14" y="10" width="56" height="68" fill="#f6f0e4" stroke="#1b2622" stroke-width="4"/><rect x="30" y="4" width="24" height="12" fill="#1b2622"/><path d="M24 34h36M24 46h30M24 58h34" stroke="#1b2622" stroke-width="3"/><path d="M24 22l6 6 10-10" stroke="#e07262" stroke-width="4" fill="none"/></svg>
+      </li>
+      <li>
+        <div><span class="word">診察</span><span class="days">3日以内</span></div>
+        <div><h3>分解して、見積もりをお電話します</h3><p>原因がわかったら、直し方と費用をお伝えします。直すかどうかは、それを聞いてから決めてください。診察だけなら無料です。</p></div>
+        <svg class="art" viewBox="0 0 84 84" aria-hidden="true"><circle cx="36" cy="36" r="22" fill="#dbe8df" stroke="#1b2622" stroke-width="4"/><path d="M52 52l20 20" stroke="#1b2622" stroke-width="9" stroke-linecap="round"/><path d="M28 30h16M36 22v16" stroke="#e07262" stroke-width="5" stroke-linecap="round"/></svg>
+      </li>
+      <li>
+        <div><span class="word">入院</span><span class="days">1〜4週間</span></div>
+        <div><h3>作業台の上で直します</h3><p>手に入らない部品は、つくります。ぬいぐるみの綿は、もとの手ざわりに近いものを選んで足します。</p></div>
+        <svg class="art" viewBox="0 0 84 84" aria-hidden="true"><rect x="8" y="44" width="68" height="20" fill="#e07262" stroke="#1b2622" stroke-width="4"/><path d="M8 64v12M76 64v12M8 44V30" stroke="#1b2622" stroke-width="4"/><circle cx="22" cy="36" r="10" fill="#c98a4b" stroke="#1b2622" stroke-width="4"/><path d="M36 54h32" stroke="#f6f0e4" stroke-width="3" stroke-dasharray="5 4"/></svg>
+      </li>
+      <li>
+        <div><span class="word">退院</span><span class="days">お迎えの日</span></div>
+        <div><h3>カルテと一緒にお返しします</h3><p>どこを、何で直したかを書いたカルテを添えます。また具合が悪くなったら、同じカルテで再診します。</p></div>
+        <svg class="art" viewBox="0 0 84 84" aria-hidden="true"><rect x="22" y="30" width="40" height="34" rx="4" fill="#e9c46a" stroke="#1b2622" stroke-width="4"/><rect x="28" y="8" width="28" height="22" rx="3" fill="#9aa7a1" stroke="#1b2622" stroke-width="4"/><path d="M22 40 q-14 -6 -12 -22" fill="none" stroke="#1b2622" stroke-width="6" stroke-linecap="round"/><path d="M36 22q6 4 12 0" stroke="#1b2622" stroke-width="3" fill="none"/><path d="M30 64v12M54 64v12" stroke="#1b2622" stroke-width="5"/></svg>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="depts" id="depts" aria-labelledby="depts-h">
+  <div class="grid wrap">
+    <h2 id="depts-h">診療科</h2>
+    <p class="lead">技術料は症状で決まります。部品代は実費です。</p>
+    <ul class="dept-list">
+      <li><h3>ぬいぐるみ科 <span class="fee">1,500円〜</span></h3><p>取れた耳や目を縫いつけます。やせた綿も足します。</p></li>
+      <li><h3>ゼンマイ科 <span class="fee">2,000円〜</span></h3><p>ブリキのロボットとオルゴール。昭和のものが得意です。</p></li>
+      <li><h3>電子科 <span class="fee">2,500円〜</span></h3><p>電池を入れても動かないもの。ゲーム機は診ていません。</p></li>
+      <li><h3>人形科 <span class="fee">3,000円〜</span></h3><p>着せかえ人形の髪の植えなおし、ひな人形の小道具。顔の描きなおしはしません。</p></li>
+    </ul>
+    <p class="note">どの科かわからなくても、受付でうかがいます。料金表は<a href="#">こちら</a>。</p>
+  </div>
+</section>
+
+<section class="doctors" id="doctors" aria-labelledby="doctors-h">
+  <div class="grid wrap">
+    <figure class="doc">
+      <svg viewBox="0 0 300 340" role="img" aria-labelledby="doc-t" style="width:100%;max-width:340px;display:block">
+        <title id="doc-t">院長の針谷さんがルーペをかけ、ロボットのツギオに聴診器をあてている</title>
+        <rect width="300" height="340" fill="#dbe8df"/>
+        <g stroke="#1b2622" stroke-width="5" stroke-linejoin="round">
+          <path d="M20 340 q10 -120 110 -130 q100 10 110 130z" fill="#f6f0e4"/>
+          <path d="M110 214 l20 40 l20 -40" fill="#386f5d"/>
+          <circle cx="130" cy="150" r="56" fill="#e8b48f"/>
+          <path d="M76 140 q0 -66 56 -64 q56 0 52 60 q-14 -30 -52 -30 q-34 2 -56 34z" fill="#9aa7a1"/>
+          <circle cx="110" cy="154" r="16" fill="#f6f0e4"/><circle cx="152" cy="154" r="16" fill="#f6f0e4"/>
+          <path d="M126 154h10" />
+          <circle cx="110" cy="156" r="4" fill="#1b2622"/><circle cx="152" cy="156" r="4" fill="#1b2622"/>
+          <path d="M116 186 q14 10 28 0" fill="none" stroke-width="4"/>
+          <path d="M100 226 q-10 60 40 60 q40 0 60 -30" fill="none" stroke-width="4"/>
+          <circle cx="204" cy="252" r="12" fill="#e07262"/>
+          <!-- Tsugio, small -->
+          <rect x="196" y="262" width="76" height="62" rx="6" fill="#e9c46a"/>
+          <rect x="206" y="214" width="56" height="46" rx="5" fill="#9aa7a1"/>
+          <rect x="214" y="228" width="40" height="16" rx="8" fill="#1b2622"/>
+          <rect x="220" y="206" width="36" height="10" rx="3" fill="#f2c7a8" transform="rotate(-18 238 211)"/>
+        </g>
+      </svg>
+      <figcaption>院長 針谷 修（はりや おさむ）とツギオ</figcaption>
+    </figure>
+    <h2 id="doctors-h">院長の針谷です</h2>
+    <div class="bio">
+      <p>町工場で四十年、ゼンマイの部品をつくってきました。ぬいぐるみは縫製の仕事をしていた糸川が、電子のおもちゃは近所の大学で電気を学ぶ森が担当しています。</p>
+      <p>三人とも、直す前に必ず持ち主の話を聞きます。誰が、どんなふうに遊んできたのかで、残す傷と直す傷が変わるからです。</p>
+    </div>
+    <blockquote class="quote">「歯車が一枚欠けていたら、真鍮の板から削ります。売っていないので」<cite>院長 針谷 修</cite></blockquote>
+  </div>
+</section>
+
+<section class="discharges" aria-labelledby="dis-h">
+  <div class="grid wrap">
+    <h2 id="dis-h">今月、退院したおもちゃ</h2>
+    <p class="lead">カルテから、持ち主の許可をいただいたものを載せています。</p>
+    <ul class="ward" id="ward">
+      <li>
+        <svg viewBox="0 0 300 200" aria-hidden="true"><g stroke="#1b2622" stroke-width="5"><circle cx="118" cy="70" r="20" fill="#c98a4b"/><circle cx="182" cy="70" r="20" fill="#c98a4b"/><circle cx="150" cy="110" r="52" fill="#c98a4b"/><ellipse cx="150" cy="126" rx="20" ry="14" fill="#e9c46a"/><circle cx="132" cy="102" r="5" fill="#1b2622"/><circle cx="168" cy="102" r="5" fill="#1b2622"/><rect x="164" y="64" width="26" height="22" fill="#e07262" stroke-width="3" transform="rotate(14 177 75)"/></g></svg>
+        <h3>クマのモモ</h3>
+        <dl class="rec"><dt>症状</dt><dd>耳がちぎれ、綿がやせた</dd><dt>処置</dt><dd>耳の縫いつけ、綿の補充</dd><dt>入院</dt><dd>9日</dd></dl>
+      </li>
+      <li>
+        <svg viewBox="0 0 300 200" aria-hidden="true"><g stroke="#1b2622" stroke-width="5"><rect x="70" y="92" width="160" height="56" rx="10" fill="#e07262"/><path d="M100 92 l20 -36 h60 l20 36" fill="#e9c46a"/><rect x="124" y="64" width="22" height="22" fill="#f6f0e4"/><rect x="154" y="64" width="22" height="22" fill="#f6f0e4"/><circle cx="104" cy="152" r="18" fill="#1b2622"/><circle cx="196" cy="152" r="18" fill="#1b2622"/><path d="M234 118 h28" /><circle cx="270" cy="118" r="10" fill="#c9a24c"/></g></svg>
+        <h3>ブリキのタクシー</h3>
+        <dl class="rec"><dt>症状</dt><dd>ゼンマイが巻けない</dd><dt>処置</dt><dd>ゼンマイ交換、歯車を一枚製作</dd><dt>入院</dt><dd>3週間</dd></dl>
+      </li>
+      <li>
+        <svg viewBox="0 0 300 200" aria-hidden="true"><g stroke="#1b2622" stroke-width="5"><rect x="96" y="40" width="108" height="140" rx="18" fill="#386f5d"/><rect x="114" y="58" width="72" height="50" fill="#dbe8df"/><circle cx="130" cy="140" r="12" fill="#e07262"/><circle cx="170" cy="140" r="12" fill="#e9c46a"/><path d="M200 70 q30 -10 40 -40 M210 84 q40 -6 56 -40" fill="none" stroke-width="4"/></g></svg>
+        <h3>おしゃべりたまご</h3>
+        <dl class="rec"><dt>症状</dt><dd>電池を入れても声が出ない</dd><dt>処置</dt><dd>端子の錆び取り、スピーカー交換</dd><dt>入院</dt><dd>12日</dd></dl>
+      </li>
+    </ul>
+    <div class="progress" aria-hidden="true"><span id="bar"></span></div>
+  </div>
+</section>
+
+<section class="faq" id="faq" aria-labelledby="faq-h">
+  <div class="grid wrap">
+    <h2 id="faq-h">よくある質問</h2>
+    <div class="faq-list">
+      <details><summary>直せないと言われたら、どうなりますか</summary><p>診察料はいただかず、そのままお返しします。部品取りのためにお店で引き取ることもできますが、決めるのは持ち主です。</p></details>
+      <details><summary>遠くに住んでいます。郵送で預けられますか</summary><p>できます。症状をメモして箱に入れ、着払いで送ってください。見積もりはお電話かメールでお送りします。</p></details>
+      <details><summary>子どもが修理を見学してもいいですか</summary><p>土曜の午後は作業台の前に小さな椅子を出しています。分解しているところを見ると、おもちゃを大事にする子が多いです。</p></details>
+      <details><summary>新しいおもちゃと同じくらいの値段になりませんか</summary><p>なることもあります。見積もりの段階で正直にお伝えします。</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="visit" id="visit" aria-labelledby="visit-h">
+  <div class="grid wrap">
+    <h2 id="visit-h">受付は火曜から土曜まで</h2>
+    <div class="info">
+      <dl>
+        <dt>場所</dt><dd>東京都杉並区ひだまり三丁目<br>ひだまり通り商店街、豆腐屋のとなり</dd>
+        <dt>受付</dt><dd>11:00–18:00（日・月曜休み）</dd>
+        <dt>電話</dt><dd><a href="tel:0300000000">03-0000-0000</a></dd>
+        <dt>駐車場</dt><dd>ありません。商店街の入口に駐輪場があります。</dd>
+      </dl>
+      <p><a href="#">地図を開く</a></p>
+    </div>
+    <div class="wave">
+      <svg viewBox="0 0 220 240" role="img" aria-labelledby="wave-t">
+        <title id="wave-t">ツギオが手を振っている</title>
+        <g stroke="#f6f0e4" stroke-width="5" stroke-linejoin="round">
+          <rect x="60" y="120" width="100" height="84" rx="8" fill="#e9c46a"/>
+          <rect x="76" y="140" width="68" height="36" fill="#f6f0e4"/>
+          <circle cx="94" cy="158" r="8" fill="#e07262"/><circle cx="124" cy="158" r="8" fill="#386f5d"/>
+          <rect x="74" y="44" width="72" height="66" rx="6" fill="#9aa7a1"/>
+          <rect x="86" y="64" width="48" height="20" rx="10" fill="#1b2622"/>
+          <path d="M110 44 v-20"/><circle cx="110" cy="18" r="7" fill="#e07262"/>
+          <rect x="92" y="48" width="46" height="13" rx="4" fill="#f2c7a8" transform="rotate(-20 115 54)"/>
+          <path d="M60 140 q-24 20 -20 56" fill="none" stroke-width="12" stroke-linecap="round"/>
+          <path class="wave-arm" d="M160 138 q26 -14 30 -62" fill="none" stroke-width="12" stroke-linecap="round"/>
+          <rect x="74" y="204" width="24" height="30" fill="#9aa7a1"/><rect x="122" y="204" width="24" height="30" fill="#9aa7a1"/>
+        </g>
+      </svg>
+    </div>
+    <p class="foot">おもちゃ病院 つぎはぎ堂　ひだまり通り商店街</p>
+  </div>
+</section>
+</main>
+
+<script>
+(function () {
+  var btn = document.getElementById('pause');
+  var scene = document.getElementById('scene');
+  btn.addEventListener('click', function () {
+    var on = scene.classList.toggle('paused');
+    btn.setAttribute('aria-pressed', String(on));
+    btn.textContent = on ? '動かす' : '動きを止める';
+  });
+  var ward = document.getElementById('ward');
+  var bar = document.getElementById('bar');
+  ward.addEventListener('scroll', function () {
+    var max = ward.scrollWidth - ward.clientWidth;
+    var p = max > 0 ? ward.scrollLeft / max : 0;
+    bar.style.width = (30 + p * 70) + '%';
+  }, { passive: true });
+})();
+</script>
+</body>
+</html>

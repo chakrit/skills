@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lanternfish Kayak Tours · Sea kayaking from Porth Skerrow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --night: #0d1838;
+  --sea: #16306e;
+  --sea-lit: #2b4f9e;
+  --deep: #2a1846;
+  --ink: #070b1a;
+  --foam: #f2eedf;
+  --foam-dim: #c9c6bd;
+  --lantern: #efed61;
+  --lantern-deep: #c9b92c;
+
+  --grid-4-5: [a1] 4fr [b2] 1fr [a2] 3fr [b3] 2fr [a3] 2fr [b4] 3fr [a4] 1fr [b5] 4fr [a5];
+  --grid-12-col: repeat(12, 1fr);
+  --grid-column-gap: clamp(1.6875rem, 1.6223rem + .3261vi, 1.875rem);
+  --grid-row-gap: clamp(1rem, calc(.89rem + .54vw), 1.31rem);
+  --measure: 60ch;
+  --margin: 20px;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { background: var(--night); }
+body {
+  margin: 0;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-variation-settings: "wdth" 100, "opsz" 14;
+  font-weight: 350;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  letter-spacing: .01em;
+  word-spacing: .04em;
+  color: var(--foam);
+  background: var(--night);
+}
+a { color: var(--lantern); text-underline-offset: .2em; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 3px; }
+h1, h2, h3 {
+  font-variation-settings: "wdth" 75, "opsz" 96;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  line-height: 1.02;
+  text-wrap: balance;
+  margin: 0;
+}
+h1 { font-size: clamp(2.5rem, 1.4rem + 4.2vw, 4.5rem); }
+h2 { font-size: clamp(2rem, 1.3rem + 2.6vw, 3.25rem); }
+h3 { font-size: 1.75rem; line-height: 1.05; }
+p { margin: 0 0 1em; max-width: var(--measure); }
+
+.wrap { padding-inline: var(--margin); }
+
+/* ---------- header ---------- */
+.site-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: 18px var(--margin);
+  background: var(--night);
+  position: relative; z-index: 2;
+}
+.logo { display: block; color: var(--foam); text-decoration: none; }
+.logo svg { display: block; height: 66px; width: auto; }
+.site-head nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 1.6rem; }
+.site-head nav a {
+  color: var(--foam); text-decoration: none;
+  font-variation-settings: "wdth" 80, "opsz" 14; font-weight: 600; font-size: 1rem;
+}
+.site-head nav a:hover { color: var(--lantern); }
+.book-btn, .site-head nav a.book-btn {
+  display: inline-block;
+  background: var(--lantern); color: var(--ink);
+  font-variation-settings: "wdth" 80, "opsz" 14; font-weight: 750;
+  text-decoration: none; padding: .55em 1.1em .6em;
+  border: 2px solid var(--ink); box-shadow: 4px 4px 0 var(--ink);
+}
+.book-btn:hover { background: var(--foam); box-shadow: 2px 2px 0 var(--ink); transform: translate(2px,2px); }
+.nav-links { display: none; }
+
+/* ---------- hero ---------- */
+.hero { position: relative; }
+.scene { position: relative; height: 546px; overflow: hidden; }
+.scene svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.pause {
+  position: absolute; right: var(--margin); top: 14px; z-index: 3;
+  font: inherit; font-size: .875rem; font-weight: 600;
+  font-variation-settings: "wdth" 85;
+  color: var(--foam); background: rgba(7,11,26,.55);
+  border: 1px solid var(--foam-dim); padding: .25em .8em; cursor: pointer;
+}
+.pause:hover { color: var(--lantern); border-color: var(--lantern); }
+.hero-copy { padding: 8px var(--margin) 72px; display: grid; gap: 1.4rem; }
+.hero-copy h1 { max-width: 13ch; }
+.standfirst {
+  font-variation-settings: "wdth" 75, "opsz" 24; font-weight: 500;
+  text-transform: uppercase; letter-spacing: .04em; line-height: 1.3;
+  font-size: 1.125rem; color: var(--foam-dim); max-width: 34ch; margin: 0;
+}
+.hero-copy .lede { margin: 0; }
+
+/* scene motion */
+@media (prefers-reduced-motion: no-preference) {
+  .twinkle { animation: twinkle var(--t, 9s) ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+  .cloud { animation: drift 240s linear infinite; }
+  .bob { animation: bob var(--t, 7s) cubic-bezier(.45,.05,.55,.95) infinite alternate; }
+  .paddle { animation: stroke 5.6s cubic-bezier(.45,.05,.55,.95) infinite alternate; transform-box: fill-box; transform-origin: center; }
+  .glow { animation: glow 4.8s ease-in-out infinite; }
+  .fish { animation: swim 22s cubic-bezier(.45,.05,.55,.95) infinite alternate; }
+  .lure { animation: sway 6.4s ease-in-out infinite alternate; transform-box: view-box; transform-origin: 800px 452px; }
+  .spark { animation: spark var(--t, 3.8s) ease-in-out infinite; }
+  .swell { animation: swell 11s cubic-bezier(.45,.05,.55,.95) infinite alternate; }
+  .paused * { animation-play-state: paused !important; }
+}
+@keyframes twinkle { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: .35; transform: scale(.7); } }
+@keyframes drift { from { transform: translateX(0); } to { transform: translateX(-1700px); } }
+@keyframes bob { from { transform: translateY(-3px) rotate(-.6deg); } to { transform: translateY(4px) rotate(.6deg); } }
+@keyframes stroke { from { transform: rotate(-16deg); } to { transform: rotate(16deg); } }
+@keyframes glow { 0%,100% { opacity: .55; } 50% { opacity: 1; } }
+@keyframes swim { from { transform: translateX(-30px); } to { transform: translateX(40px); } }
+@keyframes sway { from { transform: rotate(-3deg); } to { transform: rotate(3deg); } }
+@keyframes spark { 0%,100% { opacity: 0; } 45%,60% { opacity: 1; } }
+@keyframes swell { from { transform: translateX(0); } to { transform: translateX(-28px); } }
+
+/* ---------- trips ---------- */
+.trips { padding: 40px 0 88px; }
+.trips-head { padding-inline: var(--margin); margin-bottom: 2.4rem; display: grid; gap: 1rem; }
+.trips-head p { color: var(--foam-dim); margin: 0; }
+.trip-row {
+  list-style: none; margin: 0; padding: 0 var(--margin);
+  display: flex; gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--margin);
+  scrollbar-width: none;
+}
+.trip-row::-webkit-scrollbar { display: none; }
+.trip { flex: 0 0 85%; scroll-snap-align: start; }
+.trip svg { display: block; width: 100%; height: 190px; margin-bottom: 1.1rem; }
+.trip h3 { margin-bottom: .5rem; }
+.trip .facts {
+  display: flex; flex-wrap: wrap; gap: .2rem 1.1rem; margin: 0 0 .9rem; padding: .5rem 0;
+  border-block: 1px solid rgba(242,238,223,.28);
+  font-variation-settings: "wdth" 80; font-weight: 600; font-size: .95rem;
+}
+.trip .facts dt { position: absolute; left: -9999px; }
+.trip .facts dd { margin: 0; }
+.trip .price { color: var(--lantern); }
+.trip p { font-size: 1rem; }
+.progress { margin: 1.4rem var(--margin) 0; height: 3px; background: rgba(242,238,223,.18); }
+.progress span { display: block; height: 100%; width: 33%; background: var(--lantern); transition: width .2s; }
+
+/* ---------- night paddle sequence ---------- */
+.night { padding: 72px var(--margin) 96px; background: var(--deep); position: relative; }
+.night::before {
+  content: ""; position: absolute; left: 0; right: 0; top: -22px; height: 24px;
+  background: var(--deep);
+  clip-path: polygon(0 100%,0 55%,6% 30%,11% 62%,19% 20%,26% 58%,33% 34%,41% 70%,49% 26%,57% 60%,64% 18%,72% 54%,80% 30%,87% 66%,94% 28%,100% 50%,100% 100%);
+}
+.night-intro p { color: var(--foam-dim); }
+.night .mascot { width: min(100%, 360px); height: auto; display: block; margin: 1.5rem 0 2rem; }
+.steps { list-style: none; margin: 0; padding: 0; counter-reset: none; }
+.steps li {
+  display: grid; grid-template-columns: 5.2rem 1fr; gap: 0 1.2rem;
+  padding: 1.1rem 0; border-top: 1px solid rgba(242,238,223,.22);
+}
+.steps li:last-child { border-bottom: 1px solid rgba(242,238,223,.22); }
+.steps time {
+  font-variation-settings: "wdth" 75, "opsz" 48; font-weight: 800; font-size: 1.75rem;
+  line-height: 1.1; color: var(--lantern); letter-spacing: -.01em;
+  font-feature-settings: "tnum";
+}
+.steps h3 { font-size: 1.375rem; margin-bottom: .3rem; }
+.steps p { margin: 0; font-size: 1rem; }
+
+/* ---------- guides (daylight page colours) ---------- */
+.guides { background: var(--foam); color: var(--night); padding: 88px var(--margin); }
+.guides a { color: var(--sea); }
+.guides p { font-weight: 400; }
+.guides h2 { margin-bottom: 1.4rem; }
+.guides figure { margin: 0; }
+.quote {
+  margin: 2rem 0 0; padding: 1.2rem 0 0; border-top: 4px solid var(--night);
+}
+.quote blockquote { margin: 0; }
+.quote blockquote p {
+  font-variation-settings: "wdth" 75, "opsz" 48; font-weight: 600;
+  font-size: 1.75rem; line-height: 1.15; letter-spacing: -.01em; max-width: 22ch;
+}
+.quote figcaption { font-size: .95rem; font-weight: 500; }
+.crew { list-style: none; padding: 0; margin: 2rem 0 0; }
+.crew li { padding: .7rem 0; border-top: 1px solid rgba(13,24,56,.25); display: grid; grid-template-columns: 9rem 1fr; gap: 1rem; }
+.crew b { font-variation-settings: "wdth" 80; font-weight: 750; }
+
+/* ---------- questions ---------- */
+.questions { padding: 88px var(--margin); }
+.questions h2 { margin-bottom: 1.6rem; }
+.faq details { border-top: 1px solid rgba(242,238,223,.24); }
+.faq details:last-child { border-bottom: 1px solid rgba(242,238,223,.24); }
+.faq summary {
+  list-style: none; cursor: pointer;
+  display: grid; grid-template-columns: 8px 1fr; gap: 1.2rem; align-items: baseline;
+  padding: 1rem 0;
+  font-variation-settings: "wdth" 80, "opsz" 24; font-weight: 650; font-size: 1.25rem; line-height: 1.25;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::before {
+  content: ""; width: 8px; height: 8px; background: var(--lantern); border-radius: 50%;
+  transform: translateY(-2px); opacity: .45;
+}
+.faq details[open] summary::before { opacity: 1; box-shadow: 0 0 10px 2px rgba(239,237,97,.6); }
+.faq summary:hover { color: var(--lantern); }
+.faq details p { padding-left: calc(8px + 1.2rem); padding-bottom: .6rem; }
+
+/* ---------- booking + footer ---------- */
+.book { padding: 40px var(--margin) 0; }
+.book-inner { border-top: 4px solid var(--lantern); padding-top: 2.2rem; display: grid; gap: 1.5rem; }
+.book h2 { max-width: 14ch; }
+.book .sleeper { width: min(100%, 420px); height: auto; display: block; }
+.book .contact { font-size: 1rem; }
+.book .contact b { font-weight: 650; }
+footer {
+  margin-top: 64px; padding: 26px var(--margin) 40px;
+  border-top: 1px solid rgba(242,238,223,.2);
+  font-size: .9rem; color: var(--foam-dim);
+  display: flex; flex-wrap: wrap; gap: .6rem 2rem; justify-content: space-between;
+}
+footer p { margin: 0; }
+
+/* ---------- desktop: 4+5 grid ---------- */
+@media (width >= 48em) {
+  :root { --margin: 40px; }
+  .nav-links { display: block; }
+  .scene { height: 600px; }
+  .trip-row { display: grid; grid-template-columns: var(--grid-12-col); column-gap: 0; overflow: visible; }
+  .trip { grid-column: span 4; padding-inline: var(--grid-column-gap); border-left: 1px solid rgba(242,238,223,.28); }
+  .trip:first-child { padding-left: 0; border-left: 0; }
+  .trip:last-child { padding-right: 0; }
+  .progress { display: none; }
+}
+@media (width >= 64em) {
+  .g45 {
+    display: grid; grid-template-columns: var(--grid-4-5);
+    column-gap: var(--grid-column-gap); row-gap: var(--grid-row-gap);
+  }
+  /* "Skerrow": headline over the first five tracks, standfirst out in tracks 7-8 */
+  .hero-copy { padding-top: 28px; align-items: start; }
+  .hero-copy h1 { grid-column: a1 / b3; grid-row: 1 / 3; max-width: none; font-size: 4.5rem; }
+  .hero-copy .standfirst { grid-column: a4 / a5; grid-row: 1; padding-top: .6rem; }
+  .hero-copy .lede { grid-column: a4 / a5; grid-row: 2; }
+  /* "Porth": trips heading a1/a3, intro b4/a5 */
+  .trips-head { grid-column: 1 / -1; }
+  .trips-head h2 { grid-column: a1 / a3; }
+  .trips-head p { grid-column: b4 / a5; align-self: end; }
+  /* "Gullet": intro + mascot a1/b3, steps a3/a5 */
+  .night-intro { grid-column: a1 / b3; }
+  .steps { grid-column: a3 / a5; align-self: start; }
+  /* "Skomer": text a1/b4, quote a4/a5 */
+  .guides-text { grid-column: a1 / b4; }
+  .guides .quote { grid-column: a4 / a5; margin-top: .4rem; }
+  /* "Marloes": heading a1/b2... list b3/a5 */
+  .questions h2 { grid-column: a1 / a2; }
+  .faq { grid-column: a2 / b5; }
+  .book-inner { grid-template-columns: var(--grid-4-5); }
+  .book h2 { grid-column: a1 / a2; }
+  .book .contact { grid-column: b3 / a4; align-self: end; }
+  .book .sleeper { grid-column: a4 / a5; align-self: end; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-head">
+  <a class="logo" href="#" aria-label="Lanternfish Kayak Tours, home">
+    <svg viewBox="0 0 190 96" role="img" aria-hidden="true">
+      <rect x="0" y="33" width="190" height="34" fill="#efed61" stroke="#070b1a" stroke-width="3"/>
+      <text x="4" y="29" fill="#f2eedf" style="font-family:'Bricolage Grotesque';font-variation-settings:'wdth' 75,'opsz' 96;font-weight:800;font-size:34px;letter-spacing:-.5px">LANTERN</text>
+      <text x="10" y="62" fill="#070b1a" style="font-family:'Bricolage Grotesque';font-variation-settings:'wdth' 75,'opsz' 96;font-weight:800;font-size:34px;letter-spacing:6px">FISH</text>
+      <circle cx="165" cy="50" r="7" fill="#070b1a"/><circle cx="167" cy="48" r="2.5" fill="#efed61"/>
+      <path d="M150 50 q-12 -14 -26 -12" fill="none" stroke="#070b1a" stroke-width="3"/>
+      <text x="5" y="90" fill="#c9c6bd" style="font-family:'Bricolage Grotesque';font-variation-settings:'wdth' 75;font-weight:600;font-size:16.5px;letter-spacing:2.6px">KAYAK TOURS</text>
+    </svg>
+  </a>
+  <nav aria-label="Main">
+    <ul>
+      <li class="nav-links"><a href="#trips">Trips</a></li>
+      <li class="nav-links"><a href="#night">Night paddle</a></li>
+      <li class="nav-links"><a href="#guides">Guides</a></li>
+      <li class="nav-links"><a href="#questions">Questions</a></li>
+      <li><a class="book-btn" href="#book">Book a trip</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+<section class="hero" aria-labelledby="hero-title">
+  <div class="scene" id="scene">
+    <button class="pause" type="button" aria-pressed="false" id="pause">Pause the sea</button>
+    <svg viewBox="0 0 1440 600" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="scene-title">
+      <title id="scene-title">Three kayakers with lanterns on their sterns paddle across a dark bay under the moon. Plankton glows around their paddles, and below them a big lanternfish swims with its own light held out on a stalk.</title>
+      <!-- sky -->
+      <rect width="1440" height="600" fill="#0d1838"/>
+      <g fill="#f2eedf">
+        <path class="twinkle" style="--t:7.7s" d="M120 70 l4 10 10 4 -10 4 -4 10 -4 -10 -10 -4 10 -4z"/>
+        <path class="twinkle" style="--t:11.2s" d="M330 40 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3z"/>
+        <path class="twinkle" style="--t:9.4s" d="M560 110 l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3z"/>
+        <path class="twinkle" style="--t:13.9s" d="M760 46 l4 10 10 4 -10 4 -4 10 -4 -10 -10 -4 10 -4z"/>
+        <path class="twinkle" style="--t:8.6s" d="M940 130 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3z"/>
+        <path class="twinkle" style="--t:12.1s" d="M1350 60 l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3z"/>
+        <circle cx="230" cy="150" r="2.5"/><circle cx="470" cy="70" r="2"/><circle cx="660" cy="170" r="2"/>
+        <circle cx="870" cy="90" r="2.5"/><circle cx="1050" cy="40" r="2"/><circle cx="1280" cy="190" r="2"/>
+        <circle cx="40" cy="200" r="2"/><circle cx="1410" cy="130" r="2.5"/>
+      </g>
+      <!-- moon -->
+      <circle cx="1150" cy="118" r="62" fill="#f2eedf" stroke="#070b1a" stroke-width="5"/>
+      <path d="M1118 92 a10 9 0 1 0 1 0z M1172 150 a14 12 0 1 0 1 0z M1160 88 a6 6 0 1 0 1 0z" fill="#c9c6bd"/>
+      <!-- cloud -->
+      <g class="cloud">
+        <path d="M980 150 q10 -34 52 -28 q18 -30 60 -14 q34 -12 48 20 q34 4 28 32 h-196 q-20 -4 8 -10z" fill="#2b4f9e" stroke="#070b1a" stroke-width="4" stroke-linejoin="round"/>
+        <path d="M2680 120 q10 -30 46 -24 q18 -26 54 -12 q30 -10 42 18 q30 4 24 28 h-172 q-18 -4 6 -10z" fill="#2b4f9e" stroke="#070b1a" stroke-width="4" stroke-linejoin="round"/>
+      </g>
+      <!-- headlands -->
+      <path d="M-10 330 L-10 180 L40 160 L92 196 L150 170 L214 230 L270 236 L318 300 L360 330z" fill="#16306e" stroke="#070b1a" stroke-width="5" stroke-linejoin="round"/>
+      <path d="M40 160 L70 230 L58 330 M150 170 L170 250 M214 230 L230 290" fill="none" stroke="#070b1a" stroke-width="3"/>
+      <path d="M1450 330 L1450 210 L1400 196 L1352 232 L1300 226 L1262 270 L1226 282 L1200 330z" fill="#16306e" stroke="#070b1a" stroke-width="5" stroke-linejoin="round"/>
+      <path d="M1352 232 L1340 300 M1300 226 L1312 288" fill="none" stroke="#070b1a" stroke-width="3"/>
+      <!-- moon path on the water -->
+      <!-- sea -->
+      <path d="M-10 330 Q60 318 130 330 T270 330 T410 330 T550 330 T690 330 T830 330 T970 330 T1110 330 T1250 330 T1390 330 T1530 330 V500 H-10z" fill="#16306e" stroke="#070b1a" stroke-width="5"/>
+      <g class="swell" fill="none" stroke="#2b4f9e" stroke-width="4" stroke-linecap="round">
+        <path d="M60 372 q30 -10 60 0 M300 394 q36 -12 72 0 M1000 380 q30 -10 60 0 M1210 362 q30 -10 60 0 M1300 410 q30 -10 60 0 M90 430 q40 -12 80 0"/>
+      </g>
+      <g fill="#f2eedf" opacity=".9">
+        <rect x="1110" y="346" width="90" height="5" rx="2.5"/><rect x="1128" y="362" width="56" height="5" rx="2.5"/><rect x="1140" y="378" width="30" height="4" rx="2"/>
+      </g>
+      <!-- deep water with ragged lower edge -->
+      <path d="M-10 470 Q120 450 260 468 T540 466 T820 470 T1100 462 T1450 470 V560 L1400 548 L1352 574 L1296 552 L1240 586 L1180 556 L1120 572 L1050 548 L990 580 L930 556 L860 588 L800 560 L740 580 L680 552 L610 584 L550 558 L490 576 L420 548 L360 582 L300 556 L240 574 L170 548 L110 580 L50 554 L-10 572z" fill="#2a1846" stroke="#070b1a" stroke-width="5" stroke-linejoin="round"/>
+      <rect x="0" y="588" width="1440" height="20" fill="#0d1838"/>
+
+      <!-- the lanternfish -->
+      <g class="fish">
+        <g class="lure">
+          <path d="M800 452 C 820 400 870 390 896 410" fill="none" stroke="#070b1a" stroke-width="6" stroke-linecap="round"/>
+          <circle class="glow" cx="900" cy="414" r="34" fill="#efed61" opacity=".35"/>
+          <circle cx="900" cy="414" r="14" fill="#efed61" stroke="#070b1a" stroke-width="4"/>
+        </g>
+        <path d="M560 500 C 600 440 720 432 800 452 C 850 464 880 488 884 506 C 880 528 840 548 790 552 C 700 560 610 552 560 520 L500 470 L506 530 L470 548 Z" fill="#6e2267" stroke="#070b1a" stroke-width="5" stroke-linejoin="round"/>
+        <path d="M620 470 q20 30 0 62 M660 452 q22 36 0 96" fill="none" stroke="#070b1a" stroke-width="3"/>
+        <path d="M690 448 l20 -30 l26 34" fill="#6e2267" stroke="#070b1a" stroke-width="4" stroke-linejoin="round"/>
+        <!-- mouth and teeth -->
+        <path d="M884 506 C 860 512 836 512 816 506" fill="none" stroke="#070b1a" stroke-width="4" stroke-linecap="round"/>
+        <path d="M826 507 l4 9 l4 -9 M846 509 l4 9 l4 -9 M866 508 l4 8 l3 -8" fill="#f2eedf" stroke="#070b1a" stroke-width="2" stroke-linejoin="round"/>
+        <!-- eye -->
+        <circle cx="828" cy="474" r="17" fill="#f2eedf" stroke="#070b1a" stroke-width="4"/>
+        <circle cx="834" cy="470" r="7" fill="#070b1a"/>
+        <!-- photophores -->
+        <g fill="#efed61" stroke="#070b1a" stroke-width="2">
+          <circle cx="600" cy="528" r="5"/><circle cx="636" cy="536" r="5"/><circle cx="672" cy="541" r="5"/>
+          <circle cx="708" cy="543" r="5"/><circle cx="744" cy="542" r="5"/><circle cx="780" cy="538" r="5"/>
+          <circle cx="700" cy="500" r="4"/><circle cx="740" cy="496" r="4"/>
+        </g>
+      </g>
+
+      <!-- kayak 1 -->
+      <g class="bob" style="--t:6.4s">
+        <path d="M330 330 C 380 346 520 348 600 330 C 520 318 390 316 330 330z" fill="#efed61" stroke="#070b1a" stroke-width="4" stroke-linejoin="round"/>
+        <path d="M450 324 q0 -40 18 -46 q18 6 18 46z" fill="#f2eedf" stroke="#070b1a" stroke-width="4" stroke-linejoin="round"/>
+        <circle cx="468" cy="268" r="13" fill="#f2eedf" stroke="#070b1a" stroke-width="4"/>
+        <path d="M455 262 q13 -14 26 0" fill="#16306e" stroke="#070b1a" stroke-width="3"/>
+        <g class="paddle"><path d="M400 340 L536 254" stroke="#070b1a" stroke-width="5" stroke-linecap="round"/>
+          <path d="M392 346 l-16 10 6 -18z M544 249 l16 -10 -6 18z" fill="#16306e" stroke="#070b1a" stroke-width="3" stroke-linejoin="round"/></g>
+        <path d="M344 330 v-30" stroke="#070b1a" stroke-width="3"/>
+        <circle class="glow" cx="344" cy="296" r="18" fill="#efed61" opacity=".4"/>
+        <rect x="337" y="288" width="14" height="16" fill="#efed61" stroke="#070b1a" stroke-width="3"/>
+        <g fill="#efed61"><circle class="spark" style="--t:3.2s" cx="384" cy="352" r="3"/><circle class="spark" style="--t:4.1s" cx="372" cy="364" r="2.5"/><circle class="spark" style="--t:3.7s" cx="398" cy="362" r="2"/></g>
+      </g>
+      <!-- kayak 2 -->
+      <g class="bob" style="--t:7.3s">
+        <path d="M620 344 C 680 362 830 362 910 344 C 830 330 690 330 620 344z" fill="#efed61" stroke="#070b1a" stroke-width="4" stroke-linejoin="round"/>
+        <path d="M746 338 q0 -42 19 -48 q19 6 19 48z" fill="#2b4f9e" stroke="#070b1a" stroke-width="4" stroke-linejoin="round"/>
+        <circle cx="765" cy="278" r="13" fill="#f2eedf" stroke="#070b1a" stroke-width="4"/>
+        <path d="M752 274 q13 -16 26 0 l4 4 h-34z" fill="#efed61" stroke="#070b1a" stroke-width="3" stroke-linejoin="round"/>
+        <g class="paddle" style="animation-delay:-2s"><path d="M690 266 L840 350" stroke="#070b1a" stroke-width="5" stroke-linecap="round"/>
+          <path d="M682 261 l-16 -10 18 4z M848 355 l16 10 -18 -4z" fill="#16306e" stroke="#070b1a" stroke-width="3" stroke-linejoin="round"/></g>
+        <path d="M634 344 v-30" stroke="#070b1a" stroke-width="3"/>
+        <circle class="glow" cx="634" cy="310" r="18" fill="#efed61" opacity=".4" style="animation-delay:-1.6s"/>
+        <rect x="627" y="302" width="14" height="16" fill="#efed61" stroke="#070b1a" stroke-width="3"/>
+        <g fill="#efed61"><circle class="spark" style="--t:3.9s" cx="860" cy="372" r="3"/><circle class="spark" style="--t:3.3s" cx="874" cy="364" r="2.5"/><circle class="spark" style="--t:4.4s" cx="850" cy="384" r="2"/><circle class="spark" style="--t:3.6s" cx="842" cy="368" r="2"/></g>
+      </g>
+      <!-- kayak 3, further out -->
+      <g class="bob" style="--t:8.1s">
+        <path d="M960 318 C 1000 328 1090 328 1140 318 C 1090 310 1000 310 960 318z" fill="#efed61" stroke="#070b1a" stroke-width="3.5" stroke-linejoin="round"/>
+        <path d="M1040 314 q0 -28 13 -32 q13 4 13 32z" fill="#f2eedf" stroke="#070b1a" stroke-width="3.5" stroke-linejoin="round"/>
+        <circle cx="1053" cy="273" r="9" fill="#f2eedf" stroke="#070b1a" stroke-width="3.5"/>
+        <g class="paddle" style="animation-delay:-3.4s"><path d="M1004 324 L1100 262" stroke="#070b1a" stroke-width="4" stroke-linecap="round"/></g>
+        <path d="M970 318 v-22" stroke="#070b1a" stroke-width="3"/>
+        <circle class="glow" cx="970" cy="293" r="13" fill="#efed61" opacity=".4" style="animation-delay:-3s"/>
+        <rect x="965" y="287" width="10" height="12" fill="#efed61" stroke="#070b1a" stroke-width="2.5"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="hero-copy g45">
+    <h1 id="hero-title">Paddle out at dusk and come home by lantern light</h1>
+    <p class="standfirst">Small-group sea kayaking from the slipway at Porth Skerrow</p>
+    <p class="lede">Every boat carries a lantern on its stern. On a still summer night the plankton lights up green-gold round your paddle, and our guides know the bay well enough to take you out in the dark and bring you back. Day trips run all year; night paddles run from May to September. <a href="#night">How a night paddle goes</a></p>
+  </div>
+</section>
+
+<section class="trips" id="trips" aria-labelledby="trips-title">
+  <div class="trips-head g45 wrap" style="padding-inline:var(--margin)">
+    <h2 id="trips-title">Three trips from the slipway</h2>
+    <p>Six paddlers to one guide, never more. You don't need to have kayaked before for the first two; we teach you on the beach before we launch.</p>
+  </div>
+  <ol class="trip-row" id="trip-row">
+    <li class="trip">
+      <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <rect width="400" height="200" fill="#0d1838"/>
+        <path d="M0 110 q50 -8 100 0 t100 0 t100 0 t100 0 V200 H0z" fill="#16306e" stroke="#070b1a" stroke-width="4"/>
+        <path d="M120 112 C150 122 240 122 280 112 C240 104 150 104 120 112z" fill="#efed61" stroke="#070b1a" stroke-width="3.5"/>
+        <path d="M200 108 q0 -26 12 -30 q12 4 12 30z" fill="#f2eedf" stroke="#070b1a" stroke-width="3.5"/>
+        <circle cx="212" cy="70" r="9" fill="#f2eedf" stroke="#070b1a" stroke-width="3.5"/>
+        <path d="M150 128 L270 60" stroke="#070b1a" stroke-width="4" stroke-linecap="round"/>
+        <path d="M130 112 v-24" stroke="#070b1a" stroke-width="3"/><rect x="124" y="80" width="12" height="13" fill="#efed61" stroke="#070b1a" stroke-width="3"/>
+        <g fill="#efed61"><circle cx="146" cy="136" r="4"/><circle cx="160" cy="146" r="3"/><circle cx="134" cy="148" r="3"/><circle cx="172" cy="138" r="2.5"/><circle cx="152" cy="158" r="2.5"/><circle cx="120" cy="140" r="2"/></g>
+        <g fill="#f2eedf"><circle cx="60" cy="30" r="2.5"/><circle cx="330" cy="50" r="2"/><circle cx="280" cy="22" r="2.5"/><circle cx="40" cy="70" r="2"/></g>
+      </svg>
+      <h3>The glow paddle</h3>
+      <dl class="facts">
+        <dt>When</dt><dd>Nightly, May to Sept</dd>
+        <dt>Length</dt><dd>2½ hours</dd>
+        <dt>Price</dt><dd class="price">£68</dd>
+      </dl>
+      <p>We launch half an hour before sunset, watch the light go from the mouth of the bay, then drift with lanterns down. The plankton is brightest on moonless nights in late summer.</p>
+      <a href="#book">Dates for the glow paddle</a>
+    </li>
+    <li class="trip">
+      <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <rect width="400" height="200" fill="#2b4f9e"/>
+        <path d="M-5 0 H160 L150 60 L176 120 L140 200 H-5z" fill="#16306e" stroke="#070b1a" stroke-width="4" stroke-linejoin="round"/>
+        <path d="M60 200 q10 -90 50 -90 q40 0 46 90z" fill="#070b1a"/>
+        <path d="M0 130 q50 -8 100 0 t100 0 t100 0 t100 0 V200 H0z" fill="#16306e" stroke="#070b1a" stroke-width="4"/>
+        <ellipse cx="290" cy="128" rx="42" ry="16" fill="#c9c6bd" stroke="#070b1a" stroke-width="3.5"/>
+        <circle cx="326" cy="116" r="15" fill="#c9c6bd" stroke="#070b1a" stroke-width="3.5"/>
+        <circle cx="331" cy="112" r="3" fill="#070b1a"/><path d="M338 120 l10 -2 M338 123 l10 2" stroke="#070b1a" stroke-width="1.5"/>
+        <path d="M250 126 l-18 -10 2 20z" fill="#c9c6bd" stroke="#070b1a" stroke-width="3" stroke-linejoin="round"/>
+        <circle cx="330" cy="40" r="22" fill="#efed61" stroke="#070b1a" stroke-width="4"/>
+      </svg>
+      <h3>Seal caves at low tide</h3>
+      <dl class="facts">
+        <dt>When</dt><dd>Mornings, all year</dd>
+        <dt>Length</dt><dd>3 hours</dd>
+        <dt>Price</dt><dd class="price">£59</dd>
+      </dl>
+      <p>Along the north cliffs to the caves at Ogof Fawr, where grey seals haul out on the rocks. We time it to the tide so you can paddle into the big cave and listen to them.</p>
+      <a href="#book">Dates for the seal caves</a>
+    </li>
+    <li class="trip">
+      <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <rect width="400" height="200" fill="#16306e"/>
+        <path d="M230 120 L262 70 L290 84 L318 52 L360 96 L384 120z" fill="#2a1846" stroke="#070b1a" stroke-width="4" stroke-linejoin="round"/>
+        <path d="M318 52 v-22 l12 6 -12 6" fill="#efed61" stroke="#070b1a" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M0 120 q50 -8 100 0 t100 0 t100 0 t100 0 V200 H0z" fill="#0d1838" stroke="#070b1a" stroke-width="4"/>
+        <path d="M40 150 C70 158 140 158 170 150 C140 143 70 143 40 150z" fill="#efed61" stroke="#070b1a" stroke-width="3"/>
+        <path d="M96 147 q0 -20 9 -24 q9 4 9 24z" fill="#f2eedf" stroke="#070b1a" stroke-width="3"/>
+        <circle cx="105" cy="117" r="7" fill="#f2eedf" stroke="#070b1a" stroke-width="3"/>
+        <path d="M150 158 C170 162 210 162 230 158 C210 153 170 153 150 158z" fill="#f2eedf" stroke="#070b1a" stroke-width="3"/>
+        <path d="M30 172 q60 -10 120 -4 q80 6 140 -24" fill="none" stroke="#f2eedf" stroke-width="2.5" stroke-dasharray="2 10" stroke-linecap="round"/>
+        <g fill="#f2eedf"><circle cx="50" cy="40" r="2"/><circle cx="140" cy="60" r="2.5"/></g>
+      </svg>
+      <h3>The Skerry crossing</h3>
+      <dl class="facts">
+        <dt>When</dt><dd>Summer, calm days</dd>
+        <dt>Length</dt><dd>Full day</dd>
+        <dt>Price</dt><dd class="price">£125</dd>
+      </dl>
+      <p>Four miles of open water to Ynys Skerry and its lighthouse, lunch on the island, back on the flood tide. For paddlers who have done a few trips; we'll ask what you've done when you book.</p>
+      <a href="#book">Dates for the crossing</a>
+    </li>
+  </ol>
+  <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
+</section>
+
+<section class="night" id="night" aria-labelledby="night-title">
+  <div class="g45">
+    <div class="night-intro">
+      <h2 id="night-title">How a night paddle goes</h2>
+      <svg class="mascot" viewBox="0 0 360 230" role="img" aria-label="The lanternfish holding up its light to read a tide table">
+        <path d="M70 160 C 96 100 210 90 270 112 C 310 126 330 146 330 162 C 326 184 290 200 250 202 C 170 210 100 200 70 176 L28 132 L30 186 L6 204 Z" fill="#6e2267" stroke="#070b1a" stroke-width="5" stroke-linejoin="round"/>
+        <path d="M262 112 C 270 62 230 34 190 40" fill="none" stroke="#070b1a" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="184" cy="40" r="30" fill="#efed61" opacity=".35"/>
+        <circle cx="184" cy="40" r="12" fill="#efed61" stroke="#070b1a" stroke-width="4"/>
+        <g transform="rotate(-8 150 92)">
+          <rect x="112" y="62" width="72" height="56" fill="#f2eedf" stroke="#070b1a" stroke-width="4"/>
+          <path d="M122 76 h50 M122 88 h40 M122 100 h48" stroke="#16306e" stroke-width="3"/>
+        </g>
+        <path d="M180 140 q-20 -20 -30 -30" fill="none" stroke="#070b1a" stroke-width="5" stroke-linecap="round"/>
+        <circle cx="286" cy="136" r="16" fill="#f2eedf" stroke="#070b1a" stroke-width="4"/>
+        <circle cx="282" cy="130" r="6.5" fill="#070b1a"/>
+        <path d="M330 162 C 312 168 296 168 280 164" fill="none" stroke="#070b1a" stroke-width="4" stroke-linecap="round"/>
+        <g fill="#efed61" stroke="#070b1a" stroke-width="2"><circle cx="110" cy="184" r="5"/><circle cx="146" cy="192" r="5"/><circle cx="182" cy="196" r="5"/><circle cx="218" cy="196" r="5"/><circle cx="252" cy="192" r="5"/></g>
+      </svg>
+      <p>Times are for a mid-July evening. We move the start with the sunset, and we cancel if the wind is over fifteen knots or the sea is lumpy at the harbour wall. You get your money back or another date, whichever you prefer.</p>
+    </div>
+    <ol class="steps">
+      <li><time>20:30</time><div><h3>Meet at the boathouse</h3><p>Wetsuits, spray decks and buoyancy aids are hanging up in your size. Bring a warm layer and a hat.</p></div></li>
+      <li><time>20:50</time><div><h3>Twenty minutes on the beach</h3><p>How to hold the paddle, how to turn, and what to do if you go in. Then everyone lights their lantern.</p></div></li>
+      <li><time>21:10</time><div><h3>Out to the point</h3><p>A slow paddle along the harbour wall and out to Trwyn Du while the sky goes orange, then purple, then dark.</p></div></li>
+      <li><time>21:50</time><div><h3>Lanterns down</h3><p>We raft the boats together and turn the lanterns off. Trail a hand in the water and watch it light up.</p></div></li>
+      <li><time>22:40</time><div><h3>Back to the slipway</h3><p>Follow your guide's lantern home. Hot chocolate in the boathouse, and the showers are warm.</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="guides" id="guides" aria-labelledby="guides-title">
+  <div class="g45">
+    <div class="guides-text">
+      <h2 id="guides-title">Guides who grew up on this bay</h2>
+      <p>Nia Pritchard started Lanternfish in 2014 with four boats and a shed. She had worked as a lifeboat crew member for nine years and wanted to show people the bay the way she saw it on night shouts: dark, quiet, and full of light underneath. The boathouse is still the shed, a bit bigger.</p>
+      <p>All our guides hold British Canoeing Sea Kayak Leader awards and current first aid. Each night trip has a second guide in a safety boat once the group is over four, and the coastguard at Milford gets our float plan before we launch.</p>
+      <ul class="crew">
+        <li><b>Nia Pritchard</b><span>Founder. Leads most glow paddles and knows every cave by its echo.</span></li>
+        <li><b>Tom Okafor</b><span>Coach for the Skerry crossing. Teaches the beach session like a PE teacher who likes you.</span></li>
+        <li><b>Elin Rhys</b><span>Seal caves. Keeps a notebook of which seal is which and will show you it.</span></li>
+      </ul>
+    </div>
+    <figure class="quote">
+      <blockquote><p>My nine-year-old said the sea was full of fireflies. I couldn't do better than that, so I've stopped trying.</p></blockquote>
+      <figcaption>Hannah, glow paddle, August</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="questions" id="questions" aria-labelledby="q-title">
+  <div class="g45">
+    <h2 id="q-title">Questions people ask</h2>
+    <div class="faq">
+      <details open><summary>Will the water definitely glow?</summary><p>No one can promise that. The plankton is there most nights from late June to early September and is brightest when there's no moon. On the nights it's faint, the stars and the dark bay are still worth the trip, and if it doesn't show at all you can come back on another night for half price.</p></details>
+      <details><summary>I've never been in a kayak. Is that all right?</summary><p>Yes, for the glow paddle and the seal caves. Our boats are stable sit-on-tops for beginners, and the beach session covers what you need. The Skerry crossing is the one trip that needs experience.</p></details>
+      <details><summary>How old do you have to be?</summary><p>Eight and over, with an adult in the same double kayak until twelve. Over-sixteens can paddle on their own.</p></details>
+      <details><summary>What if I fall in?</summary><p>You'll float in your buoyancy aid, your guide will be with you within a minute, and we practise getting back into the boat on the beach first. It happens on about one trip in twenty, usually to someone laughing.</p></details>
+      <details><summary>Where do we park?</summary><p>The harbour car park at Porth Skerrow, SA62 3XX. It's free after 6pm, and the boathouse is the blue shed at the far end.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="book" id="book" aria-labelledby="book-title">
+  <div class="book-inner">
+    <h2 id="book-title">Pick a night and we'll keep a lantern for you</h2>
+    <div class="contact">
+      <p>Book online, or ring the boathouse and talk to whoever's in. We answer between 9am and 6pm, and we'll call you by 2pm on the day if the sea says no.</p>
+      <p><a class="book-btn" href="#">See dates and book</a></p>
+      <p><b>01437 720 914</b> · <a href="#">hello@lanternfishkayak.example</a></p>
+    </div>
+    <svg class="sleeper" viewBox="0 0 420 200" role="img" aria-label="The lanternfish asleep in a beached kayak, its light turned down low">
+      <path d="M20 160 C 90 186 300 188 400 160 C 300 140 100 140 20 160z" fill="#efed61" stroke="#070b1a" stroke-width="5" stroke-linejoin="round"/>
+      <path d="M130 150 C 150 112 250 106 300 124 C 320 132 330 142 330 150" fill="#6e2267" stroke="#070b1a" stroke-width="5" stroke-linejoin="round"/>
+      <path d="M134 150 L100 116 L104 152" fill="#6e2267" stroke="#070b1a" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M292 126 C 300 90 270 70 244 76" fill="none" stroke="#070b1a" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="240" cy="78" r="9" fill="#c9b92c" stroke="#070b1a" stroke-width="3.5"/>
+      <path d="M296 136 q8 6 16 0" fill="none" stroke="#070b1a" stroke-width="4" stroke-linecap="round"/>
+      <text x="330" y="96" fill="#f2eedf" style="font-family:'Bricolage Grotesque';font-weight:700;font-size:24px">z</text>
+      <text x="350" y="70" fill="#f2eedf" style="font-family:'Bricolage Grotesque';font-weight:700;font-size:18px">z</text>
+      <path d="M0 196 q60 -14 140 -6 q120 10 280 -4" fill="none" stroke="#2b4f9e" stroke-width="4" stroke-linecap="round"/>
+    </svg>
+  </div>
+</section>
+</main>
+
+<footer>
+  <p>Lanternfish Kayak Tours, The Boathouse, Harbour Road, Porth Skerrow, Pembrokeshire</p>
+  <p>Boathouse open every day, March to October</p>
+</footer>
+
+<script>
+  const scene = document.getElementById('scene');
+  const pause = document.getElementById('pause');
+  pause.addEventListener('click', () => {
+    const paused = scene.classList.toggle('paused');
+    pause.setAttribute('aria-pressed', paused);
+    pause.textContent = paused ? 'Play the sea' : 'Pause the sea';
+  });
+  const row = document.getElementById('trip-row');
+  const bar = document.getElementById('progress-bar');
+  row.addEventListener('scroll', () => {
+    const max = row.scrollWidth - row.clientWidth;
+    bar.style.width = (33 + (max > 0 ? row.scrollLeft / max : 0) * 67) + '%';
+  }, { passive: true });
+</script>
+</body>
+</html>

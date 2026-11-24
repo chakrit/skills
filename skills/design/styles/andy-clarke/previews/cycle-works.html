@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brindle &amp; Burr Cycle Works · bicycle repairs under Arch 14</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1f2b2d; --slate:#4f696c; --slate-d:#36494b; --slate-l:#8fa5a3; --mist:#c9d3cc;
+  --paper:#f3efe4; --card:#d9c39a; --card-d:#b89d6c; --red:#e00315; --red-d:#a80010;
+  --brindle:#7a5a3a; --brindle-d:#4a3424;
+  --grid-4-5:[a1] 4fr [b2] 1fr [a2] 3fr [b3] 2fr [a3] 2fr [b4] 3fr [a4] 1fr [b5] 4fr [a5];
+  --grid-12-col:repeat(12,1fr);
+  --grid-column-gap:clamp(1.6875rem, 1.6223rem + .3261vi, 1.875rem);
+  --grid-row-gap:clamp(1rem, calc(.89rem + .54vw), 1.31rem);
+  --measure:60ch;
+  --margin:22px;
+}
+@media (width>=64em){ :root{ --margin:40px; } }
+*{box-sizing:border-box}
+html{background:var(--paper)}
+body{margin:0;color:var(--ink);font-family:"Bricolage Grotesque",sans-serif;
+  font-variation-settings:"wdth" 100;font-weight:400;font-size:17.5px;line-height:1.55;
+  font-optical-sizing:auto}
+a{color:var(--red-d);text-decoration-thickness:2px;text-underline-offset:3px}
+a:hover{color:var(--red)}
+h1,h2,h3{font-variation-settings:"wdth" 75;font-weight:800;text-transform:uppercase;
+  line-height:1;letter-spacing:-.01em;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.5rem, 1.2rem + 4.2vw, 4.5rem)}
+h2{font-size:clamp(2.1rem, 1.4rem + 2vw, 3rem)}
+h3{font-size:1.35rem;line-height:1.1}
+p{margin:0 0 1em;max-width:var(--measure)}
+.wrap{padding-inline:var(--margin);max-width:1440px;margin-inline:auto}
+
+/* header */
+.site-head{display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  padding-block:18px;background:var(--paper)}
+.logo{display:block;width:200px;color:var(--ink)}
+.logo svg{display:block;width:100%;height:auto}
+nav ul{display:flex;gap:1.6rem;list-style:none;margin:0;padding:0;align-items:center}
+nav a{color:var(--ink);text-decoration:none;font-weight:600;font-variation-settings:"wdth" 85;
+  text-transform:uppercase;letter-spacing:.02em;font-size:.95rem}
+nav a:hover{color:var(--red)}
+.btn{display:inline-block;background:var(--red);color:var(--paper)!important;padding:.7em 1.1em .65em;
+  text-decoration:none;font-weight:700;font-variation-settings:"wdth" 80;text-transform:uppercase;
+  letter-spacing:.03em}
+.btn:hover{background:var(--red-d)}
+.nav-extra{display:none}
+@media (width>=48em){ .nav-extra{display:list-item} }
+
+/* hero */
+.hero{position:relative;background:var(--slate);overflow:hidden}
+.hero svg.scene{display:block;width:100%;height:auto}
+.hero svg.scene-phone{display:none}
+@media (width<48em){ .scene-wide{display:none!important} .scene-phone{display:block!important} }
+.pause{position:absolute;right:var(--margin);bottom:46px;font:inherit;font-size:.8rem;
+  font-weight:700;font-variation-settings:"wdth" 80;text-transform:uppercase;letter-spacing:.06em;
+  background:var(--paper);color:var(--ink);border:2px solid var(--ink);padding:.35em .7em;cursor:pointer}
+.pause:hover{background:var(--card)}
+
+/* grid */
+.g{display:grid;column-gap:var(--grid-column-gap);row-gap:var(--grid-row-gap)}
+@media (width>=64em){ .g{grid-template-columns:var(--grid-4-5)} }
+
+.intro{padding-block:56px 80px}
+@media (width>=64em){
+  .intro .h{grid-column:a1/b4}
+  .intro .lede{grid-column:b4/a5;align-self:end}
+}
+.intro .h h1{max-width:13ch}
+.lede p:first-child{font-size:1.2rem;line-height:1.45}
+.lede .btn{margin-top:.4rem}
+
+/* prices: Arles */
+.prices{background:var(--ink);color:var(--paper);padding-block:80px 96px;position:relative}
+.prices p{color:#e5e2d6;font-size:16px;letter-spacing:.005em;word-spacing:.04em;font-weight:300}
+.prices h2{color:var(--paper);font-weight:700}
+@media (width>=64em){
+  .prices .side{grid-column:a1/a2;display:flex;flex-direction:column}
+  .prices .dog-sit{margin-top:auto;align-self:flex-end;margin-right:-30px;width:200px}
+  .prices .ticket-wrap{grid-column:b3/a5}
+}
+.prices .side p{margin-top:1.2rem}
+.dog-sit{width:220px;margin-top:2rem}
+.ticket-wrap{position:relative}
+.ticket{background:var(--card);color:var(--ink);padding:34px 40px 30px;position:relative;
+  transform:rotate(-1.2deg);
+  clip-path:polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 0 100%);}
+.ticket::before{content:"";position:absolute;right:46px;top:22px;width:22px;height:22px;border-radius:50%;
+  background:var(--ink);box-shadow:inset 0 0 0 5px var(--card-d)}
+.ticket h3{font-size:2rem;margin-bottom:1rem}
+.ticket ol{list-style:none;margin:0;padding:0;border-top:3px solid var(--ink)}
+.ticket li{display:grid;grid-template-columns:1fr auto;gap:.3rem 1.5rem;padding:14px 0;
+  border-bottom:1px dashed var(--brindle-d)}
+.ticket li b{font-variation-settings:"wdth" 82;font-weight:700;font-size:1.15rem;text-transform:uppercase}
+.ticket li span.p{font-variation-settings:"wdth" 75;font-weight:800;font-size:1.6rem;line-height:1;
+  font-feature-settings:"tnum"}
+.ticket li small{grid-column:1/-1;font-size:15px;color:var(--slate-d);max-width:52ch}
+.ticket .foot{margin:16px 0 0;font-size:15px;color:var(--ink);font-weight:400}
+.string{position:absolute;right:56px;top:-70px;width:80px;height:100px;pointer-events:none}
+
+/* process: Ghent */
+.process{padding-block:88px 40px}
+.process > .wrap > h2{max-width:16ch;margin-bottom:40px}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:var(--grid-12-col);
+  border-top:3px solid var(--ink)}
+.steps li{grid-column:span 3;padding:22px 26px 10px 0;}
+.steps li + li{border-left:1px solid var(--ink);padding-left:26px}
+.steps .v{display:block;width:100%;max-width:220px;height:auto;margin-bottom:14px}
+.steps .n{display:block;font-variation-settings:"wdth" 75;font-weight:200;font-size:4.2rem;line-height:.9;
+  color:var(--red);margin-bottom:.4rem}
+.steps h3{margin-bottom:.5rem}
+.steps p{font-size:16.5px}
+.progress{display:none}
+.pano{display:none}
+@media (width>=48em){ .pano{display:block;width:100%;height:auto;margin-bottom:-6px} .steps .v{display:none} .steps{border-top:0} }
+@media (width<48em){
+  .steps{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:0;scrollbar-width:none;
+    margin-right:calc(-1 * var(--margin))}
+  .steps::-webkit-scrollbar{display:none}
+  .steps li{flex:0 0 85%;scroll-snap-align:start;padding-right:22px}
+  .progress{display:block;height:4px;background:var(--mist);margin-top:14px}
+  .progress i{display:block;height:100%;width:25%;background:var(--red);transition:width .2s}
+}
+
+/* questions: Lyon */
+.questions{padding-block:56px 96px}
+@media (width>=64em){
+  .questions .qh{grid-column:a1/b2}
+  .questions .qs{grid-column:a2/b5}
+}
+.qs details{border-top:1px solid var(--ink)}
+.qs details:last-child{border-bottom:1px solid var(--ink)}
+.qs summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:8px 1fr;gap:18px;
+  padding:16px 0;font-weight:700;font-variation-settings:"wdth" 85;font-size:1.2rem}
+.qs summary::-webkit-details-marker{display:none}
+.qs summary::before{content:"";width:8px;height:8px;background:var(--red);margin-top:.5em}
+.qs details[open] summary::before{background:var(--ink);transform:rotate(45deg)}
+.qs details p{margin-left:26px;padding-bottom:10px}
+
+/* visit: Bristol */
+.visit{background:var(--slate);color:var(--paper);position:relative;padding-block:0 0}
+.visit .ground{display:block;width:100%;height:40px;background:var(--paper)}
+.visit .inner{padding-block:64px 80px}
+@media (width>=64em){
+  .visit .v1{grid-column:a1/b3}
+  .visit .v2{grid-column:b3/b4}
+  .visit .v3{grid-column:b4/a5}
+}
+.visit h2{color:var(--paper);font-weight:700;margin-bottom:1rem}
+.visit p,.visit dd{font-size:16px;font-weight:300;letter-spacing:.005em}
+.visit a{color:#ffd3d6}
+.visit dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:.35rem 1.2rem;border-top:3px solid var(--paper);padding-top:14px}
+.visit dt{font-weight:700;font-variation-settings:"wdth" 80;text-transform:uppercase;letter-spacing:.03em}
+.visit dd{margin:0}
+.door-dog{width:100%;max-width:300px}
+
+footer{background:var(--ink);color:var(--mist);padding-block:34px 40px;font-size:15px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:1rem 2rem;align-items:end;justify-content:space-between}
+footer svg{width:180px;height:auto;display:block}
+footer p{margin:0}
+footer a{color:var(--paper)}
+
+/* motion */
+.spin{transform-box:fill-box;transform-origin:center;animation:spin 14s linear infinite}
+.spin-slow{transform-box:fill-box;transform-origin:center;animation:spin 22s linear infinite reverse}
+.swing{transform-box:fill-box;transform-origin:50% 0;animation:swing 7.3s ease-in-out infinite alternate}
+.swing2{transform-box:fill-box;transform-origin:50% 0;animation:swing 9.1s ease-in-out infinite alternate-reverse}
+.breathe{transform-box:fill-box;transform-origin:50% 100%;animation:breathe 4.8s ease-in-out infinite}
+.ear{transform-box:fill-box;transform-origin:10% 90%;animation:ear 11.7s ease-in-out infinite}
+.dust{animation:drift 240s linear infinite}
+.lamp{animation:lamp 13.9s ease-in-out infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes swing{from{transform:rotate(-2deg)}to{transform:rotate(2deg)}}
+@keyframes breathe{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.035)}}
+@keyframes ear{0%,86%,100%{transform:rotate(0)}90%{transform:rotate(-9deg)}94%{transform:rotate(0)}}
+@keyframes drift{from{transform:translateX(0)}to{transform:translateX(-720px)}}
+@keyframes lamp{0%,100%{opacity:.55}50%{opacity:.75}}
+.paused *{animation-play-state:paused!important}
+@media (prefers-reduced-motion:reduce){ *{animation:none!important} .pause{display:none} }
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media (width<48em){
+  body{font-size:17px}
+  .intro{padding-block:36px 56px}
+  .prices{padding-block:56px 64px}
+  .ticket{padding:26px 22px 22px}
+  .ticket::before{right:30px}
+  .ticket h3{font-size:1.6rem}
+  .prices .side{display:grid;grid-template-columns:1fr 92px;column-gap:14px;align-items:end;margin-bottom:28px}
+  .prices .side h2{grid-column:1/-1}
+  .prices .side p{grid-column:1;margin-bottom:0}
+  .dog-sit{grid-column:2;width:92px;margin:0}
+  nav ul{gap:1rem}
+  .logo{width:150px}
+  .btn{font-size:.85rem}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- wheel used in the scene -->
+    <g id="wheel">
+      <circle r="150" fill="none" stroke="#1f2b2d" stroke-width="20"/>
+      <circle r="138" fill="none" stroke="#8fa5a3" stroke-width="5"/>
+      <g stroke="#1f2b2d" stroke-width="2.4">
+        <line x1="0" y1="-136" x2="0" y2="136"/><line x1="-136" y1="0" x2="136" y2="0"/>
+        <line x1="-96" y1="-96" x2="96" y2="96"/><line x1="-96" y1="96" x2="96" y2="-96"/>
+        <line x1="-52" y1="-126" x2="52" y2="126"/><line x1="-126" y1="-52" x2="126" y2="52"/>
+        <line x1="-52" y1="126" x2="52" y2="-126"/><line x1="-126" y1="52" x2="126" y2="-52"/>
+      </g>
+      <circle r="18" fill="#e00315" stroke="#1f2b2d" stroke-width="5"/>
+    </g>
+    <!-- greyhound, lying -->
+    <g id="dog-lying">
+      <clipPath id="dogclip"><path d="M30 58 C60 40 110 44 150 56 C180 64 200 44 236 42 C266 42 280 70 270 96 C262 112 236 114 214 104 C196 96 176 92 156 96 C130 104 106 116 80 114 C56 112 34 100 28 84 Z"/></clipPath>
+      <path d="M266 84 C300 96 316 118 362 116" fill="none" stroke="#1f2b2d" stroke-width="6" stroke-linecap="round"/>
+      <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M86 108 L-34 112" stroke="#1f2b2d" stroke-width="15"/><path d="M86 108 L-34 112" stroke="#4a3424" stroke-width="6"/>
+        <path d="M230 104 L196 118 L150 119" stroke="#1f2b2d" stroke-width="15"/><path d="M230 104 L196 118 L150 119" stroke="#4a3424" stroke-width="6"/>
+      </g>
+      <path d="M30 58 C60 40 110 44 150 56 C180 64 200 44 236 42 C266 42 280 70 270 96 C262 112 236 114 214 104 C196 96 176 92 156 96 C130 104 106 116 80 114 C56 112 34 100 28 84 Z" fill="#7a5a3a"/>
+      <g clip-path="url(#dogclip)" stroke="#4a3424" stroke-width="6" stroke-linecap="round" fill="none">
+        <path d="M70 46 l-14 40"/><path d="M98 48 l-12 46"/><path d="M126 52 l-10 50"/><path d="M154 58 l-6 34"/><path d="M196 50 l-6 44"/><path d="M222 44 l-4 56"/><path d="M248 46 l2 56"/>
+      </g>
+      <path d="M30 58 C60 40 110 44 150 56 C180 64 200 44 236 42 C266 42 280 70 270 96 C262 112 236 114 214 104 C196 96 176 92 156 96 C130 104 106 116 80 114 C56 112 34 100 28 84 Z" fill="none" stroke="#1f2b2d" stroke-width="5" stroke-linejoin="round"/>
+      <path d="M214 66 C246 62 266 84 250 104 L188 117 C178 117 176 111 190 108 L214 102" fill="none" stroke="#1f2b2d" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+      <g fill="none" stroke-linecap="round"><path d="M76 112 L-44 120" stroke="#1f2b2d" stroke-width="15"/><path d="M76 112 L-44 120" stroke="#7a5a3a" stroke-width="6"/></g>
+      <path d="M46 66 C36 44 12 36 -8 44 C-28 50 -48 64 -72 74 C-80 78 -78 86 -68 86 C-40 86 -10 84 14 86 C32 88 44 80 46 72 Z" fill="#7a5a3a" stroke="#1f2b2d" stroke-width="5" stroke-linejoin="round"/>
+      <circle cx="-72" cy="80" r="5" fill="#1f2b2d"/>
+      <path d="M-24 60 q7 5 14 0" stroke="#1f2b2d" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <path d="M38 50 L50 84" stroke="#e00315" stroke-width="8"/>
+      <path d="M2 46 c8 -12 28 -12 34 0 c-12 4 -24 4 -34 0Z" fill="#4a3424" stroke="#1f2b2d" stroke-width="4" stroke-linejoin="round"/>
+    </g>
+  </defs>
+</svg>
+
+<header class="site-head wrap">
+  <a class="logo" href="#" aria-label="Brindle &amp; Burr Cycle Works, home">
+    <svg viewBox="0 0 230 96" aria-hidden="true">
+      <path d="M60 6 C30 0 6 20 10 46" fill="none" stroke="#1f2b2d" stroke-width="2.5"/>
+      <path d="M20 14 L214 6 L226 18 L224 86 L28 92 L14 80Z" fill="#d9c39a" stroke="#1f2b2d" stroke-width="3.5" stroke-linejoin="round"/>
+      <circle cx="30" cy="50" r="6" fill="#f3efe4" stroke="#1f2b2d" stroke-width="3"/>
+      <path d="M46 16 L46 88" stroke="#1f2b2d" stroke-width="2" stroke-dasharray="4 4"/>
+      <text x="56" y="50" font-family="Bricolage Grotesque" font-weight="800" font-size="38" style="font-variation-settings:'wdth' 75" fill="#1f2b2d" textLength="160" lengthAdjust="spacingAndGlyphs" transform="rotate(-2 56 50)">BRINDLE</text>
+      <text x="57" y="82" font-family="Bricolage Grotesque" font-weight="800" font-size="30" style="font-variation-settings:'wdth' 75" fill="#e00315" textLength="76" lengthAdjust="spacingAndGlyphs" transform="rotate(-2 57 82)">&amp; BURR</text>
+      <text x="140" y="79" font-family="Bricolage Grotesque" font-weight="500" font-size="13" style="font-variation-settings:'wdth' 80" fill="#1f2b2d" textLength="74" lengthAdjust="spacingAndGlyphs" transform="rotate(-2 140 79)">CYCLE WORKS</text>
+    </svg>
+  </a>
+  <nav aria-label="Main">
+    <ul>
+      <li class="nav-extra"><a href="#prices">Prices</a></li>
+      <li class="nav-extra"><a href="#visit">Find us</a></li>
+      <li><a class="btn" href="#visit">Book a repair</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+<section class="hero" aria-label="The workshop under Arch 14">
+  <!-- desktop scene: 1440 x 560 -->
+  <svg class="scene scene-wide" id="scene" viewBox="0 0 1440 560" role="img" aria-labelledby="scene-t">
+    <title id="scene-t">Inside the railway arch: a bicycle on a repair stand, tyres hanging from the ceiling, and Brindle the greyhound asleep under the stand.</title>
+    <g id="scene-art">
+    <!-- arch interior -->
+    <rect width="1440" height="560" fill="#4f696c"/>
+    <path d="M132 560 V246 C136 64 418 -14 724 -12 C1030 -8 1306 76 1296 256 V560Z" fill="#36494b"/>
+    <path d="M198 560 V262 C204 104 452 36 722 38 C994 42 1236 114 1238 264 V560Z" fill="#c9d3cc" stroke="#1f2b2d" stroke-width="6" stroke-linejoin="round"/>
+    <!-- window light -->
+    <g class="lamp"><path d="M556 58 L884 62 L1046 560 L396 560Z" fill="#f3efe4" opacity=".5"/></g>
+    <!-- parts shelf with tins -->
+    <path d="M244 214 L556 208" stroke="#1f2b2d" stroke-width="7" stroke-linecap="round"/>
+    <g stroke="#1f2b2d" stroke-width="4" stroke-linejoin="round">
+      <path d="M262 212 v-34 h40 v33Z" fill="#e00315"/><path d="M312 211 v-26 h34 v25Z" fill="#8fa5a3"/><path d="M356 210 v-40 h30 v40Z" fill="#d9c39a"/>
+      <path d="M398 210 l4 -30 h40 l2 29Z" fill="#4f696c"/><path d="M458 209 v-22 h56 v21Z" fill="#7a5a3a"/>
+    </g>
+    <path d="M380 180 v-6 M486 186 c0 -12 18 -12 18 0" stroke="#1f2b2d" stroke-width="3" fill="none"/>
+    <!-- back wall pegboard -->
+    <path d="M250 252 L552 246 L550 420 L252 422Z" fill="#d9c39a" stroke="#1f2b2d" stroke-width="5" stroke-linejoin="round"/>
+    <g fill="#b89d6c"><circle cx="276" cy="272" r="4"/><circle cx="326" cy="271" r="4"/><circle cx="376" cy="270" r="4"/><circle cx="426" cy="269" r="4"/><circle cx="476" cy="268" r="4"/><circle cx="526" cy="267" r="4"/><circle cx="276" cy="398" r="4"/><circle cx="526" cy="396" r="4"/></g>
+    <!-- tools: spanner, hammer, pliers, screwdriver, chain whip, tyre levers -->
+    <g stroke="#1f2b2d" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M284 296 l4 84 h8 l-2 -84Z" fill="#8fa5a3"/><path d="M276 282 c0 -14 26 -14 26 2 l-6 10 h-14Z" fill="#8fa5a3"/>
+      <path d="M330 300 l2 92 h8 l-2 -92Z" fill="#7a5a3a"/><path d="M318 284 h36 l-2 18 h-32Z" fill="#1f2b2d"/>
+      <path d="M376 290 l10 78 M402 292 l-12 76" fill="none" stroke-width="7"/><circle cx="388" cy="296" r="5" fill="#d9c39a"/>
+      <path d="M432 290 l2 62" fill="none" stroke-width="5"/><path d="M426 350 h18 l-2 42 h-14Z" fill="#e00315"/>
+      <path d="M484 286 c22 12 18 40 -2 50 c-20 10 -16 40 6 50" fill="none" stroke-width="5"/>
+      <path d="M512 300 l6 60 h6 l-4 -60Z M526 300 l4 60 h6 l-2 -60Z" fill="#4f696c"/>
+    </g>
+    <!-- workbench with puncture tub, radio and mug -->
+    <path d="M216 418 L584 422 L582 444 L218 442Z" fill="#7a5a3a" stroke="#1f2b2d" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M242 444 L238 560 M560 444 L566 560" stroke="#1f2b2d" stroke-width="10"/>
+    <path d="M228 506 L578 510" stroke="#1f2b2d" stroke-width="7"/>
+    <path d="M282 390 l3 30 h86 l3 -30Z" fill="#e00315" stroke="#1f2b2d" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M284 392 c20 -8 64 -8 88 0" fill="none" stroke="#8fa5a3" stroke-width="5"/>
+    <path d="M300 392 c10 -30 40 -34 56 -2" fill="none" stroke="#1f2b2d" stroke-width="9"/>
+    <circle cx="322" cy="384" r="3" fill="#f3efe4"/><circle cx="334" cy="378" r="2" fill="#f3efe4"/>
+    <path d="M396 420 l-2 -36 h60 l2 36Z" fill="#4f696c" stroke="#1f2b2d" stroke-width="5" stroke-linejoin="round"/>
+    <circle cx="412" cy="402" r="9" fill="#d9c39a" stroke="#1f2b2d" stroke-width="3"/><path d="M430 396 h18 M430 404 h18 M430 412 h18" stroke="#1f2b2d" stroke-width="3"/>
+    <path d="M440 384 l20 -26" stroke="#1f2b2d" stroke-width="3"/>
+    <path d="M480 420 l2 -26 h26 l-2 26Z" fill="#f3efe4" stroke="#1f2b2d" stroke-width="4" stroke-linejoin="round"/><path d="M508 400 c10 0 10 12 -1 12" fill="none" stroke="#1f2b2d" stroke-width="4"/>
+    <path d="M488 386 c-4 -8 4 -10 0 -18 M498 386 c-4 -8 4 -10 0 -18" fill="none" stroke="#f3efe4" stroke-width="3" stroke-linecap="round"/>
+    <!-- hanging tyres, a little out of round -->
+    <g class="swing"><path d="M690 38 v70" stroke="#1f2b2d" stroke-width="4"/><ellipse cx="690" cy="160" rx="54" ry="50" transform="rotate(-8 690 160)" fill="none" stroke="#1f2b2d" stroke-width="16"/></g>
+    <g class="swing2"><path d="M792 40 v38" stroke="#1f2b2d" stroke-width="4"/><ellipse cx="792" cy="140" rx="60" ry="64" transform="rotate(12 792 140)" fill="none" stroke="#1f2b2d" stroke-width="14"/><ellipse cx="792" cy="140" rx="48" ry="52" transform="rotate(12 792 140)" fill="none" stroke="#8fa5a3" stroke-width="3"/></g>
+    <g class="swing"><path d="M600 38 v102" stroke="#1f2b2d" stroke-width="4"/><ellipse cx="600" cy="180" rx="40" ry="36" transform="rotate(6 600 180)" fill="none" stroke="#e00315" stroke-width="12"/></g>
+    <!-- painted sign along the arch -->
+    <path id="archline" d="M172 340 C172 112 446 34 722 36 C1000 38 1262 116 1262 340" fill="none"/>
+    <text font-family="Bricolage Grotesque" font-weight="800" font-size="30" letter-spacing="4" style="font-variation-settings:'wdth' 75" fill="#d9c39a"><textPath href="#archline" startOffset="50%" text-anchor="middle">BRINDLE &amp; BURR · REPAIRS OF ALL MAKES · ARCH 14</textPath></text>
+    <!-- club-run poster on the wall -->
+    <g transform="translate(-50 -34) rotate(3 958 176)" stroke="#1f2b2d" stroke-width="4" stroke-linejoin="round">
+      <path d="M904 100 h112 v152 h-112Z" fill="#e00315"/>
+      <circle cx="960" cy="150" r="30" fill="#d9c39a" stroke-width="3"/>
+      <path d="M908 214 C930 196 990 196 1012 214 V248 H908Z" fill="#1f2b2d"/>
+      <circle cx="936" cy="196" r="12" fill="none" stroke="#f3efe4" stroke-width="3"/><circle cx="984" cy="196" r="12" fill="none" stroke="#f3efe4" stroke-width="3"/>
+      <path d="M936 196 l18 -14 h22 l8 14 M954 182 l8 14 M960 168 l-4 -16 l12 -6" fill="none" stroke="#f3efe4" stroke-width="3"/>
+      <text x="960" y="124" text-anchor="middle" font-family="Bricolage Grotesque" font-weight="800" font-size="15" style="font-variation-settings:'wdth' 75" fill="#f3efe4" stroke="none">CLUB RUN</text>
+      <text x="960" y="242" text-anchor="middle" font-family="Bricolage Grotesque" font-weight="500" font-size="11" letter-spacing="2" style="font-variation-settings:'wdth' 80" fill="#d9c39a" stroke="none">SUNDAYS 8AM</text>
+    </g>
+    <!-- saddles on the rail -->
+    <path d="M232 168 C300 150 420 140 540 138" fill="none" stroke="#1f2b2d" stroke-width="5"/>
+    <g stroke="#1f2b2d" stroke-width="4" stroke-linejoin="round">
+      <path d="M268 166 c10 -12 44 -16 56 -10 c-8 10 -28 10 -40 16Z" fill="#7a5a3a"/>
+      <path d="M352 156 c10 -12 44 -14 56 -8 c-8 10 -28 10 -40 14Z" fill="#1f2b2d"/>
+      <path d="M440 148 c10 -12 44 -14 56 -8 c-8 10 -28 10 -40 14Z" fill="#d9c39a"/>
+    </g>
+    <!-- floor -->
+    <path d="M0 502 C200 498 400 506 720 500 C1000 496 1240 504 1440 498 V560 H0Z" fill="#36494b"/>
+    <!-- print texture on the shadows -->
+    <pattern id="ht" width="7" height="7" patternUnits="userSpaceOnUse"><circle cx="3.5" cy="3.5" r="1.3" fill="#1f2b2d"/></pattern>
+    <path d="M132 560 V246 C136 64 418 -14 724 -12 C1030 -8 1306 76 1296 256 V560 H1238 V264 C1236 114 994 42 722 38 C452 36 204 104 198 262 V560Z" fill="url(#ht)" opacity=".35"/>
+    <path d="M0 0 H1440 V560 H1296 V256 C1306 76 1030 -8 724 -12 C418 -14 136 64 132 246 V560 H0Z" fill="url(#ht)" opacity=".25"/>
+    <path d="M0 502 C200 498 400 506 720 500 C1000 496 1240 504 1440 498 V560 H0Z" fill="url(#ht)" opacity=".3"/>
+    <!-- Nell, tying the ticket on the handlebar -->
+    <g stroke="#1f2b2d" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M1150 506 l6 -150 h22 l4 150Z M1190 506 l2 -150 h22 l2 150Z" fill="#36494b"/>
+      <path d="M1136 512 h50 v-10 c-10 -6 -30 -6 -46 0Z M1188 512 h50 v-10 c-10 -6 -30 -6 -46 0Z" fill="#1f2b2d"/>
+      <path d="M1146 210 C1150 196 1170 190 1184 190 C1204 190 1222 198 1226 214 L1232 370 L1140 370Z" fill="#8fa5a3"/>
+      <path d="M1152 236 L1224 236 L1236 396 L1142 396Z" fill="#e00315"/>
+      <path d="M1176 236 v-30 M1200 236 v-30" fill="none" stroke-width="4"/>
+      <path d="M1220 214 C1244 220 1262 226 1284 214" fill="none" stroke-width="20"/>
+      <path d="M1220 214 C1244 220 1262 226 1284 214" fill="none" stroke="#8fa5a3" stroke-width="10"/>
+      <path d="M1152 216 C1130 250 1150 270 1188 262" fill="none" stroke-width="20"/>
+      <path d="M1152 216 C1130 250 1150 270 1188 262" fill="none" stroke="#8fa5a3" stroke-width="10"/>
+      <path d="M1186 192 v-14" stroke-width="12"/>
+      <path d="M1162 130 C1162 104 1206 100 1210 128 C1214 156 1202 176 1186 178 C1168 178 1160 158 1162 130Z" fill="#d9a27a"/>
+      <path d="M1158 132 C1150 100 1200 86 1214 118 C1204 112 1186 116 1172 112 C1170 124 1164 132 1158 132Z" fill="#1f2b2d"/>
+      <circle cx="1150" cy="112" r="12" fill="#1f2b2d"/>
+      <path d="M1198 140 l2 2" stroke-width="5"/>
+      <path d="M1194 160 q6 3 10 -1" fill="none" stroke-width="3"/>
+      <circle cx="1288" cy="212" r="9" fill="#d9a27a" stroke-width="4"/>
+      <circle cx="1190" cy="262" r="9" fill="#d9a27a" stroke-width="4"/>
+    </g>
+    <!-- repair stand -->
+    <path d="M900 520 L950 300 M1000 520 L950 300 M950 300 L950 250 L1000 236" fill="none" stroke="#1f2b2d" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="990" y="224" width="40" height="22" fill="#e00315" stroke="#1f2b2d" stroke-width="5"/>
+    <!-- bike on stand: rear wheel left of frame, front wheel cut by the right edge -->
+    <g transform="translate(870 380) scale(.92)"><g class="spin-slow"><use href="#wheel"/></g></g>
+    <g transform="translate(1372 360)"><g class="spin"><use href="#wheel" transform="scale(1.1)"/></g></g>
+    <g fill="none" stroke="#1f2b2d" stroke-width="16" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M870 380 L1010 250 L1270 250 L1112 400 Z"/>
+      <path d="M1010 250 L1112 400"/>
+      <path d="M1270 250 L1372 360"/>
+    </g>
+    <g fill="none" stroke="#e00315" stroke-width="9" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M870 380 L1010 250 L1270 250 L1112 400 Z"/>
+      <path d="M1010 250 L1112 400"/>
+      <path d="M1270 250 L1372 360"/>
+    </g>
+    <path d="M990 214 h56" stroke="#1f2b2d" stroke-width="14" stroke-linecap="round"/>
+    <path d="M1010 250 l-6 -34" stroke="#1f2b2d" stroke-width="10"/>
+    <path d="M1270 250 l-14 -62 c22 -6 44 -2 60 14" fill="none" stroke="#1f2b2d" stroke-width="10" stroke-linecap="round"/>
+    <g class="spin-slow" ><circle cx="1112" cy="400" r="30" fill="#d9c39a" stroke="#1f2b2d" stroke-width="6"/><path d="M1112 400 L1150 446" stroke="#1f2b2d" stroke-width="9" stroke-linecap="round"/></g>
+    <!-- repair ticket on the handlebar -->
+    <g class="swing2"><path d="M1300 210 l-14 40" stroke="#f3efe4" stroke-width="3"/>
+      <path d="M1260 250 h56 l12 12 v76 h-68Z" fill="#d9c39a" stroke="#1f2b2d" stroke-width="4"/>
+      <circle cx="1302" cy="262" r="5" fill="#1f2b2d"/>
+      <path d="M1270 284 h44 M1270 298 h36 M1270 312 h44" stroke="#7a5a3a" stroke-width="3"/>
+      <path d="M1270 326 h22" stroke="#e00315" stroke-width="5"/></g>
+    <!-- Nell's apron pocket, pencil and cuffs -->
+    <g stroke="#1f2b2d" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M1166 300 h46 v34 h-46Z" fill="#a80010"/>
+      <path d="M1178 302 l-4 -26 c-8 -2 -10 -12 -4 -16 l6 8 6 -2 0 -10 c8 4 8 14 0 18 l2 26" fill="#8fa5a3"/>
+      <path d="M1204 302 l6 -30" stroke="#d9c39a" stroke-width="5"/>
+      <path d="M1206 114 l20 -14" stroke="#e00315" stroke-width="5"/>
+      <path d="M1262 206 l8 18 M1176 252 l6 18" stroke="#f3efe4" stroke-width="5"/>
+      <path d="M1150 476 h30 M1192 476 h30" stroke="#8fa5a3" stroke-width="6"/>
+    </g>
+    <!-- greyhound asleep under the stand -->
+    <g transform="translate(600 404)"><g class="breathe"><use href="#dog-lying"/></g>
+      <path class="ear" d="M2 46 c8 -12 28 -12 34 0 c-12 4 -24 4 -34 0Z" fill="#4a3424" stroke="#1f2b2d" stroke-width="4" stroke-linejoin="round"/>
+    </g>
+    <!-- drifting dust in the window light -->
+    <g class="dust" fill="#f3efe4" opacity=".85">
+      <circle cx="620" cy="220" r="2.5"/><circle cx="740" cy="300" r="2"/><circle cx="860" cy="200" r="3"/><circle cx="980" cy="160" r="2"/><circle cx="1100" cy="120" r="2.5"/><circle cx="1340" cy="220" r="2"/><circle cx="1460" cy="260" r="2.5"/><circle cx="1580" cy="200" r="2"/><circle cx="1700" cy="300" r="3"/><circle cx="1820" cy="180" r="2"/><circle cx="1940" cy="230" r="2.5"/>
+    </g>
+    <!-- ragged ground edge into the page -->
+    <path d="M0 560 V532 C60 526 110 540 180 534 C240 528 260 520 330 526 C420 534 470 544 560 538 C640 532 660 520 760 524 C860 528 900 546 1000 540 C1090 534 1120 522 1210 526 C1300 530 1360 544 1440 536 V560Z" fill="#f3efe4"/>
+    <g stroke="#1f2b2d" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M460 548 l70 -10" stroke-width="8"/><path d="M528 530 c10 -6 22 4 14 14 l-10 -2 -2 -8Z" fill="#8fa5a3"/>
+      <path d="M640 546 l6 -8 h10 l6 8 -6 8 h-10Z" fill="#d9c39a"/><circle cx="651" cy="546" r="3" fill="#1f2b2d" stroke="none"/>
+      <path d="M1046 546 c4 -8 18 -10 24 -2" fill="none" stroke="#e00315" stroke-width="6"/>
+    </g>
+    </g>
+  </svg>
+  <!-- phone crop: 390 x 546, Nell tying the ticket, larger -->
+  <svg class="scene scene-phone" viewBox="945 14 390 546" role="img" aria-label="Nell tying a repair ticket to the handlebar of a bicycle on the repair stand.">
+    <use href="#scene-art"/>
+  </svg>
+  <button class="pause" type="button" aria-pressed="false">Pause the workshop</button>
+</section>
+
+<section class="intro wrap g" aria-labelledby="h1">
+  <div class="h">
+    <h1 id="h1">We mend the bike you already own</h1>
+  </div>
+  <div class="lede">
+    <p>Brindle &amp; Burr is a two-bench repair shop in Arch 14 on Cable Street. Nell Burr fixes the bikes. Brindle, a greyhound who stopped racing in 2019, sleeps under the repair stand.</p>
+    <p>Bring in whatever you ride, including the tourer that's been in the shed since 2009. Before any spanner comes out, Nell ties a paper ticket to the handlebar with the price written on it, and the parts she takes off go home with you in a bag.</p>
+    <a class="btn" href="#visit">Book a repair</a>
+  </div>
+</section>
+
+<section class="prices" id="prices" aria-labelledby="prices-h">
+  <div class="wrap g">
+    <div class="side">
+      <h2 id="prices-h">What it costs</h2>
+      <p>These are the five jobs we do most. Anything else, Nell looks at the bike and writes the price on your ticket. If it turns out to cost more once she's inside, she rings you first.</p>
+      <svg class="dog-sit" viewBox="0 0 220 230" role="img" aria-label="Brindle sitting up, ears back">
+        <path d="M60 222 C40 180 46 120 80 96 C96 84 112 84 120 96 C146 126 164 176 162 222Z" fill="#7a5a3a" stroke="#f3efe4" stroke-width="5" stroke-linejoin="round"/>
+        <g stroke="#4a3424" stroke-width="5" stroke-linecap="round"><path d="M74 140 l18 8"/><path d="M68 168 l22 6"/><path d="M134 140 l-14 10"/><path d="M146 172 l-20 4"/></g>
+        <path d="M96 100 C90 70 92 44 104 30 C116 18 136 20 140 32 C150 40 176 48 190 58 C184 66 160 66 140 62 C132 72 126 86 120 98Z" fill="#7a5a3a" stroke="#f3efe4" stroke-width="5" stroke-linejoin="round"/>
+        <path d="M188 58 l6 0" stroke="#f3efe4" stroke-width="9" stroke-linecap="round"/>
+        <circle cx="134" cy="40" r="4" fill="#f3efe4"/>
+        <path class="ear" d="M110 30 c-10 -6 -24 -2 -30 8 c12 2 22 0 30 -8Z" fill="#4a3424" stroke="#f3efe4" stroke-width="4" stroke-linejoin="round"/>
+        <path d="M96 106 h40" stroke="#e00315" stroke-width="9" stroke-linecap="round"/>
+        <path d="M60 222 h110 M100 222 v-30 M132 222 v-30" stroke="#f3efe4" stroke-width="5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="ticket-wrap">
+      <svg class="string" viewBox="0 0 80 100" aria-hidden="true"><path d="M60 0 C40 30 70 60 46 96" fill="none" stroke="#f3efe4" stroke-width="3"/></svg>
+      <div class="ticket">
+        <h3>Prices, labour included</h3>
+        <ol>
+          <li><b>Puncture, either wheel</b><span class="p">£14</span><small>New tube, tyre checked for glass and thorns. Usually while you wait.</small></li>
+          <li><b>Brakes set up, front and back</b><span class="p">£25</span><small>Cables tightened and pads lined up with the rim. New pads are £8 a pair on top.</small></li>
+          <li><b>Gears indexed</b><span class="p">£22</span><small>So it stops jumping on the hill up from the canal.</small></li>
+          <li><b>Wheel trued</b><span class="p">£20</span><small>Spokes tensioned on the truing stand until it runs straight.</small></li>
+          <li><b>The full going-over</b><span class="p">£85</span><small>Stripped, cleaned, greased and set up again. Two days, sometimes three.</small></li>
+        </ol>
+        <p class="foot">Parts at cost plus ten percent. Old parts go home with you.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="process" aria-labelledby="process-h">
+  <div class="wrap">
+    <h2 id="process-h">How a repair goes</h2>
+    <svg class="pano" viewBox="0 0 1360 200" role="img" aria-label="A bike wheeled in under the red shutter, a ticket tied to its handlebar, the workshop phone ringing, and the mended bike leaving with a bag of old parts while Brindle watches."><path d="M0 178 V58 C150 8 820 4 1000 50 V178Z" fill="#c9d3cc" stroke="#1f2b2d" stroke-width="4"/><path d="M0 58 C150 8 820 4 1000 50" fill="none" stroke="#36494b" stroke-width="16"/><path d="M1000 178 V30 h26 V178Z" fill="#7a5a3a" stroke="#1f2b2d" stroke-width="4"/><path d="M1000 60 h26 M1000 90 h26 M1000 120 h26 M1000 150 h26" stroke="#4a3424" stroke-width="3"/><path d="M1060 60 c20 -14 40 -14 60 0 M1220 44 c16 -10 34 -10 50 0" fill="none" stroke="#8fa5a3" stroke-width="4" stroke-linecap="round"/><path d="M0 178 C300 174 700 182 1360 176" fill="none" stroke="#1f2b2d" stroke-width="5" stroke-linecap="round"/><path d="M150 186 C400 192 700 184 1200 190" fill="none" stroke="#7a5a3a" stroke-width="3" stroke-dasharray="2 9" stroke-linecap="round"/><g transform="translate(20 34) scale(1.12)"><g stroke="#1f2b2d" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"><path d="M20 128 V40 C20 14 60 4 110 4 C160 4 200 14 200 40 V128" fill="#36494b"/><path d="M40 40 h140 v40 h-140Z" fill="#e00315"/><path d="M40 52 h140 M40 64 h140" stroke="#a80010" stroke-width="3"/><path d="M40 80 V128 H180 V80" fill="#c9d3cc"/><g class="spin-slow"><ellipse cx="96" cy="100" rx="27" ry="26" fill="none" stroke-width="7"/><path d="M96 74 v52 M70 100 h52 M78 82 l36 36 M78 118 l36 -36" stroke-width="2"/></g><path d="M96 100 L140 90 L170 70" fill="none" stroke="#e00315" stroke-width="6"/></g></g><g transform="translate(360 34) scale(1.12)"><g stroke="#1f2b2d" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"><path d="M10 40 C60 30 100 36 130 50 C150 60 170 56 200 40" fill="none" stroke-width="14"/><path d="M10 40 C60 30 100 36 130 50 C150 60 170 56 200 40" fill="none" stroke="#8fa5a3" stroke-width="6"/><path d="M188 28 h24 v24 h-24Z" fill="#1f2b2d"/><path d="M100 40 C96 56 108 62 104 74" fill="none" stroke="#7a5a3a" stroke-width="3"/><g class="swing2"><path d="M76 72 h56 l12 12 v42 h-68Z" fill="#d9c39a"/><circle cx="118" cy="84" r="4" fill="#1f2b2d"/><path d="M86 98 h44 M86 108 h30" stroke="#7a5a3a" stroke-width="3"/><path d="M86 118 h22" stroke="#e00315" stroke-width="5"/></g></g></g><g transform="translate(700 34) scale(1.12)"><g stroke="#1f2b2d" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"><path d="M66 6 h62 l4 92 h-70Z" fill="#e00315"/><circle cx="97" cy="56" r="20" fill="#f3efe4"/><circle cx="97" cy="56" r="6" fill="#1f2b2d"/><g fill="#1f2b2d" stroke="none"><circle cx="97" cy="42" r="3"/><circle cx="109" cy="48" r="3"/><circle cx="111" cy="62" r="3"/><circle cx="85" cy="48" r="3"/><circle cx="83" cy="62" r="3"/></g><path d="M56 18 C40 10 34 34 46 42 C56 48 48 64 40 64 C30 64 28 40 40 36" fill="#1f2b2d"/><path d="M50 40 c10 16 -14 18 -6 34 c8 16 -14 18 -6 34 c6 12 20 14 30 4" fill="none" stroke-width="3"/><path d="M150 30 c10 8 10 20 0 28 M164 22 c16 12 16 32 0 44" fill="none" stroke="#e00315" stroke-width="4"/></g></g><g transform="translate(1040 34) scale(1.12)"><g stroke="#1f2b2d" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"><ellipse cx="44" cy="96" rx="28" ry="27" fill="none" stroke-width="7"/><ellipse cx="170" cy="96" rx="27" ry="28" fill="none" stroke-width="7"/><path d="M44 96 L86 56 L150 56 L118 100 Z M86 56 L118 100 M150 56 L170 96" fill="none" stroke="#e00315" stroke-width="6"/><path d="M76 44 h24 M150 56 l-4 -20 c8 -4 18 -2 24 4" fill="none" stroke-width="6"/><path d="M140 40 l-6 34 h30 l-4 -34Z" fill="#d9c39a"/><path d="M146 40 c4 -10 14 -10 16 0" fill="none" stroke="#8fa5a3" stroke-width="5"/></g></g><g transform="translate(888 138) scale(.3)"><use href="#dog-lying"/></g></svg>
+    <ol class="steps" id="steps">
+      <li><svg class="v" viewBox="0 0 220 130" aria-hidden="true"><g stroke="#1f2b2d" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"><path d="M20 128 V40 C20 14 60 4 110 4 C160 4 200 14 200 40 V128" fill="#36494b"/><path d="M40 40 h140 v40 h-140Z" fill="#e00315"/><path d="M40 52 h140 M40 64 h140" stroke="#a80010" stroke-width="3"/><path d="M40 80 V128 H180 V80" fill="#c9d3cc"/><g class="spin-slow"><ellipse cx="96" cy="100" rx="27" ry="26" fill="none" stroke-width="7"/><path d="M96 74 v52 M70 100 h52 M78 82 l36 36 M78 118 l36 -36" stroke-width="2"/></g><path d="M96 100 L140 90 L170 70" fill="none" stroke="#e00315" stroke-width="6"/><path d="M0 128 h220" stroke-width="5"/></g></svg><h3>Wheel it in</h3><p>No appointment for punctures. For anything bigger, book a slot so the bike isn't waiting in the queue by the door.</p></li>
+      <li><svg class="v" viewBox="0 0 220 130" aria-hidden="true"><g stroke="#1f2b2d" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"><path d="M10 40 C60 30 100 36 130 50 C150 60 170 56 200 40" fill="none" stroke-width="14"/><path d="M10 40 C60 30 100 36 130 50 C150 60 170 56 200 40" fill="none" stroke="#8fa5a3" stroke-width="6"/><path d="M188 28 h24 v24 h-24Z" fill="#1f2b2d"/><path d="M100 40 C96 56 108 62 104 74" fill="none" stroke="#7a5a3a" stroke-width="3"/><g class="swing2"><path d="M76 72 h56 l12 12 v42 h-68Z" fill="#d9c39a"/><circle cx="118" cy="84" r="4" fill="#1f2b2d"/><path d="M86 98 h44 M86 108 h30" stroke="#7a5a3a" stroke-width="3"/><path d="M86 118 h22" stroke="#e00315" stroke-width="5"/></g></g></svg><h3>Get a ticket</h3><p>Nell writes what's wrong and the price on a brown card ticket and ties it to your handlebar. You keep the stub.</p></li>
+      <li><svg class="v" viewBox="0 0 220 130" aria-hidden="true"><g stroke="#1f2b2d" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"><path d="M66 6 h62 l4 92 h-70Z" fill="#e00315"/><circle cx="97" cy="56" r="20" fill="#f3efe4"/><circle cx="97" cy="56" r="6" fill="#1f2b2d"/><g fill="#1f2b2d" stroke="none"><circle cx="97" cy="42" r="3"/><circle cx="109" cy="48" r="3"/><circle cx="111" cy="62" r="3"/><circle cx="85" cy="48" r="3"/><circle cx="83" cy="62" r="3"/></g><path d="M56 18 C40 10 34 34 46 42 C56 48 48 64 40 64 C30 64 28 40 40 36" fill="#1f2b2d"/><path d="M50 40 c10 16 -14 18 -6 34 c8 16 -14 18 -6 34 c6 12 20 14 30 4" fill="none" stroke-width="3"/><path d="M150 30 c10 8 10 20 0 28 M164 22 c16 12 16 32 0 44" fill="none" stroke="#e00315" stroke-width="4"/><path d="M0 128 h220" stroke-width="5"/></g></svg><h3>We ring you</h3><p>If she finds something the ticket doesn't cover, a cracked rim or a seized bottom bracket, she phones before touching it.</p></li>
+      <li><svg class="v" viewBox="0 0 220 130" aria-hidden="true"><g stroke="#1f2b2d" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"><ellipse cx="44" cy="96" rx="28" ry="27" fill="none" stroke-width="7"/><ellipse cx="170" cy="96" rx="27" ry="28" fill="none" stroke-width="7"/><path d="M44 96 L86 56 L150 56 L118 100 Z M86 56 L118 100 M150 56 L170 96" fill="none" stroke="#e00315" stroke-width="6"/><path d="M76 44 h24 M150 56 l-4 -20 c8 -4 18 -2 24 4" fill="none" stroke-width="6"/><path d="M140 40 l-6 34 h30 l-4 -34Z" fill="#d9c39a"/><path d="M146 40 c4 -10 14 -10 16 0" fill="none" stroke="#8fa5a3" stroke-width="5"/><path d="M0 128 h220" stroke-width="5"/></g></svg><h3>Ride it home</h3><p>Pay at the bench and take a lap of the yard before you go. If anything feels wrong, wheel it straight back in.</p></li>
+    </ol>
+    <div class="progress" aria-hidden="true"><i id="bar"></i></div>
+  </div>
+</section>
+
+<section class="questions wrap g" aria-labelledby="q-h">
+  <div class="qh"><h2 id="q-h">Asked at the counter</h2></div>
+  <div class="qs">
+    <details open><summary>Do you sell bikes?</summary><p>No. Now and then a customer leaves a bike they don't want and we fix it up and sell it on; those go on the board by the door.</p></details>
+    <details><summary>Will you work on an e-bike?</summary><p>Brakes, tyres, gears and wheels, yes. Motors and batteries go back to the maker's dealer; we can tell you which one.</p></details>
+    <details><summary>Can I watch?</summary><p>Yes, there's a stool by the bench. Nell will explain what she's doing if you ask, and keep quiet if you don't.</p></details>
+    <details><summary>Is the dog friendly?</summary><p>Brindle is eleven and mostly asleep. She likes people who ignore her, and she does not chase bikes any more.</p></details>
+  </div>
+</section>
+
+<section class="visit" id="visit" aria-labelledby="visit-h">
+  <div class="inner wrap g">
+    <div class="v1">
+      <h2 id="visit-h">Arch 14, Cable Street</h2>
+      <p>Under the railway, between the timber yard and the bakery. Come through the yard gate; the shutter is the red one.</p>
+      <p><a href="tel:+442079460114">020 7946 0114</a> · <a href="mailto:bench@brindleandburr.example">bench@brindleandburr.example</a></p>
+    </div>
+    <div class="v2">
+      <dl>
+        <dt>Tue–Fri</dt><dd>8 till 6</dd>
+        <dt>Sat</dt><dd>9 till 4</dd>
+        <dt>Sun, Mon</dt><dd>Shut</dd>
+      </dl>
+    </div>
+    <div class="v3">
+      <svg class="door-dog" viewBox="0 0 300 220" role="img" aria-label="The red shutter of Arch 14, half up, with Brindle's nose poking out">
+        <path d="M10 220 V90 C10 30 80 4 150 4 C220 4 290 30 290 90 V220Z" fill="#36494b" stroke="#1f2b2d" stroke-width="6"/>
+        <rect x="40" y="70" width="220" height="90" fill="#e00315" stroke="#1f2b2d" stroke-width="5"/>
+        <g stroke="#a80010" stroke-width="3"><path d="M40 88 h220 M40 106 h220 M40 124 h220 M40 142 h220"/></g>
+        <path d="M40 160 V220 H260 V160" fill="#1f2b2d"/>
+        <g transform="translate(120 170)">
+          <path d="M0 50 C0 20 20 4 44 4 C60 4 70 10 92 22 C100 26 100 34 92 36 C74 38 60 40 50 50Z" fill="#7a5a3a" stroke="#f3efe4" stroke-width="4" stroke-linejoin="round"/>
+          <path d="M92 28 l6 0" stroke="#f3efe4" stroke-width="8" stroke-linecap="round"/>
+          <circle cx="54" cy="18" r="3.5" fill="#f3efe4"/>
+          <path class="ear" d="M26 10 c-10 -10 -24 -6 -28 4 c10 2 20 0 28 -4Z" fill="#4a3424" stroke="#f3efe4" stroke-width="3.5" stroke-linejoin="round"/>
+        </g>
+        <text x="150" y="52" text-anchor="middle" font-family="Bricolage Grotesque" font-weight="800" font-size="30" style="font-variation-settings:'wdth' 75" fill="#f3efe4">14</text>
+      </svg>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Brindle &amp; Burr Cycle Works, Arch 14, Cable Street, London E1. <a href="#visit">Book a repair</a></p>
+    <svg viewBox="-80 30 440 100" role="img" aria-label="Brindle asleep"><use href="#dog-lying" transform="translate(0 0)"/></svg>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var btn=document.querySelector('.pause'), hero=document.querySelector('.hero');
+  btn.addEventListener('click',function(){
+    var p=hero.classList.toggle('paused');
+    btn.setAttribute('aria-pressed',p);
+    btn.textContent=p?'Start the workshop':'Pause the workshop';
+  });
+  var s=document.getElementById('steps'), bar=document.getElementById('bar');
+  s.addEventListener('scroll',function(){
+    var max=s.scrollWidth-s.clientWidth; var f=max>0?s.scrollLeft/max:0;
+    bar.style.width=(25+75*f)+'%';
+  },{passive:true});
+})();
+</script>
+</body>
+</html>
