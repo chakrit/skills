@@ -164,12 +164,20 @@ earlier research on a designer.
    apply it to a business the designer never had. Every instruction comes from the
    synthesis. Where the synthesis records a gap, `style.md` says nothing. It holds no
    review checklist. Point to the synthesis and notes for detail.
+
+   Write each of the designer's distinctive moves as a plain instruction to make it.
+   Page counts and the projects where the designer does not make a move stay in the
+   synthesis: in `style.md` they turn the move into an option, and the design comes out
+   plain. A style takes the risk of committing to what makes the designer recognisable.
 8. **Check the research against the work.** Give a reviewer in fresh context the
    screenshots of the two pages set aside in step 3 and the style's folder, and ask the
    skill's critique question: would this pass as designed by the designer? Do not say
    the pages are real. A no means the research claims more than the work shows: go back
-   to the pages for what the reviewer named, correct the notes, the synthesis and
-   `style.md` from what is there, and ask a new reviewer.
+   to the pages for what the reviewer named and correct the notes and the synthesis from
+   what is there. Correct `style.md` only where it tells the agent something the pages
+   contradict; a real page that lacks the designer's distinctive moves is plain work, and
+   it does not weaken an instruction. Review once: a corrected style is not reviewed
+   again.
 9. **Previews.** Build four previews by running the skill's own process with this
    style: two in English, one in Thai, one in Japanese, each for a different
    fictional business that suits it. Run at most three preview agents at a time. A
