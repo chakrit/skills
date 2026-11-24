@@ -146,11 +146,11 @@ ones suit academic or editorial content.
 - Let unequal modules set the pace: larger areas hold the eye longer, repeated small
   ones speed it up.
 
-Set the measure first and let layout follow it: start at `--measure: 60ch` and adjust by
-eye, `55ch` for captions and short blocks, `80ch` for introductions, headings and hero
-sections, e.g. `grid-template-columns: minmax(0, var(--measure)) 1fr`. Take breakpoints
-from the measure with container queries: when a column gets narrower than a readable
-line, the layout changes.
+Set the measure first and let layout follow it: `--measure: 55ch` for captions and short
+blocks, `80ch` for introductions, headings and hero sections, e.g.
+`grid-template-columns: minmax(0, var(--measure)) 1fr`. Take breakpoints from the measure
+with container queries: when a column gets narrower than a readable line, the layout
+changes.
 
 ## 7. Let small parts of the scene move, slowly
 
