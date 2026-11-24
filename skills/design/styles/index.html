@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design styles</title>
+<style>
+:root {
+  color-scheme: light dark;
+  --ground: light-dark(#f3eff1, #1d1023);
+  --ink: light-dark(#1d1023, #ebe4e8);
+  --dim: light-dark(#6f6069, #ad98a1);
+  --rule: light-dark(#d5c9cf, #46324d);
+  --link: light-dark(#7a01a3, #24efb1);
+  --mono: ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 3rem clamp(1.25rem, 4vw, 4.7rem) 4.7rem;
+  background: var(--ground);
+  color: var(--ink);
+  font: 1.0625rem/1.5 ui-serif, Georgia, "Noto Serif Thai", "Noto Serif JP", serif;
+}
+
+a { color: var(--link); text-underline-offset: 0.2em; }
+a:hover { text-decoration-thickness: 2px; }
+
+h1, h2 { margin: 0; font-weight: 600; line-height: 1.1; }
+h1 { font-size: 2.4rem; }
+h2 { font-size: 1.75rem; }
+
+.intro { max-width: 47ch; margin: 1rem 0 1.5rem; color: var(--dim); }
+
+.jump { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin: 0 0 3rem; padding: 0; list-style: none; }
+
+.style { padding-block: 1.5rem 3rem; border-top: 1px solid var(--rule); scroll-margin-top: 1rem; }
+
+.does { max-width: 60ch; margin: 0.5rem 0 0; }
+
+.source { display: inline-block; margin: 0.5rem 0 1.5rem; font: 0.8125rem/1.5 var(--mono); }
+
+.sheet {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sheet a { display: block; text-decoration: none; }
+.sheet a:hover .name { text-decoration: underline 2px; }
+
+.sheet img {
+  display: block;
+  width: 100%;
+  height: auto;
+  outline: 1px solid var(--rule);
+}
+
+.name { display: block; margin-top: 0.5rem; }
+.kind { display: block; color: var(--dim); font: 0.8125rem/1.5 var(--mono); }
+
+@media (max-width: 68rem) { .sheet { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 34rem) { .sheet { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<h1>Design styles</h1>
+<p class="intro">Four designers' styles, each shown on four fictional businesses. Open a picture to see the page it comes from.</p>
+
+<ul class="jump">
+<li><a href="#andy-clarke">Andy Clarke</a></li>
+<li><a href="#jason-santa-maria">Jason Santa Maria</a></li>
+<li><a href="#frank-chimero">Frank Chimero</a></li>
+<li><a href="#rob-weychert">Rob Weychert</a></li>
+</ul>
+
+<section class="style" id="andy-clarke">
+<h2>Andy Clarke</h2>
+<p class="does">Finds the business's story, picks one thing particular to it, draws it into a world, and builds every layer of the page to tell it.</p>
+<a class="source" href="andy-clarke/style.md">andy-clarke/style.md</a>
+<ul class="sheet">
+<li><a href="andy-clarke/previews/kayak-tours.html"><img src="andy-clarke/previews/kayak-tours.webp" width="704" height="416" loading="lazy" alt="Top of the Lanternfish Kayak Tours page"><span class="name">Lanternfish Kayak Tours</span><span class="kind">Sea-kayak outfitter · English</span></a></li>
+<li><a href="andy-clarke/previews/cycle-works.html"><img src="andy-clarke/previews/cycle-works.webp" width="704" height="416" loading="lazy" alt="Top of the Brindle &amp; Burr Cycle Works page"><span class="name">Brindle &amp; Burr Cycle Works</span><span class="kind">Bicycle repair workshop · English</span></a></li>
+<li><a href="andy-clarke/previews/coffee-roastery-th.html"><img src="andy-clarke/previews/coffee-roastery-th.webp" width="704" height="416" loading="lazy" alt="Top of the coffee roastery page"><span class="name" lang="th">โรงคั่วดอยหมอก</span><span class="kind">Coffee roastery · Thai</span></a></li>
+<li><a href="andy-clarke/previews/toy-hospital-ja.html"><img src="andy-clarke/previews/toy-hospital-ja.webp" width="704" height="416" loading="lazy" alt="Top of the toy repair workshop page"><span class="name" lang="ja">おもちゃ病院 つぎはぎ堂</span><span class="kind">Toy repair workshop · Japanese</span></a></li>
+</ul>
+</section>
+
+<section class="style" id="jason-santa-maria">
+<h2>Jason Santa Maria</h2>
+<p class="does">Type first, set the way a good magazine or book is set: a fixed system, with each lead piece art-directed inside it.</p>
+<a class="source" href="jason-santa-maria/style.md">jason-santa-maria/style.md</a>
+<ul class="sheet">
+<li><a href="jason-santa-maria/previews/mend-quarterly.html"><img src="jason-santa-maria/previews/mend-quarterly.webp" width="704" height="416" loading="lazy" alt="Top of The Mend Quarterly page"><span class="name">The Mend Quarterly</span><span class="kind">Magazine about repair · English</span></a></li>
+<li><a href="jason-santa-maria/previews/halfmoon-books.html"><img src="jason-santa-maria/previews/halfmoon-books.webp" width="704" height="416" loading="lazy" alt="Top of the Halfmoon Books page"><span class="name">Halfmoon Books</span><span class="kind">Second-hand bookshop · English</span></a></li>
+<li><a href="jason-santa-maria/previews/independent-press-th.html"><img src="jason-santa-maria/previews/independent-press-th.webp" width="704" height="416" loading="lazy" alt="Top of the independent publisher page"><span class="name" lang="th">สำนักพิมพ์ตัวเรียง</span><span class="kind">Independent publisher · Thai</span></a></li>
+<li><a href="jason-santa-maria/previews/letterpress-ja.html"><img src="jason-santa-maria/previews/letterpress-ja.webp" width="704" height="416" loading="lazy" alt="Top of the letterpress workshop page"><span class="name" lang="ja">山吹活版所</span><span class="kind">Letterpress workshop · Japanese</span></a></li>
+</ul>
+</section>
+
+<section class="style" id="frank-chimero">
+<h2>Frank Chimero</h2>
+<p class="does">Plain material handled closely: one text size, a typewriter voice, a still half and a scrolling half, empty field, one hue and an accent.</p>
+<a class="source" href="frank-chimero/style.md">frank-chimero/style.md</a>
+<ul class="sheet">
+<li><a href="frank-chimero/previews/alder-and-plane.html"><img src="frank-chimero/previews/alder-and-plane.webp" width="704" height="416" loading="lazy" alt="Top of the Alder &amp; Plane page"><span class="name">Alder &amp; Plane</span><span class="kind">Furniture workshop · English</span></a></li>
+<li><a href="frank-chimero/previews/field-office.html"><img src="frank-chimero/previews/field-office.webp" width="704" height="416" loading="lazy" alt="Top of the Field Office page"><span class="name">Field Office</span><span class="kind">Architecture practice · English</span></a></li>
+<li><a href="frank-chimero/previews/ceramics-studio-th.html"><img src="frank-chimero/previews/ceramics-studio-th.webp" width="704" height="416" loading="lazy" alt="Top of the ceramics studio page"><span class="name" lang="th">ดินเงียบ สตูดิโอ</span><span class="kind">Ceramics studio · Thai</span></a></li>
+<li><a href="frank-chimero/previews/tea-merchant-ja.html"><img src="frank-chimero/previews/tea-merchant-ja.webp" width="704" height="416" loading="lazy" alt="Top of the tea merchant page"><span class="name" lang="ja">茶舗 しずく</span><span class="kind">Tea merchant · Japanese</span></a></li>
+</ul>
+</section>
+
+<section class="style" id="rob-weychert">
+<h2>Rob Weychert</h2>
+<p class="does">Builds a page from its text up: content first, one typographic scale, a grid taken from that scale, black and white, colour last.</p>
+<a class="source" href="rob-weychert/style.md">rob-weychert/style.md</a>
+<ul class="sheet">
+<li><a href="rob-weychert/previews/orpheum-repertory.html"><img src="rob-weychert/previews/orpheum-repertory.webp" width="704" height="416" loading="lazy" alt="Top of The Orpheum Repertory page"><span class="name">The Orpheum Repertory</span><span class="kind">Repertory cinema · English</span></a></li>
+<li><a href="rob-weychert/previews/low-tide-records.html"><img src="rob-weychert/previews/low-tide-records.webp" width="704" height="416" loading="lazy" alt="Top of the Low Tide Records page"><span class="name">Low Tide Records</span><span class="kind">Record label · English</span></a></li>
+<li><a href="rob-weychert/previews/local-newsroom-th.html"><img src="rob-weychert/previews/local-newsroom-th.webp" width="704" height="416" loading="lazy" alt="Top of the local newsroom page"><span class="name" lang="th">สำนักข่าวริมคลอง</span><span class="kind">Local newsroom · Thai</span></a></li>
+<li><a href="rob-weychert/previews/yose-theatre-ja.html"><img src="rob-weychert/previews/yose-theatre-ja.webp" width="704" height="416" loading="lazy" alt="Top of the rakugo theatre page"><span class="name" lang="ja">寄席 つばめ亭</span><span class="kind">Rakugo theatre · Japanese</span></a></li>
+</ul>
+</section>
+
+</body>
+</html>

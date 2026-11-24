@@ -1,10 +1,10 @@
 # Styles
 
-- `andy-clarke`
-- `jason-santa-maria`
-- `dan-cederholm`
-- `frank-chimero`
-- `rob-weychert`
-- `scott-kellum`
-- `simon-collison`
-- `yugo-nakamura`
+One row per style. `index.html` in this folder shows every preview as a screenshot.
+
+| Style                 | What it does                                                                                                                                | Previews                                                                                                                                                                                                                                                                             |
+|-----------------------|---------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `andy-clarke`         | Finds the business's story, picks one thing particular to it, draws it into a world, and builds every layer of the page to tell it.         | [kayak tours](andy-clarke/previews/kayak-tours.html), [cycle works](andy-clarke/previews/cycle-works.html), [coffee roastery, Thai](andy-clarke/previews/coffee-roastery-th.html), [toy hospital, Japanese](andy-clarke/previews/toy-hospital-ja.html)                               |
+| `jason-santa-maria`   | Type first, set the way a good magazine or book is set: a fixed system, with each lead piece art-directed inside it.                        | [quarterly magazine](jason-santa-maria/previews/mend-quarterly.html), [bookshop](jason-santa-maria/previews/halfmoon-books.html), [publisher, Thai](jason-santa-maria/previews/independent-press-th.html), [letterpress, Japanese](jason-santa-maria/previews/letterpress-ja.html)   |
+| `frank-chimero`       | Plain material handled closely: one text size, a typewriter voice, a still half and a scrolling half, empty field, one hue and an accent.   | [furniture workshop](frank-chimero/previews/alder-and-plane.html), [architecture practice](frank-chimero/previews/field-office.html), [ceramics studio, Thai](frank-chimero/previews/ceramics-studio-th.html), [tea merchant, Japanese](frank-chimero/previews/tea-merchant-ja.html) |
+| `rob-weychert`        | Builds a page from its text up: content first, one typographic scale, a grid taken from that scale, black and white, colour last.           | [repertory cinema](rob-weychert/previews/orpheum-repertory.html), [record label](rob-weychert/previews/low-tide-records.html), [newsroom, Thai](rob-weychert/previews/local-newsroom-th.html), [rakugo theatre, Japanese](rob-weychert/previews/yose-theatre-ja.html)                |

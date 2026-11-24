@@ -86,10 +86,11 @@ The direct ingestions started from these revisions:
   `f804ec5a07868ca42a0ffdef137943751ff5a7f9`, renamed, with the secret files committed
   encrypted with git-crypt (`terraform.tfstate` always, `terraform.tfvars` when the repo
   commits it).
-- `design`: the Andy Clarke research (`references/andy-clarke/` and
+- `design`: began from the Andy Clarke research (`references/andy-clarke/` and
   `docs/spec/art-direction.md`) in `appbaobao/appbaobao.com` at
-  `23773f8a19bb88efc277e820a9a8ac0816c97454`; the spec became
-  `styles/andy-clarke/style.md`.
+  `23773f8a19bb88efc277e820a9a8ac0816c97454`. Every style under `skills/design/styles/`
+  is now researched in this repository by the method in `docs/spec/design.md`, from the
+  public sources its `notes/` cite.
 
 These skills are maintained here after ingestion and are not refreshed by
 `ace school pull`.
