@@ -27,6 +27,7 @@ already has a row.
 | `control.md`    | the `control` skill's design, for agents editing the skill    | implemented |
 | `design.md`     | the `design` skill's rules and how to add a designer's style  | implemented |
 | `fact-check.md` | the `fact-check` skill's design, for agents editing the skill | implemented |
+| `retro.md`      | the `retro` skill's design and its matrix test                | draft       |
 
 ## Format
 
