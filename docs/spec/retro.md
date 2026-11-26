@@ -44,8 +44,9 @@ edits.
 
 ## Testing
 
-A matrix test runs Claude and Codex against a few scenarios and checks levels, the
-guard, memory across runs, and recall in a fresh session.
+A matrix test runs Claude against a few scenarios and checks levels, the guard, memory
+across runs, and recall in a fresh session. Codex is out for now (chakrit, 2026-11-26:
+"i don't have codex subscriptioin anymore, just focus on claude only for now").
 
 - Scenarios come from chakrit's Claude conversation history; frustration (curse words)
   marks candidate incidents.
