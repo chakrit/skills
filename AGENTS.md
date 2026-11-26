@@ -73,7 +73,7 @@ and the target file. Resolve symlinks before writing. Read this repository's act
 that name is already loaded through PROD9.
 
 - **fact-check, learn, note-taker, safety-audit, 1-by-1, wrap-up, control, study,
-  de-slop, design, and gh-admin:** edit their directories under `skills/` here.
+  de-slop, design, gh-admin, and retro:** edit their directories under `skills/` here.
   Route feedback and proposed changes to `chakrit/skills`, including feedback about
   copies loaded through PROD9 or another school. Former standalone repositories and
   copies extracted from other schools are ingestion sources, not the ongoing
@@ -153,8 +153,8 @@ never converges, and chakrit has to find and undo work nobody asked for.
 
 - `skills/fact-check/`, `skills/learn/`, `skills/note-taker/`,
   `skills/safety-audit/`, `skills/1-by-1/`, `skills/wrap-up/`, `skills/control/`,
-  `skills/study/`, `skills/de-slop/`, `skills/design/`, and `skills/gh-admin/` are
-  maintained directly in this repository.
+  `skills/study/`, `skills/de-slop/`, `skills/design/`, `skills/gh-admin/`, and
+  `skills/retro/` are maintained directly in this repository.
 - `skills/kien-thai/` and `skills/kode-thai/` are imported from chakrit/kien-thai.
   Follow the upstream ownership and command-target checks in this file.
 - `skills/lowfat-pantry/` is imported from chakrit/lowfat-pantry.
