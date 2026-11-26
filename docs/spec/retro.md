@@ -1,10 +1,11 @@
 # retro skill
 
-Status: draft
+Status: implemented
 
-The design of `skills/retro/` (not yet written), for agents editing that skill. Agents
-running the skill never read this file; every rule they follow will live in its
-`SKILL.md` and `references/`.
+The design of `skills/retro/`, for agents editing that skill. Agents running the skill
+never read this file; every rule they follow lives in its `SKILL.md` and
+`references/`. chakrit locked in the skill's content on 2026-11-26 ("perrfect, lock in
+the skill ocntent please").
 
 ## What it is
 
@@ -41,6 +42,19 @@ of purpose, philosophy and the user's rulings.
 
 The flow of a run is analyze, think, distill, output; the output may be instruction
 edits.
+
+## Locked-in choices
+
+- Evidence comes only from the current session, what the user points to, and the
+  ledger's open entries.
+- The guard's threshold: two observations from different situations that no
+  lower-level edit removes.
+- The philosophy section is `## Philosophy` in an always-loaded instruction file; it
+  starts with a purpose, and each principle carries the user's quoted words and date.
+- The ledger is `docs/retro.md` unless the repository's docs conventions name another
+  place; statuses are `observed`, `proposed`, `settled`, `killed`.
+- Edits may target the user-level instruction file, with the user's agreement like any
+  other edit. Three or more proposals are walked one at a time.
 
 ## Testing
 
